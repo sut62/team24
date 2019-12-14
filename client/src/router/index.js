@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import BookFlight from '../views/BookFlight.vue'
+import CheckIn from '../views/CheckIn.vue'
 
 Vue.use(VueRouter)
 
@@ -9,6 +10,11 @@ const routes = [
     path: '/',
     name: 'bookFlight',
     component: BookFlight
+  },
+  {
+    path: '/checkIn',
+    name: 'checkIn',
+    component: CheckIn
   },
   {
     path: '/about',
