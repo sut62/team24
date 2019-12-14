@@ -3,12 +3,6 @@
     <UserNavbar/>
     <div class="header-bg"></div>
     <div class=" container" style="margin-top:100px;">
-      <v-avatar class="logo" size="100"> 
-        <img
-          src="../assets/logo.png"
-          alt="John"
-        >
-      </v-avatar>
       <div class="mx-auto">
         <div class="my-content">
           <div class="text-white" style="width: 400px;">
@@ -53,10 +47,6 @@ export default {
   }
   .container{
     padding-left: 100px;
-  }
-  .logo{
-    position: absolute;
-    top: 30px;
   }
   .my-right{
     position: absolute;

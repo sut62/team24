@@ -15,6 +15,12 @@
         </div>
       </div>
     </nav>
+    <v-avatar class="logo" size="100"> 
+      <img
+        src="../assets/logo.png"
+        alt="John"
+      >
+    </v-avatar>
   </div>
 </template>
 
@@ -24,6 +30,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .logo{
+    position: absolute;
+    top: 30px;
+    left: 10%;
+  }
 </style>
