@@ -5,11 +5,7 @@
     <div class=" container" style="margin-top:auto;">
       <div class="mx-auto">
         <div class="my-content">
-          <div class="text-black" style="width: auto;">
-            <div class="topic">
-              <h1 class="mt-5 topic">เช็คอิน</h1>
-            </div>
-          </div>
+          
           <Search/>
         </div>
       </div>
@@ -43,14 +39,18 @@ export default {
     width: 100%;
     background-size: cover;
     background-color: #ECEFF1;
+    
   }
   .container{
     margin: auto;
     padding: 20px;
+    
+
   }
 
   .my-content{
-    width: 70%;
+    width: 80%;
     margin: auto ;
+    
   }
 </style>
