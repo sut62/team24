@@ -114,8 +114,60 @@
         >Next</a>
       </div>
     </div>
-    
-    <div v-if="addon_page == true">sadasda</div>
+
+    <div v-if="addon_page == true">
+      <div>
+        <div class="step-style">
+          <v-stepper :alt-labels="true">
+            <v-stepper-header value="1">
+              <v-stepper-step complete step="1">Flight</v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step complete editable step="2">adds-on</v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step step="3">Confirmation</v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step step="4">Safty notice</v-stepper-step>
+            </v-stepper-header>
+          </v-stepper>
+        </div>
+
+        <div class="mt-3 font-weight-medium topic-size">Adds-On</div>
+      </div>
+      <div>
+        <v-card class="mx-auto card-addson" width="100%" height="240px" outlined logo>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline mb-4">OVERLINE</div>
+              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
+              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-avatar tile size="200" color="grey">
+              <img src="../../assets/baggage.png" alt="baggage" />
+            </v-list-item-avatar>
+          </v-list-item>
+        </v-card>
+        <v-card class="mx-auto card-addson" width="100%" height="240px" outlined logo>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="overline mb-4">OVERLINE</div>
+              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
+              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-avatar  tile size="200" color="grey">
+              <img src="../../assets/seat.png" alt="seat" />
+            </v-list-item-avatar>
+          </v-list-item>
+        </v-card>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -193,5 +245,10 @@ export default {
   height: 50px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.card-addson {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #e0f2f1;
 }
 </style>
