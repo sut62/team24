@@ -12,9 +12,14 @@
           </div>
           <Search/>
         </div>
+        <BookNav/>
+        <FlightList/>
+        <FlightList/>
       </div>
     </div>
-    <UserFooter/>
+    <br>
+    <UserFooter style="padding-bottom: 100px;"/>
+    <CartFooter/>
   </div>
 </template>
 
@@ -23,6 +28,9 @@
 import Search from '../components/BookFlight/Search'
 import UserNavbar from '../components/UserNavbar'
 import UserFooter from '../components/UserFooter'
+import BookNav from '../components/BookFlight/BookNav'
+import FlightList from '../components/BookFlight/FlightList/FlightList'
+import CartFooter from '../components/BookFlight/CartFooter'
 
 export default {
   name: 'boookFlight',
@@ -32,7 +40,10 @@ export default {
   components: {
     Search,
     UserNavbar,
-    UserFooter
+    UserFooter,
+    BookNav,
+    FlightList,
+    CartFooter
   },
 }
 </script>
