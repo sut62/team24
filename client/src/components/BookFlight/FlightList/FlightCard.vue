@@ -25,7 +25,7 @@
             </div>
           </v-col>
           <v-col cols="4">
-            <div class="btn btn-danger btn-block btn-lg">
+            <div class="btn btn-warning btn-block btn-lg pt-4" style="height:100%;">
               1,900 THB
             </div>
           </v-col>

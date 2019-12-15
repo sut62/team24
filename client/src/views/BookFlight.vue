@@ -18,7 +18,8 @@
       </div>
     </div>
     <br>
-    <UserFooter/>
+    <UserFooter style="padding-bottom: 100px;"/>
+    <CartFooter/>
   </div>
 </template>
 
@@ -29,6 +30,7 @@ import UserNavbar from '../components/UserNavbar'
 import UserFooter from '../components/UserFooter'
 import BookNav from '../components/BookFlight/BookNav'
 import FlightList from '../components/BookFlight/FlightList/FlightList'
+import CartFooter from '../components/BookFlight/CartFooter'
 
 export default {
   name: 'boookFlight',
@@ -40,7 +42,8 @@ export default {
     UserNavbar,
     UserFooter,
     BookNav,
-    FlightList
+    FlightList,
+    CartFooter
   },
 }
 </script>
