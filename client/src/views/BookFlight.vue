@@ -12,6 +12,7 @@
           </div>
           <Search/>
         </div>
+        <BookNav/>
       </div>
     </div>
     <UserFooter/>
@@ -23,6 +24,7 @@
 import Search from '../components/BookFlight/Search'
 import UserNavbar from '../components/UserNavbar'
 import UserFooter from '../components/UserFooter'
+import BookNav from '../components/BookFlight/BookNav'
 
 export default {
   name: 'boookFlight',
@@ -32,7 +34,8 @@ export default {
   components: {
     Search,
     UserNavbar,
-    UserFooter
+    UserFooter,
+    BookNav
   },
 }
 </script>
