@@ -140,33 +140,82 @@
         <div class="mt-3 font-weight-medium topic-size">Adds-On</div>
       </div>
       <div>
-        <v-card class="mx-auto card-addson" width="100%" height="240px" outlined logo>
-          <v-list-item three-line>
+        <v-card class="mx-auto card-addson" width="100%" height="210px" outlined>
+          <v-list-item three>
             <v-list-item-content>
-              <div class="overline mb-4">OVERLINE</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+              <v-list-item-title class="headline mb-4">สัมภาระเช็คอิน</v-list-item-title>
+              <div class="mt-0">สัมภาระพกพา 7 กก รวมอยู่ในค่าโดยสารแล้ว</div>
+              <hr />
+              <v-row class="font-weight-medium">
+                <v-col>
+                  <v-list-item>
+                    <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
+                    <div class="ml-5">DMK-URT</div>
+                  </v-list-item>
+                </v-col>
+                <v-col>
+                  <v-list-item>
+                    <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
+                    <div class="ml-5">URT-DMK</div>
+                  </v-list-item>
+                </v-col>
+              </v-row>
             </v-list-item-content>
 
-            <v-list-item-avatar tile size="200" color="grey">
+            <v-list-item-avatar tile size="200" color="#e0f2f1">
               <img src="../../assets/baggage.png" alt="baggage" />
             </v-list-item-avatar>
           </v-list-item>
         </v-card>
-        <v-card class="mx-auto card-addson" width="100%" height="240px" outlined logo>
-          <v-list-item three-line>
+        <v-card class="mx-auto card-addson" width="100%" height="250px" outlined>
+          <v-list-item three>
             <v-list-item-content>
-              <div class="overline mb-4">OVERLINE</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+              <v-list-item-title class="headline mb-4">Seat</v-list-item-title>
+              <div class="mt-0"> 
+                <v-icon large color="orange darken-2">mdi-dot-single</v-icon>
+                กำหนดอัตโนมัติ
+                </div>
+              <hr />
+              <v-row class="font-weight-medium">
+                <v-list-item>
+                  <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
+                  <v-row class="ml-6 mt-.5">
+                    <v-list-item-content>
+                      <v-list-item-title class="font-weight-medium">DMK-URT</v-list-item-title>
+                      <v-list-item-subtitle>23D,23E</v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-row>
+                </v-list-item>
+              </v-row>
+              <hr />
+              <v-row class="font-weight-medium">
+                <v-list-item>
+                  <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
+                  <v-row class="ml-6 mt-.5">
+                    <v-list-item-content>
+                      <v-list-item-title class="font-weight-medium">DMK-URT</v-list-item-title>
+                      <v-list-item-subtitle>23D,23E</v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-row>
+                </v-list-item>
+              </v-row>
             </v-list-item-content>
 
-            <v-list-item-avatar  tile size="200" color="grey">
+            <v-list-item-avatar tile size="200" color="#e0f2f1">
               <img src="../../assets/seat.png" alt="seat" />
             </v-list-item-avatar>
           </v-list-item>
         </v-card>
       </div>
+      <div class="card text-center card-button">
+        <a
+          href="#"
+          @click="()=>onShowAddOnPage(this)"
+          class="btn btn-danger text-white btn-lg"
+          style="width:20% margin-left: 130px;"
+        >Next</a>
+      </div>
+
     </div>
   </div>
 </template>
