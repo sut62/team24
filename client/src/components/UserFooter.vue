@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-footer
-      absolute
       color="primary lighten-1"
       padless
     >
