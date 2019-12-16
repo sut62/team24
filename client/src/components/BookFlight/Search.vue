@@ -32,7 +32,7 @@
           </v-col>
           <v-col cols="4">
             <v-text-field @click="showDatePick =! showDatePick" outlined v-model="dateRangeText" label="เลือกวันเวลาไป-กลับ" readonly></v-text-field>
-            <v-date-picker v-if="showDatePick" class="date-picker" v-model="dates" range></v-date-picker>
+            <v-date-picker v-if="showDatePick" style="z-index:1;" class="date-picker" v-model="dates" range></v-date-picker>
           </v-col>
           <v-col cols="4">
             <a href="#" class="btn btn-danger text-white btn-lg" style="width:100%;">ค้นหา</a>
