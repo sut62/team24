@@ -20,9 +20,18 @@ public class BookingStatus {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "bookingStatus"
-    )
-    private Collection<FlightBooking> flightBookings;
+//    @OneToMany(
+//        mappedBy = "bookingStatus",cascade = CascadeType.ALL,fetch = FetchType.LAZY
+//    )
+//    private Collection<FlightBooking> flightBookings;
+
+    //getter setter
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
