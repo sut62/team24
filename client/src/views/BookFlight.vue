@@ -31,6 +31,7 @@ import UserFooter from '../components/UserFooter'
 import BookNav from '../components/BookFlight/BookNav'
 import FlightList from '../components/BookFlight/FlightList/FlightList'
 import CartFooter from '../components/BookFlight/CartFooter'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'boookFlight',
@@ -45,6 +46,11 @@ export default {
     FlightList,
     CartFooter
   },
+  methods: {
+    ...mapActions({
+      bookFlight: 'BookFlight/book'
+    })
+  }
 }
 </script>
 
