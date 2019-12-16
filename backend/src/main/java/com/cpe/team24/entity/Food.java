@@ -1,8 +1,8 @@
 package com.cpe.backend.employee.entity;
 
 import lombok.*;
-import com.cpe.backend.employee.entity.Foodimg;
-import com.cpe.backend.employee.entity.Foodtype;
+//import com.cpe.backend.employee.entity.Foodimg;
+//import com.cpe.backend.employee.entity.Foodtype;
 import com.cpe.backend.employee.entity.Food;
 
 
@@ -36,12 +36,12 @@ public class Food {
     private @NonNull String cost;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Foodimg.class)
-    @JoinColumn(name = "FOODIMG_ID", insertable = true)
-    private Foodimg addfoodimg;
-
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Foodtype.class)
-    @JoinColumn(name = "FOODTYPE_ID", insertable = true)
-    private  Foodtype addfoodtype;
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Foodimg.class)
+//    @JoinColumn(name = "FOODIMG_ID", insertable = true)
+//    private Foodimg addfoodimg;
+//
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Foodtype.class)
+//    @JoinColumn(name = "FOODTYPE_ID", insertable = true)
+//    private  Foodtype addfoodtype;
 
 }

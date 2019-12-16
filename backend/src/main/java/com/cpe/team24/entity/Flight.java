@@ -38,15 +38,15 @@ public class Flight {
     @Column(name="ARRIVE")
     private @NonNull Date arrive;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
-    @JoinColumn(name = "AIRPORT_ID", insertable = true)
-    private Airport Form;
-
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
-    @JoinColumn(name = "AIRPORT_ID", insertable = true)
-    private Airport To;
-
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airplane.class)
-    @JoinColumn(name = "AIRPLANE_ID", insertable = true)
-    private Airplane Airplane;
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
+//    @JoinColumn(name = "AIRPORT_ID", insertable = true)
+//    private Airport Form;
+//
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
+//    @JoinColumn(name = "AIRPORT_ID", insertable = true)
+//    private Airport To;
+//
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airplane.class)
+//    @JoinColumn(name = "AIRPLANE_ID", insertable = true)
+//    private Airplane Airplane;
 }
