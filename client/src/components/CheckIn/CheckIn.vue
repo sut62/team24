@@ -78,6 +78,8 @@
               <v-divider></v-divider>
 
               <v-stepper-step step="4">Safty notice</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="5">Print</v-stepper-step>
             </v-stepper-header>
           </v-stepper>
         </div>
@@ -133,6 +135,8 @@
               <v-divider></v-divider>
 
               <v-stepper-step step="4">Safty notice</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="5">Print</v-stepper-step>
             </v-stepper-header>
           </v-stepper>
         </div>
@@ -171,10 +175,9 @@
           <v-list-item three>
             <v-list-item-content>
               <v-list-item-title class="headline mb-4">Seat</v-list-item-title>
-              <div class="mt-0"> 
-                <v-icon large color="orange darken-2">mdi-dot-single</v-icon>
-                กำหนดอัตโนมัติ
-                </div>
+              <div class="mt-0">
+                <v-icon large color="orange darken-2">mdi-dot-single</v-icon>กำหนดอัตโนมัติ
+              </div>
               <hr />
               <v-row class="font-weight-medium">
                 <v-list-item>
@@ -210,13 +213,53 @@
       <div class="card text-center card-button">
         <a
           href="#"
-          @click="()=>onShowAddOnPage(this)"
+          @click="()=>onShowConfimationPage(this)"
           class="btn btn-danger text-white btn-lg"
           style="width:20% margin-left: 130px;"
         >Next</a>
       </div>
-
     </div>
+
+    <div v-if="confimation_page == true">
+        <div class="step-style">
+          <v-stepper :alt-labels="true">
+            <v-stepper-header value="1">
+              <v-stepper-step complete step="1">Flight</v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step complete step="2">Adds-on</v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step complete editable step="3">Confimation</v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step step="4">Safty notice</v-stepper-step>
+              <v-divider></v-divider>
+              <v-stepper-step step="5">Print</v-stepper-step>
+            </v-stepper-header>
+          </v-stepper>
+        </div>
+
+       
+        <div>
+          <div class="mt-3 font-weight-medium topic-size">Confimation</div>
+           <div class="text-black">กรุณาเลือก 'continue' เพื่อทำการเช็คอิน</div>
+        </div>
+        <div class="card text-leftfont-weight-medium card-description">
+          <div class="card-header text-left">Gusest(s) are now ready to check-in</div>
+          
+        </div>
+        
+      
+      
+    </div>
+
+
+
+
   </div>
 </template>
 
@@ -233,6 +276,7 @@ export default {
       checkin_page: true,
       fligth_page: false,
       addon_page: false,
+      confimation_page: false,
 
       extensionHeight: 100,
       reverse: true
@@ -253,6 +297,10 @@ export default {
     onShowAddOnPage(main) {
       main.addon_page = !main.addon_page;
       main.fligth_page = !main.fligth_page;
+    },
+    onShowConfimationPage(main) {
+      main.addon_page = !main.addon_page;
+      main.confimation_page = !main.confimation_page;
     }
   }
 };
