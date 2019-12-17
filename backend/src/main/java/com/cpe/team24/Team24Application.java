@@ -3,7 +3,9 @@ package com.cpe.team24;
 import com.cpe.team24.entity.BookingStatus;
 import com.cpe.team24.entity.Flight;
 import com.cpe.team24.entity.FlightBooking;
+import com.cpe.team24.entity.FlightBookingLink;
 import com.cpe.team24.repository.BookingStatusRepository;
+import com.cpe.team24.repository.FlightBookingLinkRepository;
 import com.cpe.team24.repository.FlightBookingRepository;
 import com.cpe.team24.repository.FlightRepository;
 import org.springframework.boot.ApplicationRunner;
@@ -32,7 +34,8 @@ public class Team24Application {
 	ApplicationRunner init(
 			FlightBookingRepository flightBookingRepository,
 			BookingStatusRepository bookingStatusRepository,
-			FlightRepository flightRepository
+			FlightRepository flightRepository,
+			FlightBookingLinkRepository flightBookingLinkRepository
 	){
 		return args -> {
 			Object[][] data;
@@ -75,6 +78,19 @@ public class Team24Application {
 				BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
 				flightBooking.setBookingStatus(bs);
 				flightBooking = flightBookingRepository.save(flightBooking);
+
+				FlightBookingLink flightBookingLink= new FlightBookingLink();
+				flightBookingLink.setFlight(departFlight);
+				flightBookingLink.setFlightBooking(flightBooking);
+				flightBookingLink.setDepartFlight(true);
+				flightBookingLinkRepository.save(flightBookingLink);
+
+				flightBookingLink = new FlightBookingLink();
+				flightBookingLink.setFlight(returnFlight);
+				flightBookingLink.setFlightBooking(flightBooking);
+				flightBookingLink.setDepartFlight(false);
+				flightBookingLinkRepository.save(flightBookingLink);
+
 				System.out.println("Add FlightBooking");
 				System.out.println(flightBooking);
 			}

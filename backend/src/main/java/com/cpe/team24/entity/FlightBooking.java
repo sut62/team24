@@ -1,10 +1,12 @@
 package com.cpe.team24.entity;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.*;
 
+import com.cpe.team24.repository.FlightBookingLinkRepository;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -30,9 +32,12 @@ public class FlightBooking {
 
     private Integer returnSeatId; //
 
-    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
-    @JoinColumn(name = "FLIGHT_ID", nullable = false)
-    private Flight departFlight; //
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "flightBooking")
+    private Collection<FlightBookingLink> flightBookingLinks;
+
+//    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
+//    @JoinColumn(name = "FLIGHT_ID", nullable = false)
+//    private Flight departFlight; //
 
 //    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
 //    @JoinColumn(name = "FLIGHT_ID", nullable = true)
@@ -43,9 +48,7 @@ public class FlightBooking {
     private BookingStatus bookingStatus; //
 
     //Methods
-    public void book(Flight departFlight,Flight returnFlight,Integer departSeatId,Integer returnSeatId ){
-        this.departFlight = departFlight;
-//        this.returnFlight = returnFlight;
+    public void book(Flight departFlight,Flight returnFlight,Integer departSeatId,Integer returnSeatId){
         this.departSeatId = departSeatId;
         this.returnSeatId = returnSeatId;
         this.bookId = "BXXXXX"; // To do

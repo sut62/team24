@@ -2,7 +2,9 @@ package com.cpe.team24.controller;
 
 import com.cpe.team24.entity.Flight;
 import com.cpe.team24.entity.FlightBooking;
+import com.cpe.team24.entity.FlightBookingLink;
 import com.cpe.team24.model.BodyFlightBooking;
+import com.cpe.team24.repository.FlightBookingLinkRepository;
 import com.cpe.team24.repository.FlightBookingRepository;
 import com.cpe.team24.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,17 @@ public class FlightBookingController {
     @Autowired
     private FlightRepository flightRepository;
 
-    public FlightBookingController(FlightBookingRepository flightBookingRepository, FlightRepository flightRepository){
+    @Autowired
+    private FlightBookingLinkRepository flightBookingLinkRepository;
+
+    public FlightBookingController(
+        FlightBookingRepository flightBookingRepository,
+        FlightRepository flightRepository,
+        FlightBookingLinkRepository flightBookingLinkRepository
+    ){
         this.flightBookingRepository = flightBookingRepository;
         this.flightRepository = flightRepository;
+        this.flightBookingLinkRepository = flightBookingLinkRepository;
     }
 
     @GetMapping("/flight-booking")

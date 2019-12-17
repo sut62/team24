@@ -29,6 +29,10 @@ public class Flight {
     @Column(name="ARRIVE")
     private @NonNull Date arrive;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY)
+    private Collection<FlightBookingLink> flightBookingLinks;
+
     //Getter Setter
     public Double getPrice() {
         return price;
@@ -53,7 +57,6 @@ public class Flight {
     public void setArrive(Date arrive) {
         this.arrive = arrive;
     }
-
 //    @JsonIgnore
 //    @OneToMany(fetch = FetchType.EAGER)
 //    private Collection<FlightBooking> flightBookings;
