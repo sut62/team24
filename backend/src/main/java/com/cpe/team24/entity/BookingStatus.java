@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -14,16 +15,16 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class BookingStatus {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "BOOKING_STATUS_ID")
+    @SequenceGenerator(name="BOOKING_STATUS_SEQ",sequenceName="BOOKING_STATUS_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="BOOKING_STATUS_SEQ")
+    @Column(name = "BOOKING_STATUS_ID",unique = true, nullable = true)
     private @NonNull Integer id;
 
     private String name;
 
-//    @OneToMany(
-//        mappedBy = "bookingStatus",cascade = CascadeType.ALL,fetch = FetchType.LAZY
-//    )
-//    private Collection<FlightBooking> flightBookings;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER)
+    private Collection<FlightBooking> flightBookings;
 
     //getter setter
 

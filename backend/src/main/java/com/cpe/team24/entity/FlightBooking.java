@@ -8,16 +8,15 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Data
 @NoArgsConstructor
 public class FlightBooking {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "FLIGHT_BOOKING_ID")
+    @SequenceGenerator(name="FLIGHT_BOOKING_SEQ",sequenceName="FLIGHT_BOOKING_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FLIGHT_BOOKING_SEQ")
+    @Column(name = "FLIGHT_BOOKING_ID",unique = true,nullable = false)
     private @NonNull Integer id;
 
     @Column(nullable = false)
@@ -31,8 +30,8 @@ public class FlightBooking {
 
     private Integer returnSeatId; //
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOOKING_STATUS_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER,targetEntity = BookingStatus.class)
+    @JoinColumn(name = "BOOKING_STATUS_ID", nullable = false, insertable = true)
     private BookingStatus bookingStatus; //
 
     //Methods
