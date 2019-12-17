@@ -5,10 +5,7 @@ import com.cpe.team24.entity.Flight;
 import com.cpe.team24.entity.FlightBooking;
 import com.cpe.team24.entity.FlightBookingLink;
 import com.cpe.team24.model.BodyFlightBooking;
-import com.cpe.team24.repository.BookingStatusRepository;
-import com.cpe.team24.repository.FlightBookingLinkRepository;
-import com.cpe.team24.repository.FlightBookingRepository;
-import com.cpe.team24.repository.FlightRepository;
+import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,11 +26,15 @@ public class FlightBookingController {
     @Autowired
     private BookingStatusRepository bookingStatusRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
     public FlightBookingController(
         FlightBookingRepository flightBookingRepository,
         FlightRepository flightRepository,
         FlightBookingLinkRepository flightBookingLinkRepository,
-        BookingStatusRepository bookingStatusRepository
+        BookingStatusRepository bookingStatusRepository,
+        MemberRepository memberRepository
     ){}
 
     @GetMapping("/flight-booking")
@@ -47,6 +48,7 @@ public class FlightBookingController {
         Integer departSeatId = 1;
         Integer returnSeatId = 1;
         flightBooking.book(departSeatId,returnSeatId);
+        flightBooking.setMember(memberRepository.findById(bodyFlightBooking.getMemberId()).orElse(null));
         BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
         flightBooking.setBookingStatus(bs);
         flightBooking = flightBookingRepository.save(flightBooking);

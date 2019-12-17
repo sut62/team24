@@ -80,14 +80,16 @@ public class Team24Application {
 			}
 			//--------------Flight Booking-----------------
 			data = new Object[][] {
-					{2,1,1,1},
-					{1,2,2,2}
+					//departFlightId,returnFlightId,departSeatId,returnSeatId,MemberId
+					{2,1,1,1,1},
+					{1,2,2,2,1}
 			};
 			for (int i = 0; i < data.length; i++) {
 				FlightBooking flightBooking = new FlightBooking();
 				flightBooking.book((Integer) data[i][2],(Integer) data[i][3]);
 				BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
 				flightBooking.setBookingStatus(bs);
+				flightBooking.setMember(memberRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null));
 				flightBooking = flightBookingRepository.save(flightBooking);
 
 				// Add Depart's Flight and Return's Flight to TableLink
