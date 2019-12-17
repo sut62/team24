@@ -20,23 +20,22 @@ public class FlightController {
     @Autowired
     private FlightRepository flightRepository;
 
-    public FlightController(FlightRepository flightRepository){
-        this.flightRepository = flightRepository;
-    }
+    public FlightController(FlightRepository flightRepository){}
 
+    // For Book Flight - ToeiKanta had been creating.
     @GetMapping("/flight/{date}")
     public Collection<Flight> getFlightByDepartDate(@PathVariable String date) throws ParseException {
         Date departDayStart = new SimpleDateFormat("yyyy-MM-dd").parse(date);
         String dateEnd = getNextDate(date);
         Date departDayEnd = new SimpleDateFormat("yyyy-MM-dd").parse(dateEnd);
         Collection<Flight> result = flightRepository.findAllByDepartBetween(departDayStart,departDayEnd);
-//        System.out.println(departDayStart);
-//        System.out.println(departDayEnd);
-//        System.out.println(result);
+        //System.out.println(departDayStart);
+        //System.out.println(departDayEnd);
+        //System.out.println(result);
         return result;
     }
 
-    // This Function return Tomorrow's Date from Today's Date
+    // This Function return Tomorrow's Date from Today's Date - ToeiKanta had been creating.
     public String getNextDate(String curDate) throws ParseException {
         final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         final Date date = format.parse(curDate);

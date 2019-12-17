@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -35,15 +34,11 @@ public class FlightBookingController {
         FlightRepository flightRepository,
         FlightBookingLinkRepository flightBookingLinkRepository,
         BookingStatusRepository bookingStatusRepository
-    ){
-        this.flightBookingRepository = flightBookingRepository;
-        this.flightRepository = flightRepository;
-        this.flightBookingLinkRepository = flightBookingLinkRepository;
-    }
+    ){}
 
     @GetMapping("/flight-booking")
     public Collection<FlightBooking> getBooking() {
-        return flightBookingRepository.findAll().stream().collect(Collectors.toList());
+        return flightBookingRepository.findAll();
     }
 
     @PostMapping("/flight-booking/book")
