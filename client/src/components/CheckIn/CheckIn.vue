@@ -213,14 +213,14 @@
       <div class="card text-center card-button">
         <a
           href="#"
-          @click="()=>onShowConfimationPage(this)"
+          @click="()=>onShowConfirmationPage(this)"
           class="btn btn-danger text-white btn-lg"
           style="width:20% margin-left: 130px;"
         >Next</a>
       </div>
     </div>
 
-    <div v-if="confimation_page == true">
+    <div v-if="confirmation_page == true">
       <div class="step-style">
         <v-stepper :alt-labels="true">
           <v-stepper-header value="1">
@@ -272,12 +272,40 @@
       <div class="card text-center card-button">
         <a
           href="#"
-          @click="()=>onShowConfimationPage(this)"
+          @click="()=>onShowSaftyPage(this)"
           class="btn btn-danger text-white btn-lg"
           style="width:20% margin-left: 130px;"
         >Next</a>
       </div>
     </div>
+
+    <div v-if="safty_page == true">
+        <div class="step-style">
+        <v-stepper :alt-labels="true">
+          <v-stepper-header value="1">
+            <v-stepper-step complete step="1">Flight</v-stepper-step>
+
+            <v-divider></v-divider>
+
+            <v-stepper-step complete step="2">Adds-on</v-stepper-step>
+
+            <v-divider></v-divider>
+
+            <v-stepper-step complete step="3">Confimation</v-stepper-step>
+
+            <v-divider></v-divider>
+
+            <v-stepper-step complete editable step="4">Safty notice</v-stepper-step>
+            <v-divider></v-divider>
+            <v-stepper-step step="5">Print</v-stepper-step>
+          </v-stepper-header>
+        </v-stepper>
+      </div>
+    </div>
+
+
+
+
 
   </div>
 </template>
@@ -295,7 +323,8 @@ export default {
       checkin_page: true,
       fligth_page: false,
       addon_page: false,
-      confimation_page: false,
+      confirmation_page: false,
+      safty_page : false,
 
       extensionHeight: 100,
       reverse: true
@@ -317,9 +346,13 @@ export default {
       main.addon_page = !main.addon_page;
       main.fligth_page = !main.fligth_page;
     },
-    onShowConfimationPage(main) {
+    onShowConfirmationPage(main) {
       main.addon_page = !main.addon_page;
-      main.confimation_page = !main.confimation_page;
+      main.confirmation_page = !main.confirmation_page;
+    },
+    onShowSaftyPage(main) {
+      main.confirmation_page = !main.confirmation_page;
+      main.safty_page = !main.safty_page;
     }
   }
 };
