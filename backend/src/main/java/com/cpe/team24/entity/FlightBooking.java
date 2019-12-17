@@ -8,6 +8,7 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import net.bytebuddy.utility.RandomString;
 
 @Entity
 @Data
@@ -19,7 +20,7 @@ public class FlightBooking {
     @Column(name = "FLIGHT_BOOKING_ID",unique = true,nullable = false)
     private @NonNull Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String bookId;
 
     @Column(nullable = false)
@@ -44,9 +45,10 @@ public class FlightBooking {
     public void book(Integer departSeatId,Integer returnSeatId){
         this.departSeatId = departSeatId;
         this.returnSeatId = returnSeatId;
-        this.bookId = "BXXXXX"; // To do
+        this.bookId = RandomString.make(6).toUpperCase();
         this.date = new Date();
     }
+
     //Getter Setter
     public @NonNull Long getId(){
         return this.id;
@@ -81,5 +83,13 @@ public class FlightBooking {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 }
