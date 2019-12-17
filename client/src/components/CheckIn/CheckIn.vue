@@ -89,7 +89,7 @@
         <div class="mt-0 font-weight-medium text-size">กรุณาเลือกผู้โดยสารเพื่อทำการเช็คอิน</div>
         <div class="card text-center card-description">
           <div class="card-header text-left">รายละเอียด</div>
-          <div class="card-flight card-header text-center">
+          <div class="card card-flight card-header text-center">
             <v-row>
               <v-col cols="5">กรุงเทพ</v-col>
               <v-col cols="7">เชียงใหม่</v-col>
@@ -280,7 +280,7 @@
     </div>
 
     <div v-if="safty_page == true">
-        <div class="step-style">
+      <div class="step-style">
         <v-stepper :alt-labels="true">
           <v-stepper-header value="1">
             <v-stepper-step complete step="1">Flight</v-stepper-step>
@@ -301,12 +301,103 @@
           </v-stepper-header>
         </v-stepper>
       </div>
+
+      <div>
+        <v-card class="mx-auto mt-5" max-width="100%" height="600" outlined color="#ECEFF1">
+          <v-list-item three-line>
+            <v-list-item-content class="text-black">
+              <v-list-item-title class="headline mb-1">สินค้าอันตราย</v-list-item-title>
+              <v-list-item-subtitle>สินค้าอันตรายเป็นรายการหรือสารที่อาจเป็นอันตรายต่อความปลอดภัยของเครื่องบินหรือแขกบนเครื่องบิน โปรดตรวจสอบให้แน่ใจว่าคุณไม่ได้บรรจุสิ่งของที่ระบุไว้ในรายการนี้ในสัมภาระในห้องโดยสารหรือสัมภาระที่ลงทะเบียน</v-list-item-subtitle>
+              <v-list-item-title class="headline mb-1">รายการที่ต้องห้าม</v-list-item-title>
+              <v-container class="text-center break-word">
+                <v-row>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-corrosive_7.png" />
+                    <div>กัดกร่อน</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-gas_7.png" />
+                    <div>ก๊าซ</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-flammable-liquid-_131.png" />
+                    <div>ของเหลวไวไฟ</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-oxdysing-material_7.png" />
+                    <div>วัสดุออกซิไดซ์</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-organic-paroxides_7.png" />
+                    <div>สารอินทรีย์</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-toxic_7.png" />
+                    <div>สารพิษ</div>
+                  </v-img>
+                </v-row>
+                <v-row class="mt-10">
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-radioactive_7.png" />
+                    <div>กัมมันตรังสี</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-infection-subtances_7.png" />
+                    <div>สารติดเชื้อ</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-explosive_7.png" />
+                    <div>วัตถุระเบิด</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-dry-ice_7.png" />
+                    <div>น้ำมันเบนซิน</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-flammable-solids_7.png" />
+                    <div>กัดกร่อน</div>
+                  </v-img>
+                  <v-img>
+                    <img src="../../assets/safty/dg-icon-magnetic-material_7.png" />
+                    <div>วัสดุแม่เหล็ก</div>
+                  </v-img>
+                </v-row>
+              </v-container>
+              <br />
+              <p>สิ่งของต่อไปนี้เป็นสิ่งต้องห้ามในสัมภาระของคุณไม่ว่าจะมีการเช็คอินหรือไม่:</p>
+              <pre>
+ต้องห้าม	อาวุธปืนและกระสุน
+ต้องห้าม	วัตถุระเบิด, ก๊าซไวไฟหรือไม่ติดไฟ (เช่นสีสเปรย์, ก๊าซบิวเทน, เติมเบา)
+ต้องห้าม	ก๊าซแช่เย็น (เช่นถังบรรจุ aqualung, ไนโตรเจนเหลว)
+ต้องห้าม	ของเหลวไวไฟ (เช่นสี, ทินเนอร์, ตัวทำละลาย)
+ต้องห้าม	ของแข็งไวไฟ (เช่นไม้ขีดไฟ, ไฟแช็ค)
+ต้องห้าม	อินทรีย์เปอร์ออกไซด์ (เช่นเรซิน)
+ต้องห้าม	สารพิษ
+ต้องห้าม	สารติดเชื้อ (เช่นไวรัสแบคทีเรีย)
+ต้องห้าม	วัสดุกัมมันตรังสี (เช่นเรเดียม)
+ต้องห้าม	วัสดุที่มีฤทธิ์กัดกร่อน (เช่นกรด, ด่าง, ปรอท, เครื่องวัดอุณหภูมิ)
+ต้องห้าม	สารแม่เหล็ก, วัสดุออกซิไดซ์ (เช่นสารฟอกขาว)
+ต้องห้าม	อาวุธเช่นอาวุธปืนโบราณดาบมีดและสิ่งของที่คล้ายกันโดยมีเงื่อนไขว่าสิ่งของดังกล่าวอาจได้รับอนุญาตให้นำติดตัวขึ้นเครื่องได้ตามดุลยพินิจของเราด้วยเหตุผลพิเศษ
+            </pre>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+        <hr />
+        <v-checkbox
+          v-model="agree"
+          label="ข้าพเจ้าได้ศึกษาและยอมรับในข้อกำหนดเกี่ยวกับวัตถุต้องห้าม และขอยืนยันว่าไม่มีวัตถุอัตรายใด ๆ บรรจุในสัมภาระของข้าพเจ้า"
+          color="green"
+        ></v-checkbox>
+      </div>
+      <div class="card text-center card-button" >
+        <a
+          href="#"
+          @click="()=>onShowSaftyPage(this)"
+          class="btn btn-danger text-white btn-lg"
+          style="width:10px margin-left: 10px;"
+        >ยืนยัน</a>
+      </div>
     </div>
-
-
-
-
-
   </div>
 </template>
 
@@ -319,12 +410,13 @@ export default {
       select1: "",
       select2: "",
       items: ["กรุงเทพ", "ขอนแก่น", "ภูเก็ต", "เลย"],
+      agree: "Yes",
 
       checkin_page: true,
       fligth_page: false,
       addon_page: false,
       confirmation_page: false,
-      safty_page : false,
+      safty_page: false,
 
       extensionHeight: 100,
       reverse: true
