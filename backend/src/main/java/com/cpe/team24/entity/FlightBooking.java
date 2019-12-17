@@ -30,12 +30,22 @@ public class FlightBooking {
 
     private Integer returnSeatId; //
 
+    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
+    @JoinColumn(name = "FLIGHT_ID", nullable = false)
+    private Flight departFlight; //
+
+//    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
+//    @JoinColumn(name = "FLIGHT_ID", nullable = true)
+//    private Flight returnFlight; //
+
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = BookingStatus.class)
     @JoinColumn(name = "BOOKING_STATUS_ID", nullable = false, insertable = true)
     private BookingStatus bookingStatus; //
 
     //Methods
-    public void book(Integer departSeatId,Integer returnSeatId){
+    public void book(Flight departFlight,Flight returnFlight,Integer departSeatId,Integer returnSeatId ){
+        this.departFlight = departFlight;
+//        this.returnFlight = returnFlight;
         this.departSeatId = departSeatId;
         this.returnSeatId = returnSeatId;
         this.bookId = "BXXXXX"; // To do

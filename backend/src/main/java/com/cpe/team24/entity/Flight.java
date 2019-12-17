@@ -1,21 +1,12 @@
-package com.cpe.backend.entity;
+package com.cpe.team24.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
+import java.util.Collection;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
 
 @Data
 @Entity
@@ -37,6 +28,35 @@ public class Flight {
 
     @Column(name="ARRIVE")
     private @NonNull Date arrive;
+
+    //Getter Setter
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Date getDepart() {
+        return depart;
+    }
+
+    public void setDepart(Date depart) {
+        this.depart = depart;
+    }
+
+    public Date getArrive() {
+        return arrive;
+    }
+
+    public void setArrive(Date arrive) {
+        this.arrive = arrive;
+    }
+
+//    @JsonIgnore
+//    @OneToMany(fetch = FetchType.EAGER)
+//    private Collection<FlightBooking> flightBookings;
 
 //    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
 //    @JoinColumn(name = "AIRPORT_ID", insertable = true)

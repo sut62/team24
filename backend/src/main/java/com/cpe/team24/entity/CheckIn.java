@@ -27,16 +27,16 @@ public class CheckIn {
     @Id
     @SequenceGenerator(name = "CHECKIN_SEQ", sequenceName = "CHECKIN_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHECKIN_SEQ")
-    @Column(name = "CHECKIN_ID", unique = true, nullable = true)
-    private @NonNull Long id;
+    @Column(name = "CHECKIN_ID", unique = true, nullable = false)
+    private Long id;
 
-    @Column(name = "date")
-    private @NonNull String date;
+    @Column(name = "date",nullable = false)
+    private String date;
 
-    @Column(name = "bagWeigth")
-    private @NonNull float bagWeigth;
+    @Column(name = "bag_weigth",nullable = false)
+    private float bagWeigth;
 
-    @Column(name = "boardingPass")
-    private @NonNull float boardingPass;
+    @Column(name = "boarding_pass",nullable = false)
+    private  float boardingPass;
 
 }
