@@ -1,13 +1,7 @@
 package com.cpe.team24;
 
-import com.cpe.team24.entity.BookingStatus;
-import com.cpe.team24.entity.Flight;
-import com.cpe.team24.entity.FlightBooking;
-import com.cpe.team24.entity.FlightBookingLink;
-import com.cpe.team24.repository.BookingStatusRepository;
-import com.cpe.team24.repository.FlightBookingLinkRepository;
-import com.cpe.team24.repository.FlightBookingRepository;
-import com.cpe.team24.repository.FlightRepository;
+import com.cpe.team24.entity.*;
+import com.cpe.team24.repository.*;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,10 +27,28 @@ public class Team24Application {
 			FlightBookingRepository flightBookingRepository,
 			BookingStatusRepository bookingStatusRepository,
 			FlightRepository flightRepository,
-			FlightBookingLinkRepository flightBookingLinkRepository
+			FlightBookingLinkRepository flightBookingLinkRepository,
+			MemberRepository memberRepository
 	){
 		return args -> {
 			Object[][] data;
+			//------------Member-----------------
+			data = new Object[][] {
+					{"Alice","0882223331","Alick@mail.com","1234"},
+					{"Bob","0881112223","Bob@mail.com","1234"}
+			};
+			for (int i = 0; i < data.length; i++) {
+				Member member = new Member();
+				member.setName(data[i][0].toString());
+				member.setPhone(data[i][1].toString());
+				member.setEmail(data[i][2].toString());
+				member.setPassword(data[i][3].toString());
+				member.setRegDate(new Date());
+				member = memberRepository.save(member);
+				System.out.printf("\n------------Add Member%d--------------\n",i+1);
+				System.out.println(member);
+				System.out.println("-------------------------------------------");
+			}
 			//------------Flight-----------------
 			data = new Object[][] {
 					{1900},
@@ -48,8 +60,7 @@ public class Team24Application {
 				flight.setDepart(new Date());
 				flight.setArrive(new Date());
 				flight = flightRepository.save(flight);
-				System.out.println("");
-				System.out.println("------------Add Flight--------------");
+				System.out.printf("\n------------Add Flight%d--------------\n",i+1);
 				System.out.println(flight);
 				System.out.println("-------------------------------------------");
 			}
@@ -63,8 +74,7 @@ public class Team24Application {
 				BookingStatus bookingStatus = new BookingStatus();
 				bookingStatus.setName(data[i][0].toString());
 				bookingStatus = bookingStatusRepository.save(bookingStatus);
-				System.out.println("");
-				System.out.println("------------Add BookingStatus--------------");
+				System.out.printf("\n------------Add BookingStatus%d--------------\n",i+1);
 				System.out.println(bookingStatus);
 				System.out.println("-------------------------------------------");
 			}
@@ -96,8 +106,7 @@ public class Team24Application {
 				flightBookingLink.setDepartFlight(false);
 				flightBookingLinkRepository.save(flightBookingLink);
 
-				System.out.println("");
-				System.out.println("------------Add FlightBooking--------------");
+				System.out.printf("\n------------Add FlightBooking%d--------------\n",i+1);
 				System.out.println(flightBooking);
 				System.out.println("-------------------------------------------");
 			}
