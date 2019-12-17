@@ -50,20 +50,25 @@ public class Team24Application {
 				flight.setDepart(new Date());
 				flight.setArrive(new Date());
 				flight = flightRepository.save(flight);
-				System.out.println("Add Flight");
+				System.out.println("");
+				System.out.println("------------Add Flight--------------");
 				System.out.println(flight);
+				System.out.println("-------------------------------------------");
 			}
 			//------------Booking Status-----------------
 			data = new Object[][] {
 					{"ยังไม่ชำระ"},
-					{"ชำระแล้ว"}
+					{"ชำระแล้ว"},
+					{"เช็คอินแล้ว"}
 			};
 			for (int i = 0; i < data.length; i++) {
 				BookingStatus bookingStatus = new BookingStatus();
 				bookingStatus.setName(data[i][0].toString());
 				bookingStatus = bookingStatusRepository.save(bookingStatus);
-				System.out.println("Add BookingStatus");
+				System.out.println("");
+				System.out.println("------------Add BookingStatus--------------");
 				System.out.println(bookingStatus);
+				System.out.println("-------------------------------------------");
 			}
 			//--------------Flight Booking-----------------
 			data = new Object[][] {
@@ -72,12 +77,14 @@ public class Team24Application {
 			};
 			for (int i = 0; i < data.length; i++) {
 				FlightBooking flightBooking = new FlightBooking();
-				Flight departFlight = flightRepository.findById(Long.parseLong(data[i][0].toString())).orElse(null);
-				Flight returnFlight = flightRepository.findById(Long.parseLong(data[i][1].toString())).orElse(null);
-				flightBooking.book(departFlight,returnFlight,(Integer) data[i][2],(Integer) data[i][3]);
+				flightBooking.book((Integer) data[i][2],(Integer) data[i][3]);
 				BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
 				flightBooking.setBookingStatus(bs);
 				flightBooking = flightBookingRepository.save(flightBooking);
+
+				// Add Depart's Flight and Return's Flight to TableLink
+				Flight departFlight = flightRepository.findById(Long.parseLong(data[i][0].toString())).orElse(null);
+				Flight returnFlight = flightRepository.findById(Long.parseLong(data[i][1].toString())).orElse(null);
 
 				FlightBookingLink flightBookingLink= new FlightBookingLink();
 				flightBookingLink.setFlight(departFlight);
@@ -91,11 +98,14 @@ public class Team24Application {
 				flightBookingLink.setDepartFlight(false);
 				flightBookingLinkRepository.save(flightBookingLink);
 
-				System.out.println("Add FlightBooking");
+				System.out.println("");
+				System.out.println("------------Add FlightBooking--------------");
 				System.out.println(flightBooking);
+				System.out.println("-------------------------------------------");
 			}
 		};
 	}
+
 	// Fix the CORS errors
 	@Bean
 	public FilterRegistrationBean simpleCorsFilter() {

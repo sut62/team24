@@ -3,10 +3,10 @@
 # http://localhost:9000/h2-console ->  JDBC URL ใส่ค่าเป็น jdbc:h2:mem:testdb
 spring:
   jpa:
-    show-sql: true
+    show-sql: false
   h2:
     console:
-      enabled: true
+      enabled: false
 
 server:
   port: 9000

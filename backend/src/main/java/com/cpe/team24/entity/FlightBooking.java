@@ -1,12 +1,10 @@
 package com.cpe.team24.entity;
 
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.*;
 
-import com.cpe.team24.repository.FlightBookingLinkRepository;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -19,7 +17,7 @@ public class FlightBooking {
     @SequenceGenerator(name="FLIGHT_BOOKING_SEQ",sequenceName="FLIGHT_BOOKING_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FLIGHT_BOOKING_SEQ")
     @Column(name = "FLIGHT_BOOKING_ID",unique = true,nullable = false)
-    private @NonNull Integer id;
+    private @NonNull Long id;
 
     @Column(nullable = false)
     private String bookId;
@@ -32,7 +30,7 @@ public class FlightBooking {
 
     private Integer returnSeatId; //
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "flightBooking")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "flightBooking")
     private Collection<FlightBookingLink> flightBookingLinks;
 
 //    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
@@ -48,13 +46,16 @@ public class FlightBooking {
     private BookingStatus bookingStatus; //
 
     //Methods
-    public void book(Flight departFlight,Flight returnFlight,Integer departSeatId,Integer returnSeatId){
+    public void book(Integer departSeatId,Integer returnSeatId){
         this.departSeatId = departSeatId;
         this.returnSeatId = returnSeatId;
         this.bookId = "BXXXXX"; // To do
         this.date = new Date();
     }
     //Getter Setter
+    public @NonNull Long getId(){
+        return this.id;
+    }
     public Integer getDepartSeatId() {
         return departSeatId;
     }
