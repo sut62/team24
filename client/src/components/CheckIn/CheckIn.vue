@@ -221,44 +221,63 @@
     </div>
 
     <div v-if="confimation_page == true">
-        <div class="step-style">
-          <v-stepper :alt-labels="true">
-            <v-stepper-header value="1">
-              <v-stepper-step complete step="1">Flight</v-stepper-step>
+      <div class="step-style">
+        <v-stepper :alt-labels="true">
+          <v-stepper-header value="1">
+            <v-stepper-step complete step="1">Flight</v-stepper-step>
 
-              <v-divider></v-divider>
+            <v-divider></v-divider>
 
-              <v-stepper-step complete step="2">Adds-on</v-stepper-step>
+            <v-stepper-step complete step="2">Adds-on</v-stepper-step>
 
-              <v-divider></v-divider>
+            <v-divider></v-divider>
 
-              <v-stepper-step complete editable step="3">Confimation</v-stepper-step>
+            <v-stepper-step complete editable step="3">Confimation</v-stepper-step>
 
-              <v-divider></v-divider>
+            <v-divider></v-divider>
 
-              <v-stepper-step step="4">Safty notice</v-stepper-step>
-              <v-divider></v-divider>
-              <v-stepper-step step="5">Print</v-stepper-step>
-            </v-stepper-header>
-          </v-stepper>
-        </div>
+            <v-stepper-step step="4">Safty notice</v-stepper-step>
+            <v-divider></v-divider>
+            <v-stepper-step step="5">Print</v-stepper-step>
+          </v-stepper-header>
+        </v-stepper>
+      </div>
 
-       
-        <div>
-          <div class="mt-3 font-weight-medium topic-size">Confimation</div>
-           <div class="text-black">กรุณาเลือก 'continue' เพื่อทำการเช็คอิน</div>
-        </div>
-        <div class="card text-leftfont-weight-medium card-description">
-          <div class="card-header text-left">Gusest(s) are now ready to check-in</div>
-          
-        </div>
-        
-      
-      
+      <div>
+        <div class="mt-3 font-weight-medium topic-size">Confimation</div>
+        <div class="text-black">กรุณาเลือก 'continue' เพื่อทำการเช็คอิน</div>
+      </div>
+      <div class="card text-leftfont-weight-medium card-confimation">
+        <div class="card-header text-left">Gusest(s) are now ready to check-in</div>
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="mb-1 mr-1">
+              <v-icon large color="black">mdi-check-bold</v-icon>นายเปี่ยมพูล พูลเปี่ยม
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+      <div class="card text-leftfont-weight-medium card-confimation">
+        <div class="card-header text-left">พิมพ์บอร์ดดิ้งพาสเอง</div>
+        <div class="text-left ml-4">คุณสามารถบันทึกเพื่อสั่งพิมพ์ภายหลังได้</div>
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="mb-1">
+              <v-icon large color="black">mdi-email-newsletter</v-icon>รับบัตรขึ้นเครื่องบอร์ดดิ้งพาสทาง E-mail
+            </v-list-item-title>
+            <v-text-field outlined label="E-mail" filled style="width: 50%;"></v-text-field>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+      <div class="card text-center card-button">
+        <a
+          href="#"
+          @click="()=>onShowConfimationPage(this)"
+          class="btn btn-danger text-white btn-lg"
+          style="width:20% margin-left: 130px;"
+        >Next</a>
+      </div>
     </div>
-
-
-
 
   </div>
 </template>
@@ -347,5 +366,11 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: #e0f2f1;
+}
+.card-confimation {
+  height: 200px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>
