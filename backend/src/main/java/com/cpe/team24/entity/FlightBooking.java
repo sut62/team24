@@ -1,6 +1,6 @@
 package com.cpe.team24.entity;
 
-import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -8,19 +8,19 @@ import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
+import net.bytebuddy.utility.RandomString;
 
 @Entity
 @Data
 @NoArgsConstructor
 public class FlightBooking {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "FLIGHT_BOOKING_ID")
-    private @NonNull Integer id;
+    @SequenceGenerator(name="FLIGHT_BOOKING_SEQ",sequenceName="FLIGHT_BOOKING_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FLIGHT_BOOKING_SEQ")
+    @Column(name = "FLIGHT_BOOKING_ID",unique = true,nullable = false)
+    private @NonNull Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String bookId;
 
     @Column(nullable = false)
@@ -31,18 +31,28 @@ public class FlightBooking {
 
     private Integer returnSeatId; //
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOOKING_STATUS_ID", nullable = false)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "flightBooking")
+    private Collection<FlightBookingLink> flightBookingLinks;
+
+    @ManyToOne(fetch = FetchType.EAGER,targetEntity = BookingStatus.class)
+    @JoinColumn(name = "BOOKING_STATUS_ID", nullable = false, insertable = true)
     private BookingStatus bookingStatus; //
+
+    @ManyToOne
+    private Member member; //
 
     //Methods
     public void book(Integer departSeatId,Integer returnSeatId){
         this.departSeatId = departSeatId;
         this.returnSeatId = returnSeatId;
-        this.bookId = "BXXXXX"; // To do
+        this.bookId = RandomString.make(6).toUpperCase();
         this.date = new Date();
     }
+
     //Getter Setter
+    public @NonNull Long getId(){
+        return this.id;
+    }
     public Integer getDepartSeatId() {
         return departSeatId;
     }
@@ -65,5 +75,21 @@ public class FlightBooking {
 
     public void setBookingStatus(BookingStatus bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 }
