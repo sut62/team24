@@ -1,5 +1,6 @@
 package com.cpe.team24.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -24,8 +25,15 @@ public class Member {
     private @NumberFormat String phone;
 
     private String email;
+
+    @JsonIgnore
     private String password;
+
+    @JsonIgnore
     private Date regDate;
+
+//    @OneToMany(mappedBy = "member")
+//    private Collection<FlightBooking> flightBookings;
 
     // Getter Setter
 

@@ -30,20 +30,15 @@ public class FlightBooking {
 
     private Integer returnSeatId; //
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "flightBooking")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "flightBooking")
     private Collection<FlightBookingLink> flightBookingLinks;
-
-//    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
-//    @JoinColumn(name = "FLIGHT_ID", nullable = false)
-//    private Flight departFlight; //
-
-//    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
-//    @JoinColumn(name = "FLIGHT_ID", nullable = true)
-//    private Flight returnFlight; //
 
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = BookingStatus.class)
     @JoinColumn(name = "BOOKING_STATUS_ID", nullable = false, insertable = true)
     private BookingStatus bookingStatus; //
+
+    @ManyToOne
+    private Member member; //
 
     //Methods
     public void book(Integer departSeatId,Integer returnSeatId){
@@ -78,5 +73,13 @@ public class FlightBooking {
 
     public void setBookingStatus(BookingStatus bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 }
