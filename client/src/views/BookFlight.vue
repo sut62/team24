@@ -1,25 +1,27 @@
 <template>
   <div class="bookFlight">
-    <UserNavbar/>
     <div class="header-bg"></div>
-    <div class=" container" style="margin-top:100px;">
-      <div class="mx-auto">
-        <div class="my-content">
-          <div class="text-white" style="width: 400px;">
-            <div class="topic">
-              <h1 class="mt-5 topic">เริ่มทริปของคุณที่นี่</h1>
+    <div class="content">
+      <UserNavbar/>
+      <div class="container" style="margin-top:100px;">
+        <div class="mx-auto">
+          <div>
+            <div class="text-white">
+              <div >
+                <h1 class="mt-5">เริ่มทริปของคุณที่นี่</h1>
+              </div>
             </div>
+            <Search/>
           </div>
-          <Search/>
+          <BookNav/>
+          <FlightList topic="ขาไป ขอนแก่น ถึง กรุงเทพฯ" :flights = "flightDepart"/>
+          <FlightList topic="ขากลับ กรุงเทพฯ ถึง ขอนแก่น" :flights = "flightReturn"/>
         </div>
-        <BookNav/>
-        <FlightList/>
-        <FlightList/>
       </div>
+      <br>
+      <UserFooter style="padding-bottom: 100px;"/>
+      <CartFooter/>
     </div>
-    <br>
-    <UserFooter style="padding-bottom: 100px;"/>
-    <CartFooter/>
   </div>
 </template>
 
@@ -31,7 +33,7 @@ import UserFooter from '../components/UserFooter'
 import BookNav from '../components/BookFlight/BookNav'
 import FlightList from '../components/BookFlight/FlightList/FlightList'
 import CartFooter from '../components/BookFlight/CartFooter'
-import {mapActions} from 'vuex'
+import {mapActions,mapState} from 'vuex'
 
 export default {
   name: 'boookFlight',
@@ -46,6 +48,12 @@ export default {
     FlightList,
     CartFooter
   },
+  computed: {
+    ...mapState({
+      flightDepart: state => state.BookFlight.result.flightDepart,
+      flightReturn: state => state.BookFlight.result.flightReturn
+    })
+  },
   methods: {
     ...mapActions({
       bookFlight: 'BookFlight/book'
@@ -58,6 +66,8 @@ export default {
   .header-bg{
     height: 300px;
     width: 100%;
+    position: absolute;
+    top: 1px;
     background-size: cover;
     /* background-color: rgb(8, 2, 43); */
     background-image: url("../assets/head-bg.jpg");
@@ -65,11 +75,14 @@ export default {
   .container{
     padding-left: 100px;
   }
+  .content{
+    z-index: 1;
+    position: relative;
+  }
   .my-right{
     position: absolute;
     right: 1px;
   }
-  
   .my-content{
     position: absolute;
     top: 150px;

@@ -1,8 +1,12 @@
 import axios from 'axios'
 
 let axiosInstance = axios.create({
-  baseURL: '/api',
-  timeout: 120000
+  baseURL: 'http://localhost:9000/api',
+  timeout: 120000,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    "Content-type": "application/json",
+  }
 })
 
 axiosInstance.interceptors.request.use(function (config) {
@@ -27,10 +31,10 @@ class HttpRequest {
     this.axios = axios
   }
 
-  setHeader (header) {
-    axiosInstance.defaults.headers.common[header.key] = header.value
-    axiosInstance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-  }
+  // setHeader (header) {
+  //   axiosInstance.defaults.headers.common[header.key] = header.value
+  //   axiosInstance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+  // }
 
   fetch (methodName, data) {
     return axiosInstance.get(methodName, {

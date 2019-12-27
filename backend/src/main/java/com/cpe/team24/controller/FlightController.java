@@ -3,10 +3,7 @@ package com.cpe.team24.controller;
 import com.cpe.team24.entity.Flight;
 import com.cpe.team24.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +13,7 @@ import java.util.Date;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping(path="/api/flight")
 public class FlightController {
     @Autowired
     private FlightRepository flightRepository;
@@ -23,7 +21,7 @@ public class FlightController {
     public FlightController(FlightRepository flightRepository){}
 
     // For Book Flight - ToeiKanta had been creating.
-    @GetMapping("/flight/{date}")
+    @GetMapping("/{date}")
     public Collection<Flight> getFlightByDepartDate(@PathVariable String date) throws ParseException {
         Date departDayStart = new SimpleDateFormat("yyyy-MM-dd").parse(date);
         String dateEnd = getNextDate(date);
