@@ -14,8 +14,8 @@
             <Search/>
           </div>
           <BookNav/>
-          <FlightList topic="ขาไป ขอนแก่น ถึง กรุงเทพฯ" :flights = "flightDepart"/>
-          <FlightList topic="ขากลับ กรุงเทพฯ ถึง ขอนแก่น" :flights = "flightReturn"/>
+          <FlightList :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" topic="ขาไป ขอนแก่น ถึง กรุงเทพฯ" :flights = "flightDepart"/>
+          <FlightList :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" topic="ขากลับ กรุงเทพฯ ถึง ขอนแก่น" :flights = "flightReturn"/>
         </div>
       </div>
       <br>
@@ -33,13 +33,10 @@ import UserFooter from '../components/UserFooter'
 import BookNav from '../components/BookFlight/BookNav'
 import FlightList from '../components/BookFlight/FlightList/FlightList'
 import CartFooter from '../components/BookFlight/CartFooter'
-import {mapActions,mapState} from 'vuex'
+import {mapMutations,mapActions,mapState} from 'vuex'
 
 export default {
   name: 'boookFlight',
-  data: ()=>({
-    
-  }),
   components: {
     Search,
     UserNavbar,
@@ -51,10 +48,16 @@ export default {
   computed: {
     ...mapState({
       flightDepart: state => state.BookFlight.result.flightDepart,
-      flightReturn: state => state.BookFlight.result.flightReturn
+      flightReturn: state => state.BookFlight.result.flightReturn,
+      selectedDepartFlight: state => state.BookFlight.data.flightDepart,
+      selectedReturnFlight: state => state.BookFlight.data.flightReturn,
     })
   },
   methods: {
+    ...mapMutations({
+      selectDepartFlight: 'BookFlight/selectDepartFlight',
+      selectReturnFlight: 'BookFlight/selectReturnFlight'
+    }),
     ...mapActions({
       bookFlight: 'BookFlight/book'
     })

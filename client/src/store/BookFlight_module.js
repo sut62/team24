@@ -13,9 +13,8 @@ const bookFlight = {
       flightReturn: null
     },
     data:{
-      flightDepartId: -1,
-      flightReturnId: -1,
-      totalPrice: 0,
+      flightDepart: null,
+      flightReturn: null,
     }
   },
   mutations: {
@@ -46,11 +45,11 @@ const bookFlight = {
       state.pageLocation = 2
     },
     // Selection method
-    selectFlightDepartId(state,id){
-      state.data.flightDepartId = id
+    selectDepartFlight(state,data){
+      state.data.flightDepart = data
     },
-    selectFlightReturnId(state,id){
-      state.data.flightReturnId = id
+    selectReturnFlight(state,data){
+      state.data.flightReturn = data
     }
   },
   actions: {
@@ -74,8 +73,15 @@ const bookFlight = {
     }
   },
   getters: {
-    getFlightDepart: state => {
-      return state.flightDepart;
+    getTotalPrice: state => {
+      let sum = 0;
+      if(state.data.flightDepart){
+        sum += state.data.flightDepart.price;
+      }
+      if(state.data.flightReturn){
+        sum += state.data.flightDepart.price;
+      }
+      return sum;
     }
   }
 }
