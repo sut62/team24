@@ -7,7 +7,7 @@
           <v-divider></v-divider>
           <v-stepper-step :complete="pageLocation>=2" step="2">เลือกเที่ยวบิน</v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step :complete="pageLocation>=3" step="3">บริการเสริมพิเศษ</v-stepper-step>
+          <v-stepper-step :complete="pageLocation>=3" step="3">ข้อมูลผู้โดยสาร</v-stepper-step>
           <v-divider></v-divider>
           <v-stepper-step :complete="pageLocation>=4" step="4">ชำระเงิน</v-stepper-step>
         </v-stepper-header>
