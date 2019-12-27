@@ -5,11 +5,11 @@
       </v-col>
       <v-col>
         <div class="mt-3">
-          <i class="fas fa-shopping-cart fa-2x" ></i> <span class="h4 ml-3">ราคารวม </span><span class="h1"> 1,010 THB</span>
+          <i class="fas fa-shopping-cart fa-2x" ></i> <span class="h4 ml-3">ราคารวม </span><span class="h1"> {{getTotalPrice}} THB</span>
         </div>
       </v-col>
       <v-col cols="2">
-        <div class="btn btn-danger btn-block btn-lg pt-4" style="height:100%;">
+        <div @click="bookFlight" class="btn btn-danger btn-block btn-lg pt-4" style="height:100%;">
           ดำเนินการต่อ
         </div>
       </v-col>
@@ -21,8 +21,15 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex'
 export default {
-  name: "cartFooter"
+  name: "cartFooter",
+  computed: mapGetters({
+    getTotalPrice: 'BookFlight/getTotalPrice'
+  }),
+  methods: mapActions({
+    bookFlight: 'BookFlight/bookFlight'
+  })
 }
 </script>
 

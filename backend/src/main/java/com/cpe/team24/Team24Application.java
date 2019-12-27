@@ -51,14 +51,23 @@ public class Team24Application {
 			}
 			//------------Flight-----------------
 			data = new Object[][] {
-					{1900},
-					{1800}
+					// price , depart(days), flight duration(minute)
+					// 0 is today , 1 tomorrow , 2 next 2 day
+					{1900,0,30},
+					{1800,0,40},
+					{2000,1,75},
+					{2400,1,55},
 			};
 			for (int i = 0; i < data.length; i++) {
 				Flight flight = new Flight();
 				flight.setPrice(Double.parseDouble(data[i][0].toString()));
-				flight.setDepart(new Date());
-				flight.setArrive(new Date());
+
+				//date create
+				Date depart = new Date(new Date().getTime() + ((1000 * 60 * 60 * 24)*Integer.parseInt(data[i][1].toString())));
+				Date arrive = new Date(depart.getTime() + (1000 * 60 )*Integer.parseInt(data[i][2].toString()));
+				//
+				flight.setDepart(depart);
+				flight.setArrive(arrive);
 				flight = flightRepository.save(flight);
 				System.out.printf("\n------------Add Flight%d--------------\n",i+1);
 				System.out.println(flight);

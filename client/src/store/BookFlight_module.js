@@ -13,9 +13,8 @@ const bookFlight = {
       flightReturn: null
     },
     data:{
-      flightDepartId: -1,
-      flightReturnId: -1,
-      totalPrice: 0,
+      flightDepart: null,
+      flightReturn: null,
     }
   },
   mutations: {
@@ -23,6 +22,7 @@ const bookFlight = {
     BOOK_SUCCESS (state, result){
       state.bookLoading = false
       state.result.bookResult = result
+      state.pageLocation = 4
     },
     BOOK_PENDING (state){
       state.bookLoading = true
@@ -46,17 +46,22 @@ const bookFlight = {
       state.pageLocation = 2
     },
     // Selection method
-    selectFlightDepartId(state,id){
-      state.data.flightDepartId = id
+    selectDepartFlight(state,data){
+      state.data.flightDepart = data
     },
-    selectFlightReturnId(state,id){
-      state.data.flightReturnId = id
+    selectReturnFlight(state,data){
+      state.data.flightReturn = data
     }
   },
   actions: {
     // For book flight
-    async bookFlight ({commit},data){
+    async bookFlight ({commit,state}){
       await commit('BOOK_PENDING')
+      let data = {
+        "departFlightId": state.data.flightDepart.id,
+        "returnFlightId": state.data.flightReturn.id,
+        "memberId":2 // to do
+      }
       let result = await BookFlightService.bookFlight(data)
       await commit('BOOK_SUCCESS',result.data)
     },
@@ -74,8 +79,15 @@ const bookFlight = {
     }
   },
   getters: {
-    getFlightDepart: state => {
-      return state.flightDepart;
+    getTotalPrice: state => {
+      let sum = 0;
+      if(state.data.flightDepart){
+        sum += state.data.flightDepart.price;
+      }
+      if(state.data.flightReturn){
+        sum += state.data.flightDepart.price;
+      }
+      return sum;
     }
   }
 }
