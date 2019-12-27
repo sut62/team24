@@ -13,6 +13,7 @@ import java.util.Collection;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping(path="/api/flight-booking")
 public class FlightBookingController {
     @Autowired
     private FlightBookingRepository flightBookingRepository;
@@ -37,12 +38,12 @@ public class FlightBookingController {
         MemberRepository memberRepository
     ){}
 
-    @GetMapping("/flight-booking")
+    @GetMapping("")
     public Collection<FlightBooking> getBooking() {
         return flightBookingRepository.findAll();
     }
 
-    @PostMapping("/flight-booking/book")
+    @PostMapping("/book")
     public FlightBooking book(@RequestBody BodyFlightBooking bodyFlightBooking) {
         FlightBooking flightBooking = new FlightBooking();
         Integer departSeatId = 1;
