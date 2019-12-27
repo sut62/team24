@@ -35,7 +35,7 @@
             <v-date-picker v-if="showDatePick" style="z-index:1;" class="date-picker" v-model="dates" range></v-date-picker>
           </v-col>
           <v-col cols="4">
-            <a href="#" class="btn btn-danger text-white btn-lg" style="width:100%;">ค้นหา</a>
+            <div class="btn btn-danger text-white btn-lg" style="width:100%;" @click="getFlight">ค้นหา</div>
           </v-col>
         </v-row>
       </div>
@@ -46,26 +46,38 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+
 export default {
 
   name: 'search',
 
   data: () => ({
     showDatePick: false,
-    dates: ['2019-09-10', '2019-09-20'],
+    dates: ['2019-12-27', '2019-12-27'],
     select: 'Programming',
     items: [
       'กรุงเทพ',
       'ขอนแก่น',
       'ภูเก็ต',
       'เลย',
-    ],
+    ]
   }),
+  methods:{
+    ...mapActions({
+      getFlightDepart: 'BookFlight/getFlightDepart',
+      getFlightReturn: 'BookFlight/getFlightReturn'
+    }),
+    getFlight(){
+      this.getFlightDepart(this.dates[0])
+      this.getFlightReturn(this.dates[1])
+    }
+  },
   computed: {
     dateRangeText () {
-      return this.dates.join(' ~ ')
+      return 'Depart: ' + this.dates.join(' Return: ')
     },
-  },
+  }
 };
 </script>
 

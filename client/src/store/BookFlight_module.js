@@ -35,6 +35,7 @@ const bookFlight = {
     FLIGHT_DEPART_LOADING_SUCCESS(state,result){
       state.flightDepartLoading = false
       state.result.flightDepart = result
+      state.pageLocation = 2
     },
     FLIGHT_RETURN_LOADING(state){
       state.flightReturnLoading = true
@@ -42,6 +43,7 @@ const bookFlight = {
     FLIGHT_RETURN_LOADING_SUCCESS(state,result){
       state.flightReturnLoading = false
       state.result.flightReturn = result
+      state.pageLocation = 2
     },
     // Selection method
     selectFlightDepartId(state,id){
@@ -56,23 +58,25 @@ const bookFlight = {
     async bookFlight ({commit},data){
       await commit('BOOK_PENDING')
       let result = await BookFlightService.bookFlight(data)
-      await commit('BOOK_SUCCESS',result)
+      await commit('BOOK_SUCCESS',result.data)
     },
     // Get flight departure by date
     async getFlightDepart({commit},date){
       await commit('FLIGHT_DEPART_LOADING')
       let result = await BookFlightService.getFlight(date);
-      await commit('FLIGHT_DEPART_LOADING_SUCCESS',result)
+      await commit('FLIGHT_DEPART_LOADING_SUCCESS',result.data)
     },
     // Get flight return by date
     async getFlightReturn({commit},date){
       await commit('FLIGHT_RETURN_LOADING')
       let result = await BookFlightService.getFlight(date);
-      await commit('FLIGHT_RETURN_LOADING_SUCCESS',result)
+      await commit('FLIGHT_RETURN_LOADING_SUCCESS',result.data)
     }
   },
   getters: {
-    
+    getFlightDepart: state => {
+      return state.flightDepart;
+    }
   }
 }
 

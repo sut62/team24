@@ -8,8 +8,8 @@ class BookFlightProvider extends HttpRequest {
   bookFlight (data) {
     return this.create( this.baseUrl + '/book', data)
   }
-  getFlight (data) {
-    return this.fetch( this.baseUrl + '/flight/' + data)
+  getFlight (date) {
+    return this.fetch('/flight/' + date)
   }
 }
 

@@ -1,8 +1,12 @@
 import axios from 'axios'
 
 let axiosInstance = axios.create({
-  baseURL: 'localhost:9000/api',
-  timeout: 120000
+  baseURL: 'http://localhost:9000/api',
+  timeout: 120000,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    "Content-type": "application/json",
+  }
 })
 
 axiosInstance.interceptors.request.use(function (config) {
