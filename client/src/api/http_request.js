@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 let axiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: 'localhost:9000/api',
   timeout: 120000
 })
 
@@ -27,10 +27,10 @@ class HttpRequest {
     this.axios = axios
   }
 
-  setHeader (header) {
-    axiosInstance.defaults.headers.common[header.key] = header.value
-    axiosInstance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-  }
+  // setHeader (header) {
+  //   axiosInstance.defaults.headers.common[header.key] = header.value
+  //   axiosInstance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+  // }
 
   fetch (methodName, data) {
     return axiosInstance.get(methodName, {
