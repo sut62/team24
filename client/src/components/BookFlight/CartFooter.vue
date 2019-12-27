@@ -9,7 +9,7 @@
         </div>
       </v-col>
       <v-col cols="2">
-        <div class="btn btn-danger btn-block btn-lg pt-4" style="height:100%;">
+        <div @click="bookFlight" class="btn btn-danger btn-block btn-lg pt-4" style="height:100%;">
           ดำเนินการต่อ
         </div>
       </v-col>
@@ -21,11 +21,14 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 export default {
   name: "cartFooter",
   computed: mapGetters({
     getTotalPrice: 'BookFlight/getTotalPrice'
+  }),
+  methods: mapActions({
+    bookFlight: 'BookFlight/bookFlight'
   })
 }
 </script>

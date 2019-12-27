@@ -8,7 +8,7 @@
           <v-col cols="2">
             <div class="center" style="width:90px;position: absolute;right:1px;">
               <h3>{{flight.depart | formatTime}}</h3>
-              <div>
+              <div style="color:red">
                 {{duration}}
                 <!-- 1 ชม. 15 นาที -->
               </div>
@@ -20,7 +20,7 @@
           <v-col cols="2">
             <div class="center" style="width:90px;">
               <h3>{{flight.arrive | formatTime}}</h3>
-              <div>
+              <div style="color:">
                 บินตรง
               </div>
             </div>
@@ -71,5 +71,4 @@ export default {
 </script>
 
 <style>
-
 </style>

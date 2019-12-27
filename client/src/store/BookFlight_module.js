@@ -22,6 +22,7 @@ const bookFlight = {
     BOOK_SUCCESS (state, result){
       state.bookLoading = false
       state.result.bookResult = result
+      state.pageLocation = 4
     },
     BOOK_PENDING (state){
       state.bookLoading = true
@@ -54,8 +55,13 @@ const bookFlight = {
   },
   actions: {
     // For book flight
-    async bookFlight ({commit},data){
+    async bookFlight ({commit,state}){
       await commit('BOOK_PENDING')
+      let data = {
+        "departFlightId": state.data.flightDepart.id,
+        "returnFlightId": state.data.flightReturn.id,
+        "memberId":2 // to do
+      }
       let result = await BookFlightService.bookFlight(data)
       await commit('BOOK_SUCCESS',result.data)
     },
