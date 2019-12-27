@@ -22,7 +22,6 @@ const bookFlight = {
     BOOK_SUCCESS (state, result){
       state.bookLoading = false
       state.result.bookResult = result
-      state.pageLocation = 4
     },
     BOOK_PENDING (state){
       state.bookLoading = true
@@ -51,6 +50,9 @@ const bookFlight = {
     },
     selectReturnFlight(state,data){
       state.data.flightReturn = data
+    },
+    nextPage(state){
+      state.pageLocation += 1;
     }
   },
   actions: {

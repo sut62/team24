@@ -14,8 +14,23 @@
             <Search/>
           </div>
           <BookNav/>
-          <FlightList :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" topic="ขาไป ขอนแก่น ถึง กรุงเทพฯ" :flights = "flightDepart"/>
-          <FlightList :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" topic="ขากลับ กรุงเทพฯ ถึง ขอนแก่น" :flights = "flightReturn"/>
+          <!-- หน้าแรก -->
+          <div v-if="pageLocation == 1">
+            <v-card class="text-center mt-4 py-12">
+              <p style="color:grey">
+                กรุณาเลือกวันที่ออกเดินทาง
+              </p>
+            </v-card>
+          </div>
+          <!-- แสดงรายการบิน -->
+          <div v-if="pageLocation == 2">
+            <FlightList :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" topic="ขาไป ขอนแก่น ถึง กรุงเทพฯ" :flights = "flightDepart"/>
+            <FlightList :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" topic="ขากลับ กรุงเทพฯ ถึง ขอนแก่น" :flights = "flightReturn"/>
+          </div>
+          <!-- ข้อมูลผู้โดยสาร -->
+          <div v-if="pageLocation == 3">
+            <GuestDetail/>
+          </div>
         </div>
       </div>
       <br>
@@ -33,6 +48,7 @@ import UserFooter from '../components/UserFooter'
 import BookNav from '../components/BookFlight/BookNav'
 import FlightList from '../components/BookFlight/FlightList/FlightList'
 import CartFooter from '../components/BookFlight/CartFooter'
+import GuestDetail from '../components/BookFlight/GuestDetail'
 import {mapMutations,mapActions,mapState} from 'vuex'
 
 export default {
@@ -43,10 +59,12 @@ export default {
     UserFooter,
     BookNav,
     FlightList,
-    CartFooter
+    CartFooter,
+    GuestDetail
   },
   computed: {
     ...mapState({
+      pageLocation: state => state.BookFlight.pageLocation,
       flightDepart: state => state.BookFlight.result.flightDepart,
       flightReturn: state => state.BookFlight.result.flightReturn,
       selectedDepartFlight: state => state.BookFlight.data.flightDepart,
@@ -74,9 +92,6 @@ export default {
     background-size: cover;
     /* background-color: rgb(8, 2, 43); */
     background-image: url("../assets/head-bg.jpg");
-  }
-  .container{
-    padding-left: 100px;
   }
   .content{
     z-index: 1;
