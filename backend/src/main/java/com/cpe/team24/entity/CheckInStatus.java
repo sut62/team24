@@ -21,13 +21,13 @@ import javax.persistence.FetchType;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "CHECKINTYPE")
-public class CheckInType {
+@Table(name = "CHECKINSTATUS")
+public class CheckInStatus {
 
     @Id
-    @SequenceGenerator(name = "CHECKINTYPE_SEQ", sequenceName = "CHECKINTYPE_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHECKINTYPE_SEQ")
-    @Column(name = "CHECKINTYPE_ID", unique = true, nullable = false)
+    @SequenceGenerator(name = "CHECKINSTATUS_SEQ", sequenceName = "CHECKINSTATUS_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHECKINSTATUS_SEQ")
+    @Column(name = "CHECKINSTATUS_ID", unique = true, nullable = false)
     private @NonNull Long id;
 
     @Column(name = "NAME",nullable = false)
