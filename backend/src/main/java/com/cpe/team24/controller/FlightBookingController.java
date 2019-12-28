@@ -49,7 +49,7 @@ public class FlightBookingController {
         Integer departSeatId = 1;
         Integer returnSeatId = 1;
         flightBooking.book(departSeatId,returnSeatId);
-        flightBooking.setMember(memberRepository.findById(bodyFlightBooking.getMemberId()).orElse(null));
+        flightBooking.setUser(memberRepository.findById(bodyFlightBooking.getMemberId()).orElse(null));
         BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
         flightBooking.setBookingStatus(bs);
         flightBooking = flightBookingRepository.save(flightBooking);

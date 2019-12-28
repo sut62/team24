@@ -39,7 +39,7 @@ public class FlightBooking {
     private BookingStatus bookingStatus; //
 
     @ManyToOne
-    private Member member; //
+    private User user; //
 
     //Methods
     public void book(Integer departSeatId,Integer returnSeatId){
@@ -77,12 +77,12 @@ public class FlightBooking {
         this.bookingStatus = bookingStatus;
     }
 
-    public Member getMember() {
-        return member;
+    public User getUser() {
+        return user;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getBookId() {

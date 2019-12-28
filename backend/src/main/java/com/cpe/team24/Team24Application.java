@@ -30,18 +30,19 @@ public class Team24Application {
 		return args -> {
 			Object[][] data;
 			// ------------Member-----------------
-			data = new Object[][] { { "Alice", "0882223331", "Alick@mail.com", "1234" },
-					{ "Bob", "0881112223", "Bob@mail.com", "1234" } };
+			data = new Object[][] { { "Alice", "0882223331", "Alick@mail.com", "1234" ,"Alice"},
+					{ "Bob", "0881112223", "Bob@mail.com", "1234" ,"Bob"} };
 			for (int i = 0; i < data.length; i++) {
-				Member member = new Member();
-				member.setName(data[i][0].toString());
-				member.setPhone(data[i][1].toString());
-				member.setEmail(data[i][2].toString());
-				member.setPassword(data[i][3].toString());
-				member.setRegDate(new Date());
-				member = memberRepository.save(member);
+				User user = new User();
+				user.setUsername(data[i][4].toString());
+				user.setName(data[i][0].toString());
+				user.setPhone(data[i][1].toString());
+				user.setEmail(data[i][2].toString());
+				user.setPassword(data[i][3].toString());
+				user.setRegDate(new Date());
+				user = memberRepository.save(user);
 				System.out.printf("\n------------Add Member%d--------------\n", i + 1);
-				System.out.println(member);
+				System.out.println(user);
 				System.out.println("-------------------------------------------");
 			}
 			// ------------Flight-----------------
@@ -84,7 +85,7 @@ public class Team24Application {
 				flightBooking.book((Integer) data[i][2], (Integer) data[i][3]);
 				BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
 				flightBooking.setBookingStatus(bs);
-				flightBooking.setMember(memberRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null));
+				flightBooking.setUser(memberRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null));
 				flightBooking = flightBookingRepository.save(flightBooking);
 
 				// Add Depart's Flight and Return's Flight to TableLink
