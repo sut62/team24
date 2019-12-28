@@ -11,11 +11,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -37,6 +41,9 @@ public class Team24Application {
 						   RoleRepository roleRepository) {
 		return args -> {
 			Object[][] data;
+			// ------------Add User ROLE ---------
+			roleRepository.save(new Role(ERole.ROLE_MEMBER));
+			roleRepository.save(new Role(ERole.ROLE_ADMIN));
 			// ------------Member-----------------
 			data = new Object[][] { { "Alice", "0882223331", "Alick@mail.com", "1234" ,"Alice","admin"},
 					{ "Bob", "0881112223", "Bob@mail.com", "1234" ,"Bob","member"} };
@@ -54,8 +61,8 @@ public class Team24Application {
 						encoder.encode(data[i][3].toString()));
 
 				Set<Role> roles = new HashSet<>();
-//				roles.add(roleRepository.findByName(ERole.ROLE_MEMBER).orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
-				user.setRoles(null);
+				roles.add(roleRepository.findByName(ERole.ROLE_MEMBER).orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
+				user.setRoles(roles);
 				user = userRepository.save(user);
 
 				System.out.printf("\n------------Add Member%d--------------\n", i + 1);
