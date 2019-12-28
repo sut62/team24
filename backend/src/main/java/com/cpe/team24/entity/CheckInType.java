@@ -33,7 +33,7 @@ public class CheckInType {
     @Column(name = "NAME",nullable = false)
     private @NonNull String name;
 
-    //entity checkin type
+    //entity checkintype
     
 
 }
