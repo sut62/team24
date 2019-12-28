@@ -2210,6 +2210,11 @@ commander@~2.19.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
   integrity sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==
 
+common-http@^2.1.8:
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/common-http/-/common-http-2.1.8.tgz#dc9e8c8b8759d93758c9aaa57a445345ae89b658"
+  integrity sha512-fqK5k4y0UIlr0ST0wQAj91V7f7IR0U63Si0pVHgXXZFVu3beo4NFDtbQmduoZFqNGlRM7mTisCA4zrfM0Jg2kQ==
+
 commondir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
@@ -4070,6 +4075,11 @@ http-signature@~1.2.0:
     assert-plus "^1.0.0"
     jsprim "^1.2.2"
     sshpk "^1.7.0"
+
+httpie@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/httpie/-/httpie-1.1.2.tgz#e76a6792c2172446ea6df8805977a6f57bc9615d"
+  integrity sha512-VQ82oXG95oY1fQw/XecHuvcFBA+lZQ9Vwj1RfLcO8a7HpDd4cc2ukwpJt+TUlFaLUAzZErylxWu6wclJ1rUhUQ==
 
 https-browserify@^1.0.0:
   version "1.0.0"

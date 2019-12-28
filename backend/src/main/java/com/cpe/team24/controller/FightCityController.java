@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:8080")
+
 @RestController
+@RequestMapping(path="/api/flight-city")
 public class FightCityController {
 
     @Autowired
@@ -20,7 +21,7 @@ public class FightCityController {
         this.fightCityRepository = fightCityRepository;
     }
 
-    @GetMapping("/fightCity")
+    @GetMapping("")
     public Collection<FightCity> fightCity() {
         return fightCityRepository.findAll().stream().collect(Collectors.toList());
     }
