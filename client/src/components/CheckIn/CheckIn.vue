@@ -392,12 +392,17 @@
       <div class="card text-center card-button" >
         <a
           href="#"
-          @click="()=>onShowSaftyPage(this)"
+          @click="()=>onShowBoardingPass(this)"
           class="btn btn-danger text-white btn-lg"
           style="width:10px margin-left: 10px;"
         >ยืนยัน</a>
       </div>
     </div>
+
+     <div v-if="boardingPass == true">
+       BoardingPass Page
+    </div>
+
   </div>
 </template>
 
@@ -417,6 +422,7 @@ export default {
       addon_page: false,
       confirmation_page: false,
       safty_page: false,
+      boardingPass: false,
 
       extensionHeight: 100,
       reverse: true
@@ -445,6 +451,10 @@ export default {
     onShowSaftyPage(main) {
       main.confirmation_page = !main.confirmation_page;
       main.safty_page = !main.safty_page;
+    },
+    onShowBoardingPass(main) {
+      main.safty_page = !main.safty_page;
+      main.boardingPass = !main.boardingPass;
     }
   }
 };
