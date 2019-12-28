@@ -10,5 +10,4 @@ import java.util.List;
 @RepositoryRestResource
 public interface FlightRepository extends JpaRepository<Flight,Long> {
     List<Flight> findAllByDepartBetween(Date departDayStart,Date departDayEnd);
-
 }

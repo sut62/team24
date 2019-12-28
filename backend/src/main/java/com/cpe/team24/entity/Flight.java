@@ -57,19 +57,20 @@ public class Flight {
     public void setArrive(Date arrive) {
         this.arrive = arrive;
     }
+
 //    @JsonIgnore
 //    @OneToMany(fetch = FetchType.EAGER)
 //    private Collection<FlightBooking> flightBookings;
 
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
-//    @JoinColumn(name = "AIRPORT_ID", insertable = true)
-//    private Airport Form;
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = FightAirport.class)
+//    @JoinColumn(name = "FIGHT_AIRPORT_ID", insertable = true)
+//    private FightAirport form;
 //
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
-//    @JoinColumn(name = "AIRPORT_ID", insertable = true)
-//    private Airport To;
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = FightAirport.class)
+//    @JoinColumn(name = "FIGHT_AIRPORT_ID", insertable = true)
+//    private FightAirport to;
 //
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airplane.class)
-//    @JoinColumn(name = "AIRPLANE_ID", insertable = true)
-//    private Airplane Airplane;
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = FightAirplane.class)
+//    @JoinColumn(name = "FIGHT_AIRPLANE_ID", insertable = true)
+//    private FightAirplane airplane;
 }
