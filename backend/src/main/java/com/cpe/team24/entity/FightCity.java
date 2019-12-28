@@ -21,6 +21,17 @@ public class FightCity {
     @Column(name="NAME")
     private @NonNull String name;
 
+	
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+
+
 //    @OneToMany(fetch = FetchType.EAGER)
 //    // mappedBy  = "city"
 //    private Collection<FightAirport> airport;

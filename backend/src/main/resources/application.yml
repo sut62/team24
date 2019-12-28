@@ -6,7 +6,7 @@ spring:
     show-sql: false
   h2:
     console:
-      enabled: false
+      enabled: true
 
 server:
   port: 9000

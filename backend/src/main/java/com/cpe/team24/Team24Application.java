@@ -23,20 +23,15 @@ public class Team24Application {
 	}
 
 	@Bean
-	ApplicationRunner init(
-			FlightBookingRepository flightBookingRepository,
-			BookingStatusRepository bookingStatusRepository,
-			FlightRepository flightRepository,
-			FlightBookingLinkRepository flightBookingLinkRepository,
-			MemberRepository memberRepository
-	){
+	ApplicationRunner init(FlightBookingRepository flightBookingRepository,
+			BookingStatusRepository bookingStatusRepository, FlightRepository flightRepository,
+			FlightBookingLinkRepository flightBookingLinkRepository, MemberRepository memberRepository,
+			FightCityRepository fightCityRepository) {
 		return args -> {
 			Object[][] data;
-			//------------Member-----------------
-			data = new Object[][] {
-					{"Alice","0882223331","Alick@mail.com","1234"},
-					{"Bob","0881112223","Bob@mail.com","1234"}
-			};
+			// ------------Member-----------------
+			data = new Object[][] { { "Alice", "0882223331", "Alick@mail.com", "1234" },
+					{ "Bob", "0881112223", "Bob@mail.com", "1234" } };
 			for (int i = 0; i < data.length; i++) {
 				Member member = new Member();
 				member.setName(data[i][0].toString());
@@ -45,57 +40,48 @@ public class Team24Application {
 				member.setPassword(data[i][3].toString());
 				member.setRegDate(new Date());
 				member = memberRepository.save(member);
-				System.out.printf("\n------------Add Member%d--------------\n",i+1);
+				System.out.printf("\n------------Add Member%d--------------\n", i + 1);
 				System.out.println(member);
 				System.out.println("-------------------------------------------");
 			}
-			//------------Flight-----------------
+			// ------------Flight-----------------
 			data = new Object[][] {
 					// price , depart(days), flight duration(minute)
 					// 0 is today , 1 tomorrow , 2 next 2 day
-					{1900,0,30},
-					{1800,0,40},
-					{2000,1,75},
-					{2400,1,55},
-			};
+					{ 1900, 0, 30 }, { 1800, 0, 40 }, { 2000, 1, 75 }, { 2400, 1, 55 }, };
 			for (int i = 0; i < data.length; i++) {
 				Flight flight = new Flight();
 				flight.setPrice(Double.parseDouble(data[i][0].toString()));
 
-				//date create
-				Date depart = new Date(new Date().getTime() + ((1000 * 60 * 60 * 24)*Integer.parseInt(data[i][1].toString())));
-				Date arrive = new Date(depart.getTime() + (1000 * 60 )*Integer.parseInt(data[i][2].toString()));
+				// date create
+				Date depart = new Date(
+						new Date().getTime() + ((1000 * 60 * 60 * 24) * Integer.parseInt(data[i][1].toString())));
+				Date arrive = new Date(depart.getTime() + (1000 * 60) * Integer.parseInt(data[i][2].toString()));
 				//
 				flight.setDepart(depart);
 				flight.setArrive(arrive);
 				flight = flightRepository.save(flight);
-				System.out.printf("\n------------Add Flight%d--------------\n",i+1);
+				System.out.printf("\n------------Add Flight%d--------------\n", i + 1);
 				System.out.println(flight);
 				System.out.println("-------------------------------------------");
 			}
-			//------------Booking Status-----------------
-			data = new Object[][] {
-					{"ยังไม่ชำระ"},
-					{"ชำระแล้ว"},
-					{"เช็คอินแล้ว"}
-			};
+			// ------------Booking Status-----------------
+			data = new Object[][] { { "ยังไม่ชำระ" }, { "ชำระแล้ว" }, { "เช็คอินแล้ว" } };
 			for (int i = 0; i < data.length; i++) {
 				BookingStatus bookingStatus = new BookingStatus();
 				bookingStatus.setName(data[i][0].toString());
 				bookingStatus = bookingStatusRepository.save(bookingStatus);
-				System.out.printf("\n------------Add BookingStatus%d--------------\n",i+1);
+				System.out.printf("\n------------Add BookingStatus%d--------------\n", i + 1);
 				System.out.println(bookingStatus);
 				System.out.println("-------------------------------------------");
 			}
-			//--------------Flight Booking-----------------
+			// --------------Flight Booking-----------------
 			data = new Object[][] {
-					//departFlightId,returnFlightId,departSeatId,returnSeatId,MemberId
-					{2,1,1,1,1},
-					{1,2,2,2,1}
-			};
+					// departFlightId,returnFlightId,departSeatId,returnSeatId,MemberId
+					{ 2, 1, 1, 1, 1 }, { 1, 2, 2, 2, 1 } };
 			for (int i = 0; i < data.length; i++) {
 				FlightBooking flightBooking = new FlightBooking();
-				flightBooking.book((Integer) data[i][2],(Integer) data[i][3]);
+				flightBooking.book((Integer) data[i][2], (Integer) data[i][3]);
 				BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
 				flightBooking.setBookingStatus(bs);
 				flightBooking.setMember(memberRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null));
@@ -105,7 +91,7 @@ public class Team24Application {
 				Flight departFlight = flightRepository.findById(Long.parseLong(data[i][0].toString())).orElse(null);
 				Flight returnFlight = flightRepository.findById(Long.parseLong(data[i][1].toString())).orElse(null);
 
-				FlightBookingLink flightBookingLink= new FlightBookingLink();
+				FlightBookingLink flightBookingLink = new FlightBookingLink();
 				flightBookingLink.setFlight(departFlight);
 				flightBookingLink.setFlightBooking(flightBooking);
 				flightBookingLink.setDepartFlight(true);
@@ -117,8 +103,20 @@ public class Team24Application {
 				flightBookingLink.setDepartFlight(false);
 				flightBookingLinkRepository.save(flightBookingLink);
 
-				System.out.printf("\n------------Add FlightBooking%d--------------\n",i+1);
+				System.out.printf("\n------------Add FlightBooking%d--------------\n", i + 1);
 				System.out.println(flightBooking);
+				System.out.println("-------------------------------------------");
+
+			}
+			;
+			// ------------Flight City-----------------
+			data = new Object[][] { { "กรุงเทพมหานคร" }, { "เชียงใหม่" }, { "เชียงราย" }, { "ภูเก็ต" }, { "ส่งขลา" } };
+			for (int i = 0; i < data.length; i++) {
+				FightCity fightCity = new FightCity();
+				fightCity.setName(data[i][0].toString());
+				fightCity = fightCityRepository.save(fightCity);
+				System.out.printf("\n------------Add Flight City%d--------------\n", i + 1);
+				System.out.println(fightCity);
 				System.out.println("-------------------------------------------");
 			}
 		};
