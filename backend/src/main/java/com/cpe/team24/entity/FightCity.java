@@ -29,6 +29,7 @@ public class FightCity {
     public void setName(String name) {
         this.name = name;
     }
+
     
 
 
