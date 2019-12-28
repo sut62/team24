@@ -13,7 +13,30 @@
                             <v-list-item-content>
                                 <v-list-item-title class="headline mb-4"><b>เที่ยวบิน</b></v-list-item-title>
                                 <v-row class="font-weight-medium">
-                                   
+                                    <v-list-item>
+                                        <v-row class="ml-6 mt -3">
+                                            <v-list-item-content>
+                                                <v-list-item-title class="headline mb-3"><b>Boeing 777</b></v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-row>
+                                        <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
+                                        <v-row class="ml-6 mt-.5">
+                                            <v-list-item-content>
+                                                <v-list-item-title class="font-weight-medium">18/12/62 | 07.10</v-list-item-title>
+                                                <v-list-item-title class="font-weight-medium">กรุงเทพมหานคร</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-row>
+                                        <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
+                                        <v-row class="ml-6 mt-.5">
+                                            <v-list-item-content>
+                                                <v-list-item-title class="font-weight-medium">18/12/62 | 07.15</v-list-item-title>
+                                                <v-list-item-title class="font-weight-medium">ขอนแก่น</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-row>
+                                    </v-list-item>
+                                </v-row>
+                                <hr />
+                                <v-row class="font-weight-medium">
                                     <v-list-item>
                                         <v-row class="ml-6 mt -3">
                                             <v-list-item-content>
