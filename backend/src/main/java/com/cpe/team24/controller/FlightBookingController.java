@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping(path="/api/flight-booking")
 public class FlightBookingController {

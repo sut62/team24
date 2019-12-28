@@ -29,8 +29,6 @@ public class FightCity {
     public void setName(String name) {
         this.name = name;
     }
-    
-
 
 //    @OneToMany(fetch = FetchType.EAGER)
 //    // mappedBy  = "city"

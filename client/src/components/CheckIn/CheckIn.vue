@@ -11,13 +11,13 @@
         <div class="card-body">
           <v-row>
             <v-col cols="3">
-              <v-autocomplete v-model="select1" :items="items" outlined label="เมืองต้นทาง" filled></v-autocomplete>
+              <v-autocomplete v-model="checkIn.origin" :items="flightCity" item-text="name" outlined label="เมืองต้นทาง" filled></v-autocomplete>
             </v-col>
             <v-col cols="3">
-              <v-autocomplete v-model="select2" :items="items" outlined label="เมืองปลายทาง" filled></v-autocomplete>
+              <v-autocomplete v-model="checkIn.destination" :items="flightCity" item-text="name" outlined label="เมืองปลายทาง" filled></v-autocomplete>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="lastname" :lastname="lastname" outlined label="นามสกุล" filled></v-text-field>
+              <v-text-field v-model="checkIn.name"  outlined label="ชื่อจริง" filled></v-text-field>
             </v-col>
             <v-col cols="3">
               <a
@@ -389,7 +389,7 @@
           color="green"
         ></v-checkbox>
       </div>
-      <div class="card text-center card-button" >
+      <div class="card text-center card-button">
         <a
           href="#"
           @click="()=>onShowBoardingPass(this)"
@@ -399,22 +399,31 @@
       </div>
     </div>
 
-     <div v-if="boardingPass == true">
-       BoardingPass Page
-    </div>
-
+    <div v-if="boardingPass == true">BoardingPass Page</div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
+let axiosInstance = axios.create({
+  baseURL: 'http://localhost:9000/api',
+  timeout: 120000,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    "Content-type": "application/json",
+  }
+})
+
 export default {
   data() {
     return {
-      name: "search",
-      lastname: "",
-      select1: "",
-      select2: "",
-      items: ["กรุงเทพ", "ขอนแก่น", "ภูเก็ต", "เลย"],
+      flightCity: [],
+      checkIn: {
+        origin: "",
+        destination: "",
+        name: "",
+      },
       agree: "Yes",
 
       checkin_page: true,
@@ -429,11 +438,14 @@ export default {
     };
   },
 
-  updated() {},
+  // updated(){
+  //   console("Hello world!");
+  // },
 
   methods: {
     onShowCheckInPage(main) {
       main.checkin_page = !main.checkin_page;
+      
     },
 
     onShowFligthPage(main) {
@@ -455,8 +467,26 @@ export default {
     onShowBoardingPass(main) {
       main.safty_page = !main.safty_page;
       main.boardingPass = !main.boardingPass;
-    }
+      
+    },
+    getFlightCity() {
+      axiosInstance.get("/flight-city")
+        .then(response => {
+          this.flightCity = response.data;
+          this.$nextTick();
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+  
+  },
+  mounted() {
+    //alert("we are here!");
+    this.getFlightCity();
   }
+
 };
 </script>
 

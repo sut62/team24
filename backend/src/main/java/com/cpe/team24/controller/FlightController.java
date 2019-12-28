@@ -12,7 +12,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping(path="/api/flight")
 public class FlightController {
