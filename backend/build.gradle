@@ -19,6 +19,15 @@ repositories {
 }
 
 dependencies {
+	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
+	compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.2.1.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-config
+	compile group: 'org.springframework.security', name: 'spring-security-config', version: '5.2.1.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
+	compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.2.1.RELEASE'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
