@@ -1,5 +1,7 @@
 package com.cpe.team24.entity.auth;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,9 +15,7 @@ public class Role {
     @Column(length = 20)
     private ERole name;
 
-    public Role() {
-
-    }
+    public Role(){}
 
     public Role(ERole name) {
         this.name = name;

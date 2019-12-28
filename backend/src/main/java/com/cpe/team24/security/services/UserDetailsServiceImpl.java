@@ -1,6 +1,8 @@
 package com.cpe.team24.security.services;
 
 
+import com.cpe.team24.entity.User;
+import com.cpe.team24.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,19 +1,25 @@
 package com.cpe.team24;
 
 import com.cpe.team24.entity.*;
+import com.cpe.team24.entity.auth.ERole;
+import com.cpe.team24.entity.auth.Role;
 import com.cpe.team24.repository.*;
+import com.cpe.team24.repository.auth.RoleRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootApplication
 public class Team24Application {
@@ -24,23 +30,34 @@ public class Team24Application {
 
 	@Bean
 	ApplicationRunner init(FlightBookingRepository flightBookingRepository,
-			BookingStatusRepository bookingStatusRepository, FlightRepository flightRepository,
-			FlightBookingLinkRepository flightBookingLinkRepository, MemberRepository memberRepository,
-			FightCityRepository fightCityRepository) {
+						   BookingStatusRepository bookingStatusRepository, FlightRepository flightRepository,
+						   FlightBookingLinkRepository flightBookingLinkRepository, UserRepository userRepository,
+						   FightCityRepository fightCityRepository,
+						   PasswordEncoder encoder,
+						   RoleRepository roleRepository) {
 		return args -> {
 			Object[][] data;
 			// ------------Member-----------------
-			data = new Object[][] { { "Alice", "0882223331", "Alick@mail.com", "1234" ,"Alice"},
-					{ "Bob", "0881112223", "Bob@mail.com", "1234" ,"Bob"} };
+			data = new Object[][] { { "Alice", "0882223331", "Alick@mail.com", "1234" ,"Alice","admin"},
+					{ "Bob", "0881112223", "Bob@mail.com", "1234" ,"Bob","member"} };
 			for (int i = 0; i < data.length; i++) {
-				User user = new User();
-				user.setUsername(data[i][4].toString());
-				user.setName(data[i][0].toString());
-				user.setPhone(data[i][1].toString());
-				user.setEmail(data[i][2].toString());
-				user.setPassword(data[i][3].toString());
-				user.setRegDate(new Date());
-				user = memberRepository.save(user);
+//				User user = new User();
+//				user.setUsername(data[i][4].toString());
+//				user.setName(data[i][0].toString());
+//				user.setPhone(data[i][1].toString());
+//				user.setEmail(data[i][2].toString());
+//				user.setPassword(data[i][3].toString());
+//				user.setRegDate(new Date());
+//				user = userRepository.save(user);
+				User user = new User(data[i][4].toString(),
+						data[i][2].toString(),
+						encoder.encode(data[i][3].toString()));
+
+				Set<Role> roles = new HashSet<>();
+//				roles.add(roleRepository.findByName(ERole.ROLE_MEMBER).orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
+				user.setRoles(null);
+				user = userRepository.save(user);
+
 				System.out.printf("\n------------Add Member%d--------------\n", i + 1);
 				System.out.println(user);
 				System.out.println("-------------------------------------------");
@@ -85,7 +102,7 @@ public class Team24Application {
 				flightBooking.book((Integer) data[i][2], (Integer) data[i][3]);
 				BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
 				flightBooking.setBookingStatus(bs);
-				flightBooking.setUser(memberRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null));
+				flightBooking.setUser(userRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null));
 				flightBooking = flightBookingRepository.save(flightBooking);
 
 				// Add Depart's Flight and Return's Flight to TableLink

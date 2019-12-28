@@ -6,7 +6,6 @@ import lombok.Data;
 public class BodyFlightBooking {
     private Long departFlightId;
     private Long returnFlightId;
-    private Long memberId;
 
     //Getter Setter
     public Long getDepartFlightId() {
@@ -17,11 +16,4 @@ public class BodyFlightBooking {
         return returnFlightId;
     }
 
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
-    }
 }

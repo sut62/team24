@@ -7,6 +7,9 @@ import com.cpe.team24.entity.FlightBookingLink;
 import com.cpe.team24.model.BodyFlightBooking;
 import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -28,14 +31,14 @@ public class FlightBookingController {
     private BookingStatusRepository bookingStatusRepository;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository userRepository;
 
     public FlightBookingController(
-        FlightBookingRepository flightBookingRepository,
-        FlightRepository flightRepository,
-        FlightBookingLinkRepository flightBookingLinkRepository,
-        BookingStatusRepository bookingStatusRepository,
-        MemberRepository memberRepository
+            FlightBookingRepository flightBookingRepository,
+            FlightRepository flightRepository,
+            FlightBookingLinkRepository flightBookingLinkRepository,
+            BookingStatusRepository bookingStatusRepository,
+            UserRepository userRepository
     ){}
 
     @GetMapping("")
@@ -44,12 +47,14 @@ public class FlightBookingController {
     }
 
     @PostMapping("/book")
-    public FlightBooking book(@RequestBody BodyFlightBooking bodyFlightBooking) {
+    @Secured("ROLE_MEMBER")
+    public FlightBooking book(@RequestBody BodyFlightBooking bodyFlightBooking, Authentication authentication) {
+        System.out.println(authentication.getName());
         FlightBooking flightBooking = new FlightBooking();
         Integer departSeatId = 1;
         Integer returnSeatId = 1;
         flightBooking.book(departSeatId,returnSeatId);
-        flightBooking.setUser(memberRepository.findById(bodyFlightBooking.getMemberId()).orElse(null));
+        flightBooking.setUser(userRepository.findByUsername(authentication.getName()).orElse(null));
         BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
         flightBooking.setBookingStatus(bs);
         flightBooking = flightBookingRepository.save(flightBooking);

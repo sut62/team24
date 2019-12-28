@@ -3,6 +3,7 @@ package com.cpe.team24.controller;
 import com.cpe.team24.entity.Flight;
 import com.cpe.team24.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;

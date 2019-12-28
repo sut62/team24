@@ -7,6 +7,12 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.Optional;
 
 @RepositoryRestResource
-public interface MemberRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User,Long> {
     public Optional<User> findById(Long id);
+
+    Optional<User> findByUsername(String username);
+
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
 }
