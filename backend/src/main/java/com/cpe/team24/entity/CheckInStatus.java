@@ -34,6 +34,7 @@ public class CheckInStatus {
     private @NonNull String name;
 
     //entity checkinstatus
-    
+    //entity checkinstatus
+    //entity checkinstatus
 
 }
