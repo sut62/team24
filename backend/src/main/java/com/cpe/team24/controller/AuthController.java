@@ -7,8 +7,19 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.cpe.team24.model.auth.request.LoginRequest;
+import com.cpe.team24.model.auth.request.SignupRequest;
+import com.cpe.team24.model.auth.response.JwtResponse;
+import com.cpe.team24.repository.auth.RoleRepository;
+import com.cpe.team24.security.jwt.JwtUtils;
+import com.cpe.team24.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
