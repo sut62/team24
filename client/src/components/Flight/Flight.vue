@@ -90,11 +90,12 @@
                             </v-row>
 
                             <v-text-field label="ราคา(บาท)"></v-text-field>
+
                             <v-row>
                                 <v-col cols="12" sm="6" md="6">
                                     <v-menu ref="menu" v-model="menu" :close-on-content-click="false" :return-value.sync="date" transition="scale-transition" offset-y min-width="290px">
                                         <template v-slot:activator="{ on }">
-                                            <v-text-field v-model="date" label="วันออกเดินทาง" prepend-icon="event" readonly v-on="on" hint="YYYY/MM/DD format"></v-text-field>
+                                            <v-text-field v-model="date" label="วันออกเดินทาง" prepend-icon="mdi-calendar-clock" readonly v-on="on" hint="YYYY/MM/DD format"></v-text-field>
                                         </template>
                                         <v-date-picker v-model="date" no-title scrollable>
                                             <v-spacer></v-spacer>
@@ -107,7 +108,7 @@
                                 <v-col cols="12" sm="6" md="6">
                                     <v-menu ref="menu" v-model="menu1" :close-on-content-click="false" :return-value.sync="date1" transition="scale-transition" offset-y min-width="290px">
                                         <template v-slot:activator="{ on }">
-                                            <v-text-field v-model="date1" label="วันที่คาดว่าจะถึง" prepend-icon="event" readonly v-on="on" hint="YYYY/MM/DD format"></v-text-field>
+                                            <v-text-field v-model="date1" label="วันที่คาดว่าจะถึง" prepend-icon="mdi-calendar-clock" readonly v-on="on" hint="YYYY/MM/DD format"></v-text-field>
                                         </template>
                                         <v-date-picker v-model="date1" no-title scrollable>
                                             <v-spacer></v-spacer>

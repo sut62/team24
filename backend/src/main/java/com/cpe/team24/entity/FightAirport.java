@@ -29,4 +29,8 @@ public class FightAirport {
 //    // mappedBy  = "from"
 //    private Collection<Fight> flight;
 
+//    @OneToMany(fetch = FetchType.EAGER)
+//    // mappedBy  = "to"
+//    private Collection<Fight> flight;
+
 }
