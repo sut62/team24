@@ -19,13 +19,14 @@
 </template>
 
 <script>
-import {mapGetters,mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
   name: "cartFooter",
   computed: mapGetters({
     getTotalPrice: 'BookFlight/getTotalPrice'
   }),
-  methods: mapMutations({
+  methods: mapActions({
     'nextPage' : 'BookFlight/nextPage'
   })
   // mapActions({

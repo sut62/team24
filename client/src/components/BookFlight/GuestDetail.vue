@@ -1,7 +1,8 @@
 <template>
   <v-form v-model="valid">
     <v-card class="pa-10 mt-3">
-      <h2>กรอกข้อมูลผู้โดยสาร</h2>
+      <div class="mb-2" style="color:red"> {{useCurentUserData?'*ใช้ข้อมูลของผู้ใช้งาน ' + this.user.username + ' | ' + this.user.email :''}}</div>
+      <h2>ข้อมูลผู้โดยสาร </h2>
       <v-divider></v-divider>
       <v-row>
         <v-col
@@ -10,6 +11,7 @@
         >
           <v-text-field
             v-model="firstname"
+            :disabled="useCurentUserData"
             :rules="nameRules"
             label="ชื่อจริง"
             required
@@ -23,13 +25,14 @@
           <v-text-field
             v-model="lastname"
             :rules="nameRules"
+            :disabled="useCurentUserData"
             label="นามสกุล"
             required
             outlined
           ></v-text-field>
         </v-col>
       </v-row>
-      <v-row>
+      <!-- <v-row>
         <v-col cols="12" md="4">
           <v-menu
           ref="menu"
@@ -59,10 +62,10 @@
             ></v-radio>
           </v-radio-group>
         </v-col>
-      </v-row>
+      </v-row> -->
     </v-card>
     <v-card class="pa-10 mt-3">
-      <h2>กรอกข้อมูลติดต่อ</h2>
+      <h2>ข้อมูลติดต่อ</h2>
       <v-divider></v-divider>
       <v-row>
         <v-col
@@ -72,6 +75,7 @@
           <v-text-field
             v-model="phone"
             :rules="phoneRules"
+            :disabled="useCurentUserData"
             :counter="10"
             label="เบอร์โทรติดต่อ"
             required
@@ -85,6 +89,7 @@
           <v-text-field
             v-model="email"
             :rules="emailRules"
+            :disabled="useCurentUserData"
             label="อีเมลล์ที่ใช้ติดต่อ"
             required
             outlined
@@ -96,9 +101,11 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: 'GuestDetail',
   data: () => ({
+    useCurentUserData: false,
     valid: false,
     firstname: '',
     lastname: '',
@@ -122,9 +129,24 @@ export default {
     ],
   }),
   computed: {
+    ...mapState({
+      'user' : state => state.Auth.user,
+      'logedIn' : state => state.Auth.logedIn
+    }),
     dateText () {
       return this.date != '' ? 'วันที่ ' + this.date : 'เลือกวันเกิด';
     },
+  },
+  mounted(){
+    if(this.logedIn){
+      this.useCurentUserData = true
+      this.email = this.user.email
+      this.phone = this.user.phone
+      this.firstname = this.user.firstName
+      this.lastname = this.user.lastName
+    }else{
+      this.useCurentUserData = false
+    }
   }
 }
 </script>

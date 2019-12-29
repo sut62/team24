@@ -6,7 +6,7 @@ const bookFlight = {
     bookLoading: false,
     flightDepartLoading: false,
     flightReturnLoading: false,
-    pageLocation: 1, // 1 for Search, 2 for SelectFlight, 3 for Adds-on
+    pageLocation: 1, // 1 for Search, 2 for SelectFlight, 3 for guestDetail, 4 redirect to payment
     result:{
       bookResult: null,
       flightDepart: null,
@@ -51,7 +51,7 @@ const bookFlight = {
     selectReturnFlight(state,data){
       state.data.flightReturn = data
     },
-    nextPage(state){
+    NEXT_PAGE(state){
       state.pageLocation += 1;
     }
   },
@@ -62,7 +62,6 @@ const bookFlight = {
       let data = {
         "departFlightId": state.data.flightDepart.id,
         "returnFlightId": state.data.flightReturn.id,
-        "memberId":2 // to do
       }
       let result = await BookFlightService.bookFlight(data)
       await commit('BOOK_SUCCESS',result.data)
@@ -78,6 +77,16 @@ const bookFlight = {
       await commit('FLIGHT_RETURN_LOADING')
       let result = await BookFlightService.getFlight(date);
       await commit('FLIGHT_RETURN_LOADING_SUCCESS',result.data)
+    },
+    // next Page
+    async nextPage({state,commit,dispatch}){
+      //use last page number
+      if(state.pageLocation >= 3){ 
+        await dispatch('bookFlight');
+        await alert("จองสำเสร็จ BookingId ของท่านคือ " + state.result.bookResult.bookId)
+      }else{
+        await commit('NEXT_PAGE')
+      }
     }
   },
   getters: {
