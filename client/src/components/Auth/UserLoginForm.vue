@@ -17,10 +17,11 @@
           required
           outlined
         ></v-text-field>
+        <p style="color:red">{{alert.head}}<br>{{alert.result}}</p>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn>Login</v-btn>
+        <v-btn @click.stop="login">Login</v-btn>
         <v-btn @click="closeDialog">Close</v-btn>
       </v-card-actions>
     </v-card>
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   name: "UserLoginForm",
   props: {
@@ -37,8 +39,20 @@ export default {
   },
   data: ()=>({
     username: '',
-    password: ''
-  })
+    password: '',
+    alert:''
+  }),
+  methods: {
+    login(){
+      this.requestLogin({
+        username: this.username,
+        password: this.password
+      }).then(result => result === true? ()=>{this.closeDialog();this.alert={}}:this.alert = {head:"เกิดข้อผิดพลาด ",result})
+    },
+    ...mapActions({
+      'requestLogin' : 'Auth/requestLogin'
+    })
+  }
 }
 </script>
 

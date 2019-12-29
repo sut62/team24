@@ -1,11 +1,14 @@
 import axios from 'axios'
+import authHeader from './Auth_header'
 
+let auth = authHeader()
 let axiosInstance = axios.create({
   baseURL: 'http://localhost:9000/api',
   timeout: 120000,
   headers: {
     'Access-Control-Allow-Origin': '*',
     "Content-type": "application/json",
+    ...auth
   }
 })
 

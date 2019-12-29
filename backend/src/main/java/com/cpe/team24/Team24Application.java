@@ -56,7 +56,7 @@ public class Team24Application {
 //				user.setPassword(data[i][3].toString());
 //				user.setRegDate(new Date());
 //				user = userRepository.save(user);
-				User user = new User(data[i][4].toString(),
+				User user = new User(data[i][4].toString().toLowerCase(),
 						data[i][2].toString(),
 						encoder.encode(data[i][3].toString()));
 
