@@ -11,8 +11,13 @@
           <a href="/promotion" class="btn">โปรโมชั่น</a>
           <a href="/checkin" class="btn">เช็คอิน</a>
           <a href="/payment" class="btn mr-5">ชำระค่าเที่ยวบิน</a>
-          <a class="btn my-2 my-sm-0" type="submit">เข้าสู่ระบบ | สมัครสมาชิก</a>
         </div>
+        <v-dialog v-model="showAuthForm" max-width="400">
+          <template v-slot:activator="{ on }">
+            <v-btn color="primary" dark v-on="on">เข้าสู่ระบบ</v-btn>
+          </template>
+          <LoginForm :closeDialog = "closeDialog"/>
+        </v-dialog>
       </div>
     </nav>
     <v-avatar class="logo" size="100"> 
@@ -25,8 +30,24 @@
 </template>
 
 <script>
+import LoginForm from '../components/Auth/UserLoginForm'
+
 export default {
   name: "userNavbar",
+  components:{
+    LoginForm
+  },
+  data:()=>({
+    showAuthForm:false,
+  }),
+  methods:{
+    closeDialog(){
+      this.showAuthForm = false
+    },
+    openAuthForm(){
+      this.showAuthFrom = true;
+    }
+  }
 }
 </script>
 
