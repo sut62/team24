@@ -6,7 +6,6 @@ class AuthProvider extends HttpRequest {
   login (data) {
     return this.create('/auth/login',data)
   }
-
 }
 
 export default AuthProvider

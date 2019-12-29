@@ -17,6 +17,7 @@
           required
           outlined
         ></v-text-field>
+        <p style="color:red">{{alert.head}}<br>{{alert.result}}</p>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -38,14 +39,15 @@ export default {
   },
   data: ()=>({
     username: '',
-    password: ''
+    password: '',
+    alert:''
   }),
   methods: {
     login(){
       this.requestLogin({
         username: this.username,
         password: this.password
-      })
+      }).then(result => result === true? ()=>{this.closeDialog();this.alert={}}:this.alert = {head:"เกิดข้อผิดพลาด ",result})
     },
     ...mapActions({
       'requestLogin' : 'Auth/requestLogin'
