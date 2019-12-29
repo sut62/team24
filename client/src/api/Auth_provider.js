@@ -1,16 +1,12 @@
 
 import HttpRequest from './http_request'
 
-class BookFlightProvider extends HttpRequest {
-
-  BookFlightProvider(path){
-    this.path = path
-  }
+class AuthProvider extends HttpRequest {
 
   login (data) {
-    return this.request( 'POST',this.path + '/login',data)
+    return this.create('/auth/login',data)
   }
 
 }
 
-export default BookFlightProvider
+export default AuthProvider

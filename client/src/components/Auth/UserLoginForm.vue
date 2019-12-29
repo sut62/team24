@@ -20,7 +20,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn>Login</v-btn>
+        <v-btn @click.stop="login">Login</v-btn>
         <v-btn @click="closeDialog">Close</v-btn>
       </v-card-actions>
     </v-card>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-
+import {mapActions} from 'vuex'
 export default {
   name: "UserLoginForm",
   props: {
@@ -39,7 +39,18 @@ export default {
   data: ()=>({
     username: '',
     password: ''
-  })
+  }),
+  methods: {
+    login(){
+      this.requestLogin({
+        username: this.username,
+        password: this.password
+      })
+    },
+    ...mapActions({
+      'requestLogin' : 'Auth/requestLogin'
+    })
+  }
 }
 </script>
 
