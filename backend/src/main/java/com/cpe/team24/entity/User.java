@@ -33,6 +33,9 @@ public class User {
     @Column(length = 10)
     private @NumberFormat String phone;
 
+    private String firstName;
+    private String lastName;
+
     @NotBlank
     @Size(max = 20)
     private String username;
@@ -59,10 +62,13 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password,String phone,String firstName,String lastName) {
         this.setUsername(username);
         this.email = email;
         this.password = password;
+        this.phone = phone;
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
     }
 //    @OneToMany(mappedBy = "member")
 //    private Collection<FlightBooking> flightBookings;
@@ -131,5 +137,21 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
