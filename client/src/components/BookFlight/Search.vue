@@ -32,12 +32,9 @@
           </v-col>
           <v-col cols="4">
             <v-menu
-            ref="menu"
-            v-model="menu"
             :close-on-content-click="false"
             transition="scale-transition"
             offset-y
-            full-width
             min-width="290px"
             >
               <template v-slot:activator="{ on }">
