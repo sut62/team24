@@ -8,5 +8,10 @@ spring:
     console:
       enabled: true
 
+team24:
+  app:
+    jwtSecret: Team24SecreteKey
+    jwtExpirationMs: 86400000
+
 server:
   port: 9000
