@@ -36,7 +36,9 @@ public class Team24Application {
 	ApplicationRunner init(FlightBookingRepository flightBookingRepository,
 						   BookingStatusRepository bookingStatusRepository, FlightRepository flightRepository,
 						   FlightBookingLinkRepository flightBookingLinkRepository, UserRepository userRepository,
-						   FightCityRepository fightCityRepository,
+						   FlightCityRepository flightCityRepository,
+						   FlightAirportRepository flightAirportRepository,
+						   FlightAirplaneRepository flightAirplaneRepository,
 						   PasswordEncoder encoder,
 						   RoleRepository roleRepository) {
 		return args -> {
@@ -138,16 +140,29 @@ public class Team24Application {
 
 			}
 			;
+			// ------------Add Flight Airport ---------
+			flightAirportRepository.save(new FlightAirport(FAir.FLIGHT_AIRPORT_TO));
+			flightAirportRepository.save(new FlightAirport(FAir.FLIGHT_AIRPORT_FROM));
 			// ------------Flight City-----------------
 			data = new Object[][] { { "กรุงเทพมหานคร" }, { "เชียงใหม่" }, { "เชียงราย" }, { "ภูเก็ต" }, { "ส่งขลา" } };
 			for (int i = 0; i < data.length; i++) {
-				FightCity fightCity = new FightCity();
+				FlightCity fightCity = new FlightCity();
 				fightCity.setName(data[i][0].toString());
-				fightCity = fightCityRepository.save(fightCity);
+				fightCity = flightCityRepository.save(fightCity);
 				System.out.printf("\n------------Add Flight City%d--------------\n", i + 1);
 				System.out.println(fightCity);
 				System.out.println("-------------------------------------------");
 			}
+			// ------------ Flight Airplane-----------------
+			// data = new Object[][] { { "กรุงเทพมหานคร" }, { "เชียงใหม่" }, { "เชียงราย" }, { "ภูเก็ต" }, { "ส่งขลา" } };
+			// for (int i = 0; i < data.length; i++) {
+			// 	FlightAirplane flightAirplane = new FlightAirplane();
+			// 	flightAirplane.setName(data[i][0].toString());
+			// 	flightAirplane = flightAirplaneRepository.save(flightAirplane);
+			// 	System.out.printf("\n------------Add Flight City%d--------------\n", i + 1);
+			// 	System.out.println(flightAirplane);
+			// 	System.out.println("-------------------------------------------");
+			// }
 		};
 	}
 

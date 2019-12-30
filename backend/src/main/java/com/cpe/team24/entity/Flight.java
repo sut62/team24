@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -32,7 +34,21 @@ public class Flight {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<FlightBookingLink> flightBookingLinks;
+    // ========== Add by JOKE ==========
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "FLIGHT_FLIGHTAIRPORT",
+            joinColumns = @JoinColumn(name = "FLIGHT_ID"),
+            inverseJoinColumns = @JoinColumn(name = "FLIGHT_AIRPORT_ID"))
+    private Set<FlightAirport> flightAirports = new HashSet<>();
 
+    public Set<FlightAirport> getFlightAirports() {
+        return flightAirports;
+    }
+
+    public void setRoles(Set<FlightAirport> flightAirports) {
+        this.flightAirports = flightAirports;
+    }
+    // ========== End by JOKE ==========
     //Getter Setter
     public Double getPrice() {
         return price;
