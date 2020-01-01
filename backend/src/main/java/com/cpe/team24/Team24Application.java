@@ -33,7 +33,7 @@ public class Team24Application {
 	ApplicationRunner init(FlightBookingRepository flightBookingRepository,
 						   BookingStatusRepository bookingStatusRepository, FlightRepository flightRepository,
 						   FlightBookingLinkRepository flightBookingLinkRepository, UserRepository userRepository,
-						   FlightCityRepository flightCityRepository,
+						   CityRepository cityRepository,
 						   AirportRepository airportRepository,
 						   AirplaneRepository airplaneRepository,
 						   PasswordEncoder encoder,
@@ -150,9 +150,9 @@ public class Team24Application {
 			// ------------Flight City-----------------
 			data = new Object[][] { { "กรุงเทพมหานคร" }, { "เชียงใหม่" }, { "เชียงราย" }, { "ภูเก็ต" }, { "ส่งขลา" } };
 			for (int i = 0; i < data.length; i++) {
-				FlightCity fightCity = new FlightCity();
+				City fightCity = new City();
 				fightCity.setName(data[i][0].toString());
-				fightCity = flightCityRepository.save(fightCity);
+				fightCity = cityRepository.save(fightCity);
 				System.out.printf("\n------------Add Flight City%d--------------\n", i + 1);
 				System.out.println(fightCity);
 				System.out.println("-------------------------------------------");
@@ -211,7 +211,7 @@ public class Team24Application {
 				newBag.setAddbaggageimage(bimage);
 				
 
-				FlightCity fightCity = new FlightCity();
+				City fightCity = new City();
 				fightCity.setName(bag[i][4].toString());	
 
 				

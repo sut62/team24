@@ -4,8 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import java.util.Collection;
-
 
 @Data
 @Entity
@@ -40,9 +38,9 @@ public class Airport {
     }
 
 
-   @ManyToOne(fetch = FetchType.EAGER, targetEntity = FlightCity.class)
+   @ManyToOne(fetch = FetchType.EAGER, targetEntity = City.class)
    @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
-   private FlightCity city;
+   private City city;
 
 //    @OneToMany(fetch = FetchType.EAGER)
 //    // mappedBy  = "from"

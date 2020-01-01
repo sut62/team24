@@ -47,6 +47,6 @@ public class BaggageAddon {
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
     @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
-    private  FlightCity addflightairports;
+    private City addflightairports;
 
 }
