@@ -1,9 +1,6 @@
 package com.cpe.team24.controller;
 
-import com.cpe.team24.entity.BookingStatus;
-import com.cpe.team24.entity.Flight;
-import com.cpe.team24.entity.FlightBooking;
-import com.cpe.team24.entity.FlightBookingLink;
+import com.cpe.team24.entity.*;
 import com.cpe.team24.model.BodyFlightBooking;
 import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +25,9 @@ public class FlightBookingController {
 
     @Autowired
     private BookingStatusRepository bookingStatusRepository;
+
+    @Autowired
+    private FlightTypeRepository flightTypeRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -65,13 +65,13 @@ public class FlightBookingController {
         FlightBookingLink flightBookingLink= new FlightBookingLink();
         flightBookingLink.setFlight(departFlight);
         flightBookingLink.setFlightBooking(flightBooking);
-        flightBookingLink.setDepartFlight(true);
+        flightBookingLink.setFlightType(flightTypeRepository.findByName(EFlightType.DEPART_FLIGHT));
         flightBookingLinkRepository.save(flightBookingLink);
 
         flightBookingLink = new FlightBookingLink();
         flightBookingLink.setFlight(returnFlight);
         flightBookingLink.setFlightBooking(flightBooking);
-        flightBookingLink.setDepartFlight(false);
+        flightBookingLink.setFlightType(flightTypeRepository.findByName(EFlightType.RETURN_FLIGHT));
         flightBookingLinkRepository.save(flightBookingLink);
 
         return flightBooking;

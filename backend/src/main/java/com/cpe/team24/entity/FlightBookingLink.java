@@ -29,7 +29,8 @@ public class FlightBookingLink {
     @JoinColumn(name = "FLIGHT_BOOKING_ID",nullable = false)
     private FlightBooking flightBooking;
 
-    private Boolean departFlight = true;
+    @ManyToOne
+    private FlightType flightType;
 
     //GETTER SETTER
     public Flight getFlight() {
@@ -48,12 +49,12 @@ public class FlightBookingLink {
         this.flightBooking = flightBooking;
     }
 
-    public Boolean getDepartFlight() {
-        return departFlight;
+
+    public FlightType getFlightType() {
+        return flightType;
     }
 
-    public void setDepartFlight(Boolean departFlight) {
-        this.departFlight = departFlight;
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
     }
-
 }
