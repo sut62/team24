@@ -1,6 +1,6 @@
 package com.cpe.team24.controller;
 
-import com.cpe.team24.entity.FlightCity;
+import com.cpe.team24.entity.City;
 import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
 public class FlightCityController {
 
     @Autowired
-    private final FlightCityRepository flightCityRepository ;
+    private final CityRepository cityRepository;
 
-    public FlightCityController(FlightCityRepository flightCityRepository) {
+    public FlightCityController(CityRepository cityRepository) {
 
-        this.flightCityRepository = flightCityRepository;
+        this.cityRepository = cityRepository;
     }
 
     @GetMapping("")
-    public Collection<FlightCity> fightCity() {
-        return flightCityRepository.findAll().stream().collect(Collectors.toList());
+    public Collection<City> fightCity() {
+        return cityRepository.findAll().stream().collect(Collectors.toList());
     }
 
 }

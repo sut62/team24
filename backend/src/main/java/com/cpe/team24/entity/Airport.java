@@ -4,14 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import java.util.Collection;
-
 
 @Data
 @Entity
 // @NoArgsConstructor
-@Table(name="FLIGHTAIRPORT")
-public class FlightAirport {
+public class Airport {
     @Id
     // @SequenceGenerator(name="FLIGHT_AIRPORT_SEQ",sequenceName="FLIGHT_AIRPORT_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +19,8 @@ public class FlightAirport {
     @Column(length = 20)
     private FAir name;
 
-    public FlightAirport(){}
-    public FlightAirport(FAir name){
+    public Airport(){}
+    public Airport(FAir name){
         this.name = name;
     }
     public Long getId() {
@@ -41,9 +38,9 @@ public class FlightAirport {
     }
 
 
-   @ManyToOne(fetch = FetchType.EAGER, targetEntity = FlightCity.class)
+   @ManyToOne(fetch = FetchType.EAGER, targetEntity = City.class)
    @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
-   private FlightCity city;
+   private City city;
 
 //    @OneToMany(fetch = FetchType.EAGER)
 //    // mappedBy  = "from"

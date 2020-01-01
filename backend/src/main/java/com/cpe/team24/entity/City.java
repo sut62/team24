@@ -10,8 +10,7 @@ import java.util.Collection;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="FLIGHTCITY")
-public class FlightCity {
+public class City {
     @Id
     @SequenceGenerator(name="FLIGHT_CITY_SEQ",sequenceName="FLIGHT_CITY_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FLIGHT_CITY_SEQ")
@@ -32,5 +31,5 @@ public class FlightCity {
 
    @OneToMany(fetch = FetchType.EAGER)
    // mappedBy  = "city"
-   private Collection<FlightAirport> airports;
+   private Collection<Airport> airports;
 }
