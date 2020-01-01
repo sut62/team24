@@ -44,7 +44,8 @@ public class Team24Application {
 						   RoleRepository roleRepository,
 						   BaggageAddonRepository baggageaddonRepository, 
 						   BaggageImageRepository baggageimageRepository, 
-						   BaggageTypeRepository baggagetypeRepository) {
+						   BaggageTypeRepository baggagetypeRepository,
+						   FlightTypeRepository flightTypeRepository) {
 		return args -> {
 			Object[][] data;
 			// ------------Add User ROLE ---------
@@ -79,6 +80,9 @@ public class Team24Application {
 				System.out.println(user);
 				System.out.println("-------------------------------------------");
 			}
+			//-------------- Add FlightType --------
+			flightTypeRepository.save(new FlightType(EFlightType.DEPART_FLIGHT));
+			flightTypeRepository.save(new FlightType(EFlightType.RETURN_FLIGHT));
 			// ------------Flight-----------------
 			data = new Object[][] {
 					// price , depart(days), flight duration(minute)
