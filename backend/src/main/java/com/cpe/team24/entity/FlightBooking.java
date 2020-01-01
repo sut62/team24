@@ -46,7 +46,7 @@ public class FlightBooking {
         this.departSeatId = departSeatId;
         this.returnSeatId = returnSeatId;
         this.bookId = RandomString.make(6).toUpperCase();
-        this.date = new Date();
+        this.setDate(new Date());
     }
 
     //Getter Setter
@@ -91,5 +91,21 @@ public class FlightBooking {
 
     public void setBookId(String bookId) {
         this.bookId = bookId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Collection<FlightBookingLink> getFlightBookingLinks() {
+        return flightBookingLinks;
+    }
+
+    public void setFlightBookingLinks(Collection<FlightBookingLink> flightBookingLinks) {
+        this.flightBookingLinks = flightBookingLinks;
     }
 }

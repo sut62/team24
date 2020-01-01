@@ -133,13 +133,13 @@ public class Team24Application {
 				FlightBookingLink flightBookingLink = new FlightBookingLink();
 				flightBookingLink.setFlight(departFlight);
 				flightBookingLink.setFlightBooking(flightBooking);
-				flightBookingLink.setDepartFlight(true);
+				flightBookingLink.setFlightType(flightTypeRepository.findByName(EFlightType.DEPART_FLIGHT));
 				flightBookingLinkRepository.save(flightBookingLink);
 
 				flightBookingLink = new FlightBookingLink();
 				flightBookingLink.setFlight(returnFlight);
 				flightBookingLink.setFlightBooking(flightBooking);
-				flightBookingLink.setDepartFlight(false);
+				flightBookingLink.setFlightType(flightTypeRepository.findByName(EFlightType.RETURN_FLIGHT));
 				flightBookingLinkRepository.save(flightBookingLink);
 
 				System.out.printf("\n------------Add FlightBooking%d--------------\n", i + 1);
