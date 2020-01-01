@@ -34,7 +34,7 @@ public class Team24Application {
 						   BookingStatusRepository bookingStatusRepository, FlightRepository flightRepository,
 						   FlightBookingLinkRepository flightBookingLinkRepository, UserRepository userRepository,
 						   FlightCityRepository flightCityRepository,
-						   FlightAirportRepository flightAirportRepository,
+						   AirportRepository airportRepository,
 						   AirplaneRepository airplaneRepository,
 						   PasswordEncoder encoder,
 						   RoleRepository roleRepository,
@@ -145,8 +145,8 @@ public class Team24Application {
 			}
 			;
 			// ------------Add Flight Airport ---------
-			flightAirportRepository.save(new FlightAirport(FAir.FLIGHT_AIRPORT_TO));
-			flightAirportRepository.save(new FlightAirport(FAir.FLIGHT_AIRPORT_FROM));
+			airportRepository.save(new Airport(FAir.FLIGHT_AIRPORT_TO));
+			airportRepository.save(new Airport(FAir.FLIGHT_AIRPORT_FROM));
 			// ------------Flight City-----------------
 			data = new Object[][] { { "กรุงเทพมหานคร" }, { "เชียงใหม่" }, { "เชียงราย" }, { "ภูเก็ต" }, { "ส่งขลา" } };
 			for (int i = 0; i < data.length; i++) {

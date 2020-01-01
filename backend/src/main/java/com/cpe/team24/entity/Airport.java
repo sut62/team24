@@ -10,8 +10,7 @@ import java.util.Collection;
 @Data
 @Entity
 // @NoArgsConstructor
-@Table(name="FLIGHTAIRPORT")
-public class FlightAirport {
+public class Airport {
     @Id
     // @SequenceGenerator(name="FLIGHT_AIRPORT_SEQ",sequenceName="FLIGHT_AIRPORT_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +21,8 @@ public class FlightAirport {
     @Column(length = 20)
     private FAir name;
 
-    public FlightAirport(){}
-    public FlightAirport(FAir name){
+    public Airport(){}
+    public Airport(FAir name){
         this.name = name;
     }
     public Long getId() {

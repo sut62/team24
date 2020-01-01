@@ -39,14 +39,14 @@ public class Flight {
     @JoinTable(name = "FLIGHT_FLIGHTAIRPORT",
             joinColumns = @JoinColumn(name = "FLIGHT_ID"),
             inverseJoinColumns = @JoinColumn(name = "FLIGHT_AIRPORT_ID"))
-    private Set<FlightAirport> flightAirports = new HashSet<>();
+    private Set<Airport> airports = new HashSet<>();
 
-    public Set<FlightAirport> getFlightAirports() {
-        return flightAirports;
+    public Set<Airport> getAirports() {
+        return airports;
     }
 
-    public void setRoles(Set<FlightAirport> flightAirports) {
-        this.flightAirports = flightAirports;
+    public void setRoles(Set<Airport> airports) {
+        this.airports = airports;
     }
     // ========== End by JOKE ==========
     //Getter Setter

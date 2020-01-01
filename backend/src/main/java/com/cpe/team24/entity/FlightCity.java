@@ -32,5 +32,5 @@ public class FlightCity {
 
    @OneToMany(fetch = FetchType.EAGER)
    // mappedBy  = "city"
-   private Collection<FlightAirport> airports;
+   private Collection<Airport> airports;
 }
