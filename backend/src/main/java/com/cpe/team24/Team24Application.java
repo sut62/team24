@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @SpringBootApplication
 public class Team24Application {
@@ -40,7 +41,10 @@ public class Team24Application {
 						   FlightAirportRepository flightAirportRepository,
 						   FlightAirplaneRepository flightAirplaneRepository,
 						   PasswordEncoder encoder,
-						   RoleRepository roleRepository) {
+						   RoleRepository roleRepository,
+						   BaggageAddonRepository baggageaddonRepository, 
+						   BaggageImageRepository baggageimageRepository, 
+						   BaggageTypeRepository baggagetypeRepository) {
 		return args -> {
 			Object[][] data;
 			// ------------Add User ROLE ---------
@@ -152,7 +156,7 @@ public class Team24Application {
 				System.out.printf("\n------------Add Flight City%d--------------\n", i + 1);
 				System.out.println(fightCity);
 				System.out.println("-------------------------------------------");
-			}
+			};
 			// ------------ Flight Airplane-----------------
 			// data = new Object[][] { { "กรุงเทพมหานคร" }, { "เชียงใหม่" }, { "เชียงราย" }, { "ภูเก็ต" }, { "ส่งขลา" } };
 			// for (int i = 0; i < data.length; i++) {
@@ -163,6 +167,56 @@ public class Team24Application {
 			// 	System.out.println(flightAirplane);
 			// 	System.out.println("-------------------------------------------");
 			// }
+
+
+			Stream.of(
+				"ธรรมดา","ที่ต้องดูแลเป็นเศษ","อุปกรณ์การกีฬา"
+			).forEach(bagtype-> {
+				BaggageType baggagetype = new BaggageType(); 
+				baggagetype.setName(bagtype); 
+				baggagetypeRepository.save(baggagetype); 
+			});
+
+
+			Object[][] bagimage;
+			//Menu Design
+			bagimage = new Object[][] {
+				{ "AAA", "http://www.thaifoodheritage.com/uploads/recipe_list/gallery/e3de5-jpg.jpeg" },
+				{ "BBB", "https://food.mthai.com/app/uploads/2019/02/Fried-Rice-with-Shrimp-Fat.jpg" },
+				{ "CCC","https://image.makewebeasy.net/makeweb/0/zs7gnRKvE/TH/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88.jpg" },
+				{ "DDD", "https://food.mthai.com/app/uploads/2017/02/Spicy-fish-2.jpg" },
+				{ "EEE", "https://img.kapook.com/u/2015/surauch/cook2/PT1.jpg" }, 
+			};
+			for (int i = 0; i < bagimage.length; i++) {
+				BaggageImage image = new BaggageImage();
+				image.setName((String) bagimage[i][0]);
+				image.setUrl((String) bagimage[i][1]);
+				baggageimageRepository.save(image);
+			};
+
+			Object[][] bag = new Object[][] { 
+				{ "สมศรี", "Thai", 1,1,1 },
+				{ "สมชาย", "Thai", 1,2,3 },
+				{ "สมพงษ์", "Thai", 2,3,2 }
+			};
+			for (int i = 0; i < bag.length; i++) {
+				BaggageAddon newBag = new BaggageAddon();
+				newBag.setMaxweight((String) bag[i][0]);		
+				newBag.setPrice((String) bag[i][1]);
+				
+				BaggageType btype = baggagetypeRepository.findById((int) bag[i][2]);
+				newBag.setAddbaggagetype(btype);
+
+				BaggageImage bimage = baggageimageRepository.findById((int)bag[i][3]);
+				newBag.setAddbaggageimage(bimage);
+				
+
+				FlightCity fightCity = new FlightCity();
+				fightCity.setName(bag[i][4].toString());	
+
+				
+				baggageaddonRepository.save(newBag);
+			}
 		};
 	}
 
