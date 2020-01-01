@@ -10,16 +10,17 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-public class FlightAirportController {
+@RequestMapping("/airport")
+public class AirportController {
 
    @Autowired
    private final AirportRepository airportRepository;
 
-   public FlightAirportController(AirportRepository airportRepository) {
+   public AirportController(AirportRepository airportRepository) {
        this.airportRepository = airportRepository;
    }
 
-   @GetMapping("/flightAirport")
+   @GetMapping("")
    public Collection<Airport> fightAirport() {
        return airportRepository.findAll().stream().collect(Collectors.toList());
    }

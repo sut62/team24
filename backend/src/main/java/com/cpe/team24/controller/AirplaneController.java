@@ -10,17 +10,18 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-public class FlightAirplaneController {
+@RequestMapping("/airplane")
+public class AirplaneController {
 
     @Autowired
     private final AirplaneRepository airplaneRepository;
 
-    public FlightAirplaneController(AirplaneRepository airplaneRepository) {
+    public AirplaneController(AirplaneRepository airplaneRepository) {
 
         this.airplaneRepository = airplaneRepository;
     }
 
-    @GetMapping("/flightAirplane")
+    @GetMapping("")
     public Collection<Airplane> flightAirplanes() {
         return airplaneRepository.findAll().stream().collect(Collectors.toList());
     }
