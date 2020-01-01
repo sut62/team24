@@ -1,32 +1,31 @@
 package com.cpe.team24.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-public class FlightType {
+public class FlightBookingType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private EFlightType name;
+    private EFlightBookingType name;
 
     @JsonIgnore
     @OneToMany
     private Collection<FlightBookingLink> flightBookingLink;
 
-    public FlightType(){}
-    public FlightType(EFlightType name){
+    public FlightBookingType(){}
+    public FlightBookingType(EFlightBookingType name){
         this.name = name;
     }
-    public EFlightType getName() {
+    public EFlightBookingType getName() {
         return name;
     }
 
-    public void setName(EFlightType name) {
+    public void setName(EFlightBookingType name) {
         this.name = name;
     }
 }

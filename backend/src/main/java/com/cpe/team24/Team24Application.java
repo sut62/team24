@@ -11,15 +11,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -42,10 +38,10 @@ public class Team24Application {
 						   FlightAirplaneRepository flightAirplaneRepository,
 						   PasswordEncoder encoder,
 						   RoleRepository roleRepository,
-						   BaggageAddonRepository baggageaddonRepository, 
-						   BaggageImageRepository baggageimageRepository, 
+						   BaggageAddonRepository baggageaddonRepository,
+						   BaggageImageRepository baggageimageRepository,
 						   BaggageTypeRepository baggagetypeRepository,
-						   FlightTypeRepository flightTypeRepository) {
+						   FlightBookingTypeRepository flightBookingTypeRepository) {
 		return args -> {
 			Object[][] data;
 			// ------------Add User ROLE ---------
@@ -81,8 +77,8 @@ public class Team24Application {
 				System.out.println("-------------------------------------------");
 			}
 			//-------------- Add FlightType --------
-			flightTypeRepository.save(new FlightType(EFlightType.DEPART_FLIGHT));
-			flightTypeRepository.save(new FlightType(EFlightType.RETURN_FLIGHT));
+			flightBookingTypeRepository.save(new FlightBookingType(EFlightBookingType.DEPART_FLIGHT));
+			flightBookingTypeRepository.save(new FlightBookingType(EFlightBookingType.RETURN_FLIGHT));
 			// ------------Flight-----------------
 			data = new Object[][] {
 					// price , depart(days), flight duration(minute)
@@ -133,13 +129,13 @@ public class Team24Application {
 				FlightBookingLink flightBookingLink = new FlightBookingLink();
 				flightBookingLink.setFlight(departFlight);
 				flightBookingLink.setFlightBooking(flightBooking);
-				flightBookingLink.setFlightType(flightTypeRepository.findByName(EFlightType.DEPART_FLIGHT));
+				flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT));
 				flightBookingLinkRepository.save(flightBookingLink);
 
 				flightBookingLink = new FlightBookingLink();
 				flightBookingLink.setFlight(returnFlight);
 				flightBookingLink.setFlightBooking(flightBooking);
-				flightBookingLink.setFlightType(flightTypeRepository.findByName(EFlightType.RETURN_FLIGHT));
+				flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT));
 				flightBookingLinkRepository.save(flightBookingLink);
 
 				System.out.printf("\n------------Add FlightBooking%d--------------\n", i + 1);
