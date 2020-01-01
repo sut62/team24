@@ -1,8 +1,5 @@
 package com.cpe.team24.entity;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,7 +27,7 @@ public class FlightBookingLink {
     private FlightBooking flightBooking;
 
     @ManyToOne
-    private FlightType flightType;
+    private FlightBookingType flightBookingType;
 
     //GETTER SETTER
     public Flight getFlight() {
@@ -50,11 +47,11 @@ public class FlightBookingLink {
     }
 
 
-    public FlightType getFlightType() {
-        return flightType;
+    public FlightBookingType getFlightBookingType() {
+        return flightBookingType;
     }
 
-    public void setFlightType(FlightType flightType) {
-        this.flightType = flightType;
+    public void setFlightBookingType(FlightBookingType flightBookingType) {
+        this.flightBookingType = flightBookingType;
     }
 }
