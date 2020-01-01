@@ -11,7 +11,7 @@ import java.util.Collection;
 @Entity
 @NoArgsConstructor
 @Table(name="FLIGHTAIRPLANE")
-public class FlightAirplane {
+public class Airplane {
     @Id
     @SequenceGenerator(name="FIGHT_AIRPLANE_SEQ",sequenceName="FLIGHT_AIRPLANE_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FLIGHT_AIRPLANE_SEQ")

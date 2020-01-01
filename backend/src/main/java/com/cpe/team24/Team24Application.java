@@ -35,7 +35,7 @@ public class Team24Application {
 						   FlightBookingLinkRepository flightBookingLinkRepository, UserRepository userRepository,
 						   FlightCityRepository flightCityRepository,
 						   FlightAirportRepository flightAirportRepository,
-						   FlightAirplaneRepository flightAirplaneRepository,
+						   AirplaneRepository airplaneRepository,
 						   PasswordEncoder encoder,
 						   RoleRepository roleRepository,
 						   BaggageAddonRepository baggageaddonRepository,

@@ -1,6 +1,6 @@
 package com.cpe.team24.controller;
 
-import com.cpe.team24.entity.FlightAirplane;
+import com.cpe.team24.entity.Airplane;
 import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
 public class FlightAirplaneController {
 
     @Autowired
-    private final FlightAirplaneRepository flightAirplaneRepository;
+    private final AirplaneRepository airplaneRepository;
 
-    public FlightAirplaneController(FlightAirplaneRepository flightAirplaneRepository) {
+    public FlightAirplaneController(AirplaneRepository airplaneRepository) {
 
-        this.flightAirplaneRepository = flightAirplaneRepository;
+        this.airplaneRepository = airplaneRepository;
     }
 
     @GetMapping("/flightAirplane")
-    public Collection<FlightAirplane> flightAirplanes() {
-        return flightAirplaneRepository.findAll().stream().collect(Collectors.toList());
+    public Collection<Airplane> flightAirplanes() {
+        return airplaneRepository.findAll().stream().collect(Collectors.toList());
     }
 
 }
