@@ -2,39 +2,35 @@ package com.cpe.team24.entity;
 
 import lombok.*;
 
+import java.util.Collection;
+
 import javax.persistence.*;
 
 
 @Data
 @Entity
-// @NoArgsConstructor
+@NoArgsConstructor
 public class Airport {
     @Id
-    // @SequenceGenerator(name="FLIGHT_AIRPORT_SEQ",sequenceName="FLIGHT_AIRPORT_SEQ")
+    @SequenceGenerator(name="AIRPORT_SEQ",sequenceName="AIRPORT_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Column(name="FLIGHT_AIRPORT_ID",unique = true, nullable = true)
+    @Column(name="AIRPORT_ID",unique = true, nullable = true)
     private Long id;
+    private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private FAir name;
+    public String getName() {
+        return this.name;
+    }
 
-    public Airport(){}
-    public Airport(FAir name){
+    public void setName(String name) {
         this.name = name;
     }
+
     public Long getId() {
         return this.id;
     }
     public void setId(Long id) {
         this.id = id;
-    }
-    public FAir getName() {
-        return this.name;
-    }
-
-    public void setName(FAir name) {
-        this.name = name;
     }
 
 
@@ -42,12 +38,8 @@ public class Airport {
    @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
    private City city;
 
-//    @OneToMany(fetch = FetchType.EAGER)
-//    // mappedBy  = "from"
-//    private Collection<Fight> flight;
-
-//    @OneToMany(fetch = FetchType.EAGER)
-//    // mappedBy  = "to"
-//    private Collection<Fight> flight;
+   @OneToMany(fetch = FetchType.EAGER)
+   // mappedBy  = "airport"
+   private Collection<FlightAirport> flightAirports;
 
 }
