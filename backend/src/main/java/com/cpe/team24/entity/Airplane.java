@@ -10,12 +10,12 @@ import java.util.Collection;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="FLIGHTAIRPLANE")
+@Table(name="AIRPLANE")
 public class Airplane {
     @Id
-    @SequenceGenerator(name="FIGHT_AIRPLANE_SEQ",sequenceName="FLIGHT_AIRPLANE_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FLIGHT_AIRPLANE_SEQ")
-    @Column(name="FLIGHT_AIRPLANE_ID",unique = true, nullable = true)
+    @SequenceGenerator(name="AIRPLANE_SEQ",sequenceName="AIRPLANE_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="AIRPLANE_SEQ")
+    @Column(name="AIRPLANE_ID",unique = true, nullable = true)
     private Long id;
     private String name;
     private String seatAmout;
@@ -44,8 +44,7 @@ public class Airplane {
     	this.seatAmout = seatAmout;
     }
 
-
-//    @OneToMany(fetch = FetchType.EAGER)
-//    // mappedBy  = "airplane"
-//    private Collection<Flight> flight;
+   @OneToMany(fetch = FetchType.EAGER)
+   // mappedBy  = "airplane"
+   private Collection<Flight> flight;
 }

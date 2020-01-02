@@ -34,21 +34,7 @@ public class Flight {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<FlightBookingLink> flightBookingLinks;
-    // ========== Add by JOKE ==========
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "FLIGHT_FLIGHTAIRPORT",
-            joinColumns = @JoinColumn(name = "FLIGHT_ID"),
-            inverseJoinColumns = @JoinColumn(name = "FLIGHT_AIRPORT_ID"))
-    private Set<Airport> airports = new HashSet<>();
 
-    public Set<Airport> getAirports() {
-        return airports;
-    }
-
-    public void setRoles(Set<Airport> airports) {
-        this.airports = airports;
-    }
-    // ========== End by JOKE ==========
     //Getter Setter
     public Double getPrice() {
         return price;
@@ -74,19 +60,12 @@ public class Flight {
         this.arrive = arrive;
     }
 
-//    @JsonIgnore
-//    @OneToMany(fetch = FetchType.EAGER)
-//    private Collection<FlightBooking> flightBookings;
 
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = FightAirport.class)
-//    @JoinColumn(name = "FIGHT_AIRPORT_ID", insertable = true)
-//    private FightAirport form;
-//
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = FightAirport.class)
-//    @JoinColumn(name = "FIGHT_AIRPORT_ID", insertable = true)
-//    private FightAirport to;
-//
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = FightAirplane.class)
-//    @JoinColumn(name = "FIGHT_AIRPLANE_ID", insertable = true)
-//    private FightAirplane airplane;
+    @OneToMany(fetch = FetchType.EAGER)
+    // mappedBy  = "city"
+    private Collection<FlightAirport> flightAirports;
+    
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airplane.class)
+    @JoinColumn(name = "FIGHT_AIRPLANE_ID", insertable = true)
+    private Airplane airplane;
 }
