@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/airport")
+@RequestMapping("/api/airport")
 public class AirportController {
 
    @Autowired

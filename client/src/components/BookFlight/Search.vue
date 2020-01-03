@@ -9,28 +9,32 @@
           </li>
         </ul>
       </div>
-      <div class="card-body">
-        <h5 class="card-title">เริ่มต้นการเดินทาง</h5>
+      <div class="card-body px-4">
         <v-row>
-          <v-col cols="2">
+          <v-col>
             <v-autocomplete
-              v-model="select"
-              :items="items"
+              v-model="airportDepart"
+              rounded
+              :items="airportName"
+              item-text="text"
+              item-value="value"
               outlined
               label="จาก"
-              filled
+              
             ></v-autocomplete>
           </v-col>
-          <v-col cols="2">
+          <v-col>
             <v-autocomplete
-              v-model="select"
-              :items="items"
+              v-model="airportArrive"
+              rounded
+              :items="airportName"
+              item-text="text"
+              item-value="value"
               outlined
               label="ถึง"
-              filled
             ></v-autocomplete>
           </v-col>
-          <v-col cols="4">
+          <v-col >
             <v-menu
             :close-on-content-click="false"
             transition="scale-transition"
@@ -38,14 +42,14 @@
             min-width="290px"
             >
               <template v-slot:activator="{ on }">
-                <v-text-field v-on="on" outlined v-model="dateRangeText" label="เลือกวันเวลาไป-กลับ" readonly></v-text-field>
+                <v-text-field rounded v-on="on" outlined v-model="dateRangeText" label="เลือกวันเวลาไป-กลับ" readonly></v-text-field>
               </template>
               <v-date-picker v-model="dates" range no-title scrollable>
               </v-date-picker>
             </v-menu>
           </v-col>
-          <v-col cols="4">
-            <div class="btn btn-danger text-white btn-lg" style="width:100%;" @click="getFlight">ค้นหา</div>
+          <v-col cols="2">
+              <div class="btn btn-danger text-white btn-lg" style="width:100%;" @click="getFlight">ค้นหา</div>
           </v-col>
         </v-row>
       </div>
@@ -56,7 +60,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions,mapState,mapMutations} from 'vuex'
 
 export default {
 
@@ -64,19 +68,20 @@ export default {
 
   data: () => ({
     showDatePick: false,
-    dates: ['2019-12-27', '2019-12-27'],
-    select: 'Programming',
-    items: [
-      'กรุงเทพ',
-      'ขอนแก่น',
-      'ภูเก็ต',
-      'เลย',
-    ]
+    dates: ['2020-01-03', '2020-01-03'],
+    airportName: [],
+    airportDepart: {},
+    airportArrive: {},
   }),
   methods:{
     ...mapActions({
       getFlightDepart: 'BookFlight/getFlightDepart',
-      getFlightReturn: 'BookFlight/getFlightReturn'
+      getFlightReturn: 'BookFlight/getFlightReturn',
+      getAirport: 'BookFlight/getAirport',
+    }),
+    ...mapMutations({
+      'selectDepartAirport': 'BookFlight/selectDepartAirport',
+      'selectArriveAirport': 'BookFlight/selectArriveAirport'
     }),
     getFlight(){
       this.getFlightDepart(this.dates[0])
@@ -84,14 +89,44 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      'airport': state => state.BookFlight.result.airport,
+    }),
     dateRangeText () {
-      return 'Depart: ' + this.dates.join(' Return: ')
+      return 'ไป: ' + this.dates.join(' กลับ: ')
     },
+  },
+  watch:{
+    airportDepart(){
+      this.selectDepartAirport(this.airportDepart)
+    },
+    airportArrive(){
+      this.selectArriveAirport(this.airportArrive)
+    }
+  },
+  created(){
+    this.getAirport().then((result)=>{
+      // console.log(result)
+      result.map(airport => {
+        this.airportName.push({
+          text: airport.city.name + " [" + airport.name + "]" ,
+          value: airport
+        })
+      })
+    });
   }
 };
 </script>
 
 <style scoped>
+  .mycard{
+    border-style: solid;
+    border-color: rgb(240, 240, 240);
+    border-width: 3px;
+    padding:20px;
+    border-radius: 20px;
+
+  }
   .date-picker{
     position: absolute;
     left: 20px;
