@@ -11,6 +11,12 @@ class BookFlightProvider extends HttpRequest {
   getFlight (date) {
     return this.fetch('/flight/' + date)
   }
+  getFlightByAirport (date,departAirportId,arriveAirportId) {
+    return this.fetch('/flight/' + date + '/' + departAirportId + '/' + arriveAirportId)
+  }
+  getAirport(){
+    return this.fetch('/airport')
+  }
 }
 
 export default BookFlightProvider

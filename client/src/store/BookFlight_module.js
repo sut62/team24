@@ -7,14 +7,17 @@ const bookFlight = {
     flightDepartLoading: false,
     flightReturnLoading: false,
     pageLocation: 1, // 1 for Search, 2 for SelectFlight, 3 for guestDetail, 4 redirect to payment
-    result:{
+    result:{ //for response
       bookResult: null,
+      airport: null,
       flightDepart: null,
       flightReturn: null
     },
-    data:{
+    data:{ //for request
       flightDepart: null,
       flightReturn: null,
+      airportDepart: null,
+      airportArrive: null
     }
   },
   mutations: {
@@ -44,12 +47,21 @@ const bookFlight = {
       state.result.flightReturn = result
       state.pageLocation = 2
     },
+    GET_AIRPORT_SUCCESS(state,airport){
+      state.result.airport = airport;
+    },
     // Selection method
     selectDepartFlight(state,data){
       state.data.flightDepart = data
     },
     selectReturnFlight(state,data){
       state.data.flightReturn = data
+    },
+    selectDepartAirport(state,data){
+      state.data.airportDepart = data
+    },
+    selectArriveAirport(state,data){
+      state.data.airportArrive = data
     },
     NEXT_PAGE(state){
       state.pageLocation += 1;
@@ -67,15 +79,15 @@ const bookFlight = {
       await commit('BOOK_SUCCESS',result.data)
     },
     // Get flight departure by date
-    async getFlightDepart({commit},date){
+    async getFlightDepart({commit,state},date){
       await commit('FLIGHT_DEPART_LOADING')
-      let result = await BookFlightService.getFlight(date);
+      let result = await BookFlightService.getFlightByAirport(date,state.data.airportDepart.id,state.data.airportArrive.id);
       await commit('FLIGHT_DEPART_LOADING_SUCCESS',result.data)
     },
     // Get flight return by date
-    async getFlightReturn({commit},date){
+    async getFlightReturn({commit,state},date){
       await commit('FLIGHT_RETURN_LOADING')
-      let result = await BookFlightService.getFlight(date);
+      let result = await BookFlightService.getFlightByAirport(date,state.data.airportArrive.id,state.data.airportDepart.id);
       await commit('FLIGHT_RETURN_LOADING_SUCCESS',result.data)
     },
     // next Page
@@ -87,7 +99,12 @@ const bookFlight = {
       }else{
         await commit('NEXT_PAGE')
       }
-    }
+    },
+    async getAirport({commit}){
+      let result = await BookFlightService.getAirport();
+      await commit('GET_AIRPORT_SUCCESS',result.data)
+      return result.data
+    },
   },
   getters: {
     getTotalPrice: state => {
