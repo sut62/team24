@@ -11,18 +11,18 @@
         <div class="card-body">
           <v-row>
             <v-col cols="3">
-              <v-autocomplete v-model="checkIn.origin" :items="flightCity" item-text="name" outlined label="เมืองต้นทาง" filled></v-autocomplete>
+               <v-autocomplete v-model="checkIn.depart" :items="flightCity" item-text="name" item-value="id" outlined label="เมืองต้นทาง" filled></v-autocomplete>
             </v-col>
             <v-col cols="3">
-              <v-autocomplete v-model="checkIn.destination" :items="flightCity" item-text="name" outlined label="เมืองปลายทาง" filled></v-autocomplete>
+              <v-autocomplete v-model="checkIn.arrive" :items="flightCity" item-text="name" item-value="id" outlined label="เมืองปลายทาง" filled></v-autocomplete>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="checkIn.name"  outlined label="ชื่อจริง" filled></v-text-field>
+              <v-text-field v-model="checkIn.lastname"  outlined label="นามสกุล" filled></v-text-field>
             </v-col>
             <v-col cols="3">
               <a
                 href="#"
-                @click="()=> onShowFligthPage(this)"
+                @click="()=> findForCheckIn(this) "
                 class="btn btn-danger text-white btn-lg"
                 style="width:85%"
               >ค้นหา</a>
@@ -86,25 +86,22 @@
       </div>
       <div>
         <div class="mt-3 font-weight-medium topic-size">Flight</div>
-        <div class="mt-0 font-weight-medium text-size">กรุณาเลือกผู้โดยสารเพื่อทำการเช็คอิน</div>
+        <div class="mt-0 font-weight-medium text-size">รายละเอียดเที่ยวบิน</div>
         <div class="card text-center card-description">
           <div class="card-header text-left">รายละเอียด</div>
           <div class="card card-flight card-header text-center">
             <v-row>
-              <v-col cols="5">กรุงเทพ</v-col>
-              <v-col cols="7">เชียงใหม่</v-col>
+              <v-col cols="5" >{{flightAirports_go.name}}</v-col>
+              <v-col cols="7">{{flightAirports_back.name}}</v-col>
             </v-row>
             <v-row class="mt-0">
-              <v-col cols="5">14 กย 62</v-col>
+              <v-col cols="5">{{flightBookingLinks_go.depart}}</v-col>
               <v-icon x-large color="orange darken-2">mdi-airplane</v-icon>
-              <v-col cols="6">14 กย 62</v-col>
+              <v-col cols="5">{{flightBookingLinks_back.arrive}}</v-col>
             </v-row>
-            <v-row class="mt-0">
-              <v-col cols="5">23:00 น</v-col>
-              <v-col cols="7">24:00 น</v-col>
-            </v-row>
+          
           </div>
-          <div class="card-body text-left">นาย เปี่ยมพูล พูลเปี่ยม</div>
+          <div class="card-body text-left">{{flight.user.firstName}} {{flight.user.lastName}}</div>
         </div>
       </div>
       <div class="card text-center card-button">
@@ -154,13 +151,13 @@
                 <v-col>
                   <v-list-item>
                     <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
-                    <div class="ml-5">DMK-URT</div>
+                    <div class="ml-5">{{city_go}}-{{city_back}}</div>
                   </v-list-item>
                 </v-col>
                 <v-col>
                   <v-list-item>
                     <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
-                    <div class="ml-5">URT-DMK</div>
+                    <div class="ml-5">{{city_back}}-{{city_go}}</div>
                   </v-list-item>
                 </v-col>
               </v-row>
@@ -184,7 +181,7 @@
                   <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
                   <v-row class="ml-6 mt-.5">
                     <v-list-item-content>
-                      <v-list-item-title class="font-weight-medium">DMK-URT</v-list-item-title>
+                      <v-list-item-title class="font-weight-medium">{{city_go}}-{{city_back}}</v-list-item-title>
                       <v-list-item-subtitle>23D,23E</v-list-item-subtitle>
                     </v-list-item-content>
                   </v-row>
@@ -196,7 +193,7 @@
                   <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
                   <v-row class="ml-6 mt-.5">
                     <v-list-item-content>
-                      <v-list-item-title class="font-weight-medium">DMK-URT</v-list-item-title>
+                      <v-list-item-title class="font-weight-medium">{{city_back}}-{{city_go}}</v-list-item-title>
                       <v-list-item-subtitle>23D,23E</v-list-item-subtitle>
                     </v-list-item-content>
                   </v-row>
@@ -252,8 +249,7 @@
         <v-list-item three-line>
           <v-list-item-content>
             <v-list-item-title class="mb-1 mr-1">
-              <v-icon large color="black">mdi-check-bold</v-icon>นายเปี่ยมพูล พูลเปี่ยม
-            </v-list-item-title>
+              <v-icon large color="black">mdi-check-bold</v-icon> {{flight.user.firstName}}  {{flight.user.lastName}} </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </div>
@@ -265,7 +261,7 @@
             <v-list-item-title class="mb-1">
               <v-icon large color="black">mdi-email-newsletter</v-icon>รับบัตรขึ้นเครื่องบอร์ดดิ้งพาสทาง E-mail
             </v-list-item-title>
-            <v-text-field outlined label="E-mail" filled style="width: 50%;"></v-text-field>
+            <v-text-field v-model="checkIn.email" outlined label="E-mail" filled style="width: 50%;"></v-text-field>
           </v-list-item-content>
         </v-list-item>
       </div>
@@ -420,10 +416,19 @@ export default {
     return {
       flightCity: [],
       checkIn: {
-        origin: "",
-        destination: "",
-        name: "",
+        arrive: "",
+        depart: "",
+        lastname: "",
+        email:"",
+        flight:[],
       },
+      flight:[],
+      flightBookingLinks_go:[],
+      flightBookingLinks_back:[],
+      flightAirports_go:[],
+      flightAirports_back:[],
+      city_go:[],
+      city_back:[],
       agree: false ,
 
       checkin_page: true,
@@ -440,6 +445,7 @@ export default {
 
   // updated(){
   //   console("Hello world!");
+   //   console("Hello world!");
   // },
 
   methods: {
@@ -474,20 +480,29 @@ export default {
         .then(response => {
           this.flightCity = response.data;
           this.$nextTick();
-          console.log(response.data);
+          //console.log(response.data);
+          //console.log(response.data);
+           //console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
     },
 
-     findCustomer() {
-      axiosInstance.get("/checkIn/" + this.checkIn.name)
+     findForCheckIn() {
+      axiosInstance.get("/flight-booking/checkin/"+ this.checkIn.lastname +"/" +this.checkIn.depart+"/"+this.checkIn.arrive)
         .then(response => {
           console.log(response);
           if (response.data != null) {
-            this.customerName = response.data.name;
-            this.customerCheck = response.status;
+            this.flight = response.data;
+            this.flightBookingLinks_go = response.data.flightBookingLinks[0].flight;
+            this.flightBookingLinks_back = response.data.flightBookingLinks[1].flight;
+            this.flightAirports_go = response.data.flightBookingLinks[0].flight.flightAirports[0].airport;
+            this.flightAirports_back = response.data.flightBookingLinks[1].flight.flightAirports[1].airport;
+            this.city_go = response.data.flightBookingLinks[0].flight.flightAirports[0].airport.city.name;
+            this.city_back = response.data.flightBookingLinks[1].flight.flightAirports[1].airport.city.name;
+
+            console.log(this.city_go)
           } else {
             this.clear()
           }          
@@ -496,10 +511,12 @@ export default {
           console.log(e);
         });
       this.submitted = true;
+      this.onShowFligthPage(this);
     },
   
   },
   mounted() {
+    //alert("we are here!");
     //alert("we are here!");
     this.getFlightCity();
   }
