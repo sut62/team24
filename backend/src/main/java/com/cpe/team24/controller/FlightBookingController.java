@@ -35,6 +35,12 @@ public class FlightBookingController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private FlightAirportTypeRepository flightAirportTypeRepository;
+
+    @Autowired
+    private AirportRepository airportRepository;
+
     public FlightBookingController(
             final FlightBookingRepository flightBookingRepository,
             final FlightRepository flightRepository,
@@ -92,13 +98,35 @@ public class FlightBookingController {
     //     return user;  
     // }
 
-     @GetMapping("/{lastname}")
-    public FlightBooking Users(@PathVariable final String lastname) {
+     @GetMapping("/checkin/{lastname}/{depart_airport_id}/{arrive_airport_id}")
+    public FlightBooking Users(@PathVariable final String lastname,@PathVariable final Long depart_airport_id,@PathVariable final Long arrive_airport_id) {
         User user = userRepository.findByLastName(lastname).orElseThrow(()->new MessageDescriptorFormatException("User Id not founded"));
 
-        FlightBooking flightBooking = flightBookingRepository.findByUser(user).orElse(null);
-        if(flightBooking.getBookingStatus() == bookingStatusRepository.findByName(EBookingStatus.PENDING)){
-            return flightBooking;
+        Collection<FlightBooking> flightBookings = flightBookingRepository.findAllByUser(user);
+        for(FlightBooking flightBooking : flightBookings ){
+            if(flightBooking.getBookingStatus() == bookingStatusRepository.findByName(EBookingStatus.PENDING)){
+                for( FlightBookingLink flightBookingLink : flightBooking.getFlightBookingLinks()){
+                    Integer correct = 0;
+                    for(FlightAirport flightAirport : flightBookingLink.getFlight().getFlightAirports()){
+                        if(flightAirport.getFlightAirportType() == flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT)){
+                            if(flightAirport.getAirport() == airportRepository.findById(depart_airport_id).orElseThrow(()->new MessageDescriptorFormatException("depart_airport_id not founded"))){
+                                correct ++;
+                            }else{
+                                break;
+                            }
+                        }else{
+                            if(flightAirport.getFlightAirportType() == flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT)){
+                                if(flightAirport.getAirport() == airportRepository.findById(arrive_airport_id).orElseThrow(()->new MessageDescriptorFormatException("depart_airport_id not founded"))){
+                                    correct++;
+                                    if(correct == 2){
+                                        return flightBooking;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         return null;
     }
