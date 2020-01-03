@@ -91,6 +91,7 @@ export default {
       this.update += 1 % 2
     },
     returnDate(){
+      this.getFlightReturn(this.returnDate)
       this.update += 1 % 2
     }
   }
