@@ -1,19 +1,19 @@
 package com.cpe.team24.controller;
 
+import com.cpe.team24.entity.Airport;
 import com.cpe.team24.entity.EFlightAirportType;
 import com.cpe.team24.entity.Flight;
 import com.cpe.team24.entity.FlightAirport;
 import com.cpe.team24.model.BodyFlight;
 import com.cpe.team24.repository.*;
+import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 @RestController
 @RequestMapping(path="/api/flight")
@@ -33,12 +33,55 @@ public class FlightController {
     private AirportRepository airportRepository;
 
     @Autowired
+    private CityRepository cityRepository;
+
+    @Autowired
     private FlightAirportTypeRepository flightAirportTypeRepository;
 
     @GetMapping("/id/{id}")
     public Flight getFlightById(@PathVariable Long id){
         return flightRepository.findById(id).orElse(null);
     }
+
+    // For Book Flight - ToeiKanta had been creating.
+    @GetMapping("/{date}/{airport_depart_id}/{airport_arrive_id}")
+    public Collection<Flight> getFlightByDepartDate(@PathVariable String date,@PathVariable Long airport_depart_id,@PathVariable Long airport_arrive_id) throws ParseException {
+        Date departDayStart = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        String dateEnd = getNextDate(date);
+        Date departDayEnd = new SimpleDateFormat("yyyy-MM-dd").parse(dateEnd);
+        Collection<Flight> flights = flightRepository.findAllByDepartBetween(departDayStart,departDayEnd);
+        //Filter flights by depart airport
+        List<Flight> departFlight = new ArrayList<>();
+        for(Flight flight : flights){
+            for(FlightAirport flightAirport : flight.getFlightAirports()){
+                Airport airport = flightAirport.getAirport();
+                if(flightAirport.getFlightAirportType() == flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT)){
+                    if (airport == airportRepository.findById(airport_depart_id).orElseThrow(() -> new MessageDescriptorFormatException("Not found depart airport ID"))) {
+                        departFlight.add(flight);
+                    }
+                }
+
+            }
+        }
+        //Filter flight by depart and arrive airport
+        List<Flight> results = new ArrayList<>();
+        for(Flight flight : departFlight){
+            for(FlightAirport flightAirport : flight.getFlightAirports()){
+                Airport airport = flightAirport.getAirport();
+                if(flightAirport.getFlightAirportType() == flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT)){
+                    if (airport == airportRepository.findById(airport_arrive_id).orElseThrow(() -> new MessageDescriptorFormatException("Not found arrive airport ID"))) {
+                        results.add(flight);
+                    }
+                }
+            }
+        }
+
+        //System.out.println(departDayStart);
+        //System.out.println(departDayEnd);
+        //System.out.println(result);
+        return results;
+    }
+
     // For Book Flight - ToeiKanta had been creating.
     @GetMapping("/{date}")
     public Collection<Flight> getFlightByDepartDate(@PathVariable String date) throws ParseException {
