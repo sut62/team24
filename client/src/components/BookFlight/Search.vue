@@ -111,6 +111,9 @@ export default {
       if(new Date(this.dates[1]).getTime() < new Date(this.dates[0]).getTime()){
         this.dates = [this.dates[1]]
       }
+      if(new Date(this.dates[0]).getTime() < new Date().getTime()){
+        this.dates = [moment(new Date()).format("YYYY-MM-DD")]
+      }
     },
     airportDepart(){
       this.selectDepartAirport(this.airportDepart)
