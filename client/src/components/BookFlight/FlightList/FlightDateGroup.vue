@@ -1,27 +1,19 @@
 <template>
   <div :key="update">
-    <v-row>
-      <v-col>
-        <button @click="getFlight(-3)" class="mybtn btn btn-primary text-center">{{ getDate(-3) | moment("dd , DD MMMM")  }}</button>
-      </v-col>
-      <v-col>
-        <button @click="getFlight(-2)" class="mybtn btn btn-primary text-center">{{ getDate(-2) | moment("dd , DD MMMM")  }}</button>
-      </v-col>
-      <v-col>
-        <button @click="getFlight(-1)" class="mybtn btn btn-primary text-center">{{ getDate(-1) | moment("dd , DD MMMM")  }}</button>
-      </v-col>
-      <v-col>
-        <button @click="getFlight(0)" class="selected btn btn-primary text-center">{{ getDate(0) | moment("dd , DD MMMM")  }}</button>
-      </v-col>
-      <v-col>
-        <button @click="getFlight(1)" class="mybtn btn btn-primary text-center">{{ getDate(1) | moment("dd , DD MMMM")  }}</button>
-      </v-col>
-      <v-col>
-        <button @click="getFlight(2)" class="mybtn btn btn-primary text-center">{{ getDate(2) | moment("dd , DD MMMM")  }}</button>
-      </v-col>
-      <v-col>
-        <button @click="getFlight(3)" class="mybtn btn btn-primary text-center">{{ getDate(3) | moment("dd , DD MMMM")  }}</button>
-      </v-col>
+    <v-row justify="space-around">
+      <div>
+        <v-icon>mdi-chevron-left-box</v-icon>
+      <button @click="getFlight(-3)" class="mybtn btn btn-primary  text-center">{{ getDate(-3) | moment("dd")  }}<br> {{ getDate(-3) | moment("DD MMMM")  }}</button>
+      </div>
+      <button @click="getFlight(-2)" class="mybtn btn btn-primary text-center">{{ getDate(-2) | moment("dd")  }}<br> {{ getDate(-2) | moment("DD MMMM")  }}</button>
+      <button @click="getFlight(-1)" class="mybtn btn btn-primary text-center">{{ getDate(-1) | moment("dd")  }}<br> {{ getDate(-1) | moment("DD MMMM")  }}</button>
+      <button @click="getFlight(0)" class="selected btn btn-primary text-center">{{ getDate(0) | moment("dd") }} <br> {{ getDate(0) | moment("DD MMMM")  }}</button>
+      <button @click="getFlight(1)" class="mybtn btn btn-primary text-center">{{ getDate(1) | moment("dd")  }}<br> {{ getDate(1) | moment("DD MMMM")  }}</button>
+      <button @click="getFlight(2)" class="mybtn btn btn-primary text-center">{{ getDate(2) | moment("dd")  }}<br> {{ getDate(2) | moment("DD MMMM")  }}</button>
+      <div>
+      <button @click="getFlight(3)" class="mybtn btn btn-primary text-center">{{ getDate(3) | moment("dd")  }}<br> {{ getDate(3) | moment("DD MMMM")  }}</button>
+      <v-icon>mdi-chevron-right-box</v-icon>
+      </div>
     </v-row>
   </div>
 </template>
@@ -88,6 +80,8 @@ export default {
 
 <style scope>
   .mybtn{
+    height: 80px;
+    width: 150px;
     border-radius: 10px;
     background-color: rgb(70, 70, 70);
     border-style: solid;
@@ -96,10 +90,13 @@ export default {
     padding: 10px;
   }
   .selected{
+    position: relative;
+    top: -5px;
+    width: 150px;
+    height: 90px;
     border-radius: 10px;
     border-style: solid;
     border-color: white;
     border-width: 1px;
-    padding: 10px;
   }
 </style>
