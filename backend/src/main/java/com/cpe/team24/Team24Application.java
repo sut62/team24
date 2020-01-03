@@ -42,7 +42,8 @@ public class Team24Application {
 						   BaggageImageRepository baggageimageRepository,
 						   BaggageTypeRepository baggagetypeRepository,
 						   FlightBookingTypeRepository flightBookingTypeRepository,
-						   FlightAirportTypeRepository flightAirportTypeRepository) {
+						   FlightAirportTypeRepository flightAirportTypeRepository,
+						   FlightAirportRepository flightAirportRepository) {
 		return args -> {
 			Object[][] data;
 			// ------------Add User ROLE ---------
@@ -77,14 +78,54 @@ public class Team24Application {
 				System.out.println(user);
 				System.out.println("-------------------------------------------");
 			}
-			//-------------- Add FlightType --------
+			//-------------- Add FlightBookingType --------
 			flightBookingTypeRepository.save(new FlightBookingType(EFlightBookingType.DEPART_FLIGHT));
 			flightBookingTypeRepository.save(new FlightBookingType(EFlightBookingType.RETURN_FLIGHT));
+			// ------------Add FlightAirportType ---------
+			flightAirportTypeRepository.save(new FlightAirportType(EFlightAirportType.ARRIVE_AIRPORT));
+			flightAirportTypeRepository.save(new FlightAirportType(EFlightAirportType.DEPART_AIRPORT));
+			// ------------ City -----------------
+			data = new Object[][] { { "กรุงเทพมหานคร" }, { "ขอนแก่น" },{ "ชุมพร"}, { "เชียงราย" },
+					{ "เชียงใหม่" }, { "ตรัง" }, { "นครพนม" }, { "นครศรีธรรมราช" }, { "นราธิวาส" }, { "น่าน" },
+					{ "บุรีรัมย์" }, { "พิษณุโลก" }, { "ภูเก็ต" }, { "ร้อยเอ็ด" }, { "ระนอง" }, { "เลย" }, { "สกลนคร" },
+					{ "นครพนม" }, { "สุราษธานี" }, { "หาดใหญ่" }, { "อุบลราชธานี" }, { "อุดรธานี" } };
+			for (int i = 0; i < data.length; i++) {
+				City city = new City();
+				city.setName(data[i][0].toString());
+				city = cityRepository.save(city);
+				System.out.printf("\n------------Add Flight City%d--------------\n", i + 1);
+				System.out.println(city);
+				System.out.println("-------------------------------------------");
+			};
+			// ------------ Airplane -----------------
+			data = new Object[][] { { "Airbus A320" , "180"}, { "Airbus A320-Neo" , "186"} };
+			for (int i = 0; i < data.length; i++) {
+				Airplane airplane = new Airplane();
+				airplane.setName(data[i][0].toString());
+				airplane.setSeatAmout(Integer.parseInt(data[i][1].toString()));
+				airplane = airplaneRepository.save(airplane);
+				System.out.printf("\n------------Add Flight Airplane %d --------------\n", i + 1);
+				System.out.println(airplane);
+				System.out.println("-------------------------------------------");
+			};
+
+			// ------------ Airport -----------------
+			data = new Object[][] { { "สุวรรณภูมิ" , 1}, { "ดอนเมือง" , 1} };
+			for (int i = 0; i < data.length; i++) {
+				Airport airport = new Airport();
+				airport.setName(data[i][0].toString());
+				City city = cityRepository.findById((int) data[i][1]);
+				airport.setCity(city);
+				airport = airportRepository.save(airport);
+				System.out.printf("\n------------Add Flight Airplane %d --------------\n", i + 1);
+				System.out.println(airport);
+				System.out.println("-------------------------------------------");
+			};
 			// ------------Flight-----------------
 			data = new Object[][] {
-					// price , depart(days), flight duration(minute)
+					// price , depart(days), flight duration(minute) , Airport (Depart), Airpot (Arrive), Airplane
 					// 0 is today , 1 tomorrow , 2 next 2 day
-					{ 1900, 0, 30 }, { 1800, 0, 40 }, { 2000, 1, 75 }, { 2400, 1, 55 }, };
+					{ 1900, 0, 30 ,1,2,1 }, { 1800, 0, 40 ,1,2,1 }, { 2000, 1, 75 ,2,1,1 }, { 2400, 1, 55,2,1,1 }, };
 			for (int i = 0; i < data.length; i++) {
 				Flight flight = new Flight();
 				flight.setPrice(Double.parseDouble(data[i][0].toString()));
@@ -96,7 +137,23 @@ public class Team24Application {
 				//
 				flight.setDepart(depart);
 				flight.setArrive(arrive);
+				flight.setAirplane(airplaneRepository.findById(Long.parseLong(data[i][5].toString())).orElse(null));
 				flight = flightRepository.save(flight);
+
+				//FlightAirport depart
+				FlightAirport flightAirport = new FlightAirport();
+				flightAirport.setAirport(airportRepository.findById(Long.parseLong(data[i][3].toString())).orElse(null));
+				flightAirport.setFlightAirportType(flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT));
+				flightAirport.setFlight(flightRepository.findById(flight.getId()).orElse(null));
+				flightAirportRepository.save(flightAirport);
+
+				//FlightAirport arrive
+				flightAirport = new FlightAirport();
+				flightAirport.setAirport(airportRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null));
+				flightAirport.setFlightAirportType(flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT));
+				flightAirport.setFlight(flightRepository.findById(flight.getId()).orElse(null));
+				flightAirportRepository.save(flightAirport);
+
 				System.out.printf("\n------------Add Flight%d--------------\n", i + 1);
 				System.out.println(flight);
 				System.out.println("-------------------------------------------");
@@ -145,46 +202,6 @@ public class Team24Application {
 
 			}
 			;
-			// ------------Add Flight Airport ---------
-			flightAirportTypeRepository.save(new FlightAirportType(EFlightAirportType.ARRIVE_FLIGHT));
-			flightAirportTypeRepository.save(new FlightAirportType(EFlightAirportType.DEPART_FLIGHT));
-			// ------------ City -----------------
-			data = new Object[][] { { "กรุงเทพมหานคร" }, { "ขอนแก่น" },{ "ชุมพร"}, { "เชียงราย" }, 
-			{ "เชียงใหม่" }, { "ตรัง" }, { "นครพนม" }, { "นครศรีธรรมราช" }, { "นราธิวาส" }, { "น่าน" }, 
-			{ "บุรีรัมย์" }, { "พิษณุโลก" }, { "ภูเก็ต" }, { "ร้อยเอ็ด" }, { "ระนอง" }, { "เลย" }, { "สกลนคร" }, 
-			{ "นครพนม" }, { "สุราษธานี" }, { "หาดใหญ่" }, { "อุบลราชธานี" }, { "อุดรธานี" } };
-			for (int i = 0; i < data.length; i++) {
-				City city = new City();
-				city.setName(data[i][0].toString());
-				city = cityRepository.save(city);
-				System.out.printf("\n------------Add Flight City%d--------------\n", i + 1);
-				System.out.println(city);
-				System.out.println("-------------------------------------------");
-			};
-			// ------------ Airplane -----------------
-			data = new Object[][] { { "Airbus A320" , "180"}, { "Airbus A320-Neo" , "186"} };
-			for (int i = 0; i < data.length; i++) {
-				Airplane airplane = new Airplane();
-				airplane.setName(data[i][0].toString());
-				airplane.setSeatAmout(data[i][1].toString());
-				airplane = airplaneRepository.save(airplane);
-				System.out.printf("\n------------Add Flight Airplane %d --------------\n", i + 1);
-				System.out.println(airplane);
-				System.out.println("-------------------------------------------");
-			};
-
-			// ------------ Airport -----------------
-			data = new Object[][] { { "สุวรรณภูมิ" , 1}, { "ดอนเมือง" , 1} };
-			for (int i = 0; i < data.length; i++) {
-				Airport airport = new Airport();
-				airport.setName(data[i][0].toString());
-				City city = cityRepository.findById((int) data[i][1]);
-				airport.setCity(city);
-				airport = airportRepository.save(airport);
-				System.out.printf("\n------------Add Flight Airplane %d --------------\n", i + 1);
-				System.out.println(airport);
-				System.out.println("-------------------------------------------");
-			};
 
 
 			Stream.of(

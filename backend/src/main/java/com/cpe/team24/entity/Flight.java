@@ -35,6 +35,15 @@ public class Flight {
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<FlightBookingLink> flightBookingLinks;
 
+    // -------- Joke --------
+
+    @OneToMany(mappedBy = "flight",fetch = FetchType.LAZY)
+    private Collection<FlightAirport> flightAirports;
+
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airplane.class)
+    @JoinColumn(name = "FIGHT_AIRPLANE_ID", insertable = true)
+    private Airplane airplane;
+
     //Getter Setter
     public Double getPrice() {
         return price;
@@ -60,12 +69,27 @@ public class Flight {
         this.arrive = arrive;
     }
 
+    public Collection<FlightAirport> getFlightAirports() {
+        return flightAirports;
+    }
 
-    @OneToMany(fetch = FetchType.EAGER)
-    // mappedBy  = "city"
-    private Collection<FlightAirport> flightAirports;
-    
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airplane.class)
-    @JoinColumn(name = "FIGHT_AIRPLANE_ID", insertable = true)
-    private Airplane airplane;
+    public void setFlightAirports(Collection<FlightAirport> flightAirports) {
+        this.flightAirports = flightAirports;
+    }
+
+    public Airplane getAirplane() {
+        return airplane;
+    }
+
+    public void setAirplane(Airplane airplane) {
+        this.airplane = airplane;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

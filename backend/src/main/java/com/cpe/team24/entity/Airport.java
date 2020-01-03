@@ -1,6 +1,7 @@
 package com.cpe.team24.entity;
 
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.Collection;
 
@@ -18,6 +19,16 @@ public class Airport {
     private Long id;
     private String name;
 
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = City.class)
+    @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
+    private City city;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER)
+    // mappedBy  = "airport"
+    private Collection<FlightAirport> flightAirports;
+
+    //Getter Setter
     public String getName() {
         return this.name;
     }
@@ -33,13 +44,11 @@ public class Airport {
         this.id = id;
     }
 
+    public City getCity() {
+        return city;
+    }
 
-   @ManyToOne(fetch = FetchType.EAGER, targetEntity = City.class)
-   @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
-   private City city;
-
-   @OneToMany(fetch = FetchType.EAGER)
-   // mappedBy  = "airport"
-   private Collection<FlightAirport> flightAirports;
-
+    public void setCity(City city) {
+        this.city = city;
+    }
 }
