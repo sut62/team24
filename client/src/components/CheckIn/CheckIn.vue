@@ -480,6 +480,23 @@ export default {
           console.log(e);
         });
     },
+
+     findCustomer() {
+      axiosInstance.get("/member/" + this.checkIn.name)
+        .then(response => {
+          console.log(response);
+          if (response.data != null) {
+            this.customerName = response.data.name;
+            this.customerCheck = response.status;
+          } else {
+            this.clear()
+          }          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+      this.submitted = true;
+    },
   
   },
   mounted() {
