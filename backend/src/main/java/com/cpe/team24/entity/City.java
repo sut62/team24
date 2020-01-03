@@ -1,6 +1,7 @@
 package com.cpe.team24.entity;
 
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -20,7 +21,12 @@ public class City {
     @Column(name="NAME")
     private @NonNull String name;
 
-	
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER)
+    // mappedBy  = "city"
+    private Collection<Airport> airports;
+
+    // Getter Setter
     public String getName() {
         return name;
     }
@@ -29,7 +35,5 @@ public class City {
         this.name = name;
     }
 
-   @OneToMany(fetch = FetchType.EAGER)
-   // mappedBy  = "city"
-   private Collection<Airport> airports;
+
 }

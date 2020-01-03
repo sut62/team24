@@ -18,6 +18,15 @@ public class Airport {
     private Long id;
     private String name;
 
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = City.class)
+    @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
+    private City city;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    // mappedBy  = "airport"
+    private Collection<FlightAirport> flightAirports;
+
+    //Getter Setter
     public String getName() {
         return this.name;
     }
@@ -32,14 +41,4 @@ public class Airport {
     public void setId(Long id) {
         this.id = id;
     }
-
-
-   @ManyToOne(fetch = FetchType.EAGER, targetEntity = City.class)
-   @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
-   private City city;
-
-   @OneToMany(fetch = FetchType.EAGER)
-   // mappedBy  = "airport"
-   private Collection<FlightAirport> flightAirports;
-
 }

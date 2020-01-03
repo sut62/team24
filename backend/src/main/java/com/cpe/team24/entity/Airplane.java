@@ -18,9 +18,14 @@ public class Airplane {
     @Column(name="AIRPLANE_ID",unique = true, nullable = true)
     private Long id;
     private String name;
-    private String seatAmout;
+    private Integer seatAmout;
 
-    
+
+    @OneToMany(fetch = FetchType.EAGER)
+    // mappedBy  = "airplane"
+    private Collection<Flight> flight;
+
+    //Getter Setter
     public Long getId() {
         return this.id;
     }
@@ -37,14 +42,10 @@ public class Airplane {
     }
 
 
-    public String getSeatAmout() {
+    public Integer getSeatAmout() {
     	return this.seatAmout;
     }
-    public void setSeatAmout(String seatAmout) {
+    public void setSeatAmout(Integer seatAmout) {
     	this.seatAmout = seatAmout;
     }
-
-   @OneToMany(fetch = FetchType.EAGER)
-   // mappedBy  = "airplane"
-   private Collection<Flight> flight;
 }

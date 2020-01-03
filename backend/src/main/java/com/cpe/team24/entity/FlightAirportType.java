@@ -15,17 +15,35 @@ public class FlightAirportType {
 
     @JsonIgnore
     @OneToMany
-    private Collection<FlightBookingLink> flightBookingLink;
+    private Collection<FlightAirport> flightAirports;
 
     public FlightAirportType(){}
     public FlightAirportType(EFlightAirportType name){
         this.name = name;
     }
+
+    //Getter Setter
     public EFlightAirportType getName() {
         return name;
     }
 
     public void setName(EFlightAirportType name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Collection<FlightAirport> getFlightAirports() {
+        return flightAirports;
+    }
+
+    public void setFlightAirports(Collection<FlightAirport> flightAirports) {
+        this.flightAirports = flightAirports;
     }
 }

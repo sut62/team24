@@ -146,8 +146,8 @@ public class Team24Application {
 			}
 			;
 			// ------------Add Flight Airport ---------
-			flightAirportTypeRepository.save(new FlightAirportType(EFlightAirportType.ARRIVE_FLIGHT));
-			flightAirportTypeRepository.save(new FlightAirportType(EFlightAirportType.DEPART_FLIGHT));
+			flightAirportTypeRepository.save(new FlightAirportType(EFlightAirportType.ARRIVE_AIRPORT));
+			flightAirportTypeRepository.save(new FlightAirportType(EFlightAirportType.DEPART_AIRPORT));
 			// ------------ City -----------------
 			data = new Object[][] { { "กรุงเทพมหานคร" }, { "ขอนแก่น" },{ "ชุมพร"}, { "เชียงราย" }, 
 			{ "เชียงใหม่" }, { "ตรัง" }, { "นครพนม" }, { "นครศรีธรรมราช" }, { "นราธิวาส" }, { "น่าน" }, 
@@ -166,7 +166,7 @@ public class Team24Application {
 			for (int i = 0; i < data.length; i++) {
 				Airplane airplane = new Airplane();
 				airplane.setName(data[i][0].toString());
-				airplane.setSeatAmout(data[i][1].toString());
+				airplane.setSeatAmout(Integer.parseInt(data[i][1].toString()));
 				airplane = airplaneRepository.save(airplane);
 				System.out.printf("\n------------Add Flight Airplane %d --------------\n", i + 1);
 				System.out.println(airplane);
