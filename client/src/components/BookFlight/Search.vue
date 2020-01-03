@@ -93,7 +93,7 @@ export default {
         this.selectDepartDate(this.dates[0])
         this.selectReturnDate(this.dates[1])
       }
-    }
+    },
   },
   computed: {
     ...mapState({
@@ -103,10 +103,15 @@ export default {
       return 'ไป: ' + this.dates.join(' กลับ: ')
     },
     isValid(){
-      return this.airportDepart.name != undefined && this.airportArrive.name != undefined && this.dates != []
+      return this.airportDepart.name != undefined && this.airportArrive.name != undefined && this.dates != [] && new Date(this.dates[1]).getTime() >= new Date(this.dates[0]).getTime()
     }
   },
   watch:{
+    dates(){
+      if(new Date(this.dates[1]).getTime() < new Date(this.dates[0]).getTime()){
+        this.dates = [this.dates[1]]
+      }
+    },
     airportDepart(){
       this.selectDepartAirport(this.airportDepart)
     },
