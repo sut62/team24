@@ -61,6 +61,7 @@
 
 <script>
 import {mapActions,mapState,mapMutations} from 'vuex'
+import moment from 'moment'
 
 export default {
 
@@ -123,6 +124,12 @@ export default {
         })
       })
     });
+    let currentDate = new Date()
+    let nextDate = new Date()
+    nextDate.setDate(nextDate.getDate() + 1)
+    let currentDateString = moment(currentDate).format("YYYY-MM-DD").toString()
+    let nextDateString = moment(nextDate).format("YYYY-MM-DD").toString()
+    this.dates = [currentDateString,nextDateString]
   }
 };
 </script>

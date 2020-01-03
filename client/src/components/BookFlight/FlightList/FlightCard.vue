@@ -9,18 +9,23 @@
             <div class="center" style="width:90px;position: absolute;right:1px;">
               <h3>{{flight.depart | formatTime}}</h3>
               <div style="color:red">
-                {{duration}}
+                {{getDuration }}
                 <!-- 1 ชม. 15 นาที -->
               </div>
             </div>
           </v-col>
           <v-col cols="3">
-            <v-divider></v-divider>
+            <v-row>
+              <v-icon>mdi-airplane</v-icon>
+              <v-divider></v-divider>
+              <v-icon>mdi-map-marker</v-icon>
+            </v-row>
+            
           </v-col>
           <v-col cols="2">
             <div class="center" style="width:90px;">
               <h3>{{flight.arrive | formatTime}}</h3>
-              <div style="color:">
+              <div style="color:red">
                 บินตรง
               </div>
             </div>
@@ -31,7 +36,7 @@
               style="height:100%;" 
               @click="selectFlight(flight)"
             >
-              {{flight.price}} THB
+              {{flight.price}} THB <v-icon v-if="isSelected" class="mb-1">mdi-checkbox-marked-circle</v-icon>
             </div>
           </v-col>
         </v-row>
@@ -56,6 +61,19 @@ export default {
     }
   },
   computed: {
+    getDuration(){
+      let arrive = new Date(this.flight.arrive)
+      let depart = new Date(this.flight.depart)
+      const diffTime = Math.abs(arrive - depart);
+      const diffMinute = Math.ceil(diffTime / (1000 * 60));
+      const diffHour = Math.ceil(diffMinute / 60) - 1;
+      const minute = diffMinute % 60;
+      const hour = diffHour
+      if(diffHour == 0){
+        return minute + " นาที"
+      }
+      return hour + " ชม. " + minute + " นาที"
+    },
     duration(){
       let start = moment(this.flight.depart)
       let end = moment(this.flight.arrive)
