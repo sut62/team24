@@ -68,6 +68,11 @@ const bookFlight = {
     },
     selectDepartDate(state,date){
       state.data.departDate = date;
+      let departDate = new Date(state.data.departDate)
+      let returnDate = new Date(state.data.returnDate)
+      if(returnDate - departDate < 0){
+        state.data.returnDate = state.data.departDate
+      }
     },
     selectReturnDate(state,date){
       state.data.returnDate = date;
