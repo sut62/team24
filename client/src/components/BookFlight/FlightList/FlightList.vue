@@ -1,6 +1,15 @@
 <template>
   <div class="mt-12 mx-auto" id="flight-list">
     <h4 class="mb-5 mycard" >{{topic}}</h4>
+    <div v-if="flights.length == 0">
+      <v-card class="text-center mt-4 py-12">
+        <p style="color:grey">
+          ไม่มีเที่ยวบินให้บริการค่ะ
+          <br>ขออภัย เราไม่มีเที่ยวบินให้บริการในวันดังกล่าว กรุณาค้นหาโดยเลือกวันเดินทางอื่น
+          <br>บางที ท่านอาจจะพบบัตรโดยสารในราคาคุ้มกว่าเดิม
+        </p>
+      </v-card>
+    </div>
     <div v-for="(item, index) in flights" :key="index">
       <FlightCard :isSelected="isSelected(item.id)" :selectFlight="selectFlight" :flight="item"/>
     </div>
