@@ -1,9 +1,10 @@
 package com.cpe.team24.controller;
 
+import com.cpe.team24.entity.EFlightAirportType;
 import com.cpe.team24.entity.Flight;
 import com.cpe.team24.entity.FlightAirport;
-import com.cpe.team24.repository.FlightAirportRepository;
-import com.cpe.team24.repository.FlightRepository;
+import com.cpe.team24.model.BodyFlight;
+import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,18 @@ public class FlightController {
     @Autowired
     private FlightAirportRepository flightAirportRepository;
 
-    @GetMapping("")
-    public Collection<FlightAirport> getFlightAirport(){
-        return flightAirportRepository.findAll();
+    @Autowired
+    private AirplaneRepository airplaneRepository;
+
+    @Autowired
+    private AirportRepository airportRepository;
+
+    @Autowired
+    private FlightAirportTypeRepository flightAirportTypeRepository;
+
+    @GetMapping("/id/{id}")
+    public Flight getFlightById(@PathVariable Long id){
+        return flightRepository.findById(id).orElse(null);
     }
     // For Book Flight - ToeiKanta had been creating.
     @GetMapping("/{date}")
@@ -42,6 +52,36 @@ public class FlightController {
         return result;
     }
 
+    @PostMapping("/create")
+    public Flight createFlight(@RequestBody BodyFlight bodyFlight) throws ParseException {
+        Flight flight = new Flight();
+        flight.setPrice(bodyFlight.getPrice());
+
+        // date create
+        Date depart = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(bodyFlight.getDepartDate());
+        Date arrive = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(bodyFlight.getArriveDate());
+        //
+        flight.setDepart(depart);
+        flight.setArrive(arrive);
+        flight.setAirplane(airplaneRepository.findById(bodyFlight.getAirplaneId()).orElse(null));
+        flight = flightRepository.save(flight);
+
+        //FlightAirport depart
+        FlightAirport flightAirport = new FlightAirport();
+        flightAirport.setAirport(airportRepository.findById(bodyFlight.getDepartAirportId()).orElse(null));
+        flightAirport.setFlightAirportType(flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT));
+        flightAirport.setFlight(flightRepository.findById(flight.getId()).orElse(null));
+        flightAirportRepository.save(flightAirport);
+
+        //FlightAirport arrive
+        flightAirport = new FlightAirport();
+        flightAirport.setAirport(airportRepository.findById(bodyFlight.getArriveAirportId()).orElse(null));
+        flightAirport.setFlightAirportType(flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT));
+        flightAirport.setFlight(flightRepository.findById(flight.getId()).orElse(null));
+        flightAirportRepository.save(flightAirport);
+
+        return flightRepository.findById(flight.getId()).orElse(null);
+    }
     // This Function return Tomorrow's Date from Today's Date - ToeiKanta had been creating.
     public String getNextDate(String curDate) throws ParseException {
         final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -51,4 +91,5 @@ public class FlightController {
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         return format.format(calendar.getTime());
     }
+
 }
