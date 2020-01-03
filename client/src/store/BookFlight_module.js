@@ -36,6 +36,7 @@ const bookFlight = {
     // Flight Methods
     FLIGHT_DEPART_LOADING(state){
       state.flightDepartLoading = true
+      state.data.flightDepart = null
     },
     FLIGHT_DEPART_LOADING_SUCCESS(state,result){
       state.flightDepartLoading = false
@@ -45,6 +46,7 @@ const bookFlight = {
     },
     FLIGHT_RETURN_LOADING(state){
       state.flightReturnLoading = true
+      state.data.flightReturn = null
     },
     FLIGHT_RETURN_LOADING_SUCCESS(state,result){
       state.flightReturnLoading = false
@@ -131,11 +133,11 @@ const bookFlight = {
   getters: {
     getTotalPrice: state => {
       let sum = 0;
-      if(state.data.flightDepart){
+      if(state.data.flightDepart != null){
         sum += state.data.flightDepart.price;
       }
-      if(state.data.flightReturn){
-        sum += state.data.flightDepart.price;
+      if(state.data.flightReturn != null){
+        sum += state.data.flightReturn.price;
       }
       return sum;
     }

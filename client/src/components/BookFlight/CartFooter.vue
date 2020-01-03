@@ -23,15 +23,14 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: "cartFooter",
-  computed: mapGetters({
-    getTotalPrice: 'BookFlight/getTotalPrice'
-  }),
+  computed: {
+    ...mapGetters({
+      getTotalPrice: 'BookFlight/getTotalPrice'
+    }),
+  },
   methods: mapActions({
     'nextPage' : 'BookFlight/nextPage'
-  })
-  // mapActions({
-  //   bookFlight: 'BookFlight/bookFlight'
-  // })
+  }),
 }
 </script>
 
