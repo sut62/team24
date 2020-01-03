@@ -8,10 +8,10 @@
           <div>
             <div class="text-white">
               <div >
-                <h1 class="mt-5">เริ่มทริปของคุณที่นี่</h1>
+                <h1 class="mt-5">{{pageLocation == 1 ? 'เริ่มทริปของคุณที่นี่':'เลือกเที่ยวบินของคุณ'}}</h1>
               </div>
             </div>
-            <Search/>
+            <Search v-if="pageLocation <= 1"/>
           </div>
           <BookNav/>
           <!-- หน้าแรก -->
@@ -24,8 +24,8 @@
           </div>
           <!-- แสดงรายการบิน -->
           <div v-if="pageLocation == 2">
-            <FlightList :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" :topic="topicDepart" :flights = "flightDepart"/>
-            <FlightList :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" :topic="topicReturn" :flights = "flightReturn"/>
+            <FlightList :isDepart="true" :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" :topic="topicDepart" :flights = "flightDepart"/>
+            <FlightList :isDepart="false" :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" :topic="topicReturn" :flights = "flightReturn"/>
           </div>
           <!-- ข้อมูลผู้โดยสาร -->
           <div v-if="pageLocation == 3">

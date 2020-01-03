@@ -1,21 +1,37 @@
 <template>
   <div class="mt-12 mx-auto" id="flight-list">
     <h4 class="mb-5 mycard" >{{topic}}</h4>
-    <div v-for="(item, index) in flights" :key="index">
-      <FlightCard :isSelected="isSelected(item.id)" :selectFlight="selectFlight" :flight="item"/>
+    <FlightDate :isDepart="isDepart"/>
+    <div v-if="flights == null">
+      <v-card class="text-center mt-4 py-12">
+        <p style="color:grey">
+          ไม่มีเที่ยวบินให้บริการค่ะ
+          <br>ขออภัย เราไม่มีเที่ยวบินให้บริการในวันดังกล่าว กรุณาค้นหาโดยเลือกวันเดินทางอื่น
+          <br>บางที ท่านอาจจะพบบัตรโดยสารในราคาคุ้มกว่าเดิม
+        </p>
+      </v-card>
+    </div>
+    <div v-if="flights != null">
+      <div v-for="(item, index) in flights" :key="index">
+        <FlightCard :isSelected="isSelected(item.id)" :selectFlight="selectFlight" :flight="item"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import FlightCard from './FlightCard'
-
+import FlightDate from './FlightDateGroup'
 export default {
   name: "flightList",
   components: {
-    FlightCard
+    FlightCard,
+    FlightDate
   },
   props: {
+    isDepart:{
+      type: Boolean
+    },
     selectedFlight:{
       type: Object
     },
