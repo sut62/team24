@@ -80,12 +80,16 @@ export default {
       getAirport: 'BookFlight/getAirport',
     }),
     ...mapMutations({
+      'selectDepartDate':'BookFlight/selectDepartDate',
+      'selectReturnDate':'BookFlight/selectReturnDate',
       'selectDepartAirport': 'BookFlight/selectDepartAirport',
       'selectArriveAirport': 'BookFlight/selectArriveAirport'
     }),
     getFlight(){
       this.getFlightDepart(this.dates[0])
       this.getFlightReturn(this.dates[1])
+      this.selectDepartDate(this.dates[0])
+      this.selectReturnDate(this.dates[1])
     }
   },
   computed: {

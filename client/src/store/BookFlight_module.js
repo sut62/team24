@@ -14,6 +14,8 @@ const bookFlight = {
       flightReturn: null
     },
     data:{ //for request
+      departDate: '',
+      returnDate: '',
       flightDepart: null,
       flightReturn: null,
       airportDepart: null,
@@ -51,6 +53,12 @@ const bookFlight = {
       state.result.airport = airport;
     },
     // Selection method
+    selectDepartDate(state,date){
+      state.data.departDate = date;
+    },
+    selectReturnDate(state,date){
+      state.data.returnDate = date;
+    },
     selectDepartFlight(state,data){
       state.data.flightDepart = data
     },
@@ -80,12 +88,14 @@ const bookFlight = {
     },
     // Get flight departure by date
     async getFlightDepart({commit,state},date){
+      await commit('selectDepartDate',date)
       await commit('FLIGHT_DEPART_LOADING')
       let result = await BookFlightService.getFlightByAirport(date,state.data.airportDepart.id,state.data.airportArrive.id);
       await commit('FLIGHT_DEPART_LOADING_SUCCESS',result.data)
     },
     // Get flight return by date
     async getFlightReturn({commit,state},date){
+      await commit('selectReturnDate',date)
       await commit('FLIGHT_RETURN_LOADING')
       let result = await BookFlightService.getFlightByAirport(date,state.data.airportArrive.id,state.data.airportDepart.id);
       await commit('FLIGHT_RETURN_LOADING_SUCCESS',result.data)

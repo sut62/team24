@@ -24,8 +24,8 @@
           </div>
           <!-- แสดงรายการบิน -->
           <div v-if="pageLocation == 2">
-            <FlightList :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" :topic="topicDepart" :flights = "flightDepart"/>
-            <FlightList :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" :topic="topicReturn" :flights = "flightReturn"/>
+            <FlightList :isDepart="true" :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" :topic="topicDepart" :flights = "flightDepart"/>
+            <FlightList :isDepart="false" :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" :topic="topicReturn" :flights = "flightReturn"/>
           </div>
           <!-- ข้อมูลผู้โดยสาร -->
           <div v-if="pageLocation == 3">
