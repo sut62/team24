@@ -17,16 +17,14 @@ public class FlightAirport {
     @Column(name = "FLIGHT_AIRPORT_ID",unique = true,nullable = false)
     private @NonNull Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
-    @JoinColumn(name = "FLIGHT_ID",nullable = false)
+    @JsonIgnore
+    @ManyToOne
     private Flight flight;
 
-    @ManyToOne(fetch = FetchType.EAGER,targetEntity = FlightAirportType.class)
-    @JoinColumn(name = "FLIGHT_AIRPORT_TYPE_ID",nullable = false)
+    @ManyToOne
     private FlightAirportType flightAirportType;
 
-    @ManyToOne(fetch = FetchType.EAGER,targetEntity = Airport.class)
-    @JoinColumn(name = "AIRPORT_ID",nullable = false)
+    @ManyToOne
     private Airport airport;
 
     //GETTER SETTER

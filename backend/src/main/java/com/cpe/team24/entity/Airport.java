@@ -1,6 +1,7 @@
 package com.cpe.team24.entity;
 
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.Collection;
 
@@ -22,6 +23,7 @@ public class Airport {
     @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
     private City city;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
     // mappedBy  = "airport"
     private Collection<FlightAirport> flightAirports;
@@ -40,5 +42,13 @@ public class Airport {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

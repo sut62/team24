@@ -1,6 +1,8 @@
 package com.cpe.team24.controller;
 
 import com.cpe.team24.entity.Flight;
+import com.cpe.team24.entity.FlightAirport;
+import com.cpe.team24.repository.FlightAirportRepository;
 import com.cpe.team24.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,13 @@ public class FlightController {
 
     public FlightController(FlightRepository flightRepository){}
 
+    @Autowired
+    private FlightAirportRepository flightAirportRepository;
+
+    @GetMapping("")
+    public Collection<FlightAirport> getFlightAirport(){
+        return flightAirportRepository.findAll();
+    }
     // For Book Flight - ToeiKanta had been creating.
     @GetMapping("/{date}")
     public Collection<Flight> getFlightByDepartDate(@PathVariable String date) throws ParseException {
