@@ -9,7 +9,7 @@
       <v-col cols="6">
         <div class="mx-12">
           <button @click="nextPage" :disabled="getTotalPrice == 0" class="btn btn-danger btn-block btn-lg pt-4" style="height:100%;">
-          ดำเนินการต่อ
+          <v-icon color="white" size="30">mdi-chevron-right-circle-outline</v-icon> ดำเนินการต่อ 
           </button>
         </div>
       </v-col>
@@ -23,15 +23,14 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: "cartFooter",
-  computed: mapGetters({
-    getTotalPrice: 'BookFlight/getTotalPrice'
-  }),
+  computed: {
+    ...mapGetters({
+      getTotalPrice: 'BookFlight/getTotalPrice'
+    }),
+  },
   methods: mapActions({
     'nextPage' : 'BookFlight/nextPage'
-  })
-  // mapActions({
-  //   bookFlight: 'BookFlight/bookFlight'
-  // })
+  }),
 }
 </script>
 

@@ -3,13 +3,13 @@
     <div class="step-style mt-12">
       <v-stepper :alt-labels="true">
         <v-stepper-header>
-          <v-stepper-step :complete="pageLocation>=1" step="1">ค้นหาเที่ยวบิน</v-stepper-step>
+          <v-stepper-step :complete="pageLocation>=1" step="1" ><span><v-icon>mdi-magnify</v-icon> ค้นหา</span></v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step :complete="pageLocation>=2" step="2">เลือกเที่ยวบิน</v-stepper-step>
+          <v-stepper-step :complete="pageLocation>=2" step="2"><span><v-icon>mdi-airplane</v-icon> เที่ยวบิน</span></v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step :complete="pageLocation>=3" step="3">ข้อมูลผู้โดยสาร</v-stepper-step>
+          <v-stepper-step :complete="pageLocation>=3" step="3"><span><v-icon>mdi-account</v-icon> ผู้โดยสาร</span></v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step :complete="pageLocation>=4" step="4">ชำระเงิน</v-stepper-step>
+          <v-stepper-step :complete="pageLocation>=4" step="4"><span><v-icon>mdi-credit-card-outline</v-icon> ชำระเงิน</span></v-stepper-step>
         </v-stepper-header>
       </v-stepper>
     </div>

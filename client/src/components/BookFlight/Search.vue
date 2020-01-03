@@ -61,6 +61,7 @@
 
 <script>
 import {mapActions,mapState,mapMutations} from 'vuex'
+import moment from 'moment'
 
 export default {
 
@@ -92,7 +93,7 @@ export default {
         this.selectDepartDate(this.dates[0])
         this.selectReturnDate(this.dates[1])
       }
-    }
+    },
   },
   computed: {
     ...mapState({
@@ -102,10 +103,15 @@ export default {
       return 'ไป: ' + this.dates.join(' กลับ: ')
     },
     isValid(){
-      return this.airportDepart.name != undefined && this.airportArrive.name != undefined && this.dates != []
+      return this.airportDepart.name != undefined && this.airportArrive.name != undefined && this.dates != [] && new Date(this.dates[1]).getTime() >= new Date(this.dates[0]).getTime()
     }
   },
   watch:{
+    dates(){
+      if(new Date(this.dates[1]).getTime() < new Date(this.dates[0]).getTime()){
+        this.dates = [this.dates[1]]
+      }
+    },
     airportDepart(){
       this.selectDepartAirport(this.airportDepart)
     },
@@ -123,6 +129,12 @@ export default {
         })
       })
     });
+    let currentDate = new Date()
+    let nextDate = new Date()
+    nextDate.setDate(nextDate.getDate() + 1)
+    let currentDateString = moment(currentDate).format("YYYY-MM-DD").toString()
+    let nextDateString = moment(nextDate).format("YYYY-MM-DD").toString()
+    this.dates = [currentDateString,nextDateString]
   }
 };
 </script>
