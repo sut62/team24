@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -40,6 +42,10 @@ public class FlightBooking {
 
     @ManyToOne
     private User user; //
+
+    @OneToOne(mappedBy = "flightBooking", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private CheckIn checkIn; // connect with CheckIn entity by KK
 
     //Methods
     public void book(Integer departSeatId,Integer returnSeatId){

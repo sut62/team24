@@ -470,7 +470,7 @@ export default {
       
     },
     getFlightCity() {
-      axiosInstance.get("/flight-city")
+      axiosInstance.get("/city")
         .then(response => {
           this.flightCity = response.data;
           this.$nextTick();
