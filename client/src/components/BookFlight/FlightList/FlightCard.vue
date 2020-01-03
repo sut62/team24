@@ -27,7 +27,7 @@
           </v-col>
           <v-col cols="4">
             <div 
-              :class="{ 'btn btn-danger btn-block btn-lg pt-4':isSelected,'btn btn-warning btn-block btn-lg pt-4':!isSelected}" 
+              :class="{ 'btn btn-warning btn-block myselect btn-lg pt-4':isSelected,'btn btn-secondary btn-block btn-lg pt-4':!isSelected}" 
               style="height:100%;" 
               @click="selectFlight(flight)"
             >
@@ -70,5 +70,11 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
+  .myselect{
+    border-style: solid;
+    border-width: 6px;
+    border-color: black;
+    font-weight: bold;
+  }
 </style>

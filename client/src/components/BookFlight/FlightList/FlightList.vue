@@ -1,8 +1,12 @@
 <template>
-  <div class="mt-12 mx-auto" id="flight-list">
-    <h4 class="mb-5 mycard" >{{topic}}</h4>
+  <div class="mx-auto mt-6" id="flight-list">
+    <v-row class="mb-3">
+      <h4 class="mycard mr-4 ml-5">{{this.isDepart ? 'ขาไป' : 'ขากลับ'}}</h4>
+      <p class="mycard" >{{topic}}</p>
+      <v-icon class="ml-3 icon" @click="showSearchBar()">mdi-lead-pencil</v-icon>
+    </v-row>
     <FlightDate :isDepart="isDepart"/>
-    <div v-if="flights == null">
+    <div v-if="flights == null || flights.length == 0">
       <v-card class="text-center mt-4 py-12">
         <p style="color:grey">
           ไม่มีเที่ยวบินให้บริการค่ะ
@@ -22,6 +26,8 @@
 <script>
 import FlightCard from './FlightCard'
 import FlightDate from './FlightDateGroup'
+import {mapMutations} from 'vuex'
+
 export default {
   name: "flightList",
   components: {
@@ -46,6 +52,9 @@ export default {
     }
   },
   methods:{
+    ...mapMutations({
+      'showSearchBar':'BookFlight/showSearchBar'
+    }),
     isSelected(id){
       if(this.selectedFlight != null){
         if(this.selectedFlight.id == id){
@@ -59,12 +68,8 @@ export default {
 </script>
 
 <style scope>
-  .mycard{
-    /* border-style: solid; */
-    /* background-color: rgb(255, 255, 255); */
-    /* border-color: rgb(240, 240, 240); */
-    /* border-width: 3px; */
-    padding:20px;
-    border-radius: 20px;
+  .icon{
+    position:relative;
+    top:-15px;
   }
 </style>
