@@ -5,6 +5,7 @@ import com.cpe.team24.model.BodyFlightBooking;
 import com.cpe.team24.repository.*;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
+import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -92,11 +93,14 @@ public class FlightBookingController {
     // }
 
      @GetMapping("/{lastname}")
-    public Optional<FlightBooking> Users(@PathVariable final String lastname) {
-        Optional<User> user = userRepository.findByLastName(lastname);
+    public FlightBooking Users(@PathVariable final String lastname) {
+        User user = userRepository.findByLastName(lastname).orElseThrow(()->new MessageDescriptorFormatException("User Id not founded"));
 
-        Optional<FlightBooking> flightBooking = flightBookingRepository.findByUser(user);
-        return flightBooking;
+        FlightBooking flightBooking = flightBookingRepository.findByUser(user).orElse(null);
+        if(flightBooking.getBookingStatus() == bookingStatusRepository.findByName(EBookingStatus.PENDING)){
+            return flightBooking;
+        }
+        return null;
     }
 
 
