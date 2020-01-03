@@ -159,15 +159,9 @@ public class Team24Application {
 				System.out.println("-------------------------------------------");
 			}
 			// ------------Booking Status-----------------
-			data = new Object[][] { { "ยังไม่ชำระ" }, { "ชำระแล้ว" }, { "เช็คอินแล้ว" } };
-			for (int i = 0; i < data.length; i++) {
-				BookingStatus bookingStatus = new BookingStatus();
-				bookingStatus.setName(data[i][0].toString());
-				bookingStatus = bookingStatusRepository.save(bookingStatus);
-				System.out.printf("\n------------Add BookingStatus%d--------------\n", i + 1);
-				System.out.println(bookingStatus);
-				System.out.println("-------------------------------------------");
-			}
+			bookingStatusRepository.save(new BookingStatus(EBookingStatus.PENDING));
+			bookingStatusRepository.save(new BookingStatus(EBookingStatus.REJECT));
+			bookingStatusRepository.save(new BookingStatus(EBookingStatus.SUBMIT));
 			// --------------Flight Booking-----------------
 			data = new Object[][] {
 					// departFlightId,returnFlightId,departSeatId,returnSeatId,MemberId
@@ -175,8 +169,7 @@ public class Team24Application {
 			for (int i = 0; i < data.length; i++) {
 				FlightBooking flightBooking = new FlightBooking();
 				flightBooking.book((Integer) data[i][2], (Integer) data[i][3]);
-				BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
-				flightBooking.setBookingStatus(bs);
+				flightBooking.setBookingStatus(bookingStatusRepository.findByName(EBookingStatus.PENDING));
 				flightBooking.setUser(userRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null));
 				flightBooking = flightBookingRepository.save(flightBooking);
 

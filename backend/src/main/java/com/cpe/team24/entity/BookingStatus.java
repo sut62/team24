@@ -12,7 +12,6 @@ import lombok.NonNull;
 
 @Entity
 @Data
-@NoArgsConstructor
 public class BookingStatus {
     @Id
     @SequenceGenerator(name="BOOKING_STATUS_SEQ",sequenceName="BOOKING_STATUS_SEQ")
@@ -20,19 +19,23 @@ public class BookingStatus {
     @Column(name = "BOOKING_STATUS_ID",unique = true, nullable = true)
     private @NonNull Integer id;
 
-    private String name;
+    private EBookingStatus name;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER)
     private Collection<FlightBooking> flightBookings;
 
+    public BookingStatus(){}
+    public BookingStatus(EBookingStatus name){
+        this.name = name;
+    }
     //getter setter
 
-    public String getName() {
+    public EBookingStatus getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(EBookingStatus name) {
         this.name = name;
     }
 }
