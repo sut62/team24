@@ -424,7 +424,7 @@ export default {
         destination: "",
         name: "",
       },
-      agree: "Yes",
+      agree: false ,
 
       checkin_page: true,
       fligth_page: false,
@@ -482,7 +482,7 @@ export default {
     },
 
      findCustomer() {
-      axiosInstance.get("/member/" + this.checkIn.name)
+      axiosInstance.get("/checkIn/" + this.checkIn.name)
         .then(response => {
           console.log(response);
           if (response.data != null) {
