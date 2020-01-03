@@ -56,8 +56,7 @@ public class FlightBookingController {
         final Integer returnSeatId = 1;
         flightBooking.book(departSeatId,returnSeatId);
         flightBooking.setUser(userRepository.findByUsername(authentication.getName()).orElse(null));
-        final BookingStatus bs = bookingStatusRepository.findById(1).orElse(null);
-        flightBooking.setBookingStatus(bs);
+        flightBooking.setBookingStatus(bookingStatusRepository.findByName(EBookingStatus.PENDING));
         flightBooking = flightBookingRepository.save(flightBooking);
 
         // Add Depart's Flight and Return's Flight to TableLink
