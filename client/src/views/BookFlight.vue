@@ -24,8 +24,8 @@
           </div>
           <!-- แสดงรายการบิน -->
           <div v-if="pageLocation == 2">
-            <FlightList :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" topic="ขาไป ขอนแก่น ถึง กรุงเทพฯ" :flights = "flightDepart"/>
-            <FlightList :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" topic="ขากลับ กรุงเทพฯ ถึง ขอนแก่น" :flights = "flightReturn"/>
+            <FlightList :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" :topic="topicDepart" :flights = "flightDepart"/>
+            <FlightList :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" :topic="topicReturn" :flights = "flightReturn"/>
           </div>
           <!-- ข้อมูลผู้โดยสาร -->
           <div v-if="pageLocation == 3">
@@ -64,12 +64,20 @@ export default {
   },
   computed: {
     ...mapState({
+      airportDepart: state => state.BookFlight.data.airportDepart,
+      airportArrive: state => state.BookFlight.data.airportArrive,
       pageLocation: state => state.BookFlight.pageLocation,
       flightDepart: state => state.BookFlight.result.flightDepart,
       flightReturn: state => state.BookFlight.result.flightReturn,
       selectedDepartFlight: state => state.BookFlight.data.flightDepart,
       selectedReturnFlight: state => state.BookFlight.data.flightReturn,
-    })
+    }),
+    topicDepart(){
+      return 'ไป : จาก ' + this.airportDepart.city.name + " [" + this.airportDepart.name + "]" + ' ถึง ' + this.airportArrive.city.name + " [" + this.airportArrive.name + "]"
+    },
+    topicReturn(){
+      return 'กลับ : จาก ' + this.airportArrive.city.name + " [" + this.airportArrive.name + "]" + ' ถึง ' + this.airportDepart.city.name + " [" + this.airportDepart.name + "]"
+    }
   },
   methods: {
     ...mapMutations({

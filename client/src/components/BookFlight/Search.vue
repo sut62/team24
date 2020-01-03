@@ -125,7 +125,6 @@ export default {
     border-width: 3px;
     padding:20px;
     border-radius: 20px;
-
   }
   .date-picker{
     position: absolute;
