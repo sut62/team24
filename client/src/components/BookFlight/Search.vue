@@ -5,7 +5,7 @@
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item">
-            <a class="nav-link active" href="#">เที่ยวบิน</a>
+            <a class="nav-link active" href="#">ค้นหาเที่ยวบิน</a>
           </li>
         </ul>
       </div>
@@ -49,7 +49,7 @@
             </v-menu>
           </v-col>
           <v-col cols="2">
-              <div class="btn btn-danger text-white btn-lg" style="width:100%;" @click="getFlight">ค้นหา</div>
+              <div :class="{'btn btn-danger text-white btn-lg':isValid,'btn btn-secondary text-white btn-lg':!isValid}" style="width:100%;" @click="getFlight">ค้นหา</div>
           </v-col>
         </v-row>
       </div>
@@ -86,10 +86,12 @@ export default {
       'selectArriveAirport': 'BookFlight/selectArriveAirport'
     }),
     getFlight(){
-      this.getFlightDepart(this.dates[0])
-      this.getFlightReturn(this.dates[1])
-      this.selectDepartDate(this.dates[0])
-      this.selectReturnDate(this.dates[1])
+      if(this.isValid){
+        this.getFlightDepart(this.dates[0])
+        this.getFlightReturn(this.dates[1])
+        this.selectDepartDate(this.dates[0])
+        this.selectReturnDate(this.dates[1])
+      }
     }
   },
   computed: {
@@ -99,6 +101,9 @@ export default {
     dateRangeText () {
       return 'ไป: ' + this.dates.join(' กลับ: ')
     },
+    isValid(){
+      return this.airportDepart.name != undefined && this.airportArrive.name != undefined && this.dates != []
+    }
   },
   watch:{
     airportDepart(){

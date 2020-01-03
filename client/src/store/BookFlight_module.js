@@ -3,6 +3,7 @@ import { BookFlightService } from '../api'
 const bookFlight = {
   namespaced: true,
   state: {
+    showSearchBar: true,
     bookLoading: false,
     flightDepartLoading: false,
     flightReturnLoading: false,
@@ -40,6 +41,7 @@ const bookFlight = {
       state.flightDepartLoading = false
       state.result.flightDepart = result
       state.pageLocation = 2
+      state.showSearchBar = false
     },
     FLIGHT_RETURN_LOADING(state){
       state.flightReturnLoading = true
@@ -48,11 +50,20 @@ const bookFlight = {
       state.flightReturnLoading = false
       state.result.flightReturn = result
       state.pageLocation = 2
+      state.showSearchBar = false
     },
     GET_AIRPORT_SUCCESS(state,airport){
       state.result.airport = airport;
     },
     // Selection method
+    goToMainPage(state){
+      state.pageLocation = 1
+    },
+    showSearchBar(state){
+      state.showSearchBar = true
+      state.result.flightDepart = null
+      state.result.flightReturn = null
+    },
     selectDepartDate(state,date){
       state.data.departDate = date;
     },
@@ -73,6 +84,7 @@ const bookFlight = {
     },
     NEXT_PAGE(state){
       state.pageLocation += 1;
+      state.showSearchBar = false;
     }
   },
   actions: {

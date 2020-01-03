@@ -11,7 +11,7 @@
                 <h1 class="mt-5">{{pageLocation == 1 ? 'เริ่มทริปของคุณที่นี่':'เลือกเที่ยวบินของคุณ'}}</h1>
               </div>
             </div>
-            <Search v-if="pageLocation <= 1"/>
+            <Search v-if="showSearchBar"/>
           </div>
           <BookNav/>
           <!-- หน้าแรก -->
@@ -24,8 +24,11 @@
           </div>
           <!-- แสดงรายการบิน -->
           <div v-if="pageLocation == 2">
+            <hr>
             <FlightList :isDepart="true" :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" :topic="topicDepart" :flights = "flightDepart"/>
+            <hr>
             <FlightList :isDepart="false" :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" :topic="topicReturn" :flights = "flightReturn"/>
+            <hr>
           </div>
           <!-- ข้อมูลผู้โดยสาร -->
           <div v-if="pageLocation == 3">
@@ -64,6 +67,7 @@ export default {
   },
   computed: {
     ...mapState({
+      showSearchBar: state => state.BookFlight.showSearchBar,
       airportDepart: state => state.BookFlight.data.airportDepart,
       airportArrive: state => state.BookFlight.data.airportArrive,
       pageLocation: state => state.BookFlight.pageLocation,
@@ -73,10 +77,10 @@ export default {
       selectedReturnFlight: state => state.BookFlight.data.flightReturn,
     }),
     topicDepart(){
-      return 'ไป : จาก ' + this.airportDepart.city.name + " [" + this.airportDepart.name + "]" + ' ถึง ' + this.airportArrive.city.name + " [" + this.airportArrive.name + "]"
+      return 'จาก ' + this.airportDepart.city.name + " [" + this.airportDepart.name + "]" + ' ถึง ' + this.airportArrive.city.name + " [" + this.airportArrive.name + "]"
     },
     topicReturn(){
-      return 'กลับ : จาก ' + this.airportArrive.city.name + " [" + this.airportArrive.name + "]" + ' ถึง ' + this.airportDepart.city.name + " [" + this.airportDepart.name + "]"
+      return 'จาก ' + this.airportArrive.city.name + " [" + this.airportArrive.name + "]" + ' ถึง ' + this.airportDepart.city.name + " [" + this.airportDepart.name + "]"
     }
   },
   methods: {
