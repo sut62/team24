@@ -88,20 +88,35 @@
         <div class="mt-3 font-weight-medium topic-size">Flight</div>
         <div class="mt-0 font-weight-medium text-size">รายละเอียดเที่ยวบิน</div>
         <div class="card text-center card-description">
-          <div class="card-header text-left">รายละเอียด</div>
+          <div class="card-header text-left">รายละเอียด (ขาไป)</div>
           <div class="card card-flight card-header text-center">
             <v-row>
-              <v-col cols="5" >{{flightAirports_go.name}}</v-col>
-              <v-col cols="7">{{flightAirports_back.name}}</v-col>
+              <v-col cols="5" >{{flightAirports_go_depart.name}}</v-col>
+              <v-col cols="7">{{flightAirports_go_arrive.name}}</v-col>
             </v-row>
             <v-row class="mt-0">
               <v-col cols="5">{{flightBookingLinks_go.depart}}</v-col>
               <v-icon x-large color="orange darken-2">mdi-airplane</v-icon>
+              <v-col cols="5">{{flightBookingLinks_go.arrive}}</v-col>
+            </v-row>
+          </div>
+          <div class="card-body text-left">{{user.firstName}} {{user.lastName}}</div>
+        </div>
+        <br>
+        <div class="card text-center card-description" v-if="flightBookingLinks_back != ''||flightBookingLinks_back != null ">
+        <div class="card-header text-left">รายละเอียด (ขากลับ)</div>
+          <div class="card card-flight card-header text-center">
+            <v-row>
+              <v-col cols="5" >{{flightAirports_back_depart.name}}</v-col>
+              <v-col cols="7">{{flightAirports_back_arrive.name}}</v-col>
+            </v-row>
+            <v-row class="mt-0">
+              <v-col cols="5">{{flightBookingLinks_back.depart}}</v-col>
+              <v-icon x-large color="orange darken-2">mdi-airplane</v-icon>
               <v-col cols="5">{{flightBookingLinks_back.arrive}}</v-col>
             </v-row>
-          
           </div>
-          <div class="card-body text-left">{{flight.user.firstName}} {{flight.user.lastName}}</div>
+          <div class="card-body text-left">{{user.firstName}} {{user.lastName}}</div>
         </div>
       </div>
       <div class="card text-center card-button">
@@ -151,13 +166,13 @@
                 <v-col>
                   <v-list-item>
                     <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
-                    <div class="ml-5">{{city_go}}-{{city_back}}</div>
+                    <div class="ml-5">{{arrive_airport_go}}-{{depart_airport_go}}</div>
                   </v-list-item>
                 </v-col>
                 <v-col>
                   <v-list-item>
                     <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
-                    <div class="ml-5">{{city_back}}-{{city_go}}</div>
+                    <div class="ml-5">{{depart_airport_back}}-{{arrive_airport_back}}</div>
                   </v-list-item>
                 </v-col>
               </v-row>
@@ -181,7 +196,7 @@
                   <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
                   <v-row class="ml-6 mt-.5">
                     <v-list-item-content>
-                      <v-list-item-title class="font-weight-medium">{{city_go}}-{{city_back}}</v-list-item-title>
+                      <v-list-item-title class="font-weight-medium">{{arrive_airport_go}}-{{depart_airport_go}}</v-list-item-title>
                       <v-list-item-subtitle>23D,23E</v-list-item-subtitle>
                     </v-list-item-content>
                   </v-row>
@@ -193,7 +208,7 @@
                   <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
                   <v-row class="ml-6 mt-.5">
                     <v-list-item-content>
-                      <v-list-item-title class="font-weight-medium">{{city_back}}-{{city_go}}</v-list-item-title>
+                      <v-list-item-title class="font-weight-medium">{{depart_airport_back}}-{{arrive_airport_back}}</v-list-item-title>
                       <v-list-item-subtitle>23D,23E</v-list-item-subtitle>
                     </v-list-item-content>
                   </v-row>
@@ -249,7 +264,7 @@
         <v-list-item three-line>
           <v-list-item-content>
             <v-list-item-title class="mb-1 mr-1">
-              <v-icon large color="black">mdi-check-bold</v-icon> {{flight.user.firstName}}  {{flight.user.lastName}} </v-list-item-title>
+              <v-icon large color="black">mdi-check-bold</v-icon>{{user.firstName}} {{user.lastName}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </div>
@@ -261,7 +276,7 @@
             <v-list-item-title class="mb-1">
               <v-icon large color="black">mdi-email-newsletter</v-icon>รับบัตรขึ้นเครื่องบอร์ดดิ้งพาสทาง E-mail
             </v-list-item-title>
-            <v-text-field v-model="checkIn.email" outlined label="E-mail" filled style="width: 50%;"></v-text-field>
+            <v-text-field v-model="checkIn.email"  :rules="emailRules" outlined label="E-mail" required filled style="width: 50%;"></v-text-field>
           </v-list-item-content>
         </v-list-item>
       </div>
@@ -380,12 +395,14 @@
         </v-card>
         <hr />
         <v-checkbox
-          v-model="agree"
+          v-model="checkIn.checkbox"
           label="ข้าพเจ้าได้ศึกษาและยอมรับในข้อกำหนดเกี่ยวกับวัตถุต้องห้าม และขอยืนยันว่าไม่มีวัตถุอัตรายใด ๆ บรรจุในสัมภาระของข้าพเจ้า"
           color="green"
+          true-value="yes"
+          alse-value="no"
         ></v-checkbox>
       </div>
-      <div class="card text-center card-button">
+      <div class="card text-center card-button" v-show="checkIn.checkbox == true">
         <a
           href="#"
           @click="()=>onShowBoardingPass(this)"
@@ -395,7 +412,39 @@
       </div>
     </div>
 
-    <div v-if="boardingPass == true">BoardingPass Page</div>
+    <div v-if="boardingPass == true">BoardingPass Page
+       <div class="card text-center card-bordingpass-style">
+        <div class="card-body"> 
+          <v-row class="pt-5 pr-5">
+            <v-col>
+              <h4>Booking ID</h4>
+              <p>asdasdasd</p><br>
+              <h4>Bookid</h4>
+              <p>asdasdasd</p><br>
+              <h4>Bookid</h4>
+              <p>asdasdasd</p><br>
+              <h4>Bookid</h4>
+              <p>asdasdasd</p><br>
+            </v-col>
+            <v-col>
+              <h1>Bording Pass</h1>
+              <div class="myborder">
+                <h4>asdasdasd</h4>
+                <p>4454564</p>
+                <h4>asdasdasd</h4>
+                <p>4454564</p>
+                <h4>asdasdasd</h4>
+                <p>4454564</p>
+                <h4>asdasdasd</h4>
+                <p>4454564</p>
+              </div>
+            </v-col>
+          </v-row>
+          <hr>
+          <img src="../../assets/checkInLast.png" alt="">
+        </div>
+       </div>
+    </div>
   </div>
 </template>
 
@@ -421,22 +470,32 @@ export default {
         lastname: "",
         email:"",
         flight:[],
+        checkbox: "",
       },
       flight:[],
+      user:[],
       flightBookingLinks_go:[],
       flightBookingLinks_back:[],
-      flightAirports_go:[],
-      flightAirports_back:[],
+      flightAirports_go_depart:[],
+      flightAirports_go_arrive:[],
+      flightAirports_back_depart:[],
+      flightAirports_back_arrive:[],
       city_go:[],
       city_back:[],
-      agree: false ,
-
-      checkin_page: true,
+      arrive_airport_go:[],
+      depart_airport_go:[],
+      arrive_airport_back:[],
+      depart_airport_back:[],
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      checkin_page: false,
       fligth_page: false,
       addon_page: false,
       confirmation_page: false,
       safty_page: false,
-      boardingPass: false,
+      boardingPass: true,
 
       extensionHeight: 100,
       reverse: true
@@ -445,7 +504,6 @@ export default {
 
   // updated(){
   //   console("Hello world!");
-   //   console("Hello world!");
   // },
 
   methods: {
@@ -480,9 +538,6 @@ export default {
         .then(response => {
           this.flightCity = response.data;
           this.$nextTick();
-          //console.log(response.data);
-          //console.log(response.data);
-           //console.log(response.data);
         })
         .catch(e => {
           console.log(e);
@@ -495,14 +550,26 @@ export default {
           console.log(response);
           if (response.data != null) {
             this.flight = response.data;
+            this.user = response.data.user;
+
             this.flightBookingLinks_go = response.data.flightBookingLinks[0].flight;
             this.flightBookingLinks_back = response.data.flightBookingLinks[1].flight;
-            this.flightAirports_go = response.data.flightBookingLinks[0].flight.flightAirports[0].airport;
-            this.flightAirports_back = response.data.flightBookingLinks[1].flight.flightAirports[1].airport;
+
+            this.flightAirports_go_depart = response.data.flightBookingLinks[0].flight.flightAirports[0].airport;
+            this.flightAirports_go_arrive = response.data.flightBookingLinks[0].flight.flightAirports[1].airport;
+
+            this.flightAirports_back_depart = response.data.flightBookingLinks[1].flight.flightAirports[0].airport;
+            this.flightAirports_back_arrive = response.data.flightBookingLinks[1].flight.flightAirports[1].airport;
+
             this.city_go = response.data.flightBookingLinks[0].flight.flightAirports[0].airport.city.name;
             this.city_back = response.data.flightBookingLinks[1].flight.flightAirports[1].airport.city.name;
 
-            console.log(this.city_go)
+            this.arrive_airport_go = response.data.flightBookingLinks[0].flight.flightAirports[0].airport.name;
+            this.depart_airport_go = response.data.flightBookingLinks[0].flight.flightAirports[1].airport.name;
+
+            this.arrive_airport_back = response.data.flightBookingLinks[1].flight.flightAirports[0].airport.name;
+            this.depart_airport_back = response.data.flightBookingLinks[1].flight.flightAirports[1].airport.name;
+           
           } else {
             this.clear()
           }          
@@ -511,7 +578,7 @@ export default {
           console.log(e);
         });
       this.submitted = true;
-      this.onShowFligthPage(this);
+       this.onShowFligthPage(this);
     },
   
   },
@@ -525,6 +592,11 @@ export default {
 </script>
 
 <style scoped>
+.myborder{
+  border-style: solid;
+  border-width: 3px;
+  padding: 20px;
+}
 .text-size {
   font-size: 13px;
 }
@@ -534,6 +606,12 @@ export default {
 .card-style {
   border-radius: 8px;
   height: 130px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.card-bordingpass-style{
+  border-radius: 1px;
+  width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
 }
