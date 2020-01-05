@@ -108,11 +108,11 @@ export default {
   },
   watch:{
     dates(){
-      if(new Date(this.dates[1]).getTime() < new Date(this.dates[0]).getTime()){
-        this.dates = [this.dates[1]]
-      }
-      if(new Date(this.dates[0]).getTime() < new Date().getTime()){
+      if(new Date(this.dates[0]).getDate() < new Date(moment(new Date()).format("YYYY-MM-DD")).getDate() ){
         this.dates = [moment(new Date()).format("YYYY-MM-DD")]
+      }else
+      if(new Date(this.dates[1]).getDate() < new Date(this.dates[0]).getDate()){
+        this.dates = [this.dates[1]]
       }
     },
     airportDepart(){
