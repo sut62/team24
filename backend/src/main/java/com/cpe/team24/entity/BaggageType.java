@@ -25,7 +25,7 @@ public class BaggageType {
     @Column(name="BAGGAGETYPE_ID",unique = true, nullable = true)
     private @NonNull Long id;
 
-    private @NonNull String name;
+    private @NonNull String btypename;
 
 	
 }

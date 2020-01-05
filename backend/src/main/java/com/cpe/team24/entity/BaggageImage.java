@@ -25,7 +25,7 @@ public class BaggageImage {
     @Column(name="BAGGAGEIMAGE_ID",unique = true, nullable = true)
     private @NonNull Long id;
 
-    private @NonNull String name;
+    private @NonNull String imagename;
 
     private @NonNull String url;
 
