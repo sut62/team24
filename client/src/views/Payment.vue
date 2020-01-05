@@ -25,10 +25,15 @@
                     <p class="pl-3 pt-3" style="color:grey">Depart Date</p>
                   </v-row>
                   <p>{{data.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}</p>
-                  <p>{{data.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.city.name + " -> " + data.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}</p>
-                  <p>{{data.flightBooking.flightBookingLinks[0].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[0].flight.arrive | moment("HH:mm")}}</p>
-                  <p>{{getDuration(data.flightBooking.flightBookingLinks[0].flight.arrive,data.flightBooking.flightBookingLinks[0].flight.depart)}}</p>
-
+                  <p>
+                    {{data.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.city.name}}
+                    <v-icon color="error">mdi-arrow-right</v-icon>
+                    {{data.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}
+                  </p>
+                  <p>
+                    {{data.flightBooking.flightBookingLinks[0].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[0].flight.arrive | moment("HH:mm")}}
+                    | {{getDuration(data.flightBooking.flightBookingLinks[0].flight.arrive,data.flightBooking.flightBookingLinks[0].flight.depart)}}
+                  </p>
                 </v-col>
                 <v-col>
                   <v-row>
@@ -37,11 +42,15 @@
                     <p class="pl-3 pt-3" style="color:grey">Return Date</p>
                   </v-row>
                   <p>{{data.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}</p>
-                  <p>{{data.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.city.name + " -> " + data.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.city.name}}</p>
-                  <p>{{data.flightBooking.flightBookingLinks[1].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[1].flight.arrive | moment("HH:mm")}}</p>
-
-                  <p>{{getDuration(data.flightBooking.flightBookingLinks[1].flight.arrive,data.flightBooking.flightBookingLinks[1].flight.depart)}}</p>
-
+                  <p>
+                    {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.city.name}}
+                    <v-icon color="error">mdi-arrow-right</v-icon>
+                    {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.city.name}}
+                  </p>
+                  <p>
+                    {{data.flightBooking.flightBookingLinks[1].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[1].flight.arrive | moment("HH:mm")}}
+                    | {{getDuration(data.flightBooking.flightBookingLinks[1].flight.arrive,data.flightBooking.flightBookingLinks[1].flight.depart)}}
+                  </p>
                 </v-col>
               </v-row>
             </v-card>
@@ -50,7 +59,7 @@
           <div>
             <v-row>
               <v-col cols="8" v-if="paymentTypesLoaded">
-                <div >
+                <div>
                   <div class="mt-5">
                     <v-card>
                       <v-toolbar flat color="primary" dark>
@@ -58,7 +67,8 @@
                       </v-toolbar>
                       <v-tabs vertical>
                         <v-tab v-for="(paymentType,index) in data.paymentTypes" :key="index">
-                          <v-icon left>mdi-store</v-icon>{{paymentType.name}}
+                          <v-icon left>mdi-check-all</v-icon>
+                          {{paymentType.name}}
                         </v-tab>
 
                         <v-tab-item v-for="(paymentType,index) in data.paymentTypes" :key="index">
@@ -67,7 +77,12 @@
                               <p>Please Select</p>
 
                               <v-radio-group v-model="select.paymentWayId" column>
-                                <v-radio v-for="(paymentWay,index) in paymentType.paymentWays" :key="index" :label="paymentWay.name" :value="paymentWay.id"></v-radio>
+                                <v-radio
+                                  v-for="(paymentWay,index) in paymentType.paymentWays"
+                                  :key="index"
+                                  :label="paymentWay.name"
+                                  :value="paymentWay.id"
+                                ></v-radio>
                               </v-radio-group>
                             </v-card-text>
                           </v-card>
@@ -153,17 +168,18 @@
 <script>
 import UserNavbar from "../components/UserNavbar";
 import UserFooter from "../components/UserFooter";
+
 import axios from "axios";
-var numeral = require('numeral');
+var numeral = require("numeral");
 
 let http = axios.create({
-  baseURL: 'http://localhost:9000/api',
+  baseURL: "http://localhost:9000/api",
   timeout: 120000,
   headers: {
-    'Access-Control-Allow-Origin': '*',
-    "Content-type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Content-type": "application/json"
   }
-})
+});
 
 export default {
   name: "payment",
@@ -174,16 +190,16 @@ export default {
   },
   data: () => ({
     showVoucher: false,
-    flightBookingLoaded:false,
-    paymentWaysLoaded:false,
-    paymentTypesLoaded:false,
+    flightBookingLoaded: false,
+    paymentWaysLoaded: false,
+    paymentTypesLoaded: false,
     select: {
       paymentWayId: -1
     },
     data: {
-      flightBooking:{},
-      paymentWays:[],// no used
-      paymentTypes:[] 
+      flightBooking: {},
+      paymentWays: [], // no used
+      paymentTypes: []
     }
   }),
   components: {
@@ -191,35 +207,52 @@ export default {
     UserFooter
   },
   computed: {
-    totalPrice(){
-      let sum = this.data.flightBooking.flightBookingLinks[0].flight.price + this.data.flightBooking.flightBookingLinks[1].flight.price
-      return numeral(sum).format('0,0.00'); 
+    totalPrice() {
+      let sum =
+        this.data.flightBooking.flightBookingLinks[0].flight.price +
+        this.data.flightBooking.flightBookingLinks[1].flight.price;
+      return numeral(sum).format("0,0.00");
     }
   },
   methods: {
-    savePayment(){
-      http
-      .post("/payment/"+this.data.flightBooking.id+"/"+this.select.paymentWayId)
-      .then(res => {
-        console.log("Success")
-        console.log(res.data)
-      })
-      .catch(e=>console.log(e))
+    savePayment() {
+      if (
+        this.select.paymentWayId == "-1"
+      ){
+        alert("กรุณากรอกข้อมูลให้ครบ");
+      }else{
+         http
+           .post(
+             "/payment/" +
+               this.data.flightBooking.id +
+               "/" +
+               this.select.paymentWayId
+           )
+           .then(res => {
+             console.log("Success");
+             console.log(res.data);
+             alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
+          })
+           .catch(e =>{
+             console.log(e)
+             alert("เกิดข้อผิดพลาด " + e);
+          });
+      }
     },
-    getDuration(end,start){
-      let arrive = new Date(end)
-      let depart = new Date(start)
+    getDuration(end, start) {
+      let arrive = new Date(end);
+      let depart = new Date(start);
       const diffTime = Math.abs(arrive - depart);
       const diffMinute = Math.ceil(diffTime / (1000 * 60));
       const diffHour = Math.ceil(diffMinute / 60) - 1;
       const minute = diffMinute % 60;
-      const hour = diffHour
-      if(diffHour == 0){
-        return minute + " นาที"
+      const hour = diffHour;
+      if (diffHour == 0) {
+        return minute + " นาที";
       }
-      return hour + " ชม. " + minute + " นาที"
+      return hour + " ชม. " + minute + " นาที";
     },
-    getFlightBooking(){
+    getFlightBooking() {
       http
       .get("/flight-booking/"+this.bookId)
       .then(res => {
@@ -229,30 +262,30 @@ export default {
       })
       .catch(e=>console.log(e))
     },
-    getPaymentWay(){
+    getPaymentWay() {
       http
-      .get("/payment-way")
-      .then(res => {
-        this.data.paymentWays = res.data
-        console.log(this.data.paymentWays)
-        this.paymentWaysLoaded = true
-      })
-      .catch(e=>console.log(e))
+        .get("/payment-way")
+        .then(res => {
+          this.data.paymentWays = res.data;
+          console.log(this.data.paymentWays);
+          this.paymentWaysLoaded = true;
+        })
+        .catch(e => console.log(e));
     },
-    getPaymentTypes(){
+    getPaymentTypes() {
       http
-      .get("/payment-type")
-      .then(res => {
-        this.data.paymentTypes = res.data
-        console.log(this.data.paymentTypes)
-        this.paymentTypesLoaded = true
-      })
-      .catch(e=>console.log(e))
+        .get("/payment-type")
+        .then(res => {
+          this.data.paymentTypes = res.data;
+          console.log(this.data.paymentTypes);
+          this.paymentTypesLoaded = true;
+        })
+        .catch(e => console.log(e));
     }
   },
-  created(){
-    this.getFlightBooking()
-    this.getPaymentTypes()
+  created() {
+    this.getFlightBooking();
+    this.getPaymentTypes();
   }
 };
 </script>
