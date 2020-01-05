@@ -113,13 +113,17 @@
           <div class="card-header text-left">รายละเอียด (ขาไป)</div>
           <div class="card card-flight card-header text-center">
             <v-row>
-              <v-col cols="5">{{flightAirports_go_depart.name}}</v-col>
+              <v-col cols="5">{{flightAirports_go_depart.name}} </v-col>
               <v-col cols="7">{{flightAirports_go_arrive.name}}</v-col>
             </v-row>
-            <v-row class="mt-0">
-              <v-col cols="5">{{flightBookingLinks_go.depart}}</v-col>
+            <v-row class="mt-0 text-center">
+              <v-col cols="5">{{flightBookingLinks_go.depart| moment("DD MMM YYYY")}}</v-col>
               <v-icon x-large color="orange darken-2">mdi-airplane</v-icon>
-              <v-col cols="5">{{flightBookingLinks_go.arrive}}</v-col>
+              <v-col cols="6">{{flightBookingLinks_go.arrive| moment("DD MMM YYYY")}}</v-col>
+            </v-row>
+            <v-row class="mt-0 text-center">
+              <v-col cols="5">{{flightBookingLinks_go.depart| moment("HH:mm")}}</v-col>
+              <v-col cols="7">{{flightBookingLinks_go.arrive| moment("HH:mm")}}</v-col>
             </v-row>
           </div>
           <div class="card-body text-left">{{user.firstName}} {{user.lastName}}</div>
@@ -136,9 +140,13 @@
               <v-col cols="7">{{flightAirports_back_arrive.name}}</v-col>
             </v-row>
             <v-row class="mt-0">
-              <v-col cols="5">{{flightBookingLinks_back.depart}}</v-col>
+              <v-col cols="5">{{flightBookingLinks_back.depart | moment("DD MMM YYYY")}}</v-col>
               <v-icon x-large color="orange darken-2">mdi-airplane</v-icon>
-              <v-col cols="5">{{flightBookingLinks_back.arrive}}</v-col>
+              <v-col cols="5">{{flightBookingLinks_back.arrive | moment("DD MMM YYYY")}}</v-col>
+            </v-row>
+             <v-row class="mt-0 text-center">
+              <v-col cols="5">{{flightBookingLinks_back.depart| moment("HH:mm")}}</v-col>
+              <v-col cols="7">{{flightBookingLinks_back.arrive| moment("HH:mm")}}</v-col>
             </v-row>
           </div>
           <div class="card-body text-left">{{user.firstName}} {{user.lastName}}</div>
@@ -499,14 +507,14 @@
                 <img src="../../assets/logo.png" alt="John" />
                 <br />
               </v-avatar>
+              <div class="ml-10 mt-5">
               <div align="left" class="caption">Depart</div>
               <p align="left" class="title">{{flightAirports_go_depart.name}}</p>
               <div align="left" class="caption">Arrive</div>
               <p align="left" class="title">{{flightAirports_go_arrive.name}}</p>
               <div align="left" class="caption">booking no.</div>
               <p align="left" class="title">{{flight.bookId}}</p>
-              <!-- <div align="left" class="caption">Seq no.</div>
-              <p align="left" class="title">66</p>-->
+              </div>
             </v-col>
             <v-col>
               <h1>Bording Pass</h1>
@@ -517,11 +525,11 @@
                 </p>
                 <p class="caption">
                   Date Depart
-                  <sub class="overline">{{flightBookingLinks_go.depart}}</sub>
+                  <sub class="overline">{{ flightBookingLinks_go.depart  | moment("DD MMM YYYY") }}</sub>
                 </p>
                 <p class="caption">
                   Date Arrive
-                  <sub class="overline">{{flightBookingLinks_go.arrive}}</sub>
+                  <sub class="overline">{{ flightBookingLinks_go.arrive | moment("DD MMM YYYY") }}</sub>
                 </p>
                 <p class="caption">
                   Seat no.
@@ -547,14 +555,14 @@
                 <img src="../../assets/logo.png" alt="John" />
                 <br />
               </v-avatar>
-              <div align="left" class="caption">Depart</div>
+              <div class="ml-10 mt-5">
+              <div align="left" class="caption ">Depart</div>
               <p align="left" class="title">{{flightAirports_back_depart.name}}</p>
               <div align="left" class="caption">Arrive</div>
               <p align="left" class="title">{{flightAirports_back_arrive.name}}</p>
               <div align="left" class="caption">booking no.</div>
               <p align="left" class="title">{{flight.bookId}}</p>
-              <!-- <div align="left" class="caption">Seq no.</div>
-              <p align="left" class="title">66</p>-->
+              </div>
             </v-col>
             <v-col>
               <h1>Bording Pass</h1>
@@ -565,11 +573,11 @@
                 </p>
                 <p class="caption">
                   Date Depart
-                  <sub class="overline">{{flightBookingLinks_back.depart}}</sub>
+                  <sub class="overline">{{ flightBookingLinks_back.depart| moment("DD MMM YYYY") }}</sub>
                 </p>
                 <p class="caption">
                   Date Arrive
-                  <sub class="overline">{{flightBookingLinks_back.arrive}}</sub>
+                  <sub class="overline">{{ flightBookingLinks_back.arrive| moment("DD MMM YYYY") }}</sub>
                 </p>
                 <p class="caption">
                   Seat no.
