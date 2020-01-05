@@ -12,6 +12,7 @@ import java.util.Optional;
 @RepositoryRestResource
 public interface FlightBookingRepository extends JpaRepository<FlightBooking,Long> {
     public Optional<FlightBooking> findById(Long id);
+    public Optional<FlightBooking> findByBookId(String bookId);
     public Collection<FlightBooking> findAllByUser(User user);
     //public Optional<FlightBooking> findByLastName(String lastname);
 }

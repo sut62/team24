@@ -1,4 +1,5 @@
 import { BookFlightService } from '../api'
+import router from '../router'
 
 const bookFlight = {
   namespaced: true,
@@ -104,6 +105,7 @@ const bookFlight = {
       }
       let result = await BookFlightService.bookFlight(data)
       await commit('BOOK_SUCCESS',result.data)
+      await router.push({ name: 'payment', params: {bookId: result.data.bookId }})
     },
     // Get flight departure by date
     async getFlightDepart({commit,state},date){
@@ -124,7 +126,7 @@ const bookFlight = {
       //use last page number
       if(state.pageLocation >= 3){ 
         await dispatch('bookFlight');
-        await alert("จองสำเสร็จ BookingId ของท่านคือ " + state.result.bookResult.bookId)
+        // await alert("จองสำเสร็จ BookingId ของท่านคือ " + state.result.bookResult.bookId)
       }else{
         await commit('NEXT_PAGE')
       }

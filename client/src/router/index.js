@@ -15,9 +15,10 @@ const routes = [
     component: BookFlight
   },
   {
-    path: '/payment',
+    path: '/payment/:bookId',
     name: 'payment',
-    component: Payment
+    component: Payment,
+    props: true
   },
   {
     path: '/checkIn',
