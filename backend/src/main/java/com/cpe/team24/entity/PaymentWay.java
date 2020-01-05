@@ -17,7 +17,6 @@ import javax.persistence.GenerationType;
 
 @Data
 @Entity
-@Table(name="PAYMENT_WAY")
 public class PaymentWay {
     @Id
     @SequenceGenerator(name="PAYMENT_WAY_SEQ",sequenceName="PAYMENT_WAY_SEQ")
