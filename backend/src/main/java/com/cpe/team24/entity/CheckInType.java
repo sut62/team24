@@ -20,13 +20,13 @@ import javax.persistence.Entity;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "CHECKINTYPE")
+@Table(name = "CHECKIN_TYPE")
 public class CheckInType {
 
     @Id
-    @SequenceGenerator(name = "CHECKINTYPE_SEQ", sequenceName = "CHECKINTYPE_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHECKINTYPE_SEQ")
-    @Column(name = "CHECKINTYPE_ID", unique = true, nullable = true)
+    @SequenceGenerator(name = "CHECKIN_TYPE_SEQ", sequenceName = "CHECKIN_TYPE_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHECKIN_TYPE_SEQ")
+    @Column(name = "CHECKIN_TYPE_ID", unique = true, nullable = true)
     private @NonNull Long id;
 
     @Column(name = "Name")

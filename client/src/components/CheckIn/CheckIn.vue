@@ -584,6 +584,10 @@ export default {
       this.submitted = true;
        this.onShowFligthPage(this);
     },
+    
+    postCheckIn(){
+
+    }
   
   },
   mounted() {

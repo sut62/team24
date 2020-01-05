@@ -43,7 +43,10 @@ public class Team24Application {
 						   BaggageTypeRepository baggagetypeRepository,
 						   FlightBookingTypeRepository flightBookingTypeRepository,
 						   FlightAirportTypeRepository flightAirportTypeRepository,
-						   FlightAirportRepository flightAirportRepository) {
+						   FlightAirportRepository flightAirportRepository,
+						   CheckInStatusRepository checkInStatusRepository,
+						   CheckInTypeRepository checkInTypeRepository
+						   ) {
 		return args -> {
 			Object[][] data;
 			// ------------Add User ROLE ---------
@@ -193,8 +196,7 @@ public class Team24Application {
 				System.out.println(flightBooking);
 				System.out.println("-------------------------------------------");
 
-			}
-			;
+			};
 
 
 			Stream.of(
@@ -244,6 +246,26 @@ public class Team24Application {
 				
 
 				baggageaddonRepository.save(newBag);
+			}
+			Object[][] checkInStatus = new Object[][] { 
+				{ "อนุมัติ"},
+				{ "ยกเลิก"},
+				{ "ผู้โดยสารขึ้นเครื่องแล้ว"}
+			};
+			for (int i = 0; i < checkInStatus.length; i++) {
+				CheckInStatus newCheckInStatus = new CheckInStatus();
+				newCheckInStatus.setName((String) checkInStatus[i][0]);		
+				checkInStatusRepository.save(newCheckInStatus);
+			}
+			Object[][] checkInType = new Object[][] { 
+				{ "Webside"},
+				{ "WalkIn"},
+				{ "Machines"}
+			};
+			for (int i = 0; i < checkInType.length; i++) {
+				CheckInType newCheckInType = new CheckInType();
+				newCheckInType.setName((String) checkInType[i][0]);		
+				checkInTypeRepository.save(newCheckInType);
 			}
 		};
 	}

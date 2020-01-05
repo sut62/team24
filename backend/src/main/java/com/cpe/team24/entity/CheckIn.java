@@ -52,6 +52,62 @@ public class CheckIn {
     @JoinColumn(name = "FLIGHT_BOOKING_ID", referencedColumnName = "FLIGHT_BOOKING_ID",unique = true)
     private FlightBooking flightBooking;
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return this.date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBoardingPass() {
+        return this.boardingPass;
+    }
+
+    public void setBoardingPass(String boardingPass) {
+        this.boardingPass = boardingPass;
+    }
+
+    public CheckInStatus getCheckInStatus() {
+        return this.checkInStatus;
+    }
+
+    public void setCheckInStatus(CheckInStatus checkInStatus) {
+        this.checkInStatus = checkInStatus;
+    }
+
+    public CheckInType getCheckInType() {
+        return this.checkInType;
+    }
+
+    public void setCheckInType(CheckInType checkInType) {
+        this.checkInType = checkInType;
+    }
+
+    public FlightBooking getFlightBooking() {
+        return this.flightBooking;
+    }
+
+    public void setFlightBooking(FlightBooking flightBooking) {
+        this.flightBooking = flightBooking;
+    }
+
 
 
 }
