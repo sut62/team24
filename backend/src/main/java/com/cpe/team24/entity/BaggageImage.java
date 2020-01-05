@@ -17,7 +17,6 @@ import javax.persistence.Entity;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="BAGGAGEIMAGE")
 public class BaggageImage {
     @Id
     @SequenceGenerator(name="BAGGAGEIMAGE_SEQ",sequenceName="BAGGAGEIMAGE_SEQ")
@@ -25,16 +24,32 @@ public class BaggageImage {
     @Column(name="BAGGAGEIMAGE_ID",unique = true, nullable = true)
     private @NonNull Long id;
 
-    private @NonNull String imagename;
+    private @NonNull String name;
 
     private @NonNull String url;
 
 
+    public Long getId() {
+        return id;
+    }
 
-    
-    
-	
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String imagename) {
+        this.name = imagename;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

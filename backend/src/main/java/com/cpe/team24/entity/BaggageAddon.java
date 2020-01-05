@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +17,6 @@ import javax.persistence.FetchType;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="BAGGAGE")
 public class BaggageAddon {
 
     @Id
@@ -28,7 +26,7 @@ public class BaggageAddon {
     private @NonNull Long id;
     @Column(name="baggage")
 
-    private @NonNull String maxweight;
+    private @NonNull String maxWeight;
 
     private @NonNull String price;
 
@@ -39,14 +37,61 @@ public class BaggageAddon {
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = BaggageType.class)
     @JoinColumn(name = "BAGGAGETYPE_ID", insertable = true)
-    private  BaggageType addbaggagetype;
+    private  BaggageType baggageType;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = BaggageImage.class)
     @JoinColumn(name = "BAGGAGEIMAGE_ID", insertable = true)
-    private  BaggageImage addbaggageimage;
+    private  BaggageImage baggageImage;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
     @JoinColumn(name = "AIRPORT_ID", insertable = true)
-    private Airport addflightairports;
+    private Airport airport;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMaxWeight() {
+        return maxWeight;
+    }
+
+    public void setMaxWeight(String maxweight) {
+        this.maxWeight = maxweight;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public BaggageType getBaggageType() {
+        return baggageType;
+    }
+
+    public void setBaggageType(BaggageType addbaggagetype) {
+        this.baggageType = addbaggagetype;
+    }
+
+    public BaggageImage getBaggageImage() {
+        return baggageImage;
+    }
+
+    public void setBaggageImage(BaggageImage addbaggageimage) {
+        this.baggageImage = addbaggageimage;
+    }
+
+    public Airport getAirport() {
+        return airport;
+    }
+
+    public void setAirport(Airport addflightairports) {
+        this.airport = addflightairports;
+    }
 }
