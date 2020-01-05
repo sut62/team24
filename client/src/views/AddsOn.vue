@@ -1,27 +1,27 @@
 <template>
-   <div> 
-   <v-row>
-    <NavBar style="height:100vh"/>
-    <div class=" mt-10 mx-auto">
-        <h1>เพิ่มบริการเสริมพิเศษ</h1>
-        <v-card class="p-5">
-            <v-row>
-                <v-col>
-                    <v-icon size="250">mdi-bag-checked</v-icon>
-                </v-col>
-                <v-col>
-                <div class="mt-5"></div>
-                    <h1 >สัมภาระเช็คอิน</h1>
-                    <div @click="openDialog = true" class=" mt-6 btn btn-block btn-primary btn-lg">Edit</div>
-                </v-col>
-            </v-row>
-        </v-card>
-    </div>
-    
-   </v-row>
-   <Baggage :openDialog="openDialog" :closeDialog="closeDialog"/>
-    
-   </div>
+  <div> 
+  <v-row>
+  <NavBar style="height:100vh"/>
+  <div class=" mt-10 mx-auto">
+      <h1>เพิ่มบริการเสริมพิเศษ</h1>
+      <v-card class="p-5">
+          <v-row>
+              <v-col>
+                  <v-icon size="250">mdi-bag-checked</v-icon>
+              </v-col>
+              <v-col>
+              <div class="mt-5"></div>
+                  <h1 >สัมภาระเช็คอิน</h1>
+                  <div @click="openDialog = true" class=" mt-6 btn btn-block btn-primary btn-lg">Edit</div>
+              </v-col>
+          </v-row>
+      </v-card>
+  </div>
+  
+  </v-row>
+  <Baggage :openDialog="openDialog" :closeDialog="closeDialog"/>
+  
+  </div>
 </template>
 
 
