@@ -16,7 +16,7 @@ public class CityController {
     private final CityRepository cityRepository;
 
     public CityController(CityRepository cityRepository) {
-
+        
         this.cityRepository = cityRepository;
     }
 
