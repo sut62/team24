@@ -19,13 +19,13 @@ import javax.persistence.Entity;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "CHECKINSTATUS")
+@Table(name = "CHECKIN_STATUS")
 public class CheckInStatus {
 
     @Id
-    @SequenceGenerator(name = "CHECKINSTATUS_SEQ", sequenceName = "CHECKINSTATUS_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHECKINSTATUS_SEQ")
-    @Column(name = "CHECKINSTATUS_ID", unique = true, nullable = true)
+    @SequenceGenerator(name = "CHECKIN_STATUS_SEQ", sequenceName = "CHECKIN_STATUS_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHECKIN_STATUS_SEQ")
+    @Column(name = "CHECKIN_STATUS_ID", unique = true, nullable = true)
     private @NonNull Long id;
 
     @Column(name = "Name")
