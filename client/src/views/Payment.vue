@@ -18,7 +18,21 @@
               <v-toolbar flat color="primary" dark>
                 <v-toolbar-title>Booking details</v-toolbar-title>
               </v-toolbar>
-              <p>hi</p>
+              <v-row class="text-left pl-7">
+                <v-col cols="6">
+                  <v-row>
+                    <v-icon slot="icon" size="36">mdi-airplane-takeoff</v-icon>
+                    <p class="pl-3 pt-3" style="color:grey">Depart Date</p>
+                  </v-row>
+                </v-col>
+                <v-col>
+                  <v-row>
+                    <i class="airasia-icon icon-return-flight"></i>
+                    <v-icon slot="icon" size="36" class="flip">mdi-airplane-takeoff</v-icon>
+                    <p class="pl-3 pt-3" style="color:grey">Return Date</p>
+                  </v-row>
+                </v-col>
+              </v-row>
             </v-card>
           </div>
           <!-- +++++++++++++++++++++++++++++++++++++++ -->
@@ -42,8 +56,7 @@
                         <v-tab-item>
                           <v-card flat>
                             <v-card-text>
-
-                              <p>Processing fee: THB 74.90</p>
+                              <p>Please Select</p>
 
                               <v-radio-group v-model="column" column>
                                 <v-radio label="7-11 || เค้าเตอร์เซอร์วิส" value="radio-1"></v-radio>
@@ -51,23 +64,20 @@
                                 <v-radio label="Big C" value="radio-3"></v-radio>
                                 <v-radio label="true money" value="radio-4"></v-radio>
                               </v-radio-group>
-
                             </v-card-text>
                           </v-card>
                         </v-tab-item>
                         <v-tab-item>
                           <v-card flat>
                             <v-card-text>
-
-                              <p>Processing fee: THB 00.00</p>
+                              <p>Please Select</p>
 
                               <v-radio-group v-model="column" column>
-                                <v-radio label="ธนาคารไทยพานิชย์" value="radio-1"></v-radio>
-                                <v-radio label="ธนาคารทหารไทย" value="radio-2"></v-radio>
-                                <v-radio label="ธนาคารกรุงเทพ" value="radio-3"></v-radio>
-                                <v-radio label="ธนาคารกรุงไทย" value="radio-4"></v-radio>
+                                <v-radio label="ธนาคารไทยพานิชย์" value="radio-5"></v-radio>
+                                <v-radio label="ธนาคารทหารไทย" value="radio-6"></v-radio>
+                                <v-radio label="ธนาคารกรุงเทพ" value="radio-7"></v-radio>
+                                <v-radio label="ธนาคารกรุงไทย" value="radio-8"></v-radio>
                               </v-radio-group>
-
                             </v-card-text>
                           </v-card>
                         </v-tab-item>
@@ -80,28 +90,24 @@
               <v-col>
                 <v-card class="text-center mt-5">
                   <v-toolbar flat color="primary" dark>
-                    <v-toolbar-title class="pt-6">
+                    <v-toolbar-title class="pt-1">
                       <v-row>
                         <v-col>
-                          <h4 class="pt-2">Total</h4>
+                          <h4 class="text-left pt-2">Total</h4>
                         </v-col>
                         <v-col>
                           <h4 class="pt-2">3,131.00</h4>
                         </v-col>
                         <v-col>
-                          <v-select v-model="select.currency" :items="data.currency" dense outlined></v-select>
+                          <h4 class="text-right pt-2">THB</h4>
                         </v-col>
                       </v-row>
                     </v-toolbar-title>
                   </v-toolbar>
                   <div class="px-3">
-                    <div class="d-flex">
+                    <div class="d-flex pt-2">
                       <div class="mr-auto p-2" style="color:grey">Subtotal</div>
                       <div class="p-2">3,131.00</div>
-                    </div>
-                    <div class="d-flex">
-                      <div class="mr-auto p-2" style="color:grey">Processing fee</div>
-                      <div class="p-2">74.90</div>
                     </div>
 
                     <hr />
@@ -116,32 +122,40 @@
                         >{{showVoucher?'Cancel' : 'Apply'}}</v-btn>
                       </div>
                     </div>
-                    <v-text-field v-show="showVoucher" outlined class="p-2" label="code"></v-text-field>
-                    <v-btn v-show="showVoucher" color="primary">
-                      <v-icon>mdi-magnify</v-icon>
-                    </v-btn>
-                  </div>
+                    <div class="input-group mb-3" v-show="showVoucher">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="code"
+                        aria-describedby="button-addon2"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          id="button-addon2"
+                        >Search</button>
+                      </div>
+                    </div>
 
-                  <v-row>
-                    <v-col class="text-left ml-3">
-                      <p></p>
-                    </v-col>
-                    <v-col class="text-right mr-3">
-                      <p></p>
-                    </v-col>
-                  </v-row>
+                    <hr />
+
+                    <div class="text-center p-3">
+                      <v-btn large color="error">Purchase</v-btn>
+                    </div>
+                  </div>
                 </v-card>
               </v-col>
             </v-row>
-
           </div>
+          <!-- +++++++++++++++++++++++++++++++++++++++ -->
 
           <!-- +++++++++++++++++++++++++++++++++++++++ -->
         </div>
+        <br />
+        <UserFooter style="padding-bottom: 100px;" />
+        <CartFooter />
       </div>
-      <br />
-      <UserFooter style="padding-bottom: 100px;" />
-      <CartFooter />
     </div>
   </div>
 </template>
@@ -158,10 +172,10 @@ export default {
     showVoucher: false,
 
     select: {
-      currency: "THB"
+     
     },
     data: {
-      currency: ["THB", "USD"]
+      
     }
   }),
   components: {
@@ -174,6 +188,10 @@ export default {
 </script>
 
 <style scoped>
+.flip {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 .header-bg {
   height: 300px;
   width: 100%;

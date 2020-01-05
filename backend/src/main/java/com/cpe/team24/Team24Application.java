@@ -45,7 +45,10 @@ public class Team24Application {
 						   FlightAirportTypeRepository flightAirportTypeRepository,
 						   FlightAirportRepository flightAirportRepository,
 						   CheckInStatusRepository checkInStatusRepository,
-						   CheckInTypeRepository checkInTypeRepository
+						   CheckInTypeRepository checkInTypeRepository,
+						   PaymentTypeRepository paymentTypeRepository,
+						   PaymentRepository paymentRepository,
+						   PaymentWayRepository paymentWayRepository
 						   ) {
 		return args -> {
 			Object[][] data;
@@ -197,8 +200,21 @@ public class Team24Application {
 				System.out.println("-------------------------------------------");
 
 			};
-
-
+			// ------- Payment Type ---------
+			String[] types = new String[]{"Over the counter","Internet banking"};
+			for(String type : types){
+				paymentTypeRepository.save(new PaymentType(type));
+			}
+			// ------- Payment Way --------
+			String[] ways = new String[]{"7-11","Big C","Tesco Lotus","True Money"};
+			for(String way : ways){
+				paymentWayRepository.save(new PaymentWay(way,paymentTypeRepository.findById(1l).orElse(null)));
+			}
+			ways = new String[]{"ธนาคารไทยพาณิชย์","ธนาคารทหารไทย","ธนาคารกรุงไทย","ธนาคารกรุงเทพ"};
+			for(String way : ways){
+				paymentWayRepository.save(new PaymentWay(way,paymentTypeRepository.findById(2l).orElse(null)));
+			}
+			// ------- Baggage Type --------
 			Stream.of(
 				"ธรรมดา","ที่ต้องดูแลเป็นเศษ","อุปกรณ์การกีฬา"
 			).forEach(bagtype-> {

@@ -41,6 +41,9 @@ public class FlightBooking {
     @ManyToOne
     private User user; //
 
+    @OneToOne
+    private Payment payment;
+    
     //Methods
     public void book(Integer departSeatId,Integer returnSeatId){
         this.departSeatId = departSeatId;
