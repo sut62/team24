@@ -211,11 +211,11 @@ public class Team24Application {
 			Object[][] bagimage;
 			//Menu Design
 			bagimage = new Object[][] {
-				{ "AAA", "http://www.thaifoodheritage.com/uploads/recipe_list/gallery/e3de5-jpg.jpeg" },
-				{ "BBB", "https://food.mthai.com/app/uploads/2019/02/Fried-Rice-with-Shrimp-Fat.jpg" },
-				{ "CCC","https://image.makewebeasy.net/makeweb/0/zs7gnRKvE/TH/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88.jpg" },
-				{ "DDD", "https://food.mthai.com/app/uploads/2017/02/Spicy-fish-2.jpg" },
-				{ "EEE", "https://img.kapook.com/u/2015/surauch/cook2/PT1.jpg" }, 
+				{ "SMALL", "https://image.flaticon.com/icons/svg/1926/1926375.svg" },
+				{ "MEDIUM", "https://image.flaticon.com/icons/svg/494/494835.svg" },
+				{ "LARGE","https://image.flaticon.com/icons/svg/2118/2118860.svg" },
+				{ "VIP", "https://image.flaticon.com/icons/svg/1040/1040624.svg" },
+				{ "SPORT", "https://image.flaticon.com/icons/svg/33/33736.svg" }, 
 			};
 			for (int i = 0; i < bagimage.length; i++) {
 				BaggageImage image = new BaggageImage();
