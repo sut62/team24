@@ -9,13 +9,13 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(path="/api")
 public class CheckInTypeController {
 
     @Autowired
     private final CheckInTypeRepository checkInTypeRepository;
-
+    
     public CheckInTypeController(CheckInTypeRepository checkInTypeRepository) {
-
         this.checkInTypeRepository = checkInTypeRepository;
     }
 

@@ -52,15 +52,6 @@ public class CheckInController {
         return checkIn;
     }
 
-    // @PostMapping("/create/{email}/{checkInStatusId}/{checkInTypeId}/{flightBookingId}")
-    // public CheckIn newCheckIn(CheckIn newCheckIn,
-    // @PathVariable String email,@PathVariable Long checkInStatusId ,@PathVariable Long CheckInTypeId ,@PathVariable Long flightBookingId) {
-    //     CheckInStatus checkInStatus = checkInStatusRepository.findById(checkInStatusId).orElse(null);
-    //     CheckInType checkInType = checkInTypeRepository.findById(CheckInTypeId).orElse(null);
-    //     FlightBooking flightBooking = flightBookingRepository.findById(flightBookingId).orElse(null);
-    //     return checkInRepository.save(newCheckIn); // บันทึก Objcet ชื่อ MenuDesign
-    // }
-
     @PostMapping("/create")
     public CheckIn newCheckIn(@RequestBody final BodyCheckIn bodyCheckIn) {
         CheckIn checkIn = new CheckIn();
