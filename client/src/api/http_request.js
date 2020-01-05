@@ -32,6 +32,7 @@ axiosInstance.interceptors.response.use(function (response) {
 class HttpRequest {
   constructor () {
     this.axios = axios
+    this.http = axiosInstance
   }
 
   // setHeader (header) {
