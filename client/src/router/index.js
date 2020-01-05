@@ -4,6 +4,7 @@ import BookFlight from '../views/BookFlight.vue'
 import CheckIn from '../views/CheckIn.vue'
 import Flight from '../views/Flight.vue'
 import AddsOn from "../views/AddsOn.vue";
+import Payment from '../views/Payment.vue'
 
 Vue.use(VueRouter)
 
@@ -12,6 +13,11 @@ const routes = [
     path: '/',
     name: 'bookFlight',
     component: BookFlight
+  },
+  {
+    path: '/payment',
+    name: 'payment',
+    component: Payment
   },
   {
     path: '/checkIn',
