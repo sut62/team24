@@ -46,7 +46,7 @@ public class BaggageAddon {
     private  BaggageImage addbaggageimage;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
-    @JoinColumn(name = "FIGHT_CITY_ID", insertable = true)
-    private City addflightairports;
+    @JoinColumn(name = "AIRPORT_ID", insertable = true)
+    private Airport addflightairports;
 
 }
