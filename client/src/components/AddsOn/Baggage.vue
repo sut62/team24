@@ -37,17 +37,12 @@
               <label for="formGroupExampleInput">ราคา</label>
                 <input type="text" class="form-control" placeholder="">
               <br>
-
-
               <label >รูปภาพ</label>
-            <select class="browser-default custom-select">
-                  
-              <option
-                v-for="i in imagename"
-                :key="i.id"
-                :value="i.id"
-              >{{i.imagename}}</option>
-                </select><br>
+              <div class="d-flex">
+                <div class="my-img">
+                  <img v-for="(image,index) in images" :key="index" :src="image.url" style="width:200px" alt="">
+                </div>
+              </div>
             </div>
             <div class="col-sm">
               One of three columns
@@ -83,7 +78,7 @@ let http = axios.create({
     data: () => ({
   
       btypename: [],
-      imagename: [],
+      images: [],
       name: [],
       form:{
         maxweight: "",
@@ -108,7 +103,7 @@ let http = axios.create({
       },
       getBaggagetype() {
       axios
-        .get("http://localhost:9000/baggagetype")
+        .get("http://localhost:9000/api/baggage-type")
         .then(bag => {
           this.btypename = bag.data;
         })
@@ -119,9 +114,9 @@ let http = axios.create({
 
     getImage() {
       http
-        .get("http://localhost:9000/bagimage")
+        .get("http://localhost:9000/api/baggage-image")
         .then(bimage => {
-          this.imagename = bimage.data;
+          this.images = bimage.data;
         })
         .catch(e => {
           console.log(e);
@@ -140,14 +135,16 @@ let http = axios.create({
 
     },
     mounted() {
-     this.getBaggagetype();
-     this.getImage();
-     this.getAirport();
+      this.getBaggagetype();
+      this.getImage();
+      this.getAirport();
     
   }
   }
 </script>
 
-<style>
-
+<style scope>
+  .my-img{
+    border-radius: 10px;
+  }
 </style>
