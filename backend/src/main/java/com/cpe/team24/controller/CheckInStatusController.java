@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(path="/api")
 public class CheckInStatusController {
 
     @Autowired
