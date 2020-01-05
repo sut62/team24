@@ -201,7 +201,7 @@ public class Team24Application {
 				"ธรรมดา","ที่ต้องดูแลเป็นเศษ","อุปกรณ์การกีฬา"
 			).forEach(bagtype-> {
 				BaggageType baggagetype = new BaggageType(); 
-				baggagetype.setName(bagtype); 
+				baggagetype.setBtypename(bagtype); 
 				baggagetypeRepository.save(baggagetype); 
 			});
 
@@ -217,7 +217,7 @@ public class Team24Application {
 			};
 			for (int i = 0; i < bagimage.length; i++) {
 				BaggageImage image = new BaggageImage();
-				image.setName((String) bagimage[i][0]);
+				image.setImagename((String) bagimage[i][0]);
 				image.setUrl((String) bagimage[i][1]);
 				baggageimageRepository.save(image);
 			};
