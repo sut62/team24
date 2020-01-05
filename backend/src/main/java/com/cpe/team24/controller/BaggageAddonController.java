@@ -1,9 +1,14 @@
 package com.cpe.team24.controller;
 
+import com.cpe.team24.entity.Airport;
+import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import com.cpe.team24.entity.BaggageAddon;
 import com.cpe.team24.entity.BaggageType;
@@ -22,7 +27,8 @@ public class BaggageAddonController {
     private BaggageImageRepository baggageimageRepository;
     @Autowired
     private BaggageTypeRepository baggagetypeRepository;
-   
+    @Autowired
+    private AirportRepository airportRepository;
 
     public BaggageAddonController(BaggageAddonRepository baggageaddonRepository, BaggageImageRepository baggageimageRepository,
     BaggageTypeRepository baggagetypeRepository ) {
@@ -32,22 +38,30 @@ public class BaggageAddonController {
 
     
     @GetMapping("")
-    public Collection<BaggageAddon> Food() {
-        return baggageaddonRepository.findAll();
+    public Collection<BaggageAddon> getAllAddsOn() {
+        return baggageaddonRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    }
+    @GetMapping("/airport/{id}")
+    public Collection<BaggageAddon> getAllAddsOn(@PathVariable Long id) {
+        return baggageaddonRepository.findAllByAirport(airportRepository.findById(id).orElse(null));
     }
 
-    @PostMapping("/{maxweight}/{price}/{baggageimage_id}/{baggagetype_id}")
+    @PostMapping("/{maxweight}/{price}/{baggageimage_id}/{baggagetype_id}/{airport_id}")
     public BaggageAddon newBaggage(BaggageAddon newBaggage,
     
     @PathVariable String maxweight,
     @PathVariable String price,
    
     @PathVariable long baggageimage_id,
-    @PathVariable long baggagetype_id) {
+    @PathVariable long baggagetype_id,
+    @PathVariable long airport_id
+   ) {
                         
     BaggageImage addbaggageimage = baggageimageRepository.findById(baggageimage_id);                    
-    BaggageType addbaggagetype = baggagetypeRepository.findById(baggagetype_id);                                
-                                  
+    BaggageType addbaggagetype = baggagetypeRepository.findById(baggagetype_id);
+    Airport airport = airportRepository.findById(airport_id).orElseThrow(()-> new MessageDescriptorFormatException("Can not find airport id"));
+
+    newBaggage.setAirport(airport);
 
     newBaggage.setMaxWeight(maxweight);
     newBaggage.setPrice(price);
@@ -56,7 +70,7 @@ public class BaggageAddonController {
     newBaggage.setBaggageType(addbaggagetype);
 
 
-    return baggageaddonRepository.save(newBaggage); 
+    return baggageaddonRepository.save(newBaggage);
 
     
     
