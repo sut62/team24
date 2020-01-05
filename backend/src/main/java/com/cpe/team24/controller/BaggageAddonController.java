@@ -35,16 +35,7 @@ public class BaggageAddonController {
     this.baggageaddonRepository = baggageaddonRepository;
     this.baggageimageRepository = baggageimageRepository;
     this.baggagetypeRepository = baggagetypeRepository; }
-
     
-    @GetMapping("")
-    public Collection<BaggageAddon> getAllAddsOn() {
-        return baggageaddonRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-    }
-    @GetMapping("/airport/{id}")
-    public Collection<BaggageAddon> getAllAddsOn(@PathVariable Long id) {
-        return baggageaddonRepository.findAllByAirport(airportRepository.findById(id).orElse(null));
-    }
 
     @PostMapping("/{maxweight}/{price}/{baggageimage_id}/{baggagetype_id}/{airport_id}")
     public BaggageAddon newBaggage(BaggageAddon newBaggage,
