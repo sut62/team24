@@ -8,7 +8,6 @@ import com.cpe.team24.model.BodyFlight;
 import com.cpe.team24.repository.*;
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -31,9 +30,6 @@ public class FlightController {
 
     @Autowired
     private AirportRepository airportRepository;
-
-    @Autowired
-    private CityRepository cityRepository;
 
     @Autowired
     private FlightAirportTypeRepository flightAirportTypeRepository;

@@ -1,7 +1,5 @@
 package com.cpe.team24.entity.auth;
 
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity

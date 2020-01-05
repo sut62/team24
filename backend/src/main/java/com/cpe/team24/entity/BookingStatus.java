@@ -1,13 +1,11 @@
 package com.cpe.team24.entity;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Entity

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import com.cpe.team24.entity.BaggageAddon;
 import com.cpe.team24.entity.BaggageType;
