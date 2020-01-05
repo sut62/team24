@@ -412,31 +412,31 @@
       </div>
     </div>
 
-    <div v-if="boardingPass == true">BoardingPass Page
+    <div v-show="boardingPass == true">BoardingPass Page
        <div class="card text-center card-bordingpass-style">
         <div class="card-body"> 
           <v-row class="pt-5 pr-5">
             <v-col>
-              <h4>Booking ID</h4>
-              <p>asdasdasd</p><br>
-              <h4>Bookid</h4>
-              <p>asdasdasd</p><br>
-              <h4>Bookid</h4>
-              <p>asdasdasd</p><br>
-              <h4>Bookid</h4>
-              <p>asdasdasd</p><br>
+              <div align="left" class="caption">Depart</div>
+              <p align="left" class="title">กรุงเทพ</p>
+              <div align="left" class="caption">Arrive</div>
+              <p align="left" class="title">กรุงเทพ</p>
+              <div align="left" class="caption">booking no.</div>
+              <p align="left" class="title">sadasdas</p>
+              <div align="left" class="caption">Seq no.</div>
+              <p align="left" class="title">66</p>
             </v-col>
             <v-col>
               <h1>Bording Pass</h1>
               <div class="myborder">
-                <h4>asdasdasd</h4>
-                <p>4454564</p>
-                <h4>asdasdasd</h4>
-                <p>4454564</p>
-                <h4>asdasdasd</h4>
-                <p>4454564</p>
-                <h4>asdasdasd</h4>
-                <p>4454564</p>
+                <p class="caption">Flight no.<sub class="title"> fdwsfdsfsdf</sub>
+                <p class="caption">Date <sub class="title"> 13 DEC 14</sub>
+                <p class="caption">Boarding time<sub class="title"> 07:15</sub>
+                <p class="caption">Seat no.<sub class="title"> 6A</sub>
+                <p></p>
+              </div>
+              <div>
+                <img id="barcode"/>
               </div>
             </v-col>
           </v-row>
@@ -450,6 +450,8 @@
 
 <script>
 import axios from "axios";
+var JsBarcode = require('jsbarcode');
+
 
 let axiosInstance = axios.create({
   baseURL: 'http://localhost:9000/api',
@@ -463,6 +465,7 @@ let axiosInstance = axios.create({
 export default {
   data() {
     return {
+      isBarcodeVisible: true,
       flightCity: [],
       checkIn: {
         arrive: "",
@@ -490,12 +493,12 @@ export default {
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
-      checkin_page: false,
+      checkin_page: true,
       fligth_page: false,
       addon_page: false,
       confirmation_page: false,
       safty_page: false,
-      boardingPass: true,
+      boardingPass: false,
 
       extensionHeight: 100,
       reverse: true
@@ -531,7 +534,7 @@ export default {
     onShowBoardingPass(main) {
       main.safty_page = !main.safty_page;
       main.boardingPass = !main.boardingPass;
-      
+     
     },
     getFlightCity() {
       axiosInstance.get("/city")
@@ -547,7 +550,7 @@ export default {
      findForCheckIn() {
       axiosInstance.get("/flight-booking/checkin/"+ this.checkIn.lastname +"/" +this.checkIn.depart+"/"+this.checkIn.arrive)
         .then(response => {
-          console.log(response);
+          console.log(response.data);
           if (response.data != null) {
             this.flight = response.data;
             this.user = response.data.user;
@@ -569,7 +572,8 @@ export default {
 
             this.arrive_airport_back = response.data.flightBookingLinks[1].flight.flightAirports[0].airport.name;
             this.depart_airport_back = response.data.flightBookingLinks[1].flight.flightAirports[1].airport.name;
-           
+
+            JsBarcode("#barcode", this.flight.bookId );
           } else {
             this.clear()
           }          
@@ -585,7 +589,8 @@ export default {
   mounted() {
     //alert("we are here!");
     //alert("we are here!");
-    this.getFlightCity();
+    this.getFlightCity()
+     
   }
 
 };
@@ -649,5 +654,8 @@ export default {
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
+}.barcode-style{
+  height: 100px;
+  width: 150px;
 }
 </style>
