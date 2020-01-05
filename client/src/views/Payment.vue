@@ -18,12 +18,17 @@
               <v-toolbar flat color="primary" dark>
                 <v-toolbar-title>Booking details</v-toolbar-title>
               </v-toolbar>
-              <v-row class="text-left pl-7">
+              <v-row v-if="flightBookingLoaded" class="text-left pl-7">
                 <v-col cols="6">
                   <v-row>
                     <v-icon slot="icon" size="36">mdi-airplane-takeoff</v-icon>
                     <p class="pl-3 pt-3" style="color:grey">Depart Date</p>
                   </v-row>
+                  <p>{{data.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}</p>
+                  <p>{{data.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.city.name + " -> " + data.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}</p>
+                  <p>{{data.flightBooking.flightBookingLinks[0].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[0].flight.arrive | moment("HH:mm")}}</p>
+                  <p>{{getDuration(data.flightBooking.flightBookingLinks[0].flight.arrive,data.flightBooking.flightBookingLinks[0].flight.depart)}}</p>
+
                 </v-col>
                 <v-col>
                   <v-row>
@@ -31,6 +36,12 @@
                     <v-icon slot="icon" size="36" class="flip">mdi-airplane-takeoff</v-icon>
                     <p class="pl-3 pt-3" style="color:grey">Return Date</p>
                   </v-row>
+                  <p>{{data.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}</p>
+                  <p>{{data.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.city.name + " -> " + data.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.city.name}}</p>
+                  <p>{{data.flightBooking.flightBookingLinks[1].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[1].flight.arrive | moment("HH:mm")}}</p>
+
+                  <p>{{getDuration(data.flightBooking.flightBookingLinks[1].flight.arrive,data.flightBooking.flightBookingLinks[1].flight.depart)}}</p>
+
                 </v-col>
               </v-row>
             </v-card>
@@ -58,7 +69,7 @@
                             <v-card-text>
                               <p>Please Select</p>
 
-                              <v-radio-group v-model="column" column>
+                              <v-radio-group v-model="select.paymentWayId" column>
                                 <v-radio label="7-11 || เค้าเตอร์เซอร์วิส" value="radio-1"></v-radio>
                                 <v-radio label="Tesco Lotus" value="radio-2"></v-radio>
                                 <v-radio label="Big C" value="radio-3"></v-radio>
@@ -72,7 +83,7 @@
                             <v-card-text>
                               <p>Please Select</p>
 
-                              <v-radio-group v-model="column" column>
+                              <v-radio-group v-model="select.paymentWayId" column>
                                 <v-radio label="ธนาคารไทยพานิชย์" value="radio-5"></v-radio>
                                 <v-radio label="ธนาคารทหารไทย" value="radio-6"></v-radio>
                                 <v-radio label="ธนาคารกรุงเทพ" value="radio-7"></v-radio>
@@ -154,36 +165,72 @@
         </div>
         <br />
         <UserFooter style="padding-bottom: 100px;" />
-        <CartFooter />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import UserNavbar from "../components/UserNavbar";
 import UserFooter from "../components/UserFooter";
-// import {mapMutations,mapActions,mapState} from 'vuex'
+import axios from "axios";
+
+let http = axios.create({
+  baseURL: 'http://localhost:9000/api',
+  timeout: 120000,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    "Content-type": "application/json",
+  }
+})
 
 export default {
   name: "payment",
   data: () => ({
     showVoucher: false,
-
+    flightBookingLoaded:false,
     select: {
-     
+      paymentWayId: -1
     },
     data: {
-      
+      flightBooking:{}
     }
   }),
   components: {
     UserNavbar,
     UserFooter
   },
-  computed: {},
-  methods: {}
+  computed: {
+    
+  },
+  methods: {
+    getDuration(end,start){
+      let arrive = new Date(end)
+      let depart = new Date(start)
+      const diffTime = Math.abs(arrive - depart);
+      const diffMinute = Math.ceil(diffTime / (1000 * 60));
+      const diffHour = Math.ceil(diffMinute / 60) - 1;
+      const minute = diffMinute % 60;
+      const hour = diffHour
+      if(diffHour == 0){
+        return minute + " นาที"
+      }
+      return hour + " ชม. " + minute + " นาที"
+    },
+    getFlightBooking(){
+      http
+      .get("/flight-booking/1")
+      .then(res => {
+        this.data.flightBooking = res.data
+        console.log(this.data.flightBooking)
+        this.flightBookingLoaded = true
+      })
+      .catch(e=>console.log(e))
+    }
+  },
+  created(){
+    this.getFlightBooking()
+  }
 };
 </script>
 
