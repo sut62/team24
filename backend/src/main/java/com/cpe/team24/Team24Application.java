@@ -223,9 +223,9 @@ public class Team24Application {
 			};
 
 			Object[][] bag = new Object[][] { 
-				{ "สมศรี", "Thai", 1,1,1 },
-				{ "สมชาย", "Thai", 1,2,3 },
-				{ "สมพงษ์", "Thai", 2,3,2 }
+				{ "5", "500", 1,1,1 },
+				{ "10", "1000", 1,2,1 },
+				{ "10", "1200", 2,3,2 }
 			};
 			for (int i = 0; i < bag.length; i++) {
 				BaggageAddon newBag = new BaggageAddon();
@@ -235,14 +235,14 @@ public class Team24Application {
 				BaggageType btype = baggagetypeRepository.findById((int) bag[i][2]);
 				newBag.setAddbaggagetype(btype);
 
-				BaggageImage bimage = baggageimageRepository.findById((int)bag[i][3]);
+				BaggageImage bimage = baggageimageRepository.findById((int) bag[i][3]);
 				newBag.setAddbaggageimage(bimage);
+
+				// Airport bagairport = airportRepository.findById(id)
+				Airport bagairport = airportRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null);
+				newBag.setAddflightairports(bagairport);
 				
 
-				City fightCity = new City();
-				fightCity.setName(bag[i][4].toString());	
-
-				
 				baggageaddonRepository.save(newBag);
 			}
 		};
