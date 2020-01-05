@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import BookFlight from '../views/BookFlight.vue'
 import CheckIn from '../views/CheckIn.vue'
 import Flight from '../views/Flight.vue'
+import AddsOn from "../views/AddsOn.vue";
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/flight',
     name: 'flight',
     component: Flight
+  },
+  {
+    path: '/adds-on',
+    name: 'addsOn',
+    component: AddsOn
   },
   {
     path: '/about',
