@@ -3,7 +3,6 @@ package com.cpe.team24.controller;
 import com.cpe.team24.entity.*;
 import com.cpe.team24.model.BodyFlightBooking;
 import com.cpe.team24.repository.*;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/api/flight-booking")
