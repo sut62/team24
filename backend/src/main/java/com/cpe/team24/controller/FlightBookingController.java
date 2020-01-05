@@ -84,9 +84,9 @@ public class FlightBookingController {
         return flightBooking;
     }
 
-    @GetMapping("/{id}")
-    public FlightBooking FlightBookings(@PathVariable Long id) {
-        return flightBookingRepository.findById(id).orElse(null);
+    @GetMapping("/{book_id}")
+    public FlightBooking FlightBookings(@PathVariable String book_id) {
+        return flightBookingRepository.findByBookId(book_id).orElse(null);
     }   
 
     @GetMapping("/checkin/{lastname}/{depart_airport_id}/{arrive_airport_id}")

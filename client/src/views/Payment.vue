@@ -167,6 +167,11 @@ let http = axios.create({
 
 export default {
   name: "payment",
+  props:{
+    bookId:{
+      type: String
+    }
+  },
   data: () => ({
     showVoucher: false,
     flightBookingLoaded:false,
@@ -216,7 +221,7 @@ export default {
     },
     getFlightBooking(){
       http
-      .get("/flight-booking/1")
+      .get("/flight-booking/"+this.bookId)
       .then(res => {
         this.data.flightBooking = res.data
         console.log(this.data.flightBooking)
