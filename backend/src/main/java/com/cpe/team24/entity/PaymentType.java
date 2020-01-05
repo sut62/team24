@@ -24,7 +24,7 @@ public class PaymentType {
 
     private @NonNull String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "paymentType")
     private Collection<PaymentWay> paymentWays;
 
     public PaymentType(){}

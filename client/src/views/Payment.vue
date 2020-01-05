@@ -1,5 +1,5 @@
 <template>
-  <div class="payment">
+  <div class="payment" v-if="flightBookingLoaded && paymentTypesLoaded">
     <div class="header-bg"></div>
     <div class="content">
       <UserNavbar />
@@ -18,7 +18,7 @@
               <v-toolbar flat color="primary" dark>
                 <v-toolbar-title>Booking details</v-toolbar-title>
               </v-toolbar>
-              <v-row v-if="flightBookingLoaded" class="text-left pl-7">
+              <v-row class="text-left pl-7">
                 <v-col cols="6">
                   <v-row>
                     <v-icon slot="icon" size="36">mdi-airplane-takeoff</v-icon>
@@ -49,52 +49,32 @@
           <!-- +++++++++++++++++++++++++++++++++++++++ -->
           <div>
             <v-row>
-              <v-col cols="8">
-                <div id="app">
-                  <v-app id="inspire" class="mt-5">
+              <v-col cols="8" v-if="paymentTypesLoaded">
+                <div >
+                  <div class="mt-5">
                     <v-card>
                       <v-toolbar flat color="primary" dark>
                         <v-toolbar-title>Payment</v-toolbar-title>
                       </v-toolbar>
                       <v-tabs vertical>
-                        <v-tab>
-                          <v-icon left>mdi-store</v-icon>Over the counter
-                        </v-tab>
-                        <v-tab>
-                          <v-icon left>mdi-monitor</v-icon>internet banking
+                        <v-tab v-for="(paymentType,index) in data.paymentTypes" :key="index">
+                          <v-icon left>mdi-store</v-icon>{{paymentType.name}}
                         </v-tab>
 
-                        <v-tab-item>
+                        <v-tab-item v-for="(paymentType,index) in data.paymentTypes" :key="index">
                           <v-card flat>
                             <v-card-text>
                               <p>Please Select</p>
 
                               <v-radio-group v-model="select.paymentWayId" column>
-                                <v-radio label="7-11 || เค้าเตอร์เซอร์วิส" value="radio-1"></v-radio>
-                                <v-radio label="Tesco Lotus" value="radio-2"></v-radio>
-                                <v-radio label="Big C" value="radio-3"></v-radio>
-                                <v-radio label="true money" value="radio-4"></v-radio>
-                              </v-radio-group>
-                            </v-card-text>
-                          </v-card>
-                        </v-tab-item>
-                        <v-tab-item>
-                          <v-card flat>
-                            <v-card-text>
-                              <p>Please Select</p>
-
-                              <v-radio-group v-model="select.paymentWayId" column>
-                                <v-radio label="ธนาคารไทยพานิชย์" value="radio-5"></v-radio>
-                                <v-radio label="ธนาคารทหารไทย" value="radio-6"></v-radio>
-                                <v-radio label="ธนาคารกรุงเทพ" value="radio-7"></v-radio>
-                                <v-radio label="ธนาคารกรุงไทย" value="radio-8"></v-radio>
+                                <v-radio v-for="(paymentWay,index) in paymentType.paymentWays" :key="index" :label="paymentWay.name" :value="paymentWay.id"></v-radio>
                               </v-radio-group>
                             </v-card-text>
                           </v-card>
                         </v-tab-item>
                       </v-tabs>
                     </v-card>
-                  </v-app>
+                  </div>
                 </div>
               </v-col>
               <!-- *************************************** -->
@@ -107,7 +87,7 @@
                           <h4 class="text-left pt-2">Total</h4>
                         </v-col>
                         <v-col>
-                          <h4 class="pt-2">3,131.00</h4>
+                          <h4 class="pt-2">{{totalPrice}}</h4>
                         </v-col>
                         <v-col>
                           <h4 class="text-right pt-2">THB</h4>
@@ -118,7 +98,7 @@
                   <div class="px-3">
                     <div class="d-flex pt-2">
                       <div class="mr-auto p-2" style="color:grey">Subtotal</div>
-                      <div class="p-2">3,131.00</div>
+                      <div class="p-2">{{totalPrice}}</div>
                     </div>
 
                     <hr />
@@ -152,7 +132,7 @@
                     <hr />
 
                     <div class="text-center p-3">
-                      <v-btn large color="error">Purchase</v-btn>
+                      <v-btn @click="savePayment" large color="error">Purchase</v-btn>
                     </div>
                   </div>
                 </v-card>
@@ -164,8 +144,8 @@
           <!-- +++++++++++++++++++++++++++++++++++++++ -->
         </div>
         <br />
-        <UserFooter style="padding-bottom: 100px;" />
       </div>
+      <UserFooter />
     </div>
   </div>
 </template>
@@ -174,6 +154,7 @@
 import UserNavbar from "../components/UserNavbar";
 import UserFooter from "../components/UserFooter";
 import axios from "axios";
+var numeral = require('numeral');
 
 let http = axios.create({
   baseURL: 'http://localhost:9000/api',
@@ -189,11 +170,15 @@ export default {
   data: () => ({
     showVoucher: false,
     flightBookingLoaded:false,
+    paymentWaysLoaded:false,
+    paymentTypesLoaded:false,
     select: {
       paymentWayId: -1
     },
     data: {
-      flightBooking:{}
+      flightBooking:{},
+      paymentWays:[],// no used
+      paymentTypes:[] 
     }
   }),
   components: {
@@ -201,9 +186,21 @@ export default {
     UserFooter
   },
   computed: {
-    
+    totalPrice(){
+      let sum = this.data.flightBooking.flightBookingLinks[0].flight.price + this.data.flightBooking.flightBookingLinks[1].flight.price
+      return numeral(sum).format('0,0.00'); 
+    }
   },
   methods: {
+    savePayment(){
+      http
+      .post("/payment/"+this.data.flightBooking.id+"/"+this.select.paymentWayId)
+      .then(res => {
+        console.log("Success")
+        console.log(res.data)
+      })
+      .catch(e=>console.log(e))
+    },
     getDuration(end,start){
       let arrive = new Date(end)
       let depart = new Date(start)
@@ -226,10 +223,31 @@ export default {
         this.flightBookingLoaded = true
       })
       .catch(e=>console.log(e))
+    },
+    getPaymentWay(){
+      http
+      .get("/payment-way")
+      .then(res => {
+        this.data.paymentWays = res.data
+        console.log(this.data.paymentWays)
+        this.paymentWaysLoaded = true
+      })
+      .catch(e=>console.log(e))
+    },
+    getPaymentTypes(){
+      http
+      .get("/payment-type")
+      .then(res => {
+        this.data.paymentTypes = res.data
+        console.log(this.data.paymentTypes)
+        this.paymentTypesLoaded = true
+      })
+      .catch(e=>console.log(e))
     }
   },
   created(){
     this.getFlightBooking()
+    this.getPaymentTypes()
   }
 };
 </script>
