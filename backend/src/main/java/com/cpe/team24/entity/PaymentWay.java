@@ -8,6 +8,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -17,7 +19,6 @@ import javax.persistence.GenerationType;
 
 @Data
 @Entity
-@Table(name="PAYMENT_WAY")
 public class PaymentWay {
     @Id
     @SequenceGenerator(name="PAYMENT_WAY_SEQ",sequenceName="PAYMENT_WAY_SEQ")
@@ -27,9 +28,11 @@ public class PaymentWay {
 
     private @NonNull String name;
 
+    @JsonIgnore
     @ManyToOne
     private PaymentType paymentType;
     
+    @JsonIgnore
     @OneToMany
     private Collection<Payment> payments;
 

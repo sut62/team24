@@ -51,7 +51,7 @@ public class FlightBookingController {
     public Collection<FlightBooking> getBooking() {
         return flightBookingRepository.findAll();
     }
-
+    
     @PostMapping("/book")
     @PreAuthorize("hasRole('MEMBER')")
     public FlightBooking book(@RequestBody final BodyFlightBooking bodyFlightBooking, final Authentication authentication) {
@@ -84,19 +84,12 @@ public class FlightBookingController {
         return flightBooking;
     }
 
-    // @GetMapping("/{id}")
-    // public Optional<FlightBooking> FlightBookings(@PathVariable Long id) {
-    //     Optional<FlightBooking> flightBooking = flightBookingRepository.findById(id);
-    //     return flightBooking;
-    // }
+    @GetMapping("/{id}")
+    public FlightBooking FlightBookings(@PathVariable Long id) {
+        return flightBookingRepository.findById(id).orElse(null);
+    }   
 
-    // @GetMapping("/{id}")
-    // public Optional<User> Users(@PathVariable Long id) {
-    //     Optional<User> user = userRepository.findById(id);
-    //     return user;  
-    // }
-
-     @GetMapping("/checkin/{lastname}/{depart_airport_id}/{arrive_airport_id}")
+    @GetMapping("/checkin/{lastname}/{depart_airport_id}/{arrive_airport_id}")
     public FlightBooking Users(@PathVariable final String lastname,@PathVariable final Long depart_airport_id,@PathVariable final Long arrive_airport_id) {
         User user = userRepository.findByLastName(lastname).orElseThrow(()->new MessageDescriptorFormatException("User Id not founded"));
 
