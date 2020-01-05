@@ -35,4 +35,27 @@ public class CheckInStatus {
     @JsonIgnore
     private CheckIn checkIn;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public CheckIn getCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(CheckIn checkIn) {
+        this.checkIn = checkIn;
+    }
 }

@@ -17,7 +17,6 @@ import javax.persistence.GenerationType;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="BAGGAGETYPE")
 public class BaggageType {
     @Id
     @SequenceGenerator(name="BAGGAGETYPE_SEQ",sequenceName="BAGGAGETYPE_SEQ")
@@ -27,5 +26,20 @@ public class BaggageType {
 
     private @NonNull String btypename;
 
-	
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBtypename() {
+        return btypename;
+    }
+
+    public void setBtypename(String btypename) {
+        this.btypename = btypename;
+    }
 }

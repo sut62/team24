@@ -219,7 +219,7 @@ public class Team24Application {
 			};
 			for (int i = 0; i < bagimage.length; i++) {
 				BaggageImage image = new BaggageImage();
-				image.setImagename((String) bagimage[i][0]);
+				image.setName((String) bagimage[i][0]);
 				image.setUrl((String) bagimage[i][1]);
 				baggageimageRepository.save(image);
 			};
@@ -231,18 +231,18 @@ public class Team24Application {
 			};
 			for (int i = 0; i < bag.length; i++) {
 				BaggageAddon newBag = new BaggageAddon();
-				newBag.setMaxweight((String) bag[i][0]);		
+				newBag.setMaxWeight((String) bag[i][0]);
 				newBag.setPrice((String) bag[i][1]);
 				
 				BaggageType btype = baggagetypeRepository.findById((int) bag[i][2]);
-				newBag.setAddbaggagetype(btype);
+				newBag.setBaggageType(btype);
 
 				BaggageImage bimage = baggageimageRepository.findById((int) bag[i][3]);
-				newBag.setAddbaggageimage(bimage);
+				newBag.setBaggageImage(bimage);
 
 				// Airport bagairport = airportRepository.findById(id)
 				Airport bagairport = airportRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null);
-				newBag.setAddflightairports(bagairport);
+				newBag.setAirport(bagairport);
 				
 
 				baggageaddonRepository.save(newBag);

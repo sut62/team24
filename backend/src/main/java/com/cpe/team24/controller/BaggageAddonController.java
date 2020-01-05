@@ -1,13 +1,9 @@
 package com.cpe.team24.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import com.cpe.team24.entity.BaggageAddon;
 import com.cpe.team24.entity.BaggageType;
@@ -16,10 +12,9 @@ import com.cpe.team24.entity.BaggageImage;
 
 import com.cpe.team24.repository.*;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping("/api/adds-on")
 public class BaggageAddonController {
     @Autowired
     private final BaggageAddonRepository baggageaddonRepository;
@@ -36,12 +31,12 @@ public class BaggageAddonController {
     this.baggagetypeRepository = baggagetypeRepository; }
 
     
-    @GetMapping("/foodaddon")
+    @GetMapping("")
     public Collection<BaggageAddon> Food() {
-        return baggageaddonRepository.findAll().stream().collect(Collectors.toList());
+        return baggageaddonRepository.findAll();
     }
 
-    @PostMapping("/foodaddon/{maxweight}/{price}/{baggageimage_id}/{baggagetype_id}")
+    @PostMapping("/{maxweight}/{price}/{baggageimage_id}/{baggagetype_id}")
     public BaggageAddon newBaggage(BaggageAddon newBaggage,
     
     @PathVariable String maxweight,
@@ -54,11 +49,11 @@ public class BaggageAddonController {
     BaggageType addbaggagetype = baggagetypeRepository.findById(baggagetype_id);                                
                                   
 
-    newBaggage.setMaxweight(maxweight);
+    newBaggage.setMaxWeight(maxweight);
     newBaggage.setPrice(price);
 
-    newBaggage.setAddbaggageimage(addbaggageimage);
-    newBaggage.setAddbaggagetype(addbaggagetype);
+    newBaggage.setBaggageImage(addbaggageimage);
+    newBaggage.setBaggageType(addbaggagetype);
 
 
     return baggageaddonRepository.save(newBaggage); 
