@@ -79,43 +79,37 @@
                 <v-dialog v-model="dialog" max-width="800px">
                     <v-card>
                         <v-card-text>
-                            <v-autocomplete label="เครื่องบิน" v-model="select1" :items="airplane"></v-autocomplete>
+                            <v-autocomplete label="เครื่องบิน" v-model="flights.airplaneId" :items="airplanes" item-text="name" item-value="id"></v-autocomplete>
                             <v-row>
                                 <v-col cols="12" sm="6" md="6">
-                                    <v-autocomplete label="เมืองต้นทาง" v-model="select1" :items="depart"></v-autocomplete>
+                                    <v-autocomplete label="เมืองต้นทาง" v-model="flights.departAirportId" :items="airportName" item-text="text" item-value="value.id"></v-autocomplete>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="6">
-                                    <v-autocomplete label="เมืองปลายทาง" v-model="select2" :items="depart"></v-autocomplete>
+                                    <v-autocomplete label="เมืองปลายทาง" v-model="flights.arriveAirportId" :items="airportName" item-text="text" item-value="id"></v-autocomplete>
                                 </v-col>
                             </v-row>
 
-                            <v-text-field label="ราคา(บาท)"></v-text-field>
+                            <v-text-field label="ราคา(บาท)" v-model="flights.price"></v-text-field>
 
                             <v-row>
-                                <v-col cols="12" sm="6" md="6">
-                                    <v-menu ref="menu" v-model="menu" :close-on-content-click="false" :return-value.sync="date" transition="scale-transition" offset-y min-width="290px">
+                                <v-col cols="12" lg="6">
+                                    <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                                         <template v-slot:activator="{ on }">
-                                            <v-text-field v-model="date" label="วันออกเดินทาง" prepend-icon="mdi-calendar-clock" readonly v-on="on" hint="YYYY/MM/DD format"></v-text-field>
+                                            <v-text-field v-model="flights.departDate" label="Date" hint="YYYY/MM/DD format" persistent-hint prepend-icon="mdi-calendar-clock" @blur="date = parseDate(dateFormatted)" v-on="on"></v-text-field>
                                         </template>
-                                        <v-date-picker v-model="date" no-title scrollable>
-                                            <v-spacer></v-spacer>
-                                            <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                                            <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                                        </v-date-picker>
+                                        <v-date-picker v-model="flights.departDate" no-title @input="menu1 = false"></v-date-picker>
                                     </v-menu>
+                                    <p>Date in ISO format: <strong>{{ flights.departDate }}</strong></p>
                                 </v-col>
 
-                                <v-col cols="12" sm="6" md="6">
-                                    <v-menu ref="menu" v-model="menu1" :close-on-content-click="false" :return-value.sync="date1" transition="scale-transition" offset-y min-width="290px">
+                                <v-col cols="12" lg="6">
+                                    <v-menu ref="menu2" v-model="menu2" :close-on-content-click="false" transition="scale-transition" offset-y full-width max-width="290px" min-width="290px">
                                         <template v-slot:activator="{ on }">
-                                            <v-text-field v-model="date1" label="วันที่คาดว่าจะถึง" prepend-icon="mdi-calendar-clock" readonly v-on="on" hint="YYYY/MM/DD format"></v-text-field>
+                                            <v-text-field v-model="flights.arriveDate" label="Date" hint="YYYY/MM/DD format" persistent-hint prepend-icon="mdi-calendar-clock" @blur="date = parseDate(dateFormatted)" v-on="on"></v-text-field>
                                         </template>
-                                        <v-date-picker v-model="date1" no-title scrollable>
-                                            <v-spacer></v-spacer>
-                                            <v-btn text color="primary" @click="menu1 = false">Cancel</v-btn>
-                                            <v-btn text color="primary" @click="$refs.menu.save(date1)">OK</v-btn>
-                                        </v-date-picker>
+                                        <v-date-picker v-model="flights.arriveDate" no-title @input="menu2 = false"></v-date-picker>
                                     </v-menu>
+                                    <p>Date in ISO format: <strong>{{ flights.arriveDate }}</strong></p>
                                 </v-col>
                             </v-row>
 
@@ -123,8 +117,8 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-
-                            <v-btn text color="primary" @click="dialog = false">ยืนยันการเพิ่มเที่ยวบิน</v-btn>
+                            <v-btn text color="primary" @click="dialog = false">ปิด</v-btn>
+                            <v-btn text color="primary" @click="saveFlight">ยืนยันการเพิ่มเที่ยวบิน</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -135,24 +129,101 @@
 </template>
 
 <script>
+import axios from "axios";
+
+let http = axios.create({
+    baseURL: 'http://localhost:9000/api',
+    timeout: 120000,
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        "Content-type": "application/json",
+    }
+})
 export default {
     name: "flight",
     data: () => ({
-        modal: false,
-        dialog: false,
-        date: new Date().toISOString().substr(0, 10),
-        date1: new Date().toISOString().substr(0, 10),
-        menu: false,
+        airportName: [],
         menu1: false,
-        modal1: false,
         menu2: false,
-        select1: "",
-        select2: "",
-        airplane: ['Boeing 777'],
-        depart: ['กรุงเทพมหานคร', 'ขอนแก่น'],
+        flight: [],
+        airplanes: [],
+        airports: [],
+        flights: {
+            airplaneId: "",
+            departAirportId: "",
+            arriveAirportId: "",
+            price: "",
+            departDate: "",
+            arriveDate: ""
+        }
     }),
+    watch: {
+        flights() {
+            console.log("flighs")
+            console.log(this.flights)
+        }
+    },
+    methods: {
+        getAirport() {
+            http
+                .get("http://localhost:9000/api/airport")
+                .then(response => {
+                    this.airports = response.data;
+                    console.log(this.airports)
+                    response.data.map(airport => {
+                        this.airportName.push({
+                            text: airport.city.name + " [" + airport.name + "]",
+                            value: airport
+                        })
+                    })
+                })
+                .catch(e => {
+                    console.log(e);
+                })
+        },
+        getAirplane() {
+            http
+                .get("http://localhost:9000/api/airplane")
+                .then(response => {
+                    this.airplanes = response.data;
+                    console.log(this.airplanes);
+                })
+                .catch(e => {
+                    console.log(e);
+                })
+        },
+        saveFlight() {
+            http({
+                    method: 'post',
+                    url: "http://localhost:9000/api/flight/create",
+                    data: {
+                        "price": this.flights.price,
+                        "departDate": this.flights.departDate,
+                        "arriveDate": this.flights.arriveDate,
+                        "airplaneId": this.flights.airplanes,
+                        "departAirportId": this.flights.airports,
+                        "arriveAirportId": this.flights.airports
+                    }
+                })
+                .then(response => {
+                    alert("บันทึกสำเร็จ", response);
+                    console.log(response.data)
+                    window.location.reload()
+                })
+                .catch(e => {
+                    alert("เกิดข้อผิดพลาด" + e)
+                    console.log(e);
+                });
+        },
+    },
+    mounted() {
+            this.getAirport();
+            this.getAirplane();
+            // this.saveFlight();
+        }
+}
 
-};
+    
 </script>
 
 <style scoped>
