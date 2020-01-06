@@ -7,12 +7,13 @@
       <v-card class="p-5">
           <v-row>
               <v-col>
-                  <v-icon size="250">mdi-bag-checked</v-icon>
+                  <v-icon size="250" color="red">mdi-sale</v-icon>
               </v-col>
               <v-col>
               <div class="mt-5"></div>
-                  <h1 >สัมภาระเช็คอิน</h1>
-                  <div @click="openDialog = true" class=" mt-6 btn btn-block btn-primary btn-lg">Edit</div>
+                  <h1 >เพิ่มโปรโมชั่น
+                  </h1>
+                  <div @click="openDialog = true" class=" mt-6 btn btn-block btn-primary btn-lg">เพิ่ม</div>
               </v-col>
           </v-row>
       </v-card>
