@@ -48,10 +48,22 @@ public class Team24Application {
 						   CheckInTypeRepository checkInTypeRepository,
 						   PaymentTypeRepository paymentTypeRepository,
 						   PaymentRepository paymentRepository,
-						   PaymentWayRepository paymentWayRepository
+						   PaymentWayRepository paymentWayRepository,
+						   PromotionRepository promotionRepository,
+						   PromotionStatusRepository promotionStatusRepository,
+						   PromotionImageRepository promotionImageRepository,
+						   PromotionCodeRepository promotionCodeRepository
 						   ) {
 		return args -> {
 			Object[][] data;
+			//----------- Add Promotion Status ---------
+			promotionStatusRepository.save(new PromotionStatus(EPromotionStatus.AVALIABLE));
+			promotionStatusRepository.save(new PromotionStatus(EPromotionStatus.EXPIRED));
+			promotionStatusRepository.save(new PromotionStatus(EPromotionStatus.CANCELED));
+			//---------- Add Promotion Image ---------
+			promotionImageRepository.save(new PromotionImage("Promotion1",""));
+			promotionImageRepository.save(new PromotionImage("Promotion2",""));
+			promotionImageRepository.save(new PromotionImage("Promotion3",""));
 			// ------------Add User ROLE ---------
 			roleRepository.save(new Role(ERole.ROLE_MEMBER));
 			roleRepository.save(new Role(ERole.ROLE_ADMIN));
