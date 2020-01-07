@@ -12,6 +12,10 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    redirect: '/book-flight'
+  },
+  {
+    path: '/book-flight',
     name: 'bookFlight',
     component: BookFlight
   },
@@ -49,6 +53,10 @@ const routes = [
     name: 'promotion',
     component: Promotion
   },
+  {
+    path: '*',
+    redirect: '/book-flight'
+  }
 ]
 
 const router = new VueRouter({
