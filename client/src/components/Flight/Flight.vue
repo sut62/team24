@@ -70,39 +70,38 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-                    <!-- <div v-for="(flight1,index) in flight" :key="index">
-                        <v-card-text style="height: 100%;" class="grey lighten-5">
+                    <v-card-text style="height: 100%;" class="grey lighten-5">
+                        <div v-for="(flight, index) in flight" :key="index">
                             <v-list-item>
-                                <v-list-item-content>
-                                    <v-list-item-title class="headline mb-4"><b>เที่ยวบิน</b></v-list-item-title>
-                                    <v-row class="font-weight-medium">
-                                        <v-list-item>
-                                            <v-row class="ml-6 mt -3">
-                                                <v-list-item-content>
-                                                    <v-list-item-title class="headline mb-3">{{flight1.airplanes}}</v-list-item-title>
-                                                </v-list-item-content>
-                                            </v-row>
-                                            <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
-                                            <v-row class="ml-6 mt-.5">
-                                                <v-list-item-content>
-                                                    <v-list-item-title class="font-weight-medium">{{flight1.departDate}}</v-list-item-title>
-                                                    <v-list-item-title class="font-weight-medium">{{flight1.departAirportId}}</v-list-item-title>
-                                                </v-list-item-content>
-                                            </v-row>
-                                            <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
-                                            <v-row class="ml-6 mt-.5">
-                                                <v-list-item-content>
-                                                    <v-list-item-title class="font-weight-medium">{{flight1.arriveDate}}</v-list-item-title>
-                                                    <v-list-item-title class="font-weight-medium">{{flight1.arriveAirportId}}</v-list-item-title>
-                                                </v-list-item-content>
-                                            </v-row>
-                                        </v-list-item>
-                                    </v-row>
-                                    <hr />
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-card-text>
-                    </div> -->
+                            <v-list-item-content>
+                                <v-row class="font-weight-medium">
+                                    <v-list-item>
+                                        <v-row class="ml-6 mt -3">
+                                            <v-list-item-title class="headline mb-3">{{flight.airplane.name}}</v-list-item-title>
+                                            <v-list-item-title class="headline mb-0">{{flight.price}}</v-list-item-title>
+                                        </v-row>
+                                        <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
+                                        <v-row class="ml-6 mt-.5">
+                                            <v-list-item-content>
+                                                <v-list-item-title class="font-weight-medium">{{flight.departDate}}</v-list-item-title>
+                                                <v-list-item-title class="font-weight-medium">departAirport</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-row>
+                                        <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
+                                        <v-row class="ml-6 mt-.5">
+                                            <v-list-item-content>
+                                                <v-list-item-title class="font-weight-medium">{{flight.arriveDate}}</v-list-item-title>
+                                                <v-list-item-title class="font-weight-medium">arriveAirport</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-row>
+                                    </v-list-item>
+                                </v-row>
+                                <hr />
+                            </v-list-item-content>
+                        </v-list-item>
+                        </div>
+                    </v-card-text>
+
                     <v-card-text style="height: 100px; position: relative">
                         <v-btn absolute dark fab top right color="pink" @click="dialog = !dialog">
                             <v-icon>mdi-plus</v-icon>
@@ -113,20 +112,7 @@
 
             </v-col>
         </v-row>
-        <div v-for="(flight1,index) in flight" :key="index">
-            <v-card>
-                <div class="d-flex justify-content-between p-3 mb-2">
-                    <div>
-                        <div>เครื่องบิน {{flight1.airplane.name}}</div>
-                        <div>ราคา {{flight1.price}} บาท</div>
-                        <div>departDate {{flight1.depart}}</div>
-                        <div>arriveDate {{flight1.arrive}}</div>
-                    </div>
-                </div>
-            </v-card>
-        </div>
     </v-container>
-
 </div>
 </template>
 
@@ -225,7 +211,7 @@ export default {
                 .then(response => {
                     alert("บันทึกสำเร็จ", response);
                     console.log(response.data)
-                    // window.location.reload()
+                    window.location.reload()
                 })
                 .catch(e => {
                     console.log(e);
