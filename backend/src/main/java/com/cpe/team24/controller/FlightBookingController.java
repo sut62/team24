@@ -93,6 +93,7 @@ public class FlightBookingController {
     public FlightBooking Users(@PathVariable final String lastname,@PathVariable final Long depart_airport_id,@PathVariable final Long arrive_airport_id) {
         User user = userRepository.findByLastName(lastname).orElseThrow(()->new MessageDescriptorFormatException("User Id not founded"));
 
+        FlightBooking result = null;
         Collection<FlightBooking> flightBookings = flightBookingRepository.findAllByUser(user);
         for(FlightBooking flightBooking : flightBookings ){
             if(flightBooking.getBookingStatus() == bookingStatusRepository.findByName(EBookingStatus.PENDING)){
@@ -110,7 +111,7 @@ public class FlightBookingController {
                                 if(flightAirport.getAirport() == airportRepository.findById(arrive_airport_id).orElseThrow(()->new MessageDescriptorFormatException("depart_airport_id not founded"))){
                                     correct++;
                                     if(correct == 2){
-                                        return flightBooking;
+                                        result = flightBooking;
                                     }
                                 }
                             }
@@ -119,7 +120,7 @@ public class FlightBookingController {
                 }
             }
         }
-        return null;
+        return result;
     }
 
 
