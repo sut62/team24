@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.*;
 
 @RestController
@@ -19,8 +20,6 @@ import java.util.*;
 public class FlightController {
     @Autowired
     private FlightRepository flightRepository;
-
-    public FlightController(FlightRepository flightRepository){}
 
     @Autowired
     private FlightAirportRepository flightAirportRepository;
@@ -33,6 +32,16 @@ public class FlightController {
 
     @Autowired
     private FlightAirportTypeRepository flightAirportTypeRepository;
+
+    public FlightController(FlightRepository flightRepository) {
+
+        this.flightRepository = flightRepository;
+    }
+    
+    @GetMapping("")
+    public Collection<Flight> getFlight(){
+        return flightRepository.findAll();
+    }
 
     @GetMapping("/id/{id}")
     public Flight getFlightById(@PathVariable Long id){
