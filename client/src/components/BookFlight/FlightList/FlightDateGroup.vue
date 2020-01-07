@@ -2,7 +2,7 @@
   <div :key="update">
     <v-row justify="space-around">
       <div>
-        <v-icon>mdi-chevron-left-box</v-icon>
+        <v-icon color="rgb(216, 216, 216)">mdi-chevron-left-box</v-icon>
       <button @click="getFlight(-3)"  :disabled="!dateCheck(-3)" :class="{'mybtn btn btn-primary text-center':dateCheck(-3),'mybtn-disable btn btn-secondary text-center':!dateCheck(-3)}">{{ getDate(-3) | moment("dd")  }}<br> {{ getDate(-3) | moment("DD MMMM")  }}</button>
       </div>
       <button @click="getFlight(-2)"  :disabled="!dateCheck(-2)" :class="{'mybtn btn btn-primary text-center':dateCheck(-2),'mybtn-disable btn btn-secondary text-center':!dateCheck(-2)}">{{ getDate(-2) | moment("dd")  }}<br> {{ getDate(-2) | moment("DD MMMM")  }}</button>
@@ -12,7 +12,7 @@
       <button @click="getFlight(2)"  :disabled="!dateCheck(2)" :class="{'mybtn btn btn-primary text-center':dateCheck(2),'mybtn-disable btn btn-secondary text-center':!dateCheck(2)}">{{ getDate(2) | moment("dd")  }}<br> {{ getDate(2) | moment("DD MMMM")  }}</button>
       <div>
       <button @click="getFlight(3)"  :disabled="!dateCheck(3)" :class="{'mybtn btn btn-primary text-center':dateCheck(3),'mybtn-disable btn btn-secondary text-center':!dateCheck(3)}">{{ getDate(3) | moment("dd")  }}<br> {{ getDate(3) | moment("DD MMMM")  }}</button>
-      <v-icon>mdi-chevron-right-box</v-icon>
+      <v-icon color="rgb(216, 216, 216)">mdi-chevron-right-box</v-icon>
       </div>
     </v-row>
   </div>
@@ -69,7 +69,8 @@ export default {
     dateCheck(count){
       if(this.isDepart){
         let date = new Date(this.departDate)
-        if(date.setDate(date.getDate() + count ) - new Date() < 0){
+        let todayString = Moment(new Date()).format("YYYY-MM-DD")
+        if(date.setDate(date.getDate() + count ) - new Date(todayString) < 0){
           return false
         }else{
           return true;
