@@ -53,7 +53,7 @@ public class FlightBookingController {
     }
     
     @PostMapping("/book")
-    @PreAuthorize("hasRole('MEMBER')")
+    @PreAuthorize("hasRole('ROLE_MEMBER')")
     public FlightBooking book(@RequestBody final BodyFlightBooking bodyFlightBooking, final Authentication authentication) {
         System.out.println(authentication.getName());
         FlightBooking flightBooking = new FlightBooking();

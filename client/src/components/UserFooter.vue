@@ -9,14 +9,15 @@
         no-gutters
       >
         <v-btn
-          v-for="link in links"
-          :key="link"
+          v-for="(link,index) in links"
+          :key="index"
+          :href="link.path"
           color="white"
           text
           rounded
           class="my-2"
         >
-          {{ link }}
+          {{ link.name }}
         </v-btn>
         <v-col
           class="primary lighten-2 py-4 text-center white--text"
@@ -34,12 +35,22 @@ export default {
   name: "userFooter",
   data:()=>({
     links: [
-      'เริ่มจองเที่ยวบิน',
-      'เช็คอิน',
-      'ชำระค่าเที่ยวบิน',
-      'เข้าสู่ระบบ',
-      'สมัครสมาชิก',
-      'ติดต่อเรา',
+      {
+        name:'เริ่มจองเที่ยวบิน',
+        path: '/book-flight'
+      },
+      {
+        name:'เช็คอิน',
+        path: '/checkIn'
+      },
+      {
+        name:'ชำระเงิน',
+        path: '/payment'
+      },
+      {
+        name:'เกี่ยวกับเรา',
+        path: '/about'
+      },
     ],
   })
 }

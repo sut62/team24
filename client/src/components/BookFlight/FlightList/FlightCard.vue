@@ -82,7 +82,7 @@ export default {
   },
   filters: {
     formatTime: (value) => {
-      return moment(String(value)).format('hh:mm')
+      return moment(String(value)).format('HH:mm')
     }
   }
 }

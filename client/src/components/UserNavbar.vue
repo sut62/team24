@@ -7,12 +7,13 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
         <div class="my-2 my-lg-0">
-          <a href="/" class="a btn">เริ่มจองเที่ยวบิน</a>
-          <a href="/promotion" class="btn">โปรโมชั่น</a>
+          <a href="/book-flight" class="a btn">เริ่มจองเที่ยวบิน</a>
           <a href="/checkin" class="btn">เช็คอิน</a>
-          <a href="/payment" class="btn mr-5">ชำระค่าเที่ยวบิน</a>
+          <a href="/payment" class="btn">ชำระค่าเที่ยวบิน</a>
+          <a href="/about" class="btn mr-5">เกี่ยวกับเรา</a>
+
         </div>
-        <v-dialog v-if="!logedIn" v-model="showAuthForm" max-width="400">
+        <v-dialog persistent v-if="!logedIn" v-model="showAuthForm" max-width="400">
           <template v-slot:activator="{ on }">
             <v-btn color="primary" dark v-on="on">เข้าสู่ระบบ</v-btn>
           </template>
@@ -28,8 +29,6 @@
               <a class="dropdown-item px-0" style="color:red;" @click="logout">ออกจากระบบ</a>
             </div>
           </div>
-          
-          
         </span>
       </div>
     </nav>
@@ -75,15 +74,22 @@ export default {
     }
   },
   watch:{
-    // logedIn(logedIn){
-    //   console.log(logedIn)
-    // }
+    logedIn(){
+      if(!this.logedIn){
+        this.showAuthForm = true
+      } 
+    }
   },
   computed:{
     ...mapState({
       'logedIn': state => state.Auth.logedIn,
       'user': state => state.Auth.user
     })
+  },
+  mounted(){
+    if(!this.logedIn){
+      this.showAuthForm = true
+    } 
   }
 }
 </script>
