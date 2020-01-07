@@ -26,7 +26,7 @@
                                     <v-col cols="12" lg="6">
                                         <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="290px">
                                             <template v-slot:activator="{ on }">
-                                                <v-text-field v-model="flights.departDate" label="Date" hint="YYYY/MM/DD format" persistent-hint prepend-icon="mdi-calendar-clock" v-on="on"></v-text-field>
+                                                <v-text-field v-model="flights.departDate" label="Depart Date" hint="YYYY/MM/DD format" persistent-hint prepend-icon="mdi-calendar-clock" v-on="on"></v-text-field>
                                             </template>
                                             <v-date-picker v-model="flights.departDate" no-title @input="menu1 = false"></v-date-picker>
                                         </v-menu>
@@ -36,14 +36,31 @@
                                     <v-col cols="12" lg="6">
                                         <v-menu ref="menu2" v-model="menu2" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="290px">
                                             <template v-slot:activator="{ on }">
-                                                <v-text-field v-model="flights.arriveDate" label="Date" hint="YYYY/MM/DD format" persistent-hint prepend-icon="mdi-calendar-clock" v-on="on"></v-text-field>
+                                                <v-text-field v-model="flights.arriveDate" label="Arrive Date" hint="YYYY/MM/DD format" persistent-hint prepend-icon="mdi-calendar-clock" v-on="on"></v-text-field>
                                             </template>
                                             <v-date-picker v-model="flights.arriveDate" no-title @input="menu2 = false"></v-date-picker>
                                         </v-menu>
                                         <p>Date in ISO format: <strong>{{ flights.arriveDate }}</strong></p>
                                     </v-col>
                                 </v-row>
-
+                                <v-row>
+                                    <v-col cols="12" sm="6">
+                                        <v-menu ref="menu3" v-model="menu3" :close-on-content-click="false" :nudge-right="40" :return-value.sync="flights.departTime" transition="scale-transition" offset-y max-width="290px" min-width="290px">
+                                            <template v-slot:activator="{ on }">
+                                                <v-text-field v-model="flights.departTime" label="Depart Time" prepend-icon="mdi-timer" readonly v-on="on"></v-text-field>
+                                            </template>
+                                            <v-time-picker format="24hr" v-if="menu3" v-model="flights.departTime" @click:minute="$refs.menu3.save(flights.departTime)"></v-time-picker>
+                                        </v-menu>
+                                    </v-col>
+                                    <v-col cols="12" sm="6">
+                                        <v-menu ref="menu4" v-model="menu4" :close-on-content-click="false" :nudge-right="40" :return-value.sync="flights.arriveTime" transition="scale-transition" offset-y max-width="290px" min-width="290px">
+                                            <template v-slot:activator="{ on }">
+                                                <v-text-field v-model="flights.arriveTime" label="Depart Time" prepend-icon="mdi-timer" readonly v-on="on"></v-text-field>
+                                            </template>
+                                            <v-time-picker format="24hr" v-if="menu4" v-model="flights.arriveTime" @click:minute="$refs.menu4.save(flights.arriveTime)"></v-time-picker>
+                                        </v-menu>
+                                    </v-col>
+                                </v-row>
                                 <small class="grey--text">* This doesn't actually save.</small>
                             </v-card-text>
                             <v-card-actions>
@@ -95,20 +112,21 @@
                 </v-card>
 
             </v-col>
-        </v-row><div v-for="(flight1,index) in flight" :key="index">
-        <v-card>
-            <div class="d-flex justify-content-between p-3 mb-2">
-                <div>
-                    <div>เครื่องบิน {{flight1.airplane.name}}</div>
-                    <div>ราคา {{flight1.price}} บาท</div>
-                    <div>departDate {{flight1.depart}}</div>
-                    <div>arriveDate {{flight1.arrive}}</div>
+        </v-row>
+        <div v-for="(flight1,index) in flight" :key="index">
+            <v-card>
+                <div class="d-flex justify-content-between p-3 mb-2">
+                    <div>
+                        <div>เครื่องบิน {{flight1.airplane.name}}</div>
+                        <div>ราคา {{flight1.price}} บาท</div>
+                        <div>departDate {{flight1.depart}}</div>
+                        <div>arriveDate {{flight1.arrive}}</div>
+                    </div>
                 </div>
-            </div>
-        </v-card>
-    </div>
+            </v-card>
+        </div>
     </v-container>
-    
+
 </div>
 </template>
 
@@ -130,6 +148,8 @@ export default {
         dialog: false,
         menu1: false,
         menu2: false,
+        menu3: false,
+        menu4: false,
         flight: [],
         airplanes: [],
         airports: [],
@@ -139,7 +159,9 @@ export default {
             arriveAirportId: "",
             price: "",
             departDate: "",
-            arriveDate: ""
+            departTime: "",
+            arriveDate: "",
+            arriveTime: ""
         }
     }),
     watch: {
@@ -193,8 +215,8 @@ export default {
                     url: "http://localhost:9000/api/flight/create",
                     data: {
                         "price": this.flights.price,
-                        "departDate": this.flights.departDate + " 11:00",
-                        "arriveDate": this.flights.arriveDate + " 11:30",
+                        "departDate": this.flights.departDate + " " + this.flights.departTime,
+                        "arriveDate": this.flights.arriveDate + " " + this.flights.arriveTime,
                         "airplaneId": this.flights.airplaneId,
                         "departAirportId": this.flights.departAirportId,
                         "arriveAirportId": this.flights.arriveAirportId
@@ -203,14 +225,14 @@ export default {
                 .then(response => {
                     alert("บันทึกสำเร็จ", response);
                     console.log(response.data)
-                    window.location.reload()
+                    // window.location.reload()
                 })
                 .catch(e => {
                     console.log(e);
                     console.log({
                         "price": this.flights.price,
-                        "departDate": this.flights.departDate + " 11:00",
-                        "arriveDate": this.flights.arriveDate + " 11:30",
+                        "departDate": this.flights.departDate + " " + this.flights.departTime,
+                        "arriveDate": this.flights.arriveDate + " " + this.flights.arriveTime,
                         "airplaneId": this.flights.airplaneId,
                         "departAirportId": this.flights.departAirportId,
                         "arriveAirportId": this.flights.arriveAirportId
