@@ -2,7 +2,7 @@
   <div>
     <v-card>
       <v-card-title>
-        <h2>เข้าสู่ระบบ</h2>
+        <h2 class="mx-auto">เข้าสู่ระบบ</h2>
       </v-card-title>
       <v-card-text>
         <v-text-field
@@ -17,12 +17,11 @@
           required
           outlined
         ></v-text-field>
-        <p style="color:red">{{alert.head}}<br>{{alert.result}}</p>
+        <div style="color:red">{{alert.head}}<br>{{alert.result}}</div>
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn @click.stop="login">Login</v-btn>
-        <v-btn @click="closeDialog">Close</v-btn>
+        <button class="btn btn-lg btn-primary  btn-block" @click.stop="login">Login</button>
+        <!-- <v-btn @click="closeDialog">Close</v-btn> -->
       </v-card-actions>
     </v-card>
   </div>
