@@ -17,6 +17,7 @@
           required
           outlined
         ></v-text-field>
+        <dir style="color:red" v-if="message != ''">{{message}}</dir>
         <div style="color:red">{{alert.head}}<br>{{alert.result}}</div>
       </v-card-text>
       <v-card-actions>
@@ -34,6 +35,9 @@ export default {
   props: {
     closeDialog:{
       type: Function
+    },
+    message:{
+      type: String
     }
   },
   data: ()=>({

@@ -71,14 +71,6 @@ public class Team24Application {
 			data = new Object[][] { { "Alice", "0882223331", "Alick@mail.com", "1234" ,"Alice","admin","AliceFirst","AliceLast"},
 					{ "Bob", "0881112223", "Bob@mail.com", "1234" ,"Bob","member","BobFirst","BobLast"} };
 			for (int i = 0; i < data.length; i++) {
-//				User user = new User();
-//				user.setUsername(data[i][4].toString());
-//				user.setName(data[i][0].toString());
-//				user.setPhone(data[i][1].toString());
-//				user.setEmail(data[i][2].toString());
-//				user.setPassword(data[i][3].toString());
-//				user.setRegDate(new Date());
-//				user = userRepository.save(user);
 				User user = new User(data[i][4].toString().toLowerCase(),
 						data[i][2].toString(),
 						encoder.encode(data[i][3].toString()),
@@ -88,7 +80,10 @@ public class Team24Application {
 						);
 
 				Set<Role> roles = new HashSet<>();
-				roles.add(roleRepository.findByName(ERole.ROLE_MEMBER).orElseThrow(() -> new RuntimeException("Error: Role is not found.")));
+				if(i==0){
+					roles.add(roleRepository.findByName(ERole.ROLE_ADMIN).orElseThrow(() -> new RuntimeException("Error: Role Admin is not found.")));
+				}
+				roles.add(roleRepository.findByName(ERole.ROLE_MEMBER).orElseThrow(() -> new RuntimeException("Error: Role Member is not found.")));
 				user.setRoles(roles);
 				user = userRepository.save(user);
 

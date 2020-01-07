@@ -2,7 +2,7 @@
   <div class="checkIn">
     <UserNavbar/>
 
-    <div class=" container" style="margin-top:auto;">
+    <div class="container" style="margin-top:auto;">
       <div class="mx-auto">
         <div class="my-content">
           <div class="text-black" style="width: auto;">
@@ -14,15 +14,13 @@
         </div>
       </div>
     </div>
-    <UserFooter/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Search from '../components/Flight/Flight'
-import UserNavbar from '../components/UserNavbar'
-import UserFooter from '../components/UserFooter'
+import UserNavbar from '../components/AdminNavBar'
 
 export default {
   name: 'checkIn',
@@ -31,8 +29,7 @@ export default {
   }),
   components: {
     Search,
-    UserNavbar,
-    UserFooter
+    UserNavbar
   },
 }
 </script>
@@ -49,8 +46,4 @@ export default {
     padding: 20px;
   }
 
-  .my-content{
-    width: 70%;
-    margin: auto ;
-  }
 </style>
