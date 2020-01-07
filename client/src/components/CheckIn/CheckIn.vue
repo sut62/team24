@@ -16,22 +16,22 @@
             <v-col cols="3">
               <v-autocomplete
                 v-model="checkIn.depart"
-                :items="flightCity"
+                :items="flightAirport"
                 item-text="name"
                 item-value="id"
                 outlined
-                label="เมืองต้นทาง"
+                label="ต้นทาง"
                 filled
               ></v-autocomplete>
             </v-col>
             <v-col cols="3">
               <v-autocomplete
                 v-model="checkIn.arrive"
-                :items="flightCity"
+                :items="flightAirport"
                 item-text="name"
                 item-value="id"
                 outlined
-                label="เมืองปลายทาง"
+                label="ปลายทาง"
                 filled
               ></v-autocomplete>
             </v-col>
@@ -80,6 +80,7 @@
     </div>
     <!-- ================================================================Section checkin_page========================================================================================== -->
   <br>
+  <br>
     <!-- ================================================================Section fligth_page========================================================================================== -->
     <div v-if="fligth_page == true">
       <div>
@@ -122,8 +123,8 @@
               <v-col cols="6">{{flightBookingLinks_go.arrive| moment("DD MMM YYYY")}}</v-col>
             </v-row>
             <v-row class="mt-0 text-center">
-              <v-col cols="5">{{flightBookingLinks_go.depart| moment("HH:mm")}}</v-col>
-              <v-col cols="7">{{flightBookingLinks_go.arrive| moment("HH:mm")}}</v-col>
+              <v-col cols="5">{{flightBookingLinks_go.depart| moment("HH:mm:ss")}}</v-col>
+              <v-col cols="7">{{flightBookingLinks_go.arrive| moment("HH:mm:ss")}}</v-col>
             </v-row>
           </div>
           <div class="card-body text-left">{{user.firstName}} {{user.lastName}}</div>
@@ -131,7 +132,7 @@
         <br />
         <div
           class="card text-center card-description"
-          v-show="flightBookingLinks_back != '' "
+          
         >
           <div class="card-header text-left">รายละเอียด (ขากลับ)</div>
           <div class="card card-flight card-header text-center">
@@ -145,8 +146,8 @@
               <v-col cols="5">{{flightBookingLinks_back.arrive | moment("DD MMM YYYY")}}</v-col>
             </v-row>
              <v-row class="mt-0 text-center">
-              <v-col cols="5">{{flightBookingLinks_back.depart| moment("HH:mm")}}</v-col>
-              <v-col cols="7">{{flightBookingLinks_back.arrive| moment("HH:mm")}}</v-col>
+              <v-col cols="5">{{flightBookingLinks_back.depart| moment("HH:mm:ss")}}</v-col>
+              <v-col cols="7">{{flightBookingLinks_back.arrive| moment("HH:mm:ss")}}</v-col>
             </v-row>
           </div>
           <div class="card-body text-left">{{user.firstName}} {{user.lastName}}</div>
@@ -311,19 +312,20 @@
           </v-list-item-content>
         </v-list-item>
       </div>
-      <div class="card text-leftfont-weight-medium card-confimation">
-        <div class="card-header text-left">พิมพ์บอร์ดดิ้งพาสเอง</div>
+      <div class="card text-leftfont-weight-medium card-confimation mb-5 mt-5">
+        <div class="card-header text-left ">พิมพ์บอร์ดดิ้งพาสเอง</div>
         <div class="text-left ml-4">คุณสามารถบันทึกเพื่อสั่งพิมพ์ภายหลังได้</div>
         <v-list-item three-line>
           <v-list-item-content>
-            <v-list-item-title class="mb-1">
+            <v-list-item-title class="mb-1 mb-5">
               <v-icon large color="black">mdi-email-newsletter</v-icon>รับบัตรขึ้นเครื่องบอร์ดดิ้งพาสทาง E-mail
             </v-list-item-title>
             <v-text-field
               v-model="checkIn.email"
               :rules="emailRules"
               outlined
-              label="E-mail"
+              label="Email"
+              placeholder="user@yahoo.com"
               required
               filled
               style="width: 50%;"
@@ -331,7 +333,7 @@
           </v-list-item-content>
         </v-list-item>
       </div>
-      <div class="card text-center card-button">
+      <div v-show="checkIn.email != '' " class="card text-center card-button">
         <a
           href="#"
           @click="()=>onShowSaftyPage(this)"
@@ -516,7 +518,7 @@
               <p align="left" class="title">{{flight.bookId}}</p>
               </div>
             </v-col>
-            <v-col>
+            <v-col >
               <h1>Bording Pass</h1>
               <div class="myborder">
                 <p class="caption">
@@ -601,8 +603,8 @@
 
 <script>
 import axios from "axios";
+//import moment from 'moment';
 var JsBarcode = require("jsbarcode");
-
 let axiosInstance = axios.create({
   baseURL: "http://localhost:9000/api",
   timeout: 120000,
@@ -616,7 +618,7 @@ export default {
   data() {
     return {
       isBarcodeVisible: true,
-      flightCity: [],
+      flightAirport: [],
       checkInStatus: [],
       checkInType: [],
       flight: [],
@@ -644,7 +646,7 @@ export default {
         arrive: "",
         depart: "",
         lastname: "",
-        email: "xxxx@mail.com",
+        email: "",
         flight: [],
         checkbox: "",
         flightBookingId: this.flightBookingId,
@@ -696,11 +698,11 @@ export default {
     backToFirstPage(){
       location.reload()
     },
-    getFlightCity() {
+    getFlightAirport() {
       axiosInstance
-        .get("/city")
+        .get("/airport")
         .then(response => {
-          this.flightCity = response.data;
+          this.flightAirport = response.data;
           this.$nextTick();
         })
         .catch(e => {
@@ -806,6 +808,7 @@ export default {
         })
         .catch(e => {
           console.log(e);
+          alert("ไม่พบข้อมูลที่ตรงกัน");
         });
       this.submitted = true;
     },
@@ -826,16 +829,16 @@ export default {
           this.onShowBoardingPass(this);
         })
         .catch(e => {
-          alert("เกิดข้อผิดพลาด " + e);
-          this.forceRefresh();
+          alert("เกิดข้อผิดพลาด CheckIn ไม่สำเร็จ !!" + e);
+          this.backToFirstPage();
         });
     }
   },
   mounted() {
-    this.getFlightCity();
+    this.getFlightAirport();
     this.getCheckInStatus();
     this.getCheckInType();
-  }
+  },
 };
 </script>
 
@@ -893,7 +896,7 @@ export default {
   background-color: #e0f2f1;
 }
 .card-confimation {
-  height: 200px;
+  height: 230px;
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
