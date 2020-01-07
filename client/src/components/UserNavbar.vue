@@ -21,12 +21,15 @@
         </v-dialog>
         <span v-if="logedIn">
           <div class="dropdown ">
-            <button class="px-10 btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button style="width:300px" class="px-10 btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class=""><v-icon>mdi-account</v-icon> ชื่อผู้ใช้ {{user.username}} </span>
             </button>
-            <div class="dropdown-menu px-3" style="width:100%" aria-labelledby="dropdown" justify-center>
-              <span class="dropdawn-item" style="height:50px"><span style="color:black">E-Mail:</span> {{user.email}}</span>
-              <a class="dropdown-item px-0" style="color:red;" @click="logout">ออกจากระบบ</a>
+            <div class="dropdown-menu px-3" style="width:300px" aria-labelledby="dropdown" justify-center>
+              <span class="dropdawn-item" style="height:50px; color:gray"><span style="color:black">e-mail:</span> {{user.email}}</span>
+              <br>
+              <span class="dropdawn-item" style="height:50px; color:gray"><span style="color:black">name:</span> {{user.firstName}} {{user.lastName}}</span>
+
+              <div class="dropdown-item px-0 btn logout-btn" @click="logout">ออกจากระบบ</div>
             </div>
           </div>
         </span>
@@ -95,6 +98,16 @@ export default {
 </script>
 
 <style scoped>
+  .logout-btn{
+    color:white;
+    background-color: rgb(221, 42, 42);
+    text-align: center;
+  }
+  .logout-btn:hover {
+    color:white;
+    background-color: rgb(167, 34, 34);
+    text-align: center;
+  }
   .my-lable{
     border-radius: 10px;
     border-style: solid;

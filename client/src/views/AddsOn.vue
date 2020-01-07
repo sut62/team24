@@ -1,8 +1,7 @@
 <template>
   <div> 
-  <v-row>
-  <NavBar style="height:100vh"/>
-  <div class=" mt-10 mx-auto">
+  <NavBar/>
+  <div class=" mt-10 mx-auto container">
       <h1>เพิ่มบริการเสริมพิเศษ</h1>
       <v-card class="p-5">
           <v-row>
@@ -18,7 +17,6 @@
       </v-card>
   </div>
   
-  </v-row>
   <Baggage :openDialog="openDialog" :closeDialog="closeDialog"/>
   
   </div>
@@ -27,8 +25,8 @@
 
 <script>
 //   import axios from "../../src/api/http_request";
-    import NavBar from '../components/AdminNavBar'
-    import Baggage from '../components/AddsOn/Baggage.vue'
+  import NavBar from '../components/AdminNavBar'
+  import Baggage from '../components/AddsOn/Baggage.vue'
   export default {
     name: 'AddsOn',
     components: {
