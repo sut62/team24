@@ -34,9 +34,18 @@ public class Payment {
     private FlightBooking flightBooking;
 
     @ManyToOne
-    private Promotion promotion;
+    private PromotionCode promotionCode;
 
     //Getter Setter
+    public PromotionCode getPromotionCode() {
+        return this.promotionCode;
+    }
+
+    public void setPromotionCode(PromotionCode promotionCode) {
+        this.promotionCode = promotionCode;
+    }
+
+    
     public Long getId() {
         return this.id;
     }
@@ -75,14 +84,6 @@ public class Payment {
 
     public void setFlightBooking(FlightBooking flightBooking) {
         this.flightBooking = flightBooking;
-    }
-
-    public Promotion getPromotion() {
-        return this.promotion;
-    }
-
-    public void setPromotion(Promotion promotion) {
-        this.promotion = promotion;
     }
 
 }

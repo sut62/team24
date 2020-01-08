@@ -64,6 +64,14 @@ public class Team24Application {
 			promotionImageRepository.save(new PromotionImage("Promotion1","https://image.shutterstock.com/image-vector/promotion-rubber-stamp-seal-vector-260nw-1437143363.jpg"));
 			promotionImageRepository.save(new PromotionImage("Promotion2","https://www.c3inter.com/images/slideshow/resize-1537237433756.png"));
 			promotionImageRepository.save(new PromotionImage("Promotion3","http://blog.sogoodweb.com/upload/510/ukoJ7reQYc.png"));
+			//---------- Add Promotion ----------
+			PromotionCode p = new PromotionCode();
+			p.setCode("1234A");
+			p.setDiscount(90);
+			p.setExp(new Date(new Date().getTime() + (1000*60*60*24)));
+			p = promotionCodeRepository.save(p);
+			promotionCodeRepository.save(p);
+			
 			// ------------Add User ROLE ---------
 			roleRepository.save(new Role(ERole.ROLE_MEMBER));
 			roleRepository.save(new Role(ERole.ROLE_ADMIN));
