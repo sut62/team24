@@ -138,6 +138,12 @@ const bookFlight = {
     },
   },
   getters: {
+    getIsNextBtnAllow: state => {
+      if(state.data.flightDepart == null || state.data.flightReturn == null){
+        return false;
+      }
+      return true;
+    },
     getTotalPrice: state => {
       let sum = 0;
       if(state.data.flightDepart != null){
