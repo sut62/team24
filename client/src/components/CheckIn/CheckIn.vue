@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div>ท่านกำลังทำการเช็คอินผ่าน {{checkInType.name}}</div>
     <br>
     <br>
     <!-- ================================================================Section checkin_page========================================================================================== -->
@@ -36,7 +37,7 @@
               ></v-autocomplete>
             </v-col>
             <v-col cols="3">
-              <v-text-field v-model="checkIn.lastname" outlined label="นามสกุล" filled></v-text-field>
+              <v-text-field v-model="checkIn.lastname" outlined disabled label="นามสกุล" filled></v-text-field>
             </v-col>
             <v-col cols="3">
               <a
@@ -516,6 +517,8 @@
               <p align="left" class="title">{{flightAirports_go_arrive.name}}</p>
               <div align="left" class="caption">booking no.</div>
               <p align="left" class="title">{{flight.bookId}}</p>
+               <div align="left" class="caption">Check in status. </div>
+              <p align="left" class="title">{{checkInStatus.name}}</p>
               </div>
             </v-col>
             <v-col >
@@ -564,6 +567,8 @@
               <p align="left" class="title">{{flightAirports_back_arrive.name}}</p>
               <div align="left" class="caption">booking no.</div>
               <p align="left" class="title">{{flight.bookId}}</p>
+              <div align="left" class="caption">Check in status. </div>
+              <p align="left" class="title">{{checkInStatus.name}}</p>
               </div>
             </v-col>
             <v-col>
@@ -602,6 +607,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 import axios from "axios";
 //import moment from 'moment';
 var JsBarcode = require("jsbarcode");
@@ -650,8 +656,6 @@ export default {
         flight: [],
         checkbox: "",
         flightBookingId: this.flightBookingId,
-        checkInStatus: this.checkInStatus,
-        checkInType: this.checkInType
       },
 
       checkin_page: true,
@@ -663,6 +667,7 @@ export default {
 
       extensionHeight: 100,
       reverse: true
+
     };
   },
 
@@ -714,7 +719,7 @@ export default {
       axiosInstance
         .get("/checkInStatus")
         .then(response => {
-          this.checkInStatus = response.data[0].id;
+          this.checkInStatus = response.data[0];
           this.checkIn.checkInStatus = response.data[0].id;
           this.$nextTick();
         })
@@ -727,7 +732,7 @@ export default {
       axiosInstance
         .get("/checkInType")
         .then(response => {
-          this.checkInType = response.data[0].id;
+          this.checkInType = response.data[0];
           this.checkIn.checkInType = response.data[0].id;
           this.$nextTick();
         })
@@ -819,8 +824,6 @@ export default {
         url: "/checkin/create",
         data: {
           email: this.checkIn.email,
-          checkInStatusId: this.checkIn.checkInStatus,
-          checkInTypeId: this.checkIn.checkInType,
           flightBookingId: this.checkIn.flightBookingId
         }
       })
@@ -834,10 +837,17 @@ export default {
         });
     }
   },
+   computed:{
+    ...mapState({
+      'logedIn': state => state.Auth.logedIn,
+      'account': state => state.Auth.user
+    })
+  },
   mounted() {
     this.getFlightAirport();
     this.getCheckInStatus();
     this.getCheckInType();
+    this.checkIn.lastname = this.account.lastName
   },
 };
 </script>

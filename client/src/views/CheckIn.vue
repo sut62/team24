@@ -1,7 +1,6 @@
 <template>
   <div class="checkIn">
     <UserNavbar/>
-
     <div class=" container" style="margin-top:auto;">
       <div class="mx-auto">
         <div class="my-content">
