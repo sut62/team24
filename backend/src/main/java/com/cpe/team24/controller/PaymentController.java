@@ -62,5 +62,23 @@ public class PaymentController{
         return paymentRepository.save(payment);
     }
     
+    @PostMapping("/{flight_booking_id}/{payment_way_id}")
+    public Payment createPayment(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id ){
+        Payment payment = new Payment();
+
+        FlightBooking flightBooking = flightBookingRepository.findById(flight_booking_id).orElse(null);
+        PaymentWay paymentWay = paymentWayRepository.findById(payment_way_id).orElse(null);
+
+        payment.setPayDate(new Date());
+        payment.setFlightBooking(flightBooking);
+        payment.setPaymentWay(paymentWay);
+        
+        Double total = (double) 0;
+        for(FlightBookingLink fbl : flightBooking.getFlightBookingLinks()){
+            total += fbl.getFlight().getPrice();
+        }
+        payment.setAmount(total);
+        return paymentRepository.save(payment);
+    }
     
 }

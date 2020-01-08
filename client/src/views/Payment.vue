@@ -106,7 +106,7 @@
                           <h4 class="text-left pt-2">Total</h4>
                         </v-col>
                         <v-col cols="4">
-                          <h4 class="text-center pt-2">{{totalPrice}}</h4>
+                          <h4 class="text-center pt-2">{{getDiff}}</h4>
                         </v-col> 
                         <v-col cols="4">
                           <h4 class="text-right pt-2">THB</h4>
@@ -119,7 +119,14 @@
                       <div class="mr-auto p-2" style="color:grey">Subtotal</div>
                       <div class="p-2">{{totalPrice}}</div>
                     </div>
-
+                    <div class="d-flex pt-2" v-if="this.discountPer > 0">
+                      <div class="mr-auto p-2" style="color:grey">Discount</div>
+                      <div class="p-2">{{getDiscount}}</div>
+                    </div>
+                    <div class="d-flex pt-2" v-if="this.discountPer > 0">
+                      <div class="mr-auto p-2" style="color:grey">Total</div>
+                      <div class="p-2">{{getDiff}}</div>
+                    </div>
                     <hr />
 
                     <div class="d-flex">
@@ -135,6 +142,7 @@
                     <div class="input-group mb-3" v-show="showVoucher">
                       <input
                         type="text"
+                        v-model="data.promotionCode"
                         class="form-control"
                         placeholder="code"
                         aria-describedby="button-addon2"
@@ -152,7 +160,7 @@
                     <hr />
 
                     <div class="text-center p-3">
-                      <v-btn @click="savePayment" large color="error">Purchase</v-btn>
+                      <v-btn @click="save" large color="error">Purchase</v-btn>
                     </div>
                   </div>
                 </v-card>
@@ -206,8 +214,10 @@ export default {
     data: {
       flightBooking: {},
       paymentWays: [], // no used
-      paymentTypes: []
-    }
+      paymentTypes: [],
+      promotionCode: '',
+    },
+    discountPer: 0
   }),
   components: {
     UserNavbar,
@@ -215,6 +225,18 @@ export default {
     // PaymentChooser
   },
   computed: {
+    getDiscount(){
+      let discount = (this.data.flightBooking.flightBookingLinks[0].flight.price + this.data.flightBooking.flightBookingLinks[1].flight.price) * this.discountPer / 100
+      return numeral(discount).format("0,0.00");
+    },
+    getDiff(){
+      let sum =
+        this.data.flightBooking.flightBookingLinks[0].flight.price +
+        this.data.flightBooking.flightBookingLinks[1].flight.price;
+      let discount = (this.data.flightBooking.flightBookingLinks[0].flight.price + this.data.flightBooking.flightBookingLinks[1].flight.price) * this.discountPer / 100
+      let diff = sum - discount;
+       return numeral(diff).format("0,0.00");
+    },
     totalPrice() {
       let sum =
         this.data.flightBooking.flightBookingLinks[0].flight.price +
@@ -223,8 +245,19 @@ export default {
     }
   },
   methods: {
+    save(){
+      if (this.getDiscount > 0) 
+        this.savePaymentWithPromotionCode()
+      else 
+        this.savePayment()
+    },
     checkPromotion(){
-
+      this.data.promotionCode
+      http.get('/promotion-code/'+this.data.promotionCode)
+      .then(res => {
+        console.log(res.data)
+        this.discountPer = res.data.discount;
+      }).catch(e=>{console.log(e)})
     },
     checkToLoad(){
       if(this.flightBookingLoaded && this.paymentTypesLoaded){
@@ -252,6 +285,32 @@ export default {
                this.data.flightBooking.id +
                "/" +
                this.select.paymentWayId
+           )
+           .then(res => {
+             console.log("Success");
+             console.log(res.data);
+             alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
+          })
+           .catch(e =>{
+             console.log(e)
+             alert("เกิดข้อผิดพลาด " + e);
+          });
+      }
+    },
+    savePaymentWithPromotionCode() {
+      if (
+        this.select.paymentWayId == "-1"
+      ){
+        alert("กรุณากรอกข้อมูลให้ครบ");
+      }else{
+         http
+           .post(
+             "/payment/" +
+               this.data.flightBooking.id +
+               "/" +
+               this.select.paymentWayId +
+               "/" +
+               this.data.promotionCode
            )
            .then(res => {
              console.log("Success");
