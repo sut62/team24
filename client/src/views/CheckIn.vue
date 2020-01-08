@@ -18,7 +18,6 @@
 import Search from '../components/CheckIn/CheckIn'
 import UserNavbar from '../components/UserNavbar'
 import UserFooter from '../components/UserFooter'
-
 export default {
   name: 'checkIn',
   data: ()=>({

@@ -102,13 +102,13 @@
                   <v-toolbar flat color="primary" dark>
                     <v-toolbar-title class="pt-1">
                       <v-row>
-                        <v-col>
+                        <v-col cols="4">
                           <h4 class="text-left pt-2">Total</h4>
                         </v-col>
-                        <v-col>
-                          <h4 class="pt-2">{{totalPrice}}</h4>
-                        </v-col>
-                        <v-col>
+                        <v-col cols="4">
+                          <h4 class="text-center pt-2">{{totalPrice}}</h4>
+                        </v-col> 
+                        <v-col cols="4">
                           <h4 class="text-right pt-2">THB</h4>
                         </v-col>
                       </v-row>
@@ -144,6 +144,7 @@
                           class="btn btn-outline-secondary"
                           type="button"
                           id="button-addon2"
+
                         >Search</button>
                       </div>
                     </div>
@@ -222,14 +223,22 @@ export default {
     }
   },
   methods: {
+    checkPromotion(){
+
+    },
     checkToLoad(){
       if(this.flightBookingLoaded && this.paymentTypesLoaded){
+        if(!this.isRealValue(this.data.flightBooking)){
+          alert("Book ID " + this.bookId + " not founded")
+          router.push({name:'bookFlight'})
+        }
         return true
-      }else{
-        alert("Book ID " + this.bookId + " not founded")
-        router.push({name:'bookFlight'})
       }
       return false
+    },
+    isRealValue(obj)
+    {
+      return obj && obj !== 'null' && obj !== 'undefined';
     },
     savePayment() {
       if (

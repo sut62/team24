@@ -67,7 +67,7 @@ public class FlightBookingController {
         // Add Depart's Flight and Return's Flight to TableLink
         final Flight departFlight = flightRepository.findById(bodyFlightBooking.getDepartFlightId()).orElse(null);
         final Flight returnFlight = flightRepository.findById(bodyFlightBooking.getReturnFlightId()).orElse(null);
-
+ 
         FlightBookingLink flightBookingLink= new FlightBookingLink();
         flightBookingLink.setFlight(departFlight);
         flightBookingLink.setFlightBooking(flightBooking);
