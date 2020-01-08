@@ -37,8 +37,8 @@
         </div>
       </div>
       <br>
-      <UserFooter style="padding-bottom: 100px;"/>
-      <CartFooter/>
+      <UserFooter :class="{'up-100':pageLocation !== 1}"/>
+      <CartFooter v-if="pageLocation !== 1"/>
     </div>
   </div>
 </template>
@@ -104,6 +104,9 @@ export default {
     background-size: cover;
     /* background-color: rgb(8, 2, 43); */
     background-image: url("../assets/head-bg.jpg");
+  }
+  .up-100{
+    padding-bottom: 100px;
   }
   .content{
     z-index: 1;
