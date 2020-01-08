@@ -470,11 +470,7 @@
      <!-- ================================================================Section safty_page==================================================================================== -->
      <br>
       <!-- ================================================================Section boardingPass==================================================================================== -->
-<<<<<<< HEAD
-    <div v-if="boardingPass == true">
-=======
     <div v-show ="boardingPass == true">
->>>>>>> Fix bug in UI checkIn page can't generate barcode and could not build a valid moment opject - close #81
       <div class="step-style">
         <v-stepper :alt-labels="true">
           <v-stepper-header value="1">
