@@ -197,7 +197,7 @@
           <v-list-item three>
             <v-list-item-content>
               <v-list-item-title class="headline mb-4">สัมภาระเช็คอิน</v-list-item-title>
-              <div class="mt-0">สัมภาระพกพา 7 กก รวมอยู่ในค่าโดยสารแล้ว</div>
+              <div class="mt-0">สัมภาระพกพา รวมอยู่ในค่าโดยสารแล้ว</div>
               <hr />
               <v-row class="font-weight-medium">
                 <v-col>
@@ -334,7 +334,7 @@
           </v-list-item-content>
         </v-list-item>
       </div>
-      <div v-show="checkIn.email != '' " class="card text-center card-button">
+      <div v-if="checkIn.email != '' " class="card text-center card-button">
         <a
           href="#"
           @click="()=>onShowSaftyPage(this)"
@@ -458,7 +458,7 @@
           alse-value="no"
         ></v-checkbox>
       </div>
-      <div class="card text-center card-button" v-show="checkIn.checkbox == true">
+      <div class="card text-center card-button" v-if="checkIn.checkbox == true">
         <a
           href="#"
           @click="()=>saveCreateCheckIn(this)"
@@ -470,7 +470,11 @@
      <!-- ================================================================Section safty_page==================================================================================== -->
      <br>
       <!-- ================================================================Section boardingPass==================================================================================== -->
+<<<<<<< HEAD
     <div v-if="boardingPass == true">
+=======
+    <div v-show ="boardingPass == true">
+>>>>>>> Fix bug in UI checkIn page can't generate barcode and could not build a valid moment opject - close #81
       <div class="step-style">
         <v-stepper :alt-labels="true">
           <v-stepper-header value="1">
@@ -505,7 +509,7 @@
       <div class="card text-center card-bordingpass-style">
         <div class="card-body">
           <v-row class="pt-5 pr-5">
-            <v-col>
+            <v-col v-if ="boardingPass == true" >
               <v-avatar class="logo" size="100">
                 <img src="../../assets/logo.png" alt="John" />
                 <br />
@@ -523,7 +527,7 @@
             </v-col>
             <v-col >
               <h1>Bording Pass</h1>
-              <div class="myborder">
+              <div v-if ="boardingPass == true"  class="myborder">
                 <p class="caption">
                   Flight
                   <sub class="title">{{flightBookingType_go}}</sub>
@@ -552,10 +556,10 @@
         </div>
       </div>
       <br />
-      <div v-show="flightBookingLinks_back != '' "  class="card text-center card-bordingpass-style">
+      <div v-if="flightBookingLinks_back != '' "  class="card text-center card-bordingpass-style">
         <div class="card-body">
           <v-row class="pt-5 pr-5">
-            <v-col>
+            <v-col  v-if ="boardingPass == true">
               <v-avatar class="logo" size="100">
                 <img src="../../assets/logo.png" alt="John" />
                 <br />
@@ -573,7 +577,7 @@
             </v-col>
             <v-col>
               <h1>Bording Pass</h1>
-              <div class="myborder">
+              <div  v-if ="boardingPass == true" class="myborder">
                 <p class="caption">
                   Flight
                   <sub class="title">{{flightBookingType_back}}</sub>
@@ -588,7 +592,7 @@
                 </p>
                 <p class="caption">
                   Seat no.
-                  <sub class="title">{{flight.arriveSeatId}}</sub>
+                  <sub class="title">{{flight.returnSeatId}}</sub>
                 </p>
                 <p></p>
               </div>
@@ -609,7 +613,7 @@
 <script>
 import {mapState} from 'vuex';
 import axios from "axios";
-//import moment from 'moment';
+
 var JsBarcode = require("jsbarcode");
 let axiosInstance = axios.create({
   baseURL: "http://localhost:9000/api",
@@ -657,7 +661,6 @@ export default {
         checkbox: "",
         flightBookingId: this.flightBookingId,
       },
-
       checkin_page: true,
       fligth_page: false,
       addon_page: false,
@@ -699,6 +702,7 @@ export default {
     onShowBoardingPass(main) {
       main.safty_page = !main.safty_page;
       main.boardingPass = !main.boardingPass;
+      JsBarcode("#barcode", this.flight.bookId);
     },
     backToFirstPage(){
       location.reload()
@@ -767,6 +771,7 @@ export default {
             this.flight = response.data;
             this.user = response.data.user;
             this.flightBookingId = response.data.id;
+
             this.flightBookingLinks_go =
               response.data.flightBookingLinks[0].flight;
             this.flightBookingLinks_back =
@@ -802,11 +807,9 @@ export default {
             this.depart_airport_back =
               response.data.flightBookingLinks[1].flight.flightAirports[1].airport.name;
 
-            this.checkIn.flightBookingId = response.data.id;
-            JsBarcode("#barcode", this.flight.bookId);
-            this.onShowFligthPage(this);
-
-            // console.log(this.flightBookingType_go);
+            this.checkIn.flightBookingId = this.flight.id;
+           
+               this.onShowFligthPage(this);
           } else {
             this.clear();
           }
@@ -848,6 +851,7 @@ export default {
     this.getCheckInStatus();
     this.getCheckInType();
     this.checkIn.lastname = this.account.lastName
+    //console.log(this.flight)
   },
 };
 </script>
