@@ -470,7 +470,7 @@
      <!-- ================================================================Section safty_page==================================================================================== -->
      <br>
       <!-- ================================================================Section boardingPass==================================================================================== -->
-    <div v-show="boardingPass == true">
+    <div v-if="boardingPass == true">
       <div class="step-style">
         <v-stepper :alt-labels="true">
           <v-stepper-header value="1">
@@ -530,11 +530,11 @@
                 </p>
                 <p class="caption">
                   Date Depart
-                  <sub class="overline">{{ flightBookingLinks_go.depart  | moment("DD MMM YYYY") }}</sub>
+                  <sub class="overline">{{ flightBookingLinks_go.depart  | moment("DD MMM YYYY")}}</sub>
                 </p>
                 <p class="caption">
                   Date Arrive
-                  <sub class="overline">{{ flightBookingLinks_go.arrive | moment("DD MMM YYYY") }}</sub>
+                  <sub class="overline">{{ flightBookingLinks_go.arrive | moment("DD MMM YYYY")}}</sub>
                 </p>
                 <p class="caption">
                   Seat no.
