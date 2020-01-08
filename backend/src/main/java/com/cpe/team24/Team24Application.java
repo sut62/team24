@@ -234,7 +234,7 @@ public class Team24Application {
 
 
 			Object[][] bagimage;
-			//Menu Design
+		
 			bagimage = new Object[][] {
 				{ "SMALL", "https://image.flaticon.com/icons/svg/1926/1926375.svg" },
 				{ "MEDIUM", "https://image.flaticon.com/icons/svg/494/494835.svg" },
@@ -250,14 +250,14 @@ public class Team24Application {
 			};
 
 			Object[][] bag = new Object[][] { 
-				{ "5", "500", 1,1,1 },
-				{ "10", "1000", 1,2,1 },
-				{ "10", "1200", 2,3,2 }
+				{ 5, 500, 1,1,1 },
+				{ 10, 1000, 1,2,1 },
+				{ 10, 1200, 2,3,2 }
 			};
 			for (int i = 0; i < bag.length; i++) {
 				BaggageAddon newBag = new BaggageAddon();
-				newBag.setMaxWeight((String) bag[i][0]);
-				newBag.setPrice((String) bag[i][1]);
+				newBag.setMaxWeight((Integer) bag[i][0]);
+				newBag.setPrice((Integer) bag[i][1]);
 				
 				BaggageType btype = baggagetypeRepository.findById((int) bag[i][2]);
 				newBag.setBaggageType(btype);

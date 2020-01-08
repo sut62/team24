@@ -26,9 +26,9 @@ public class BaggageAddon {
     private @NonNull Long id;
     @Column(name="baggage")
 
-    private @NonNull String maxWeight;
+    private @NonNull Integer maxWeight;
 
-    private @NonNull String price;
+    private @NonNull Integer price;
 
 
    /* @OneToOne(cascade = CascadeType.ALL, targetEntity = BaggageImage.class)
@@ -55,19 +55,19 @@ public class BaggageAddon {
         this.id = id;
     }
 
-    public String getMaxWeight() {
+    public Integer getMaxWeight() {
         return maxWeight;
     }
 
-    public void setMaxWeight(String maxweight) {
+    public void setMaxWeight(Integer maxweight) {
         this.maxWeight = maxweight;
     }
 
-    public String getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

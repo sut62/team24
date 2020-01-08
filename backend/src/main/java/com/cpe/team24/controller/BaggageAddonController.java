@@ -47,8 +47,8 @@ public class BaggageAddonController {
     @PostMapping("/{maxweight}/{price}/{baggageimage_id}/{baggagetype_id}/{airport_id}")
     public BaggageAddon newBaggage(BaggageAddon newBaggage,
     
-    @PathVariable String maxweight,
-    @PathVariable String price,
+    @PathVariable Integer maxweight,
+    @PathVariable Integer price,
    
     @PathVariable long baggageimage_id,
     @PathVariable long baggagetype_id,
