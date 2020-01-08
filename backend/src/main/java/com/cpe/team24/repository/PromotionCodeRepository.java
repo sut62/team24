@@ -6,4 +6,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface PromotionCodeRepository extends JpaRepository<PromotionCode,Long> {
+    public PromotionCode findByCode(String code);
 }

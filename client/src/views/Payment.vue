@@ -144,7 +144,7 @@
                           class="btn btn-outline-secondary"
                           type="button"
                           id="button-addon2"
-
+                          @click="checkPromotion"
                         >Search</button>
                       </div>
                     </div>

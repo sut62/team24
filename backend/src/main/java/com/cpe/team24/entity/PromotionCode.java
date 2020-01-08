@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -17,6 +19,9 @@ public class PromotionCode {
     private Integer discount;
     private Date exp;
 
+    @OneToMany
+    private Collection<Payment> payments;
+    
     @OneToOne
     private Promotion promotion;
 
@@ -59,4 +64,8 @@ public class PromotionCode {
     public void setPromotion(Promotion promotion) {
         this.promotion = promotion;
     }
+
+	public PromotionCode orElseThrow(Object object) {
+		return null;
+	}
 }

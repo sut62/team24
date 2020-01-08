@@ -30,9 +30,6 @@ public class Promotion {
     @ManyToOne
     private PromotionStatus promotionStatus;
 
-    @OneToMany
-    private Collection<Payment> payments;
-
     //Gettter setter
     public Long getId() {
         return id;
