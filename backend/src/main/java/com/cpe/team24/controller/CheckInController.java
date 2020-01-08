@@ -58,8 +58,8 @@ public class CheckInController {
         checkIn.setBoardingPass("dsfsdf");
         checkIn.setEmail(bodyCheckIn.getEmail());
         checkIn.setDate(new Date());
-        checkIn.setCheckInStatus(checkInStatusRepository.findById(bodyCheckIn.getCheckInStatusId()).orElse(null));
-        checkIn.setCheckInType(checkInTypeRepository.findById(bodyCheckIn.getCheckInTypeId()).orElse(null));
+        checkIn.setCheckInStatus(checkInStatusRepository.findById((1L)).orElse(null));
+        checkIn.setCheckInType(checkInTypeRepository.findById((1L)).orElse(null));
         checkIn.setFlightBooking(flightBookingRepository.findById(bodyCheckIn.getFlightBookingId()).orElse(null));
         return checkInRepository.save(checkIn);
     }
