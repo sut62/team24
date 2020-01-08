@@ -14,55 +14,54 @@
                 type="text"
                 class="form-control"
                 placeholder="ชื่อโปรโมชั่น"
-                v-model="form.maxWeight"
+                v-model="form.promotionName"
               />
-              <br />
-              <label for="formGroupExampleInput"></label>
-              <input type="text" class="form-control" placeholder="รหัส" v-model="form.maxWeight" />
-              <br />
-              <label for="formGroupExampleInput"></label>
+              <br>
+              <input type="text" class="form-control" placeholder="รหัส" v-model="form.promotionCode" />
+              <br>
               <input
                 type="text"
                 class="form-control"
                 placeholder="ส่วนลด (%)"
-                v-model="form.maxWeight"
+                v-model="form.discount"
               />
+              <br>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="หมดอายุ (ปี-เดือน-วัน เช่น 2020-12-30)"
+                v-model="form.promotionExp"
+              />
+              <br>
+              <v-textarea label="รายละเอียด" v-model="form.promotionDesc" auto-grow outlined rows="5" row-height="20"></v-textarea>
+              
+              <select class="browser-default custom-select" v-model = "form.getPromotionStatusId">
+                <option disabled value="-1">สถานะ</option>
+                <option
+                  v-for="stat in promotionStatus"
+                  :key="stat.id"
+                  :value="stat.id"
+                >{{stat.promotionStatus}}</option>
+                </select>
+
               <br />
-              <label for="formGroupExampleInput"></label>
-              <v-textarea label="รายละเอียด" auto-grow outlined rows="5" row-height="20"></v-textarea>
-              <br />
-            </div>
-            <div class="col-sm mt-6">
-              <label></label>
-              <select
-                @change="getBaggage"
-                class="browser-default custom-select mb-2"
-                v-model="filterAirportId"
-                placeholder="ชื่อโปรโมชั่น"
-              >
-                <option disabled value="-1">เลือก</option>
-                <option v-for="a in name" :key="a.id" :value="a.id">{{a.name}}</option>
-              </select>
-              <div v-for="(baggage,index) in baggages" :key="index">
-                <v-card>
-                  <div class="d-flex justify-content-between p-3 mb-2">
-                    <img class="my-img3" :src="baggage.baggageImage.url" alt />
+              <label >รูปภาพ</label>
                     <div>
-                      <div>{{baggage.baggageType.btypename}}</div>
-                      <div>น้อยกว่า {{baggage.maxWeight}}</div>
+                      <div class="d-flex flex-wrap">
+                  <img @click="setImageId(image.id)" :class="{'my-img2':form.promotionImageId == image.id ,'my-img':form.promotionImageId != image.id ,}" v-for="(image,index) in promotionImages" :key="index" :src="image.url" alt="">
                     </div>
-                    <div>ราคา {{baggage.price}} บาท</div>
+                    
                   </div>
-                </v-card>
+               
               </div>
             </div>
           </div>
-        </div>
+        
 
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="saveBaggage">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="savePromotion">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -84,17 +83,17 @@ let http = axios.create({
 export default {
   name: "Baggage",
   data: () => ({
-    baggages: [],
-    btypename: [],
-    images: [],
-    name: [],
-    filterAirportId: 1,
+    promotionImages: [],
+    promotionStatus: [],
+    promotions: [],
     form: {
-      airportId: -1,
-      baggageTypeId: -1,
-      maxWeight: "",
-      price: "",
-      imageId: -1
+     promotionName: '',
+      promotionDesc: '',
+      discount: '',
+      promotionCode: '',
+      promotionImageId: 1,
+      promotionStatusId: 1,
+      promotionExp: ''
     }
   }),
   props: {
@@ -108,82 +107,68 @@ export default {
 
   methods: {
     setImageId(id) {
-      this.form.imageId = id;
+      this.form.promotionImageId = id;
       console.log(this.form);
     },
-    saveBaggage() {
-      http
-        .post(
-          "http://localhost:9000/api/adds-on/" +
-            this.form.maxWeight +
-            "/" +
-            this.form.price +
-            "/" +
-            this.form.imageId +
-            "/" +
-            this.form.baggageTypeId +
-            "/" +
-            this.form.airportId
-        )
+    setStatusId(id) {
+      this.form.promotionStatusId = id;
+      console.log(this.form);
+    },
+    savePromotion() {
+      http({
+          method:'post',
+          url:'/promotion',
+          data:{
+            proName:this.form.promotionName,
+            desc:this.form.promotionDesc,
+            discount:this.form.discount,
+            code:this.form.promotionCode,
+            exp:this.form.promotionExp,
+            img_id:this.form.promotionImageId,
+            proStat:this.form.promotionStatusId
+          }
+        })
         .then(res => {
           console.log(res.data);
-          this.getBaggage();
+          alert("เพิ่มโปรโมชั่นสำเร็จ ID="+res.data.id)
         })
         .catch(e => {
           console.log(e);
         });
     },
-    getBaggagetype() {
+    getPromotion() {
       http
-        .get("http://localhost:9000/api/baggage-type/")
-        .then(bag => {
-          this.btypename = bag.data;
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    getBaggage() {
-      http
-        .get(
-          "http://localhost:9000/api/adds-on/airport/" + this.filterAirportId
-        )
+        .get("http://localhost:9000/api/promotion/")
         .then(res => {
-          this.baggages = res.data.reverse();
-        })
-        .catch(e => console.log(e));
-    },
-    getImage() {
-      http
-        .get("http://localhost:9000/api/baggage-image")
-        .then(bimage => {
-          this.images = bimage.data;
+          this.promotions = res.data;
         })
         .catch(e => {
           console.log(e);
         });
     },
-    getAirport() {
+    getPromotionImage() {
       http
-        .get("http://localhost:9000/api/airport")
-        .then(aerodrom => {
-          this.name = aerodrom.data;
-        })
-        .catch(e => {
-          console.log(e);
+        .get("http://localhost:9000/api/promotion-image")
+        .then(res => {
+          this.promotionImages = res.data;
         });
-    }
+    },
+    getPromotionStatus() {
+      http
+        .get("http://localhost:9000/api/promotion-status")
+        .then(res => {
+          this.promotionStatus = res.data;
+        });
+    },
+    
   },
   mounted() {
-    this.getBaggagetype();
-    this.getImage();
-    this.getAirport();
-    this.getBaggage();
+    this.getPromotion()
+    this.getPromotionImage()
+    this.getPromotionStatus()
   },
   watch: {
-    images() {
-      // console.log("this.form");
-    }
+    
   }
 };
 </script>
@@ -192,7 +177,7 @@ export default {
 .my-img {
   border-style: solid;
   padding: 10px;
-  width: 18%;
+  width: 40%;
   margin-left: 5px;
   border-radius: 10px;
 }
@@ -200,7 +185,7 @@ export default {
   border-style: solid;
   border-color: red;
   padding: 10px;
-  width: 18%;
+  width: 40%;
   margin-left: 5px;
   border-radius: 10px;
 }
@@ -208,7 +193,7 @@ export default {
   border-style: solid;
   border-color: rgb(24, 166, 231);
   padding: 10px;
-  width: 18%;
+  width: 40%;
   margin-left: 5px;
   border-radius: 10px;
 }
@@ -216,7 +201,7 @@ export default {
   border-color: red;
   border-style: solid;
   padding: 10px;
-  width: 18%;
+  width: 40%;
   margin-left: 5px;
   border-radius: 20px;
 }

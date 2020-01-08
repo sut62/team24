@@ -3,6 +3,8 @@ package com.cpe.team24.controller;
 import com.cpe.team24.entity.Promotion;
 import com.cpe.team24.entity.PromotionCode;
 import com.cpe.team24.entity.PromotionImage;
+import com.cpe.team24.entity.PromotionStatus;
+import com.cpe.team24.model.BodyPromotion;
 import com.cpe.team24.repository.PromotionCodeRepository;
 import com.cpe.team24.repository.PromotionImageRepository;
 import com.cpe.team24.repository.PromotionRepository;
@@ -37,17 +39,17 @@ public class PromotionController {
         return promotionRepository.findAll();
     }
 
-    @PostMapping("/{name}/{desc}/{code}/{discount}/{exp}/{img_id}")
-    public Promotion createPromotion(@PathVariable String name,@PathVariable String desc,@PathVariable String code,@PathVariable Integer discount,@PathVariable String exp,@PathVariable Long img_id) throws ParseException {
+    @PostMapping("")
+    public Promotion createPromotion(@RequestBody BodyPromotion bodyPromotion) throws ParseException {
         Promotion promotion = new Promotion();
-        promotion.setName(name);
-        promotion.setDesc(desc);
+        promotion.setName(bodyPromotion.getProName());
+        promotion.setDesc(bodyPromotion.getDesc());
         PromotionCode promotionCode = new PromotionCode();
-        promotionCode.setCode(code);
-        promotionCode.setDiscount(discount);
-        Date expDate = new SimpleDateFormat("YYYY-MM-DD").parse(exp);
+        promotionCode.setCode(bodyPromotion.getCode());
+        promotionCode.setDiscount(bodyPromotion.getDiscount());
+        Date expDate = new SimpleDateFormat("YYYY-MM-DD").parse(bodyPromotion.getExp());
         promotionCode.setExp(expDate);
-        promotion.setPromotionImage(promotionImageRepository.findById(img_id).get());
+        promotion.setPromotionImage(promotionImageRepository.findById(bodyPromotion.getImg_id()).get());
         promotion.setPromotionCode(promotionCode);
         promotionCodeRepository.save(promotionCode);
         return promotionRepository.save(promotion);
