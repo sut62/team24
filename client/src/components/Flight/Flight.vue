@@ -2,7 +2,7 @@
 <div>
     <v-container fluid>
         <v-row>
-            <v-col cols="12" sm="20" md="10">
+            <v-col cols="12" sm="20" md="12">
                 <v-card>
                     <v-toolbar>
                         <h1>เที่ยวบิน</h1>
@@ -70,36 +70,40 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-                    <v-card-text style="height: 100%;" class="grey lighten-5">
-                        <div v-for="(flight, index) in flight" :key="index">
-                            <v-list-item>
-                            <v-list-item-content>
-                                <v-row class="font-weight-medium">
+
+                    <v-card-text style="height: 100%; width: 100%" class="background">
+                            <div v-for="(flights, index) in flight" :key="index">
+                                <v-card>
                                     <v-list-item>
-                                        <v-row class="ml-6 mt -3">
-                                            <v-list-item-title class="headline mb-3">{{flight.airplane.name}}</v-list-item-title>
-                                            <v-list-item-title class="headline mb-0">{{flight.price}}</v-list-item-title>
+                                    <v-list-item-content>
+                                        <v-row class="font-weight-medium">
+                                            <v-list-item>
+                                                <v-row class="ml-6 mt -3">
+                                                    <v-list-item-title class="headline mb-3">{{flights.airplane.name}}</v-list-item-title>
+                                                    <v-list-item-title class="headline mb-0">{{flights.price}} บาท</v-list-item-title>
+                                                </v-row>
+                                                <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
+                                                <v-row class="ml-6 mt-.5">
+                                                    <v-list-item-content>
+                                                        <v-list-item-title class="font-weight-medium">{{flights.depart | moment("DD-MM-YYYY | HH:mm")}}</v-list-item-title>
+                                                        <v-list-item-title class="font-weight-medium">[{{flights.flightAirports[0].airport.name}}] {{flights.flightAirports[0].airport.city.name}}</v-list-item-title>
+                                                    </v-list-item-content>
+                                                </v-row>
+                                                <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
+                                                <v-row class="ml-6 mt-.5">
+                                                    <v-list-item-content>
+                                                        <v-list-item-title class="font-weight-medium">{{flights.arrive | moment("DD-MM-YYYY | HH:mm")}}</v-list-item-title>
+                                                        <v-list-item-title class="font-weight-medium">[{{flights.flightAirports[1].airport.name}}] {{flights.flightAirports[1].airport.city.name}}</v-list-item-title>
+                                                    </v-list-item-content>
+                                                </v-row>
+                                            </v-list-item>
                                         </v-row>
-                                        <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
-                                        <v-row class="ml-6 mt-.5">
-                                            <v-list-item-content>
-                                                <v-list-item-title class="font-weight-medium">{{flight.departDate}}</v-list-item-title>
-                                                <v-list-item-title class="font-weight-medium">departAirport</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-row>
-                                        <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
-                                        <v-row class="ml-6 mt-.5">
-                                            <v-list-item-content>
-                                                <v-list-item-title class="font-weight-medium">{{flight.arriveDate}}</v-list-item-title>
-                                                <v-list-item-title class="font-weight-medium">arriveAirport</v-list-item-title>
-                                            </v-list-item-content>
-                                        </v-row>
-                                    </v-list-item>
-                                </v-row>
-                                <hr />
-                            </v-list-item-content>
-                        </v-list-item>
-                        </div>
+                                        <hr />
+                                    </v-list-item-content>
+                                </v-list-item>
+                                </v-card>
+                            </div>
+                                
                     </v-card-text>
 
                     <v-card-text style="height: 100px; position: relative">
@@ -227,6 +231,7 @@ export default {
         },
     },
     mounted() {
+        this.getFlight();
         this.getAirport();
         this.getAirplane();
         // this.saveFlight();
@@ -235,5 +240,12 @@ export default {
 </script>
 
 <style scoped>
+.background {
+    background: url("https://www.bloggang.com/data/or-oa/picture/1220243567.jpg") no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
 
+}
 </style>
