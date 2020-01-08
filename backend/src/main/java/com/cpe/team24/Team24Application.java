@@ -61,9 +61,9 @@ public class Team24Application {
 			promotionStatusRepository.save(new PromotionStatus(EPromotionStatus.EXPIRED));
 			promotionStatusRepository.save(new PromotionStatus(EPromotionStatus.CANCELED));
 			//---------- Add Promotion Image ---------
-			promotionImageRepository.save(new PromotionImage("Promotion1",""));
-			promotionImageRepository.save(new PromotionImage("Promotion2",""));
-			promotionImageRepository.save(new PromotionImage("Promotion3",""));
+			promotionImageRepository.save(new PromotionImage("Promotion1","https://image.shutterstock.com/image-vector/promotion-rubber-stamp-seal-vector-260nw-1437143363.jpg"));
+			promotionImageRepository.save(new PromotionImage("Promotion2","https://www.c3inter.com/images/slideshow/resize-1537237433756.png"));
+			promotionImageRepository.save(new PromotionImage("Promotion3","http://blog.sogoodweb.com/upload/510/ukoJ7reQYc.png"));
 			// ------------Add User ROLE ---------
 			roleRepository.save(new Role(ERole.ROLE_MEMBER));
 			roleRepository.save(new Role(ERole.ROLE_ADMIN));
