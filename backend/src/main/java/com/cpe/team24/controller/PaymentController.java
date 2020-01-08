@@ -3,7 +3,6 @@ package com.cpe.team24.controller;
 import java.util.Date;
 import java.util.Collection;
 
-import com.cpe.team24.entity.Flight;
 import com.cpe.team24.entity.FlightBooking;
 import com.cpe.team24.entity.FlightBookingLink;
 import com.cpe.team24.entity.Payment;
@@ -47,4 +46,6 @@ public class PaymentController{
         payment.setPaymentWay(paymentWayRepository.findById(payment_way_id).orElse(null));
         return paymentRepository.save(payment);
     }
+    
+    
 }

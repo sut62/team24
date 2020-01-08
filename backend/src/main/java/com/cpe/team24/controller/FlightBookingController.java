@@ -123,7 +123,11 @@ public class FlightBookingController {
         return result;
     }
 
-
+    @GetMapping("/user")
+    public Collection<FlightBooking> getByUser(){
+        System.out.println(flightBookingRepository.findAllByUser(userRepository.findByUsername("alice").get()));
+        return flightBookingRepository.findAllByUser(userRepository.findByUsername("alice").get());
+    }
 
 
 }

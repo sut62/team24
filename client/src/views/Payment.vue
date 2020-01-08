@@ -1,5 +1,9 @@
 <template>
-  <div class="payment" v-if="flightBookingLoaded && paymentTypesLoaded">
+<div>
+  <!-- <div v-if="true">
+    <PaymentChooser/>
+  </div> -->
+  <div class="payment" v-if="checkToLoad()">
     <div class="header-bg"></div>
     <div class="content">
       <UserNavbar />
@@ -163,13 +167,15 @@
       <UserFooter />
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import UserNavbar from "../components/UserNavbar";
 import UserFooter from "../components/UserFooter";
-
+// import PaymentChooser from "../components/Payment/PaymentByFindBookingId";
 import axios from "axios";
+import router from '../router'
 var numeral = require("numeral");
 
 let http = axios.create({
@@ -204,7 +210,8 @@ export default {
   }),
   components: {
     UserNavbar,
-    UserFooter
+    UserFooter,
+    // PaymentChooser
   },
   computed: {
     totalPrice() {
@@ -215,6 +222,15 @@ export default {
     }
   },
   methods: {
+    checkToLoad(){
+      if(this.flightBookingLoaded && this.paymentTypesLoaded){
+        return true
+      }else{
+        alert("Book ID " + this.bookId + " not founded")
+        router.push({name:'bookFlight'})
+      }
+      return false
+    },
     savePayment() {
       if (
         this.select.paymentWayId == "-1"

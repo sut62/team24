@@ -3,6 +3,7 @@ package com.cpe.team24.entity;
 import lombok.*;
 
 import javax.persistence.*;
+
 import java.util.Collection;
 
 @Data
@@ -28,6 +29,9 @@ public class Promotion {
 
     @ManyToOne
     private PromotionStatus promotionStatus;
+
+    @OneToMany
+    private Collection<Payment> payments;
 
     //Gettter setter
     public Long getId() {

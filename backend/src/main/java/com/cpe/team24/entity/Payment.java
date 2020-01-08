@@ -33,6 +33,9 @@ public class Payment {
     @OneToOne
     private FlightBooking flightBooking;
 
+    @ManyToOne
+    private Promotion promotion;
+
     //Getter Setter
     public Long getId() {
         return this.id;
@@ -82,6 +85,4 @@ public class Payment {
         this.promotion = promotion;
     }
 
-    @ManyToOne
-    private Promotion promotion;
 }
