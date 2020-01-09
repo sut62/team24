@@ -22,14 +22,14 @@
         <span v-if="logedIn">
           <div class="dropdown ">
             <button style="width:300px" class="px-10 btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class=""><v-icon>mdi-account</v-icon> ชื่อผู้ใช้ {{user.username}} </span>
+              <span class="" id="user_info_bar"><v-icon>mdi-account</v-icon> ชื่อผู้ใช้ {{user.username}} </span>
             </button>
             <div class="dropdown-menu px-3" style="width:300px" aria-labelledby="dropdown" justify-center>
               <span class="dropdawn-item" style="height:50px; color:gray"><span style="color:black">e-mail:</span> {{user.email}}</span>
               <br>
               <span class="dropdawn-item" style="height:50px; color:gray"><span style="color:black">name:</span> {{user.firstName}} {{user.lastName}}</span>
 
-              <div class="dropdown-item px-0 btn logout-btn" @click="logout">ออกจากระบบ</div>
+              <div id="logout_button" class="dropdown-item px-0 btn logout-btn" @click="logout">ออกจากระบบ</div>
             </div>
           </div>
         </span>
