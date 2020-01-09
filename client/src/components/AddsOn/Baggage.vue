@@ -136,10 +136,14 @@
         .then(res => {
           console.log(res.data)
           this.getBaggage()
+          alert("บันทึกข้อมูลเสร็จสิ้น");
         })
         .catch(e => {
           console.log(e);
+          alert("บันทึกข้อมูลล้มเหลว");
         });
+
+        
       },
       getBaggagetype() {
         http
@@ -194,7 +198,7 @@
   }
 </script>
 
-<style scope>
+<style scoped>
   .my-img{
     border-style: solid;
     padding: 10px;

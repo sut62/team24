@@ -173,7 +173,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 .my-img {
   border-style: solid;
   padding: 10px;
