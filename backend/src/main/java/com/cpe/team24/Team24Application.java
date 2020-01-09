@@ -197,16 +197,15 @@ public class Team24Application {
 				flightBooking = flightBookingRepository.save(flightBooking);
 
 				// Add Depart's Flight and Return's Flight to TableLink
-				Flight departFlight = flightRepository.findById(Long.parseLong(data[i][0].toString())).orElse(null);
-				Flight returnFlight = flightRepository.findById(Long.parseLong(data[i][1].toString())).orElse(null);
-
 				FlightBookingLink flightBookingLink = new FlightBookingLink();
+				Flight departFlight = flightRepository.findById(Long.parseLong(data[i][0].toString())).orElse(null);
 				flightBookingLink.setFlight(departFlight);
 				flightBookingLink.setFlightBooking(flightBooking);
 				flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT));
 				flightBookingLinkRepository.save(flightBookingLink);
 
 				flightBookingLink = new FlightBookingLink();
+				Flight returnFlight = flightRepository.findById(Long.parseLong(data[i][1].toString())).orElse(null);
 				flightBookingLink.setFlight(returnFlight);
 				flightBookingLink.setFlightBooking(flightBooking);
 				flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT));
