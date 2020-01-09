@@ -59,6 +59,7 @@ const auth = {
         if (result.data.accessToken) {
           localStorage.setItem('user', JSON.stringify(result.data));
         }
+        location.reload();
         return true
       }catch(e){
         await commit('LOGIN_FAIL',e)

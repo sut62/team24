@@ -20,17 +20,17 @@
               item-value="value"
               outlined
               label="จาก"
-              
             ></v-autocomplete>
           </v-col>
           <v-col>
             <v-autocomplete
               v-model="airportArrive"
               rounded
-              :items="airportName"
+              :items="airportNameFilter"
               item-text="text"
               item-value="value"
               outlined
+              :disabled="airportNameFilter.length != airportName.length -1"
               label="ถึง"
             ></v-autocomplete>
           </v-col>
@@ -96,6 +96,14 @@ export default {
     },
   },
   computed: {
+    airportNameFilter(){
+      if(this.airportDepart != {}){
+        return this.airportName.filter(obj => obj.value.id != this.airportDepart.id)
+      }else if(this.airportArrive != {}){
+        return this.airportName.filter(obj => obj.value.id != this.airportArrive.id)
+      }
+      return this.airportName
+    },
     ...mapState({
       'airport': state => state.BookFlight.result.airport,
     }),
