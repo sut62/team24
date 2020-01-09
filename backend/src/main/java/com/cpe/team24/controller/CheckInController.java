@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import net.bytebuddy.utility.RandomString;
 
 @RestController
 @RequestMapping(path="/api/checkin")
@@ -55,12 +56,12 @@ public class CheckInController {
     @PostMapping("/create")
     public CheckIn newCheckIn(@RequestBody final BodyCheckIn bodyCheckIn) {
         CheckIn checkIn = new CheckIn();
-        checkIn.setBoardingPass("dsfsdf");
-        checkIn.setEmail(bodyCheckIn.getEmail());
-        checkIn.setDate(new Date());
         checkIn.setCheckInStatus(checkInStatusRepository.findById((1L)).orElse(null));
         checkIn.setCheckInType(checkInTypeRepository.findById((1L)).orElse(null));
         checkIn.setFlightBooking(flightBookingRepository.findById(bodyCheckIn.getFlightBookingId()).orElse(null));
+        checkIn.setBoardingPass(RandomString.make(6).toUpperCase());
+        checkIn.setEmail(bodyCheckIn.getEmail());
+        checkIn.setDate(new Date());
         return checkInRepository.save(checkIn);
     }
 
