@@ -64,19 +64,17 @@ public class FlightBookingController {
         flightBooking.setBookingStatus(bookingStatusRepository.findByName(EBookingStatus.PENDING));
         flightBooking = flightBookingRepository.save(flightBooking);
 
-        // Add Depart's Flight and Return's Flight to TableLink
-        final Flight departFlight = flightRepository.findById(bodyFlightBooking.getDepartFlightId()).orElse(null);
-        final Flight returnFlight = flightRepository.findById(bodyFlightBooking.getReturnFlightId()).orElse(null);
- 
+        // Add Depart's Flight and Return's Flight to TableLink 
         FlightBookingLink flightBookingLink= new FlightBookingLink();
+        final Flight departFlight = flightRepository.findById(bodyFlightBooking.getDepartFlightId()).orElse(null);
         flightBookingLink.setFlight(departFlight);
         flightBookingLink.setFlightBooking(flightBooking);
         flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT));
         flightBookingLinkRepository.save(flightBookingLink);
 
         flightBookingLink = new FlightBookingLink();
+        final Flight returnFlight = flightRepository.findById(bodyFlightBooking.getReturnFlightId()).orElse(null);
         flightBookingLink.setFlight(returnFlight);
-
         flightBookingLink.setFlightBooking(flightBooking);
         flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT));
         flightBookingLinkRepository.save(flightBookingLink);
