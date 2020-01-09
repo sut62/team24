@@ -5,8 +5,18 @@ import org.hibernate.validator.internal.engine.messageinterpolation.parser.Messa
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import lombok.var;
 
 import java.util.Collection;
+
+import javax.validation.Valid;
 
 import com.cpe.team24.entity.BaggageAddon;
 import com.cpe.team24.entity.BaggageType;
@@ -73,4 +83,11 @@ public class BaggageAddonController {
     
     
     }
+    @DeleteMapping("/{id}")
+    public boolean deleteBag(@Valid @PathVariable Long id) {
+        baggageaddonRepository.deleteById(id);
+        return true;
+    }
+
+
 }

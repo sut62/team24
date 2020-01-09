@@ -13,4 +13,5 @@ public
 interface BaggageAddonRepository extends JpaRepository<BaggageAddon, Long> {
     BaggageAddon findById(long id);
     Collection<BaggageAddon> findAllByAirport(Airport airport);
+    void deleteById(Long id);
 }

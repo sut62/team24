@@ -57,6 +57,9 @@
                 </select>
               <div v-for="(baggage,index) in baggages" :key="index">
                 <v-card>
+                  <button type="button" class="close" aria-label="Close" @click="deleteBag(baggage.id)">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                   <div class="d-flex justify-content-between p-3 mb-2">
                     <img class="my-img3" :src="baggage.baggageImage.url" alt="">
                     <div>
@@ -108,6 +111,7 @@
       images: [],
       name: [],
       filterAirportId: 1,
+      deleteB: -1,
       form:{
         airportId:-1,
         baggageTypeId: -1,
@@ -144,6 +148,15 @@
         });
 
         
+      },
+      deleteBag(id){
+        http
+          .delete("http://localhost:9000/api/adds-on/"+id)
+          .then(res => {
+          console.log(res.data)
+          this.getBaggage();
+          alert("ลบข้อมูลเสร็จสิ้น");
+        })
       },
       getBaggagetype() {
         http
