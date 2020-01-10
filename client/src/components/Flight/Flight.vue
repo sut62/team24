@@ -74,28 +74,28 @@
                     </v-dialog>
 
                     <v-card-text style="height: 100%; width: 100%" class="background">
-                        <div v-for="(flights, index) in flight" :key="index">
+                        <div v-for="(flight1, index) in flight" :key="index">
                             <v-card>
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-row class="font-weight-medium">
                                             <v-list-item>
                                                 <v-row class="ml-6 mt -3">
-                                                    <v-list-item-title class="headline mb-3">{{flights.airplane.name}}</v-list-item-title>
-                                                    <v-list-item-title class="headline mb-0">{{flights.price}} บาท</v-list-item-title>
+                                                    <v-list-item-title class="headline mb-3">{{flight1.airplane.name}}</v-list-item-title>
+                                                    <v-list-item-title class="headline mb-0">{{flight1.price}} บาท</v-list-item-title>
                                                 </v-row>
                                                 <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
                                                 <v-row class="ml-6 mt-.5">
                                                     <v-list-item-content>
-                                                        <v-list-item-title class="font-weight-medium">{{flights.depart | moment("DD-MM-YYYY | HH:mm")}}</v-list-item-title>
-                                                        <v-list-item-title class="font-weight-medium">[{{flights.flightAirports[0].airport.name}}] {{flights.flightAirports[0].airport.city.name}}</v-list-item-title>
+                                                        <v-list-item-title class="font-weight-medium">{{flight1.depart | moment("DD-MM-YYYY | HH:mm")}}</v-list-item-title>
+                                                        <v-list-item-title class="font-weight-medium">[{{flight1.flightAirports[0].airport.name}}] {{flight1.flightAirports[0].airport.city.name}}</v-list-item-title>
                                                     </v-list-item-content>
                                                 </v-row>
                                                 <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
                                                 <v-row class="ml-6 mt-.5">
                                                     <v-list-item-content>
-                                                        <v-list-item-title class="font-weight-medium">{{flights.arrive | moment("DD-MM-YYYY | HH:mm")}}</v-list-item-title>
-                                                        <v-list-item-title class="font-weight-medium">[{{flights.flightAirports[1].airport.name}}] {{flights.flightAirports[1].airport.city.name}}</v-list-item-title>
+                                                        <v-list-item-title class="font-weight-medium">{{flight1.arrive | moment("DD-MM-YYYY | HH:mm")}}</v-list-item-title>
+                                                        <v-list-item-title class="font-weight-medium">[{{flight1.flightAirports[1].airport.name}}] {{flight1.flightAirports[1].airport.city.name}}</v-list-item-title>
                                                     </v-list-item-content>
                                                 </v-row>
                                             </v-list-item>
