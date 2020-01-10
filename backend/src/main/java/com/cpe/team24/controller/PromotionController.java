@@ -2,8 +2,6 @@ package com.cpe.team24.controller;
 
 import com.cpe.team24.entity.Promotion;
 import com.cpe.team24.entity.PromotionCode;
-import com.cpe.team24.entity.PromotionImage;
-import com.cpe.team24.entity.PromotionStatus;
 import com.cpe.team24.model.BodyPromotion;
 import com.cpe.team24.repository.PromotionCodeRepository;
 import com.cpe.team24.repository.PromotionImageRepository;
