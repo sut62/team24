@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Alert :open="success" topic="แจ้งเตือน" desc="บันทึกสำเร็จ" :callback="onAlertSumbit"/>
   <v-row justify="center">
     <v-dialog v-model="openDialog" persistent max-width="1000px">
       <template v-slot:activator="{ on }"></template>
@@ -66,11 +68,12 @@
       </v-card>
     </v-dialog>
   </v-row>
+</div>
 </template>
 
 <script>
 import axios from "axios";
-
+import Alert from '../Alert'
 let http = axios.create({
   baseURL: "http://localhost:9000/api",
   timeout: 120000,
@@ -83,6 +86,7 @@ let http = axios.create({
 export default {
   name: "Baggage",
   data: () => ({
+    success: false,
     promotionImages: [],
     promotionStatus: [],
     promotions: [],
@@ -96,6 +100,9 @@ export default {
       promotionExp: ''
     }
   }),
+  components:{
+    Alert
+  },
   props: {
     openDialog: {
       type: Boolean
@@ -106,6 +113,9 @@ export default {
   },
 
   methods: {
+    onAlertSumbit(){
+      this.success = false;
+    },
     setImageId(id) {
       this.form.promotionImageId = id;
       console.log(this.form);
@@ -130,7 +140,8 @@ export default {
         })
         .then(res => {
           console.log(res.data);
-          alert("เพิ่มโปรโมชั่นสำเร็จ ID="+res.data.id)
+          this.success = true;
+          // alert("เพิ่มโปรโมชั่นสำเร็จ ID="+res.data.id)
         })
         .catch(e => {
           console.log(e);
