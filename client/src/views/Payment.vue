@@ -1,8 +1,5 @@
 <template>
 <div>
-  <!-- <div v-if="true">
-    <PaymentChooser/>
-  </div> -->
   <Alert :open="saveSuccess" topic="แจ้งเตือน" desc="บันทึกสำเร็จ" :callback="goToFlight"/>
   <Alert :open="dataFail" topic="แจ้งเตือน" desc="กรุณากรอกข้อมูลให้ครบ" :callback="()=>this.dataFail = false"/>
   <Alert :open="codeNotFound" topic="แจ้งเตือน" desc="Code ไม่ถูกต้อง" :callback="()=>this.codeNotFound = false"/>
@@ -185,7 +182,6 @@
 <script>
 import UserNavbar from "../components/UserNavbar";
 import UserFooter from "../components/UserFooter";
-// import PaymentChooser from "../components/Payment/PaymentByFindBookingId";
 import axios from "axios";
 import Alert from '../components/Alert';
 import router from '../router'
