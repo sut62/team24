@@ -3,6 +3,9 @@
   <!-- <div v-if="true">
     <PaymentChooser/>
   </div> -->
+  <Alert :open="saveSuccess" topic="แจ้งเตือน" desc="บันทึกสำเร็จ" :callback="goToFlight"/>
+  <Alert :open="dataFail" topic="แจ้งเตือน" desc="กรุณากรอกข้อมูลให้ครบ" :callback="()=>this.dataFail = false"/>
+  <Alert :open="codeNotFound" topic="แจ้งเตือน" desc="Code ไม่ถูกต้อง" :callback="()=>this.codeNotFound = false"/>
   <div class="payment" v-if="checkToLoad()">
     <div class="header-bg"></div>
     <div class="content">
@@ -184,6 +187,7 @@ import UserNavbar from "../components/UserNavbar";
 import UserFooter from "../components/UserFooter";
 // import PaymentChooser from "../components/Payment/PaymentByFindBookingId";
 import axios from "axios";
+import Alert from '../components/Alert';
 import router from '../router'
 var numeral = require("numeral");
 
@@ -204,6 +208,9 @@ export default {
     }
   },
   data: () => ({
+    saveSuccess: false,
+    dataFail: false,
+    codeNotFound: false,
     showVoucher: false,
     flightBookingLoaded: false,
     paymentWaysLoaded: false,
@@ -222,18 +229,24 @@ export default {
   components: {
     UserNavbar,
     UserFooter,
+    Alert
     // PaymentChooser
   },
   computed: {
+    
     getDiscount(){
-      let discount = (this.data.flightBooking.flightBookingLinks[0].flight.price + this.data.flightBooking.flightBookingLinks[1].flight.price) * this.discountPer / 100
+      let discount = 
+        (this.data.flightBooking.flightBookingLinks[0].flight.price + 
+        this.data.flightBooking.flightBookingLinks[1].flight.price) * this.discountPer / 100
       return numeral(discount).format("0,0.00");
     },
     getDiff(){
       let sum =
         this.data.flightBooking.flightBookingLinks[0].flight.price +
         this.data.flightBooking.flightBookingLinks[1].flight.price;
-      let discount = (this.data.flightBooking.flightBookingLinks[0].flight.price + this.data.flightBooking.flightBookingLinks[1].flight.price) * this.discountPer / 100
+      let discount = 
+        (this.data.flightBooking.flightBookingLinks[0].flight.price + 
+        this.data.flightBooking.flightBookingLinks[1].flight.price) * this.discountPer / 100
       let diff = sum - discount;
        return numeral(diff).format("0,0.00");
     },
@@ -251,14 +264,24 @@ export default {
       else 
         this.savePayment()
     },
-    checkPromotion(){
-      this.data.promotionCode
-      http.get('/promotion-code/'+this.data.promotionCode)
-      .then(res => {
-        console.log(res.data)
-        this.discountPer = res.data.discount;
-      }).catch(e=>{console.log(e)})
+    goToFlight(){
+      router.push({name:'bookFlight'})
     },
+    checkPromotion(){
+        this.data.promotionCode
+        http.get('/promotion-code/'+this.data.promotionCode)
+      .then(res => {
+        
+        console.log(res.data)
+        if(this.isRealValue(res.data))
+          this.discountPer = res.data.discount;
+        else
+          this.codeNotFound = true;
+      }).catch(e=>{console.log(e)})
+  
+      }
+      
+      ,
     checkToLoad(){
       if(this.flightBookingLoaded && this.paymentTypesLoaded){
         if(!this.isRealValue(this.data.flightBooking)){
@@ -277,7 +300,7 @@ export default {
       if (
         this.select.paymentWayId == "-1"
       ){
-        alert("กรุณากรอกข้อมูลให้ครบ");
+        this.dataFail = true;
       }else{
          http
            .post(
@@ -289,11 +312,12 @@ export default {
            .then(res => {
              console.log("Success");
              console.log(res.data);
-             alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
+             this.saveSuccess = true;
+             //alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
           })
            .catch(e =>{
              console.log(e)
-             alert("เกิดข้อผิดพลาด " + e);
+            //alert("เกิดข้อผิดพลาด " + e);
           });
       }
     },
@@ -315,11 +339,12 @@ export default {
            .then(res => {
              console.log("Success");
              console.log(res.data);
-             alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
+             //alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
+             this.saveSuccess = true;
           })
            .catch(e =>{
              console.log(e)
-             alert("เกิดข้อผิดพลาด " + e);
+             //alert("เกิดข้อผิดพลาด " + e);
           });
       }
     },
