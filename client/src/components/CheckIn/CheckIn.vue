@@ -1,5 +1,8 @@
 <template>
   <div>
+    <Alert :open="success" topic="แจ้งเตือน" desc="checkIn สำเร็จ" :callback="()=>this.success = false"/>
+    <Alert :open="fall" topic="แจ้งเตือน" desc="เกิดข้อผิดพลาด CheckIn ไม่สำเร็จ" :callback="()=>{this.fall = false & this.backToFirstPage()}"/>
+    <Alert :open="notfound" topic="แจ้งเตือน" desc="ไม่พบข้อมูลที่ตรงกัน" :callback="()=>this.notfound = false"/>
     <div>ท่านกำลังทำการเช็คอินผ่าน {{checkInType.name}}</div>
     <br>
     <br>
@@ -609,6 +612,7 @@
 <script>
 import {mapState} from 'vuex';
 import axios from "axios";
+import Alert from '../Alert';
 
 var JsBarcode = require("jsbarcode");
 let axiosInstance = axios.create({
@@ -623,6 +627,9 @@ let axiosInstance = axios.create({
 export default {
   data() {
     return {
+      success: false,
+      fall: false,
+      notfound: false,
       isBarcodeVisible: true,
       flightAirport: [],
       checkInStatus: [],
@@ -669,12 +676,16 @@ export default {
 
     };
   },
+  components:{
+    Alert
+  },
 
   // updated(){
   //   console(checkIn);
   // },
 
   methods: {
+    
     onShowCheckInPage(main) {
       main.checkin_page = !main.checkin_page;
     },
@@ -812,7 +823,8 @@ export default {
         })
         .catch(e => {
           console.log(e);
-          alert("ไม่พบข้อมูลที่ตรงกัน");
+          //alert("ไม่พบข้อมูลที่ตรงกัน");
+          this.notfound = true
         });
       this.submitted = true;
     },
@@ -826,13 +838,15 @@ export default {
           flightBookingId: this.checkIn.flightBookingId
         }
       })
-        .then(response => {
-          alert("เช็คอินสำเร็จ", response);
+        .then(() => {
+          // alert("เช็คอินสำเร็จ", response);
+          this.success = true
           this.onShowBoardingPass(this);
         })
-        .catch(e => {
-          alert("เกิดข้อผิดพลาด CheckIn ไม่สำเร็จ !!" + e);
-          this.backToFirstPage();
+        .catch(() => {
+          this.fall = true
+          //alert("เกิดข้อผิดพลาด CheckIn ไม่สำเร็จ !!" + e);
+          
         });
     }
   },
