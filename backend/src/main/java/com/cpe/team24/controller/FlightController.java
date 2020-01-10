@@ -7,9 +7,16 @@ import com.cpe.team24.entity.FlightAirport;
 import com.cpe.team24.model.BodyFlight;
 import com.cpe.team24.repository.*;
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -47,6 +54,13 @@ public class FlightController {
     public Flight getFlightById(@PathVariable Long id){
         return flightRepository.findById(id).orElse(null);
     }
+
+    @DeleteMapping("/id/{id}")
+    public boolean deleteFlight(@Valid @PathVariable Long id){
+        flightRepository.deleteById(id);
+        return true;
+    }
+
 
     // For Book Flight - ToeiKanta had been creating.
     @GetMapping("/{date}/{airport_depart_id}/{airport_arrive_id}")
