@@ -107,6 +107,81 @@ public class BookFlightTests {
     }
 
     @Test
+    void b6000530_testBookingStatusMustNotBeNull() {
+        FlightBooking flightBooking = new FlightBooking();
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(1,1);
+        flightBooking.setBookingStatus(null);
+        flightBooking.setUser(user);
+        Set<ConstraintViolation<FlightBooking>> result = validator.validate(flightBooking);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<FlightBooking> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("bookingStatus", v.getPropertyPath().toString());
+    }
+    @Test
+    void b6000530_testUserMustNotBeNull() {
+        FlightBooking flightBooking = new FlightBooking();
+        BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(1,1);
+        flightBooking.setBookingStatus(pendingStatus);
+        flightBooking.setUser(null);
+        Set<ConstraintViolation<FlightBooking>> result = validator.validate(flightBooking);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<FlightBooking> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("user", v.getPropertyPath().toString());
+    }
+    @Test
+    void b6000530_testDepartSeatIdMustNotBeNull() {
+        FlightBooking flightBooking = new FlightBooking();
+        BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(null,1);
+        flightBooking.setBookingStatus(pendingStatus);
+        flightBooking.setUser(user);
+        Set<ConstraintViolation<FlightBooking>> result = validator.validate(flightBooking);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<FlightBooking> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("departSeatId", v.getPropertyPath().toString());
+    }
+    @Test
+    void b6000530_testReturnSeatIdMustNotBeNull() {
+        FlightBooking flightBooking = new FlightBooking();
+        BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(1,null);
+        flightBooking.setBookingStatus(pendingStatus);
+        flightBooking.setUser(user);
+        Set<ConstraintViolation<FlightBooking>> result = validator.validate(flightBooking);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<FlightBooking> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("returnSeatId", v.getPropertyPath().toString());
+    }
+    @Test
     void b6000530_testBookIdMustNotBeNull() {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
