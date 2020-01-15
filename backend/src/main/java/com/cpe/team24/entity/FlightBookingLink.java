@@ -1,6 +1,7 @@
 package com.cpe.team24.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -19,14 +20,17 @@ public class FlightBookingLink {
 
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = Flight.class)
     @JoinColumn(name = "FLIGHT_ID",nullable = false)
+    @NotNull
     private Flight flight;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,targetEntity = FlightBooking.class)
-    @JoinColumn(name = "FLIGHT_BOOKING_ID",nullable = false)
+    @JoinColumn(name = "FLIGHT_BOOKING_ID")
+    @NotNull
     private FlightBooking flightBooking;
 
     @ManyToOne
+    @NotNull
     private FlightBookingType flightBookingType;
 
     //GETTER SETTER
@@ -53,5 +57,13 @@ public class FlightBookingLink {
 
     public void setFlightBookingType(FlightBookingType flightBookingType) {
         this.flightBookingType = flightBookingType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

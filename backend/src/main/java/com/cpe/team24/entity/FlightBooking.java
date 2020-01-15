@@ -4,6 +4,9 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,27 +21,33 @@ public class FlightBooking {
     @SequenceGenerator(name="FLIGHT_BOOKING_SEQ",sequenceName="FLIGHT_BOOKING_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FLIGHT_BOOKING_SEQ")
     @Column(name = "FLIGHT_BOOKING_ID",unique = true,nullable = false)
-    private @NonNull Long id;
+    private Long id;
 
-    @Column(nullable = false,unique = true)
+    @Size(min=6,max=10)
+    @Pattern(regexp = "[A-Z0-9]*")
+    @Column(unique = true)
+    @NotNull
     private String bookId;
 
-    @Column(nullable = false)
+    @NotNull
     private Date date;
 
-    @Column(nullable = false)
+    @NotNull
     private Integer departSeatId; //
 
+    @NotNull
     private Integer returnSeatId; //
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "flightBooking")
+    @OneToMany(mappedBy = "flightBooking")
     private Collection<FlightBookingLink> flightBookingLinks;
 
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = BookingStatus.class)
-    @JoinColumn(name = "BOOKING_STATUS_ID", nullable = false, insertable = true)
+    @JoinColumn(name = "BOOKING_STATUS_ID", insertable = true)
+    @NotNull
     private BookingStatus bookingStatus; //
 
     @ManyToOne
+    @NotNull
     private User user; //
 
     @OneToOne
@@ -53,7 +62,7 @@ public class FlightBooking {
     }
 
     //Getter Setter
-    public @NonNull Long getId(){
+    public Long getId(){
         return this.id;
     }
     public Integer getDepartSeatId() {
