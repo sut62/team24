@@ -1,5 +1,5 @@
 import { BookFlightService } from '../api'
-import router from '../router'
+// import router from '../router'
 
 const bookFlight = {
   namespaced: true,
@@ -105,7 +105,7 @@ const bookFlight = {
       }
       let result = await BookFlightService.bookFlight(data)
       await commit('BOOK_SUCCESS',result.data)
-      await router.push({ name: 'payment', params: {bookId: result.data.bookId }})
+      // await router.push({ name: 'payment', params: {bookId: result.data.bookId }})
     },
     // Get flight departure by date
     async getFlightDepart({commit,state},date){
