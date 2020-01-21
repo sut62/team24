@@ -2,14 +2,11 @@ package com.cpe.team24;
 
 import com.cpe.team24.entity.*;
 import com.cpe.team24.repository.*;
-import com.cpe.team24.repository.auth.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import net.bytebuddy.utility.RandomString;
 
@@ -22,7 +19,6 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.cpe.team24.model.BodyCheckIn;
 
 
 // @DataJpaTest
