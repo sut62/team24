@@ -1,6 +1,9 @@
 <template>
   <div>
-    <MyAlert :open="showAlert" topic="แจ้งเตือนจากระบบ" :desc="msgAlert" :callback="()=>showAlert=false" />
+    <MyAlert :open="showGuestAlert" :topic="topicAlert" :desc="msgAlert" :callback="closeAlert" />
+    <div :v-if="this.bookResult != null">
+      <MyAlert :open="this.bookResult != null" topic="จองเที่ยวบินสำเร็จ" desc="กด ตกลง เพื่อไปหน้าชำระเงิน" :callback="goToPayment" />
+    </div>
     <div class="footer" >
       <v-row>
         <v-col cols="6">
@@ -23,19 +26,23 @@
 <script>
 import {mapGetters, mapActions,mapState} from 'vuex'
 import MyAlert from '../Alert'
+import router from '../../router'
 export default {
   name: "cartFooter",
   components: {
     MyAlert
   },
   data:()=>({
-    showAlert: false,
-    msgAlert: ''
+    showGuestAlert: false,
+    msgAlert: '',
+    topicAlert:'',
   }),
   computed: {
     ...mapState({
       flightDepart: state => state.BookFlight.data.flightDepart,
       flightReturn: state => state.BookFlight.data.flightReturn,
+      bookResult: state => state.BookFlight.result.bookResult,
+      pageLocation: state => state.BookFlight.pageLocation,
     }),
     ...mapGetters({
       getTotalPrice: 'BookFlight/getTotalPrice',
@@ -46,24 +53,37 @@ export default {
     ...mapActions({
       'nextPage' : 'BookFlight/nextPage'
     }),
+    getDesc(){
+      return 'Booking ID ของคุณ คือ ' + this.bookResult.bookId
+    },
+    closeAlert(){
+      this.showAlert = false
+    },
+    goToPayment(){
+      router.push({ name: 'payment', params: {bookId: this.bookResult.bookId }})
+      this.showAlert = false
+    },
     nextBtnClick(){
       console.log("click")
       if(this.flightDepart == null && this.flightReturn == null){
-        this.showAlert = true
+        this.showGuestAlert = true
+        this.topicAlert = "แจ้งเตือนจากระบบ"
         this.msgAlert = "กรุณาเลือกเที่ยวบินขาไปและขากลับ"
       }else
       if(this.flightDepart == null){
-        this.showAlert = true
+        this.showGuestAlert = true
+        this.topicAlert = "แจ้งเตือนจากระบบ"
         this.msgAlert = "กรุณาเลือกเที่ยวบินขาไป"
       }else
       if(this.flightReturn == null){
-        this.showAlert = true
+        this.showGuestAlert = true
+        this.topicAlert = "แจ้งเตือนจากระบบ"
         this.msgAlert = "กรุณาเลือกเที่ยวบินขากลับ"
       }else{
         this.nextPage()
       }
     }
-  }
+  },
 }
 </script>
 
