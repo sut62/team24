@@ -1,8 +1,8 @@
 <template>
   <div>
-    <MyAlert :open="showGuestAlert" :topic="topicAlert" :desc="msgAlert" :callback="closeAlert" />
+    <MyAlert id="alert" :open="showGuestAlert" :topic="topicAlert" :desc="msgAlert" :callback="closeAlert" />
     <div :v-if="this.bookResult != null">
-      <MyAlert :open="this.bookResult != null" topic="จองเที่ยวบินสำเร็จ" desc="กด ตกลง เพื่อไปหน้าชำระเงิน" :callback="goToPayment" />
+      <MyAlert id="alert_success" :open="this.bookResult != null" topic="จองเที่ยวบินสำเร็จ" desc="กด ตกลง เพื่อไปหน้าชำระเงิน" :callback="goToPayment" />
     </div>
     <div class="footer" >
       <v-row>
@@ -57,14 +57,12 @@ export default {
       return 'Booking ID ของคุณ คือ ' + this.bookResult.bookId
     },
     closeAlert(){
-      this.showAlert = false
+      this.showGuestAlert = false
     },
     goToPayment(){
       router.push({ name: 'payment', params: {bookId: this.bookResult.bookId }})
-      this.showAlert = false
     },
     nextBtnClick(){
-      console.log("click")
       if(this.flightDepart == null && this.flightReturn == null){
         this.showGuestAlert = true
         this.topicAlert = "แจ้งเตือนจากระบบ"
