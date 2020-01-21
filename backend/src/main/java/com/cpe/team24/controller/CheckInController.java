@@ -9,7 +9,7 @@ import com.cpe.team24.entity.FlightBooking;
 import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.cpe.team24.model.BodyCheckIn;
+
 
 import java.util.Collection;
 import java.util.Date;

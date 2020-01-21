@@ -7,6 +7,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import java.util.Date;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,38 +23,42 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 
-@CrossOrigin(origins = "*")
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "CHECKIN")
 public class CheckIn {
 
     @Id
     @SequenceGenerator(name = "CHECKIN_SEQ", sequenceName = "CHECKIN_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CHECKIN_SEQ")
     @Column(name = "CHECKIN_ID", unique = true, nullable = true)
-    private @NonNull Long id;
+    private Long id;
 
-    @Column(name = "Date")
-    private @NonNull Date date;
+    @NotNull
+    private Date date;
 
-    @Column(name = "Email")
-    private @NonNull String email;
-
-    @Column(name = "BoardingPass")
-    private @NonNull String boardingPass;
+    @NotNull
+    @Email
+    private String email;
+    
+    @NotNull 
+    @Size(min=6,max=10)
+    @Pattern(regexp = "[A-Z0-9]*")
+    @Column(unique = true)
+    private String boardingPass;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = CheckInStatus.class)
     @JoinColumn(name = "CHECKINSTATUS_ID", insertable = true)
-    private @NonNull CheckInStatus checkInStatus;
+    @NotNull
+    private CheckInStatus checkInStatus;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = CheckInType.class)
     @JoinColumn(name = "CHECKINTYPE_ID", insertable = true)
-    private @NonNull CheckInType checkInType;
+    @NotNull
+    private CheckInType checkInType;
 
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = FlightBooking.class)
-    @JoinColumn(name = "FLIGHT_BOOKING_ID", referencedColumnName = "FLIGHT_BOOKING_ID",unique = true)
+    @OneToOne
+    @NotNull
     private FlightBooking flightBooking;
 
     public Long getId() {
