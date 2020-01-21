@@ -140,16 +140,6 @@
 </template>
 
 <script>
-//import axios from "axios";
-
-// let axiosInstance = axios.create({
-//   baseURL: "http://localhost:9000/api",
-//   timeout: 120000,
-//   headers: {
-//     "Access-Control-Allow-Origin": "*",
-//     "Content-type": "application/json"
-//   }
-// });
 
 export default {
   name: "showCheckIn",
