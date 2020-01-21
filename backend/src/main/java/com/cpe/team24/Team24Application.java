@@ -44,6 +44,7 @@ public class Team24Application {
 						   FlightBookingTypeRepository flightBookingTypeRepository,
 						   FlightAirportTypeRepository flightAirportTypeRepository,
 						   FlightAirportRepository flightAirportRepository,
+						   CheckInRepository checkInRepository,
 						   CheckInStatusRepository checkInStatusRepository,
 						   CheckInTypeRepository checkInTypeRepository,
 						   PaymentTypeRepository paymentTypeRepository,
@@ -200,21 +201,22 @@ public class Team24Application {
 				flightBooking.setUser(userRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null));
 				flightBooking = flightBookingRepository.save(flightBooking);
 
-				// Add Depart's Flight and Return's Flight to TableLink
-				FlightBookingLink flightBookingLink = new FlightBookingLink();
-				Flight departFlight = flightRepository.findById(Long.parseLong(data[i][0].toString())).orElse(null);
-				flightBookingLink.setFlight(departFlight);
-				flightBookingLink.setFlightBooking(flightBooking);
-				flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT));
-				flightBookingLinkRepository.save(flightBookingLink);
+				if(i != 0){
+					// Add Depart's Flight and Return's Flight to TableLink
+					FlightBookingLink flightBookingLink = new FlightBookingLink();
+					Flight departFlight = flightRepository.findById(Long.parseLong(data[i][0].toString())).orElse(null);
+					flightBookingLink.setFlight(departFlight);
+					flightBookingLink.setFlightBooking(flightBooking);
+					flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT));
+					flightBookingLinkRepository.save(flightBookingLink);
 
-				flightBookingLink = new FlightBookingLink();
-				Flight returnFlight = flightRepository.findById(Long.parseLong(data[i][1].toString())).orElse(null);
-				flightBookingLink.setFlight(returnFlight);
-				flightBookingLink.setFlightBooking(flightBooking);
-				flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT));
-				flightBookingLinkRepository.save(flightBookingLink);
-
+					flightBookingLink = new FlightBookingLink();
+					Flight returnFlight = flightRepository.findById(Long.parseLong(data[i][1].toString())).orElse(null);
+					flightBookingLink.setFlight(returnFlight);
+					flightBookingLink.setFlightBooking(flightBooking);
+					flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT));
+					flightBookingLinkRepository.save(flightBookingLink);
+				}
 				System.out.printf("\n------------Add FlightBooking%d--------------\n", i + 1);
 				System.out.println(flightBooking);
 				System.out.println("-------------------------------------------");
@@ -303,6 +305,7 @@ public class Team24Application {
 				newCheckInType.setName((String) checkInType[i][0]);		
 				checkInTypeRepository.save(newCheckInType);
 			}
+
 		};
 	}
 
