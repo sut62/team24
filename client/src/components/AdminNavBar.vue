@@ -9,7 +9,8 @@
         <div class="my-2 my-lg-0">
           <a href="/adds-on" class="a btn text-light">เพิ่มบริการเสริมพิเศษ</a>
           <a href="/promotion" class="btn text-light">เพิ่มโปรโมชั่น</a>
-          <a href="/flight" class="btn text-light">จัดการเที่ยวบิน</a>  
+          <a href="/flight" class="btn text-light">จัดการเที่ยวบิน</a>
+          <a href="/verify-checkIn" class="btn text-light">ตรวจสอบการเช็คอิน</a>    
         </div>
         <v-dialog persistent v-if="!this.isLoginAsAdmin()" v-model="showAuthForm" max-width="400">
           <template v-slot:activator="{ on }">
