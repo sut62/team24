@@ -6,6 +6,7 @@ import Flight from '../views/Flight.vue'
 import AddsOn from "../views/AddsOn.vue";
 import Payment from '../views/Payment.vue'
 import Promotion from '../views/Promotion.vue'
+import VeriflyCheckIn from '../views/VerifyCheckIn.vue'
 
 Vue.use(VueRouter)
 
@@ -56,7 +57,12 @@ const routes = [
   {
     path: '*',
     redirect: '/book-flight'
-  }
+  },
+  {
+    path: '/verify-checkIn',
+    name: 'VerifyCheckIn',
+    component: VeriflyCheckIn
+  },
 ]
 
 const router = new VueRouter({
