@@ -128,6 +128,7 @@ public class BaggageAddonTests {
         bag.setBaggageImage(baggageimageRepository.findById(1L));
         bag.setAirport(airportRepository.findById(1L).orElse(null));
 
+        
         Set<ConstraintViolation<BaggageAddon>> result = validator.validate(bag);
 
         // result ต้องมี error 1 ค่าเท่านั้น
