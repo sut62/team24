@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 import java.util.Collection;
 import java.util.Date;
@@ -18,16 +23,21 @@ public class Flight {
     @SequenceGenerator(name="FLIGHT_seq",sequenceName="FLIGHT_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FLIGHT_seq")
     @Column(name = "FLIGHT_ID", unique = true, nullable = true)
-    private @NonNull Long id;
+    private Long id;
 
-    @Column(name="PRICE")
-    private @NonNull Double price;
+    @Size(max = 255)
+    @Pattern(regexp = "[a-z A-Z]*")
+    private String description;
+    
+    @NotNull
+    @PositiveOrZero
+    private Double price;
 
-    @Column(name="DEPART")
-    private @NonNull Date depart;
+    @NotNull
+    private Date depart;
 
-    @Column(name="ARRIVE")
-    private @NonNull Date arrive;
+    @NotNull
+    private Date arrive;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
@@ -50,7 +60,13 @@ public class Flight {
     public void setPrice(Double price) {
         this.price = price;
     }
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public Date getDepart() {
         return depart;
     }

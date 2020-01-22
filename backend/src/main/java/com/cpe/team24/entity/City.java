@@ -4,6 +4,7 @@ import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import java.util.Collection;
 
@@ -18,7 +19,7 @@ public class City {
     @Column(name="FLIGHT_CITY_ID",unique = true, nullable = true)
     private @NonNull Long id;
 
-    @Column(name="NAME")
+    @NotNull
     private @NonNull String name;
 
     @JsonIgnore

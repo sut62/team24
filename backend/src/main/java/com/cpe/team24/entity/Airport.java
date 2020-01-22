@@ -6,6 +6,7 @@ import net.minidev.json.annotate.JsonIgnore;
 import java.util.Collection;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Data
@@ -17,6 +18,7 @@ public class Airport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="AIRPORT_ID",unique = true, nullable = true)
     private Long id;
+    @NotNull
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = City.class)
