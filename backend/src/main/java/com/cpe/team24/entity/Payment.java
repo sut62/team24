@@ -6,6 +6,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,16 +25,29 @@ public class Payment {
     @Id
     @SequenceGenerator(name="payment_seq",sequenceName="payment_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="payment_seq")
-    private @NonNull Long id;
+    private Long id;
 
-    private @NonNull Date payDate;
+    @NotNull
+    private Date payDate;
 
-    private @NonNull Double amount;
+    @NotNull
+    private Double amount;
+
+    @NotNull
+    @Size(min=10 ,max=10)
+    @Pattern(regexp = "[0-9]*")
+    private String phone;
+
+    @NotNull
+    @Email
+    private String email;
 
     @ManyToOne
+    @NotNull
     private PaymentWay paymentWay;
     
     @OneToOne
+    @NotNull
     private FlightBooking flightBooking;
 
     @ManyToOne
@@ -84,6 +101,22 @@ public class Payment {
 
     public void setFlightBooking(FlightBooking flightBooking) {
         this.flightBooking = flightBooking;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

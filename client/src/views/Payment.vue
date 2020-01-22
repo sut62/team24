@@ -1,190 +1,230 @@
 <template>
-<div>
-  <Alert :open="saveSuccess" topic="แจ้งเตือน" desc="บันทึกสำเร็จ" :callback="goToFlight"/>
-  <Alert :open="dataFail" topic="แจ้งเตือน" desc="กรุณากรอกข้อมูลให้ครบ" :callback="()=>this.dataFail = false"/>
-  <Alert :open="codeNotFound" topic="แจ้งเตือน" desc="Code ไม่ถูกต้อง" :callback="()=>this.codeNotFound = false"/>
-  <div class="payment" v-if="checkToLoad()">
-    <div class="header-bg"></div>
-    <div class="content">
-      <UserNavbar />
-      <div class="container" style="margin-top:100px;">
-        <div class="mx-auto">
-          <div>
-            <div class="text-white">
-              <div>
-                <h1 class="mt-5">เลือกชำระเที่ยวบินของคุณ</h1>
+  <div>
+    <Alert :open="saveSuccess" topic="แจ้งเตือน" desc="บันทึกสำเร็จ" :callback="goToFlight" />
+    <Alert
+      :open="dataFail"
+      topic="แจ้งเตือน"
+      desc="กรุณากรอกข้อมูลให้ครบ"
+      :callback="()=>this.dataFail = false"
+    />
+    <Alert
+      :open="codeNotFound"
+      topic="แจ้งเตือน"
+      desc="Code ไม่ถูกต้อง"
+      :callback="()=>this.codeNotFound = false"
+    />
+    <div class="payment" v-if="checkToLoad()">
+      <div class="header-bg"></div>
+      <div class="content">
+        <UserNavbar />
+        <div class="container" style="margin-top:100px;">
+          <div class="mx-auto">
+            <div>
+              <div class="text-white">
+                <div>
+                  <h1 class="mt-5">เลือกชำระเที่ยวบินของคุณ</h1>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div>
-            <v-card class="text-center mt-4">
-              <v-toolbar flat color="primary" dark>
-                <v-toolbar-title>Booking details</v-toolbar-title>
-              </v-toolbar>
-              <v-row class="text-left pl-7">
-                <v-col cols="6">
-                  <v-row>
-                    <v-icon slot="icon" size="36">mdi-airplane-takeoff</v-icon>
-                    <p class="pl-3 pt-3" style="color:grey">Depart Date</p>
-                  </v-row>
-                  <p>{{data.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}</p>
-                  <p>
-                    {{data.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.city.name}}
-                    <v-icon color="error">mdi-arrow-right</v-icon>
-                    {{data.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}
-                  </p>
-                  <p>
-                    {{data.flightBooking.flightBookingLinks[0].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[0].flight.arrive | moment("HH:mm")}}
-                    | {{getDuration(data.flightBooking.flightBookingLinks[0].flight.arrive,data.flightBooking.flightBookingLinks[0].flight.depart)}}
-                  </p>
+            <div>
+              <v-card class="text-center mt-4">
+                <v-toolbar flat color="primary" dark>
+                  <v-toolbar-title>Booking details</v-toolbar-title>
+                </v-toolbar>
+                <v-row class="text-left pl-7">
+                  <v-col cols="6">
+                    <v-row>
+                      <v-icon slot="icon" size="36">mdi-airplane-takeoff</v-icon>
+                      <p class="pl-3 pt-3" style="color:grey">Depart Date</p>
+                    </v-row>
+                    <p>{{data.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}</p>
+                    <p>
+                      {{data.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.city.name}}
+                      <v-icon color="error">mdi-arrow-right</v-icon>
+                      {{data.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}
+                    </p>
+                    <p>
+                      {{data.flightBooking.flightBookingLinks[0].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[0].flight.arrive | moment("HH:mm")}}
+                      | {{getDuration(data.flightBooking.flightBookingLinks[0].flight.arrive,data.flightBooking.flightBookingLinks[0].flight.depart)}}
+                    </p>
+                  </v-col>
+                  <v-col>
+                    <v-row>
+                      <i class="airasia-icon icon-return-flight"></i>
+                      <v-icon slot="icon" size="36" class="flip">mdi-airplane-takeoff</v-icon>
+                      <p class="pl-3 pt-3" style="color:grey">Return Date</p>
+                    </v-row>
+                    <p>{{data.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}</p>
+                    <p>
+                      {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.city.name}}
+                      <v-icon color="error">mdi-arrow-right</v-icon>
+                      {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.city.name}}
+                    </p>
+                    <p>
+                      {{data.flightBooking.flightBookingLinks[1].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[1].flight.arrive | moment("HH:mm")}}
+                      | {{getDuration(data.flightBooking.flightBookingLinks[1].flight.arrive,data.flightBooking.flightBookingLinks[1].flight.depart)}}
+                    </p>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </div>
+            <!-- +++++++++++++++++++++++++++++++++++++++ -->
+            <div>
+              <v-card class="text-center mt-4">
+                <v-toolbar flat color="primary" dark>
+                  <v-toolbar-title>Contact info</v-toolbar-title>
+                </v-toolbar>
+                <v-row class="pl-3">
+                  <v-col cols="12" md="4">
+                    <v-text-field
+                      v-model="phone"
+                      :rules="phoneRules"
+                      :counter="10"
+                      label="เบอร์โทรติดต่อ"
+                      required
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="4">
+                    <v-text-field
+                      v-model="email"
+                      :rules="emailRules"
+                      label="อีเมลล์ที่ใช้ติดต่อ"
+                      required
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </div>
+            <!-- +++++++++++++++++++++++++++++++++++++++ -->
+            <div>
+              <v-row>
+                <v-col cols="8" v-if="paymentTypesLoaded">
+                  <div>
+                    <div class="mt-5">
+                      <v-card>
+                        <v-toolbar flat color="primary" dark>
+                          <v-toolbar-title>Payment</v-toolbar-title>
+                        </v-toolbar>
+                        <v-tabs vertical>
+                          <v-tab v-for="(paymentType,index) in data.paymentTypes" :key="index">
+                            <v-icon left>mdi-check-all</v-icon>
+                            {{paymentType.name}}
+                          </v-tab>
+
+                          <v-tab-item v-for="(paymentType,index) in data.paymentTypes" :key="index">
+                            <v-card flat>
+                              <v-card-text>
+                                <p>Please Select</p>
+
+                                <v-radio-group v-model="select.paymentWayId" column>
+                                  <v-radio
+                                    v-for="(paymentWay,index) in paymentType.paymentWays"
+                                    :key="index"
+                                    :label="paymentWay.name"
+                                    :value="paymentWay.id"
+                                  ></v-radio>
+                                </v-radio-group>
+                              </v-card-text>
+                            </v-card>
+                          </v-tab-item>
+                        </v-tabs>
+                      </v-card>
+                    </div>
+                  </div>
                 </v-col>
+                <!-- *************************************** -->
                 <v-col>
-                  <v-row>
-                    <i class="airasia-icon icon-return-flight"></i>
-                    <v-icon slot="icon" size="36" class="flip">mdi-airplane-takeoff</v-icon>
-                    <p class="pl-3 pt-3" style="color:grey">Return Date</p>
-                  </v-row>
-                  <p>{{data.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}</p>
-                  <p>
-                    {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.city.name}}
-                    <v-icon color="error">mdi-arrow-right</v-icon>
-                    {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.city.name}}
-                  </p>
-                  <p>
-                    {{data.flightBooking.flightBookingLinks[1].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[1].flight.arrive | moment("HH:mm")}}
-                    | {{getDuration(data.flightBooking.flightBookingLinks[1].flight.arrive,data.flightBooking.flightBookingLinks[1].flight.depart)}}
-                  </p>
+                  <v-card class="text-center mt-5">
+                    <v-toolbar flat color="primary" dark>
+                      <v-toolbar-title class="pt-1">
+                        <v-row>
+                          <v-col cols="4">
+                            <h4 class="text-left pt-2">Total</h4>
+                          </v-col>
+                          <v-col cols="4">
+                            <h4 class="text-center pt-2">{{getDiff}}</h4>
+                          </v-col>
+                          <v-col cols="4">
+                            <h4 class="text-right pt-2">THB</h4>
+                          </v-col>
+                        </v-row>
+                      </v-toolbar-title>
+                    </v-toolbar>
+                    <div class="px-3">
+                      <div class="d-flex pt-2">
+                        <div class="mr-auto p-2" style="color:grey">Subtotal</div>
+                        <div class="p-2">{{totalPrice}}</div>
+                      </div>
+                      <div class="d-flex pt-2" v-if="this.discountPer > 0">
+                        <div class="mr-auto p-2" style="color:grey">Discount</div>
+                        <div class="p-2">{{getDiscount}}</div>
+                      </div>
+                      <div class="d-flex pt-2" v-if="this.discountPer > 0">
+                        <div class="mr-auto p-2" style="color:grey">Total</div>
+                        <div class="p-2">{{getDiff}}</div>
+                      </div>
+                      <hr />
+
+                      <div class="d-flex">
+                        <div class="mr-auto p-2" style="color:grey">E-Gift Voucher</div>
+                        <div class="my-2">
+                          <v-btn
+                            @click="showVoucher=!showVoucher"
+                            text
+                            color="error"
+                          >{{showVoucher?'Cancel' : 'Apply'}}</v-btn>
+                        </div>
+                      </div>
+                      <div class="input-group mb-3" v-show="showVoucher">
+                        <input
+                          type="text"
+                          v-model="data.promotionCode"
+                          class="form-control"
+                          placeholder="code"
+                          aria-describedby="button-addon2"
+                        />
+                        <div class="input-group-append">
+                          <button
+                            class="btn btn-outline-secondary"
+                            type="button"
+                            id="button-addon2"
+                            @click="checkPromotion"
+                          >Search</button>
+                        </div>
+                      </div>
+
+                      <hr />
+
+                      <div class="text-center p-3">
+                        <v-btn @click="save" large color="error">Purchase</v-btn>
+                      </div>
+                    </div>
+                  </v-card>
                 </v-col>
               </v-row>
-            </v-card>
+            </div>
+            <!-- +++++++++++++++++++++++++++++++++++++++ -->
+
+            <!-- +++++++++++++++++++++++++++++++++++++++ -->
           </div>
-          <!-- +++++++++++++++++++++++++++++++++++++++ -->
-          <div>
-            <v-row>
-              <v-col cols="8" v-if="paymentTypesLoaded">
-                <div>
-                  <div class="mt-5">
-                    <v-card>
-                      <v-toolbar flat color="primary" dark>
-                        <v-toolbar-title>Payment</v-toolbar-title>
-                      </v-toolbar>
-                      <v-tabs vertical>
-                        <v-tab v-for="(paymentType,index) in data.paymentTypes" :key="index">
-                          <v-icon left>mdi-check-all</v-icon>
-                          {{paymentType.name}}
-                        </v-tab>
-
-                        <v-tab-item v-for="(paymentType,index) in data.paymentTypes" :key="index">
-                          <v-card flat>
-                            <v-card-text>
-                              <p>Please Select</p>
-
-                              <v-radio-group v-model="select.paymentWayId" column>
-                                <v-radio
-                                  v-for="(paymentWay,index) in paymentType.paymentWays"
-                                  :key="index"
-                                  :label="paymentWay.name"
-                                  :value="paymentWay.id"
-                                ></v-radio>
-                              </v-radio-group>
-                            </v-card-text>
-                          </v-card>
-                        </v-tab-item>
-                      </v-tabs>
-                    </v-card>
-                  </div>
-                </div>
-              </v-col>
-              <!-- *************************************** -->
-              <v-col>
-                <v-card class="text-center mt-5">
-                  <v-toolbar flat color="primary" dark>
-                    <v-toolbar-title class="pt-1">
-                      <v-row>
-                        <v-col cols="4">
-                          <h4 class="text-left pt-2">Total</h4>
-                        </v-col>
-                        <v-col cols="4">
-                          <h4 class="text-center pt-2">{{getDiff}}</h4>
-                        </v-col> 
-                        <v-col cols="4">
-                          <h4 class="text-right pt-2">THB</h4>
-                        </v-col>
-                      </v-row>
-                    </v-toolbar-title>
-                  </v-toolbar>
-                  <div class="px-3">
-                    <div class="d-flex pt-2">
-                      <div class="mr-auto p-2" style="color:grey">Subtotal</div>
-                      <div class="p-2">{{totalPrice}}</div>
-                    </div>
-                    <div class="d-flex pt-2" v-if="this.discountPer > 0">
-                      <div class="mr-auto p-2" style="color:grey">Discount</div>
-                      <div class="p-2">{{getDiscount}}</div>
-                    </div>
-                    <div class="d-flex pt-2" v-if="this.discountPer > 0">
-                      <div class="mr-auto p-2" style="color:grey">Total</div>
-                      <div class="p-2">{{getDiff}}</div>
-                    </div>
-                    <hr />
-
-                    <div class="d-flex">
-                      <div class="mr-auto p-2" style="color:grey">E-Gift Voucher</div>
-                      <div class="my-2">
-                        <v-btn
-                          @click="showVoucher=!showVoucher"
-                          text
-                          color="error"
-                        >{{showVoucher?'Cancel' : 'Apply'}}</v-btn>
-                      </div>
-                    </div>
-                    <div class="input-group mb-3" v-show="showVoucher">
-                      <input
-                        type="text"
-                        v-model="data.promotionCode"
-                        class="form-control"
-                        placeholder="code"
-                        aria-describedby="button-addon2"
-                      />
-                      <div class="input-group-append">
-                        <button
-                          class="btn btn-outline-secondary"
-                          type="button"
-                          id="button-addon2"
-                          @click="checkPromotion"
-                        >Search</button>
-                      </div>
-                    </div>
-
-                    <hr />
-
-                    <div class="text-center p-3">
-                      <v-btn @click="save" large color="error">Purchase</v-btn>
-                    </div>
-                  </div>
-                </v-card>
-              </v-col>
-            </v-row>
-          </div>
-          <!-- +++++++++++++++++++++++++++++++++++++++ -->
-
-          <!-- +++++++++++++++++++++++++++++++++++++++ -->
+          <br />
         </div>
-        <br />
+        <UserFooter />
       </div>
-      <UserFooter />
     </div>
   </div>
-</div>
 </template>
 
 <script>
 import UserNavbar from "../components/UserNavbar";
 import UserFooter from "../components/UserFooter";
 import axios from "axios";
-import Alert from '../components/Alert';
-import router from '../router'
+import Alert from "../components/Alert";
+import router from "../router";
+import { mapState } from "vuex";
 var numeral = require("numeral");
 
 let http = axios.create({
@@ -198,8 +238,8 @@ let http = axios.create({
 
 export default {
   name: "payment",
-  props:{
-    bookId:{
+  props: {
+    bookId: {
       type: String
     }
   },
@@ -211,6 +251,16 @@ export default {
     flightBookingLoaded: false,
     paymentWaysLoaded: false,
     paymentTypesLoaded: false,
+    phone: "",
+    email: "",
+    phoneRules: [
+      v => !!v || "ท่านจำเป็นต้องกรอกเบอร์โทร",
+      v => v.length == 10 || "กรุณากรอกให้ครบ 10 หลัก"
+    ],
+    emailRules: [
+      v => !!v || "จำเป็นต้องกรอก E-mail",
+      v => /.+@.+/.test(v) || "กรุณากรอก E-mail ให้ถูกต้อง"
+    ],
     select: {
       paymentWayId: -1
     },
@@ -218,7 +268,7 @@ export default {
       flightBooking: {},
       paymentWays: [], // no used
       paymentTypes: [],
-      promotionCode: '',
+      promotionCode: ""
     },
     discountPer: 0
   }),
@@ -229,22 +279,30 @@ export default {
     // PaymentChooser
   },
   computed: {
-    
-    getDiscount(){
-      let discount = 
-        (this.data.flightBooking.flightBookingLinks[0].flight.price + 
-        this.data.flightBooking.flightBookingLinks[1].flight.price) * this.discountPer / 100
+    ...mapState({
+      user: state => state.Auth.user,
+      logedIn: state => state.Auth.logedIn
+    }),
+
+    getDiscount() {
+      let discount =
+        ((this.data.flightBooking.flightBookingLinks[0].flight.price +
+          this.data.flightBooking.flightBookingLinks[1].flight.price) *
+          this.discountPer) /
+        100;
       return numeral(discount).format("0,0.00");
     },
-    getDiff(){
+    getDiff() {
       let sum =
         this.data.flightBooking.flightBookingLinks[0].flight.price +
         this.data.flightBooking.flightBookingLinks[1].flight.price;
-      let discount = 
-        (this.data.flightBooking.flightBookingLinks[0].flight.price + 
-        this.data.flightBooking.flightBookingLinks[1].flight.price) * this.discountPer / 100
+      let discount =
+        ((this.data.flightBooking.flightBookingLinks[0].flight.price +
+          this.data.flightBooking.flightBookingLinks[1].flight.price) *
+          this.discountPer) /
+        100;
       let diff = sum - discount;
-       return numeral(diff).format("0,0.00");
+      return numeral(diff).format("0,0.00");
     },
     totalPrice() {
       let sum =
@@ -254,93 +312,93 @@ export default {
     }
   },
   methods: {
-    save(){
-      if (this.getDiscount > 0) 
-        this.savePaymentWithPromotionCode()
-      else 
-        this.savePayment()
+    save() {
+      if (this.getDiscount > 0) this.savePaymentWithPromotionCode();
+      else this.savePayment();
     },
-    goToFlight(){
-      router.push({name:'bookFlight'})
+    goToFlight() {
+      router.push({ name: "bookFlight" });
     },
-    checkPromotion(){
-        this.data.promotionCode
-        http.get('/promotion-code/'+this.data.promotionCode)
-      .then(res => {
-        
-        console.log(res.data)
-        if(this.isRealValue(res.data))
-          this.discountPer = res.data.discount;
-        else
-          this.codeNotFound = true;
-      }).catch(e=>{console.log(e)})
-  
-      }
-      
-      ,
-    checkToLoad(){
-      if(this.flightBookingLoaded && this.paymentTypesLoaded){
-        if(!this.isRealValue(this.data.flightBooking)){
-          alert("Book ID " + this.bookId + " not founded")
-          router.push({name:'bookFlight'})
+    checkPromotion() {
+      this.data.promotionCode;
+      http
+        .get("/promotion-code/" + this.data.promotionCode)
+        .then(res => {
+          console.log(res.data);
+          if (this.isRealValue(res.data)) this.discountPer = res.data.discount;
+          else this.codeNotFound = true;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
+    checkToLoad() {
+      if (this.flightBookingLoaded && this.paymentTypesLoaded) {
+        if (!this.isRealValue(this.data.flightBooking)) {
+          alert("Book ID " + this.bookId + " not founded");
+          router.push({ name: "bookFlight" });
         }
-        return true
+        return true;
       }
-      return false
+      return false;
     },
-    isRealValue(obj)
-    {
-      return obj && obj !== 'null' && obj !== 'undefined';
+    isRealValue(obj) {
+      return obj && obj !== "null" && obj !== "undefined";
     },
     savePayment() {
-      if (
-        this.select.paymentWayId == "-1"
-      ){
+      if (this.select.paymentWayId == "-1") {
         this.dataFail = true;
-      }else{
-         http
-           .post(
-             "/payment/" +
-               this.data.flightBooking.id +
-               "/" +
-               this.select.paymentWayId
-           )
-           .then(res => {
-             console.log("Success");
-             console.log(res.data);
-             this.saveSuccess = true;
-             //alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
+      } else {
+        http
+          .post(
+            "/payment/" +
+              this.data.flightBooking.id +
+              "/" +
+              this.select.paymentWayId +
+              "/" +
+              this.phone +
+              "/" +
+              this.email
+          )
+          .then(res => {11
+            console.log("Success");
+            console.log(res.data);
+            this.saveSuccess = true;
+            //alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
           })
-           .catch(e =>{
-             console.log(e)
+          .catch(e => {
+            console.log(e);
             //alert("เกิดข้อผิดพลาด " + e);
           });
       }
     },
     savePaymentWithPromotionCode() {
-      if (
-        this.select.paymentWayId == "-1"
-      ){
+      if (this.select.paymentWayId == "-1") {
         alert("กรุณากรอกข้อมูลให้ครบ");
-      }else{
-         http
-           .post(
-             "/payment/" +
-               this.data.flightBooking.id +
-               "/" +
-               this.select.paymentWayId +
-               "/" +
-               this.data.promotionCode
-           )
-           .then(res => {
-             console.log("Success");
-             console.log(res.data);
-             //alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
-             this.saveSuccess = true;
+      } else {
+        http
+          .post(
+            "/payment/" +
+              this.data.flightBooking.id +
+              "/" +
+              this.select.paymentWayId +
+              "/" +
+              this.data.promotionCode +
+              "/" +
+              this.phone +
+              "/" +
+              this.email
+          )
+          .then(res => {
+            console.log("Success");
+            console.log(res.data);
+            //alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
+            this.saveSuccess = true;
           })
-           .catch(e =>{
-             console.log(e)
-             //alert("เกิดข้อผิดพลาด " + e);
+          .catch(e => {
+            console.log(e);
+            //alert("เกิดข้อผิดพลาด " + e);
           });
       }
     },
@@ -359,13 +417,13 @@ export default {
     },
     getFlightBooking() {
       http
-      .get("/flight-booking/"+this.bookId)
-      .then(res => {
-        this.data.flightBooking = res.data
-        console.log(this.data.flightBooking)
-        this.flightBookingLoaded = true
-      })
-      .catch(e=>console.log(e))
+        .get("/flight-booking/" + this.bookId)
+        .then(res => {
+          this.data.flightBooking = res.data;
+          console.log(this.data.flightBooking);
+          this.flightBookingLoaded = true;
+        })
+        .catch(e => console.log(e));
     },
     getPaymentWay() {
       http

@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 
 import java.util.Collection;
 
@@ -20,9 +21,10 @@ public class PaymentType {
     @SequenceGenerator(name="PAYMENT_TYPE_SEQ",sequenceName="PAYMENT_TYPE_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="PAYMENT_TYPE_SEQ")
     @Column(name="PAYMENT_TYPE_ID",unique = true, nullable = true)
-    private @NonNull Long id;
+    private Long id;
 
-    private @NonNull String name;
+    @NotNull
+    private String name;
 
     @OneToMany(mappedBy = "paymentType")
     private Collection<PaymentWay> paymentWays;
