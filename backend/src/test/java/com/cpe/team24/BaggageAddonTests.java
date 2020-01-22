@@ -119,7 +119,7 @@ public class BaggageAddonTests {
     }
 
     @Test
-    void testStudentIdMustFollowWithDigitOnly() {
+    void b6026066_PriceNoneNegative() {
         BaggageAddon bag = new BaggageAddon();
         bag.setMaxWeight(10);
         bag.setPrice(-10.00);
@@ -128,6 +128,7 @@ public class BaggageAddonTests {
         bag.setBaggageImage(baggageimageRepository.findById(1L));
         bag.setAirport(airportRepository.findById(1L).orElse(null));
 
+        
         Set<ConstraintViolation<BaggageAddon>> result = validator.validate(bag);
 
         // result ต้องมี error 1 ค่าเท่านั้น
@@ -139,7 +140,7 @@ public class BaggageAddonTests {
     }
 
     @Test
-    void testStudentIdMustbeint() {
+    void b6026066_Pricemax100000() {
         BaggageAddon bag = new BaggageAddon();
         bag.setMaxWeight(10);
         bag.setPrice(100000000000.00);
