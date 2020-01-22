@@ -119,7 +119,7 @@ public class BaggageAddonTests {
     }
 
     @Test
-    void testStudentIdMustFollowWithDigitOnly() {
+    void b6026066_PriceNoneNegative() {
         BaggageAddon bag = new BaggageAddon();
         bag.setMaxWeight(10);
         bag.setPrice(-10.00);
@@ -139,7 +139,7 @@ public class BaggageAddonTests {
     }
 
     @Test
-    void testStudentIdMustbeint() {
+    void b6026066_Pricemax100000() {
         BaggageAddon bag = new BaggageAddon();
         bag.setMaxWeight(10);
         bag.setPrice(100000000000.00);

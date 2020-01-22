@@ -6,27 +6,11 @@
             <div class="col-6">
                 <h1>ตรวจสอบการชำระเงิน</h1>
             </div>
-            <div class="col-3">
-            </div>
-            <div class="col-3">
-                <div @click="openDialog = true" class="  btn-primary btn">
-                    <v-icon>mdi-magnify</v-icon>
-                </div>
-            </div>
         </div>
-        <div class="row">
-            <div class="col">
-                1 of 3
-            </div>
-            <div class="col">
-            </div>
-            <div class="col">
-                3 of 3
-            </div>
-        </div>
+    <Check></Check>   
     </div>
 
-    <Check :openDialog="openDialog" :closeDialog="closeDialog" />
+    
 
 </div>
 </template>
@@ -47,13 +31,6 @@ export default {
             modal: false,
 
         }
-    },
-
-    methods: {
-        closeDialog() {
-            this.openDialog = false
-        }
-
     },
 
     mounted() {}

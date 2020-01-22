@@ -1,100 +1,27 @@
 <template>
 <div>
-    <v-row justify="center">
-        <v-dialog v-model="openDialog" persistent max-width="1000px">
-
-            <v-card>
-                <v-card-title>
-                    <span class="headline">ตรวจสอบการชำระเงิน</span>
-                </v-card-title>
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-
-                            <label>ยังไม่ชำระ</label>
-                            <div v-for="(flightBookings,index) in flightBookings" :key="index">
-                                <v-card>
-                                    <div class="my-img2 justify-content-between p-3 mb-2">
-
-                                        <div>
-                                            <div class="row">
-                                                    <div class="col-sm">
-                                                        {{flightBookings.user.firstName}}
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        {{flightBookings.bookId}}
-                                                    </div>
-                                                </div>
-                                            <p>
-                                                <v-icon slot="icon" size="24">mdi-airplane-takeoff</v-icon>
-                                                {{flightBookings.flightBookingLinks[0].flight.flightAirports[0].airport.city.name}}
-                                                <v-icon color="error">mdi-arrow-right</v-icon>
-                                                {{flightBookings.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}
-                                            </p>
-                                            <p>
-                                                <v-icon slot="icon" size="24" class="flip">mdi-airplane-landing</v-icon>
-                                                {{flightBookings.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}
-                                                <v-icon color="error">mdi-arrow-right</v-icon>
-                                                {{flightBookings.flightBookingLinks[0].flight.flightAirports[0].airport.city.name}}
-                                            </p>
-
-                                        </div>
-
-                                    </div>
-                                </v-card>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <label>ชำระเงินแล้ว</label>
-                            <div v-for="(payment,index) in payment" :key="index">
-                                <v-card>
-                                    <div class="my-img3 justify-content-between p-3 mb-2">
-
-                                        <div>
-                                            
-                                                <div class="row">
-                                                    <div class="col-sm">
-                                                        {{payment.flightBooking.user.firstName}}
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        {{payment.flightBooking.flightBookingLinks[0].flight.price}}
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        {{payment.flightBooking.bookId}}
-                                                    </div>
-                                                </div>
-                                            
-                                            <p>
-                                                {{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.city.name}}
-                                                <v-icon color="error">mdi-arrow-right</v-icon>
-                                                {{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}
-                                            </p>
-                                            <p>
-                                                {{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}
-                                                <v-icon color="error">mdi-arrow-right</v-icon>
-                                                {{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.city.name}}
-                                            </p>
-                                        </div>
-
-                                    </div>
-                                </v-card>
-                            </div>
-                        </div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+        <p class="pl-3 pt-3" style="color:black">ยังไม่ชำระเงิน</p>
+     <div v-for="(flightBookings,index) in flightBookings" :key="index">
+                  <v-card>
+                    <div class="my-img2 justify-content-between p-3 mb-2">
+                      <div>
+                        <div>{{flightBookings.user.firstName}}  {{flightBookings.user.lastName}}</div>
+                        <div></div>
+                      </div>
+                      <div></div>
                     </div>
+                  </v-card>
                 </div>
+    </div>
+    <div class="col">
+      <p class="pl-3 pt-3" style="color:black">ชำระเงินแล้ว</p>
+    </div>
+  </div>
+</div>
 
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="closeDialog">Close</v-btn>
-
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-row>
 </div>
 </template>
 
@@ -133,7 +60,7 @@ export default {
                     "http://localhost:9000/api/flight-booking"
                 )
                 .then(res => {
-                    this.flightBookings = res.data.reverse();
+                    this.flightBookings = res.data;
                 })
                 .catch(e => console.log(e));
         },
@@ -143,7 +70,7 @@ export default {
                     "http://localhost:9000/api/payment"
                 )
                 .then(res => {
-                    this.payment = res.data.reverse();
+                    this.payment = res.data;
                 })
                 .catch(e => console.log(e));
         }
