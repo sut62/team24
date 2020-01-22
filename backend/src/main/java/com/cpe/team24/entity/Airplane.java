@@ -3,6 +3,7 @@ package com.cpe.team24.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import java.util.Collection;
 
@@ -17,7 +18,10 @@ public class Airplane {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="AIRPLANE_SEQ")
     @Column(name="AIRPLANE_ID",unique = true, nullable = true)
     private Long id;
+
+    @NotNull
     private String name;
+    @NotNull
     private Integer seatAmout;
 
 
