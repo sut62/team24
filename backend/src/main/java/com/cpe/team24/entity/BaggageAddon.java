@@ -13,6 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
+import org.hibernate.validator.constraints.Range;
 
 @Data
 @Entity
@@ -23,26 +28,34 @@ public class BaggageAddon {
     @SequenceGenerator(name="BAGGAGE_SEQ",sequenceName="BAGGAGE_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="BAGGAGE_SEQ")
     @Column(name = "BAGGAGE_ID", unique = true, nullable = true)
-    private @NonNull Long id;
-    @Column(name="baggage")
+    private Long id;
 
-    private @NonNull Integer maxWeight;
+    @NotNull
+    @PositiveOrZero
+    private Integer maxWeight;
+ 
 
-    private @NonNull Integer price;
+    @NotNull
+    @PositiveOrZero
+    @Max(100000)
+    private Double price;
 
 
    /* @OneToOne(cascade = CascadeType.ALL, targetEntity = BaggageImage.class)
     @JoinColumn(name = "BAGGAGEIMAGE_ID", referencedColumnName = "BAGGAGEIMAGE_ID",unique = true)
     private BaggageImage addbaggageimage;*/
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = BaggageType.class)
     @JoinColumn(name = "BAGGAGETYPE_ID", insertable = true)
     private  BaggageType baggageType;
-
+    
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = BaggageImage.class)
     @JoinColumn(name = "BAGGAGEIMAGE_ID", insertable = true)
     private  BaggageImage baggageImage;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airport.class)
     @JoinColumn(name = "AIRPORT_ID", insertable = true)
     private Airport airport;
@@ -63,11 +76,11 @@ public class BaggageAddon {
         this.maxWeight = maxweight;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

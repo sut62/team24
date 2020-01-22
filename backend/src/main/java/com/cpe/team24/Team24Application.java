@@ -236,6 +236,8 @@ public class Team24Application {
 			for(String way : ways){
 				paymentWayRepository.save(new PaymentWay(way,paymentTypeRepository.findById(2l).orElse(null)));
 			}
+
+
 			// ------- Baggage Type --------
 			Stream.of(
 				"ธรรมดา","ที่ต้องดูแลเป็นเศษ","อุปกรณ์การกีฬา"
@@ -263,14 +265,14 @@ public class Team24Application {
 			};
 
 			Object[][] bag = new Object[][] { 
-				{ 5, 500, 1,1,1 },
-				{ 10, 1000, 1,2,1 },
-				{ 10, 1200, 2,3,2 }
+				{ 5, 500.00, 1,1,1 },
+				{ 10, 1000.00, 1,2,1 },
+				{ 10, 1200.00, 2,3,2 }
 			};
 			for (int i = 0; i < bag.length; i++) {
 				BaggageAddon newBag = new BaggageAddon();
 				newBag.setMaxWeight((Integer) bag[i][0]);
-				newBag.setPrice((Integer) bag[i][1]);
+				newBag.setPrice((Double) bag[i][1]);
 				
 				BaggageType btype = baggagetypeRepository.findById((int) bag[i][2]);
 				newBag.setBaggageType(btype);
@@ -285,6 +287,8 @@ public class Team24Application {
 
 				baggageaddonRepository.save(newBag);
 			}
+
+			//-----------------------------------------
 			Object[][] checkInStatus = new Object[][] { 
 				{ "อนุมัติ"},
 				{ "ยกเลิก"},
