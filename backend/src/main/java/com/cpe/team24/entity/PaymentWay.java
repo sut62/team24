@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,9 +24,10 @@ public class PaymentWay {
     @SequenceGenerator(name="PAYMENT_WAY_SEQ",sequenceName="PAYMENT_WAY_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="PAYMENT_WAY_SEQ")
     @Column(name="PAYMENT_WAY_ID",unique = true, nullable = true)
-    private @NonNull Long id;
+    private Long id;
 
-    private @NonNull String name;
+    @NotNull
+    private String name;
 
     @JsonIgnore
     @ManyToOne
