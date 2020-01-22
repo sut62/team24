@@ -58,7 +58,7 @@ public class BaggageAddonController {
     public BaggageAddon newBaggage(BaggageAddon newBaggage,
     
     @PathVariable Integer maxweight,
-    @PathVariable Integer price,
+    @PathVariable Double price,
    
     @PathVariable long baggageimage_id,
     @PathVariable long baggagetype_id,

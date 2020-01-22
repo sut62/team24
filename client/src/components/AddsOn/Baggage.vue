@@ -4,7 +4,7 @@
     <Alert :open="fall" topic="แจ้งเตือน" desc="บันทึกข้อมูลล้มเหลว" :callback="()=>this.fall = false"/>
     <v-row justify="center">
       <v-dialog v-model="openDialog" persistent max-width="1000px">
-        <template v-slot:activator="{ on }"></template>
+    
         <v-card>
           <v-card-title>
             <span class="headline">จัดการสัมภาระ</span>
