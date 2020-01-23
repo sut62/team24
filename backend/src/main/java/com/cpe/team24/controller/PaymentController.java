@@ -3,12 +3,14 @@ package com.cpe.team24.controller;
 import java.util.Date;
 import java.util.Collection;
 
+import com.cpe.team24.entity.EBookingStatus;
 import com.cpe.team24.entity.FlightBooking;
 import com.cpe.team24.entity.FlightBookingLink;
 import com.cpe.team24.entity.Payment;
 import com.cpe.team24.entity.PaymentWay;
 import com.cpe.team24.entity.Promotion;
 import com.cpe.team24.entity.PromotionCode;
+import com.cpe.team24.repository.BookingStatusRepository;
 import com.cpe.team24.repository.FlightBookingRepository;
 import com.cpe.team24.repository.PaymentRepository;
 import com.cpe.team24.repository.PaymentWayRepository;
@@ -36,6 +38,9 @@ public class PaymentController{
     private PromotionRepository promotionRepository ;
     @Autowired
     private PromotionCodeRepository promotionCodeRepository;
+    @Autowired
+    private BookingStatusRepository bookingStatusRepository;
+
     @GetMapping("")
     public Collection<Payment> getAllPayment(){
         return paymentRepository.findAll();
@@ -55,6 +60,8 @@ public class PaymentController{
         payment.setPhone(phone);
         payment.setEmail(email);
         
+        this.submitBooking(flightBooking);
+
         Double total = (double) 0;
         for(FlightBookingLink fbl : flightBooking.getFlightBookingLinks()){
             total += fbl.getFlight().getPrice();
@@ -64,6 +71,11 @@ public class PaymentController{
         return paymentRepository.save(payment);
     }
     
+    void submitBooking(FlightBooking flightBooking){
+        flightBooking.setBookingStatus(bookingStatusRepository.findByName(EBookingStatus.SUBMIT));
+        flightBookingRepository.save(flightBooking);
+    }
+
     @PostMapping("/{flight_booking_id}/{payment_way_id}/{phone}/{email}")
     public Payment createPayment(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String phone,@PathVariable String email ){
         Payment payment = new Payment();
@@ -76,6 +88,8 @@ public class PaymentController{
         payment.setPaymentWay(paymentWay);
         payment.setPhone(phone);
         payment.setEmail(email);
+        
+        this.submitBooking(flightBooking);
         
         Double total = (double) 0;
         for(FlightBookingLink fbl : flightBooking.getFlightBookingLinks()){
