@@ -6,7 +6,7 @@
             <div class="col">
                 <p class="pl-3 pt-3" style="color:black">ยังไม่ชำระเงิน</p>
 
-                <div v-for="(flightBookings,index) in flightBookings" :key="index">
+                <div v-for="(flightBookings,index) in flightBookings" :key="index" >
                     <v-card>
                         <div class="my-img2 justify-content-between p-3 mb-2">
                             <div>
@@ -118,7 +118,7 @@ export default {
         getFBooking() {
             http
                 .get(
-                    "http://localhost:9000/api/flight-booking"
+                    "http://localhost:9000/api/flight-booking/pending"
                 )
                 .then(res => {
                     this.flightBookings = res.data;

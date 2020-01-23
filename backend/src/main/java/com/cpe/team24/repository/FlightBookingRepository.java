@@ -1,5 +1,6 @@
 package com.cpe.team24.repository;
 
+import com.cpe.team24.entity.BookingStatus;
 import com.cpe.team24.entity.FlightBooking;
 import com.cpe.team24.entity.User;
 
@@ -14,6 +15,7 @@ public interface FlightBookingRepository extends JpaRepository<FlightBooking,Lon
     public Optional<FlightBooking> findById(Long id);
     public Optional<FlightBooking> findByBookId(String bookId);
     public Collection<FlightBooking> findAllByUser(User user);
+    public Collection<FlightBooking> findAllByBookingStatus(BookingStatus lastname);
     //public Optional<FlightBooking> findByLastName(String lastname);
 }
 

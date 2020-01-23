@@ -51,6 +51,11 @@ public class FlightBookingController {
     public Collection<FlightBooking> getBooking() {
         return flightBookingRepository.findAll();
     }
+
+    @GetMapping("/pending")
+    public Collection<FlightBooking> getBookingPendingOnly() {
+        return flightBookingRepository.findAllByBookingStatus(bookingStatusRepository.findByName(EBookingStatus.PENDING));
+    }
     
     @PostMapping("/book")
     @PreAuthorize("hasRole('ROLE_MEMBER')")
