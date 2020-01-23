@@ -34,6 +34,9 @@
           <div v-if="pageLocation == 3">
             <GuestDetail/>
           </div>
+          <div v-if="pageLocation == 4">
+            <AddsOn/>
+          </div>
         </div>
       </div>
       <br>
@@ -53,10 +56,12 @@ import FlightList from '../components/BookFlight/FlightList/FlightList'
 import CartFooter from '../components/BookFlight/CartFooter'
 import GuestDetail from '../components/BookFlight/GuestDetail'
 import {mapMutations,mapActions,mapState} from 'vuex'
+import AddsOn from '../components/BookFlight/AddsOn/AddsOn'
 
 export default {
   name: 'boookFlight',
   components: {
+    AddsOn,
     Search,
     UserNavbar,
     UserFooter,

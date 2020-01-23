@@ -9,7 +9,9 @@
           <v-divider></v-divider>
           <v-stepper-step :complete="pageLocation>=3" step="3"><span><v-icon>mdi-account</v-icon> ผู้โดยสาร</span></v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step :complete="pageLocation>=4" step="4"><span><v-icon>mdi-credit-card-outline</v-icon> ชำระเงิน</span></v-stepper-step>
+          <v-stepper-step :complete="pageLocation>=4" step="4"><span><v-icon>mdi-cart</v-icon>บริการเสริม</span></v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step :complete="pageLocation>=5" step="5"><span><v-icon>mdi-credit-card-outline</v-icon> ชำระเงิน</span></v-stepper-step>
         </v-stepper-header>
       </v-stepper>
     </div>
