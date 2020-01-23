@@ -36,7 +36,7 @@
               style="height:100%;" 
               @click="selectFlight(flight)"
             >
-              {{flight.price}} THB <v-icon v-if="isSelected" class="mb-1">mdi-checkbox-marked-circle</v-icon>
+              {{flight.price | price}} THB <v-icon v-if="isSelected" class="mb-1">mdi-checkbox-marked-circle</v-icon>
             </div>
           </v-col>
         </v-row>
@@ -46,6 +46,7 @@
 
 <script>
 import moment from 'moment'
+var numeral = require("numeral");
 
 export default {
   name: 'flightCard',
@@ -83,6 +84,11 @@ export default {
   filters: {
     formatTime: (value) => {
       return moment(String(value)).format('HH:mm')
+    },
+    price(price){
+      // add this on top
+      // var numeral = require("numeral");
+      return numeral(price).format("0,0.00");
     }
   }
 }

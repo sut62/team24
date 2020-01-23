@@ -15,7 +15,7 @@
         <div @click="menu == 1 ? selectBaggageDepart(baggage) : selectBaggageReturn(baggage)" v-for="(baggage,index) in baggages" :key="index" :class="{'btn card my-img m-1':true,'my-selected':menu == 1? baggageDepart != null && baggageDepart.id == baggage.id : baggageReturn != null && baggageReturn.id == baggage.id}">
           <img :src="baggage.baggageImage.url" class="baggageIcon"/>
           <div class="text-secondary">{{baggage.maxWeight}} กก.</div>
-          <div>{{baggage.price}}.00 THB</div>
+          <div>{{baggage.price | price}} THB</div>
         </div>
       </div>
       <hr>
@@ -27,6 +27,7 @@
 <script>
 import {BookFlightService} from '../../../api'
 import {mapState,mapMutations} from 'vuex'
+var numeral = require("numeral");
 export default {
   data:()=>({
     baggages:[]
@@ -38,6 +39,13 @@ export default {
       baggageDepart: state => state.BookFlight.data.baggageDepart,
       baggageReturn: state => state.BookFlight.data.baggageReturn,
     })
+  },
+  filters:{
+    price(price){
+      // add this on top
+      // var numeral = require("numeral");
+      return numeral(price).format("0,0.00");
+    }
   },
   methods:{
     ...mapMutations({

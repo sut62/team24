@@ -12,7 +12,7 @@
               <span class="alert alert-secondary"><v-icon>mdi-alert-circle-outline</v-icon> สัมภาระพกพา 7 กก. รวมอยู่ในค่าโดยสารแล้ว</span>
             </div>
             <div>
-              <div class="text-success h4">ค่าใช้จ่าย 770.00 บาท <v-icon>mdi-chevron-right</v-icon></div> 
+              <div class="text-success h4">ค่าใช้จ่าย {{getBaggagesPrice | price }} บาท <v-icon>mdi-chevron-right</v-icon></div> 
             </div>
           </div>
         </div>
@@ -23,6 +23,9 @@
 
 <script>
 import BaggageSidebar from './BaggageSidebar'
+import {mapGetters} from 'vuex'
+var numeral = require("numeral");
+
 export default {
   data: ()=>({
     showBaggage: false
@@ -30,8 +33,18 @@ export default {
   components:{
     BaggageSidebar
   },
-  mounted(){
-  }
+  computed:{
+    ...mapGetters({
+      getBaggagesPrice: 'BookFlight/getBaggagesPrice'
+    })
+  },
+  filters:{
+    price(price){
+      // add this on top
+      // var numeral = require("numeral");
+      return numeral(price).format("0,0.00");
+    }
+  },
 }
 </script>
 

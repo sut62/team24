@@ -28,7 +28,7 @@
           <hr class="hr">
           <div class="text-right d-flex mx-6 justify-space-between mb-4">
             <div class="text-black text-left">รวม
-              <div class="h5 text-info"> 700.00 THB</div>
+              <div class="h5 text-info"> {{getBaggagesPrice | price}} THB</div>
             </div>
             <div @click="next" class="btn btn-danger btn-lg pt-3">{{menu == 1?'เที่ยวบินถัดไป':'เสร็จสิ้น'}} <v-icon color="white">mdi-chevron-right</v-icon></div>
           </div>
@@ -40,7 +40,8 @@
 
 <script>
 import BaggageCard from './BaggegeCard'
-import {mapState} from 'vuex'
+import {mapState,mapGetters} from 'vuex'
+var numeral = require("numeral");
 
 export default {
   components:{
@@ -58,7 +59,17 @@ export default {
     ...mapState({
       airportDepart: state => state.BookFlight.data.airportDepart,
       airportArrive: state => state.BookFlight.data.airportArrive
+    }),
+    ...mapGetters({
+      getBaggagesPrice: 'BookFlight/getBaggagesPrice'
     })
+  },
+  filters:{
+    price(price){
+      // add this on top
+      // var numeral = require("numeral");
+      return numeral(price).format("0,0.00");
+    }
   },
   methods:{
     next(){
