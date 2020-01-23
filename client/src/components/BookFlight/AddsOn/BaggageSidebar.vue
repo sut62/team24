@@ -62,8 +62,11 @@ export default {
   },
   methods:{
     next(){
+      if(this.menu == 2){
+        this.closeSidebar()
+      }
       if(this.menu == 1) {
-        this.menu ++;
+        this.menu = 2 ;
       }
     }
   }
