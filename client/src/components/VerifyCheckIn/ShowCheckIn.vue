@@ -81,7 +81,7 @@ export default {
         .get("/checkin")
         .then(response => {
           this.checkIn = response.data;
-          console.log(response.data);
+          //console.log(response.data);
           this.$nextTick();
         })
         .catch(e => {
