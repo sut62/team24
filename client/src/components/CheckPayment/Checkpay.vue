@@ -1,26 +1,87 @@
 <template>
 <div>
-<div class="container">
-  <div class="row">
-    <div class="col">
-        <p class="pl-3 pt-3" style="color:black">ยังไม่ชำระเงิน</p>
-     <div v-for="(flightBookings,index) in flightBookings" :key="index">
-                  <v-card>
-                    <div class="my-img2 justify-content-between p-3 mb-2">
-                      <div>
-                        <div>{{flightBookings.user.firstName}}  {{flightBookings.user.lastName}}</div>
-                        <div></div>
-                      </div>
-                      <div></div>
-                    </div>
-                  </v-card>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p class="pl-3 pt-3" style="color:black">ยังไม่ชำระเงิน</p>
+
+                <div v-for="(flightBookings,index) in flightBookings" :key="index">
+                    <v-card>
+                        <div class="my-img2 justify-content-between p-3 mb-2">
+                            <div>
+                                <v-list-item two-line>
+                                    <v-list-item-action>
+                                        <img src="../../assets/iconfinder_profle_1055000.png" alt="profilePicture" width="" height="100" />
+                                        <v-list-item>{{flightBookings.user.firstName}} <br> {{flightBookings.user.lastName}}</v-list-item>
+                                        <v-list-item>{{flightBookings.bookId}}</v-list-item>
+
+                                    </v-list-item-action>
+                                    <v-list-item-content>
+                                        <div class="text-card">
+                                            <v-col>
+                                                <v-icon color="teal darken-2">mdi-calendar-range </v-icon>{{flightBookings.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}<br>
+                                                <v-icon color="blue darken-2">mdi-airplane-takeoff</v-icon>{{flightBookings.flightBookingLinks[0].flight.flightAirports[0].airport.name}}
+                                                <v-icon color="error">mdi-arrow-right</v-icon>
+                                                {{flightBookings.flightBookingLinks[0].flight.flightAirports[1].airport.name}}
+                                            </v-col>
+                                            <v-col>
+                                                <v-icon color="teal darken-2">mdi-calendar-range </v-icon>{{flightBookings.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}<br>
+                                                <v-icon color="green darken-2" class="flip">mdi-airplane-takeoff</v-icon>{{flightBookings.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
+                                                <v-icon color="error">mdi-arrow-right</v-icon>
+                                                {{flightBookings.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
+                                            </v-col>
+                                        </div>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <div></div>
+                            </div>
+
+                            <div></div>
+                        </div>
+                    </v-card>
                 </div>
+            </div>
+            <div class="col">
+                <p class="pl-3 pt-3" style="color:black">ชำระเงินแล้ว</p>
+                <div v-for="(payment,index) in payment" :key="index">
+                    <v-card>
+                        <div class="my-img3 justify-content-between p-3 mb-2">
+                            <div>
+                                <v-list-item two-line>
+                                    <v-list-item-action>
+                                        <img src="../../assets/iconfinder_profle_1055000.png" alt="profilePicture" width="" height="100" />
+                                        <v-list-item>{{payment.flightBooking.user.firstName}} <br> {{payment.flightBooking.user.lastName}}</v-list-item>
+                                        <v-list-item>{{payment.flightBooking.bookId}}</v-list-item>
+
+                                    </v-list-item-action>
+                                    <v-list-item-content>
+                                        <div class="text-card">
+                                            <v-col>
+                                                <v-icon color="teal darken-2">mdi-calendar-range </v-icon>{{payment.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}<br>
+                                                <v-icon color="blue darken-2">mdi-airplane-takeoff</v-icon>{{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.name}}
+                                                <v-icon color="error">mdi-arrow-right</v-icon>
+                                                {{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.name}}
+                                            </v-col>
+                                            <v-col>
+                                                <v-icon color="teal darken-2">mdi-calendar-range </v-icon>{{payment.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}<br>
+                                                <v-icon color="green darken-2" class="flip">mdi-airplane-takeoff</v-icon>{{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
+                                                <v-icon color="error">mdi-arrow-right</v-icon>
+                                                {{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
+                                            </v-col>
+                                        </div>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <div></div>
+                            </div>
+
+                            <div></div>
+                        </div>
+                    </v-card>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col">
-      <p class="pl-3 pt-3" style="color:black">ชำระเงินแล้ว</p>
-    </div>
-  </div>
-</div>
 
 </div>
 </template>
@@ -86,12 +147,12 @@ export default {
     },
     computed: {
         totalPrice() {
-      let sum =
-        this.payment.flightBooking.flightBookingLinks[0].flight.price +
-        this.payment.flightBooking.flightBookingLinks[1].flight.price;
-        console.log(sum);
-      return numeral(sum).format("0,0.00");
-    }
+            let sum =
+                this.payment.flightBooking.flightBookingLinks[0].flight.price +
+                this.payment.flightBooking.flightBookingLinks[1].flight.price;
+            console.log(sum);
+            return numeral(sum).format("0,0.00");
+        }
     }
 
 };
@@ -108,7 +169,7 @@ export default {
 
 .my-img2 {
     border-style: solid;
-    border-color: red;
+    border-color: rgb(236, 60, 16);
     padding: 10px;
     width: 100%;
 
