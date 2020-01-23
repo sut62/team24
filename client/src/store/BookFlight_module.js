@@ -4,11 +4,11 @@ import { BookFlightService } from '../api'
 const bookFlight = {
   namespaced: true,
   state: {
-    showSearchBar: false,//true,
+    showSearchBar: true,//true,
     bookLoading: false,
     flightDepartLoading: false,
     flightReturnLoading: false,
-    pageLocation: 4, // 1 for Search, 2 for SelectFlight, 3 for guestDetail, 4 adds on , 5 redirect to payment
+    pageLocation: 1, // 1 for Search, 2 for SelectFlight, 3 for guestDetail, 4 adds on , 5 redirect to payment
     result:{ //for response
       bookResult: null,
       airport: null,
@@ -124,7 +124,8 @@ const bookFlight = {
     // next Page
     async nextPage({state,commit,dispatch}){
       //use last page number
-      if(state.pageLocation >= 4){ 
+      // 1 for Search, 2 for SelectFlight, 3 for guestDetail, 4 adds on , 5 redirect to payment
+      if(state.pageLocation+1 >= 5){ 
         await dispatch('bookFlight');
         // await alert("จองสำเสร็จ BookingId ของท่านคือ " + state.result.bookResult.bookId)
       }else{

@@ -1,6 +1,6 @@
 <template>
   <div class="mx-10 mt-10 mb-12" id="adds-on">
-    <Baggage v-if="showBaggage" :closeSidebar="()=> showBaggage = false"/>
+    <BaggageMain v-if="showBaggage" :closeSidebar="()=> showBaggage = false"/>
     <h3>บริการเสริมพิเศษ</h3>
     <div class="card btn" @click="showBaggage = true">
       <div class="d-flex p-4 justify-center">
@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import Baggage from './Baggage'
+import BaggageMain from './BaggageMain'
 export default {
   data: ()=>({
-    showBaggage: true
+    showBaggage: false
   }),
   components:{
-    Baggage
+    BaggageMain
   }
 }
 </script>
