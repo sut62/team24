@@ -17,6 +17,9 @@ class BookFlightProvider extends HttpRequest {
   getAirport(){
     return this.fetch('/airport')
   }
+  getAddsOnByAirport(airport_id){
+    return this.fetch('/adds-on/airport/'+airport_id)
+  }
 }
 
 export default BookFlightProvider

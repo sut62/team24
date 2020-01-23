@@ -7,11 +7,11 @@
         <div class="d-flex justify-space-between">
           <div @click="menu = 1" :class="{'w-50 text-center p-4 btn btn-dark':true,'btn-selected':menu==1}" style="border-radius:0px">
             <v-icon large color="white">mdi-airplane-takeoff</v-icon>
-            <div>สนามบินสุวรรภูมิ - กรุงเทพ</div>
+            <div>{{this.airportDepart.name}} - {{this.airportDepart.city.name}}</div>
           </div>
           <div @click="menu = 2" :class="{'w-50 text-center p-4 btn btn-dark':true,'btn-selected':menu==2}" style="border-radius:0px">
             <v-icon large color="white">mdi-airplane-landing</v-icon>
-            <div>สนามบินเชียงใหม่ - เชียงใหม่</div>
+            <div>{{this.airportArrive.name}} - {{this.airportArrive.city.name}}</div>
           </div>
         </div>
         <!-- This is content -->
@@ -40,6 +40,7 @@
 
 <script>
 import BaggageCard from './BaggegeCard'
+import {mapState} from 'vuex'
 
 export default {
   components:{
@@ -52,6 +53,12 @@ export default {
     closeSidebar:{
       type: Function
     }
+  },
+  computed:{
+    ...mapState({
+      airportDepart: state => state.BookFlight.data.airportDepart,
+      airportArrive: state => state.BookFlight.data.airportArrive
+    })
   },
   methods:{
     next(){
