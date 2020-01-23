@@ -29,16 +29,12 @@
     },
     data() {
       return {
-        openDialog:false,
-        modal: false,
         
       }
     },
 
     methods: {
-        closeDialog(){
-            this.openDialog = false
-        }
+      
         
     
   },
