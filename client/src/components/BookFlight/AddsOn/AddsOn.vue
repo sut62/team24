@@ -1,6 +1,6 @@
 <template>
   <div class="mx-10 mt-10 mb-12" id="adds-on">
-    <BaggageMain v-if="showBaggage" :closeSidebar="()=> showBaggage = false"/>
+    <BaggageSidebar v-if="showBaggage" :closeSidebar="()=> showBaggage = false"/>
     <h3>บริการเสริมพิเศษ</h3>
     <div class="card btn" @click="showBaggage = true">
       <div class="d-flex p-4 justify-center">
@@ -12,7 +12,7 @@
               <span class="alert alert-secondary"><v-icon>mdi-alert-circle-outline</v-icon> สัมภาระพกพา 7 กก. รวมอยู่ในค่าโดยสารแล้ว</span>
             </div>
             <div>
-              <div class="text-success h4">ค่าใช้จ่าย 770.00 บาท <v-icon>mdi-chevron-right</v-icon></div> 
+              <div class="text-success h4">ค่าใช้จ่าย {{getBaggagesPrice | price }} บาท <v-icon>mdi-chevron-right</v-icon></div> 
             </div>
           </div>
         </div>
@@ -22,14 +22,29 @@
 </template>
 
 <script>
-import BaggageMain from './BaggageMain'
+import BaggageSidebar from './BaggageSidebar'
+import {mapGetters} from 'vuex'
+var numeral = require("numeral");
+
 export default {
   data: ()=>({
     showBaggage: false
   }),
   components:{
-    BaggageMain
-  }
+    BaggageSidebar
+  },
+  computed:{
+    ...mapGetters({
+      getBaggagesPrice: 'BookFlight/getBaggagesPrice'
+    })
+  },
+  filters:{
+    price(price){
+      // add this on top
+      // var numeral = require("numeral");
+      return numeral(price).format("0,0.00");
+    }
+  },
 }
 </script>
 

@@ -16,6 +16,8 @@ const bookFlight = {
       flightReturn: null
     },
     data:{ //for request
+      baggageDepart: null,
+      baggageReturn: null,
       departDate: '',
       returnDate: '',
       flightDepart: null,
@@ -59,6 +61,12 @@ const bookFlight = {
       state.result.airport = airport;
     },
     // Selection method
+    SELECT_BAGGAGE_DEPART(state,baggage){
+      state.data.baggageDepart = baggage
+    },
+    SELECT_BAGGAGE_RETURN(state,baggage){
+      state.data.baggageReturn = baggage
+    },
     goToMainPage(state){
       state.pageLocation = 1
     },
@@ -153,7 +161,23 @@ const bookFlight = {
       if(state.data.flightReturn != null){
         sum += state.data.flightReturn.price;
       }
+      if(state.data.baggageDepart != null){
+        sum += state.data.baggageDepart.price;
+      }
+      if(state.data.baggageReturn != null){
+        sum += state.data.baggageReturn.price;
+      }
       return sum;
+    },
+    getBaggagesPrice: state => {
+      let sum = 0;
+      if(state.data.baggageDepart != null){
+        sum += state.data.baggageDepart.price;
+      }
+      if(state.data.baggageReturn != null){
+        sum += state.data.baggageReturn.price;
+      }
+      return sum
     }
   }
 }

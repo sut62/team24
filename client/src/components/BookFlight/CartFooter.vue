@@ -8,7 +8,7 @@
       <v-row>
         <v-col cols="6">
           <div class="mt-3 float-right">
-            <i class="fas fa-shopping-cart fa-2x" ></i> <span class="h4 ml-3">ราคารวม </span><span class="h1"> {{getTotalPrice}} THB</span>
+            <i class="fas fa-shopping-cart fa-2x" ></i> <span class="h4 ml-3">ราคารวม </span><span class="h1"> {{getTotalPrice | price}} THB</span>
           </div>
         </v-col>
         <v-col cols="6">
@@ -27,6 +27,8 @@
 import {mapGetters, mapActions,mapState} from 'vuex'
 import MyAlert from '../Alert'
 import router from '../../router'
+var numeral = require("numeral");
+
 export default {
   name: "cartFooter",
   components: {
@@ -48,6 +50,13 @@ export default {
       getTotalPrice: 'BookFlight/getTotalPrice',
       getIsNextBtnAllow: 'BookFlight/getIsNextBtnAllow'
     }),
+  },
+  filters:{
+    price(price){
+      // add this on top
+      // var numeral = require("numeral");
+      return numeral(price).format("0,0.00");
+    }
   },
   methods: {
     ...mapActions({
