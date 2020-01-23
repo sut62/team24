@@ -123,7 +123,8 @@ export default {
                 .then(res => {
                     this.flightBookings = res.data;
                 })
-                .catch(e => console.log(e));
+                .catch(e => console.log(e)); 
+                
         },
         getPay() {
             http
