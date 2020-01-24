@@ -66,6 +66,11 @@ public class PaymentController{
         Double total = (double) 0;
         for(FlightBookingLink fbl : flightBooking.getFlightBookingLinks()){
             total += fbl.getFlight().getPrice();
+            for(FlightBookingLink flightBookingLink: flightBooking.getFlightBookingLinks()){
+                if(flightBookingLink.getBaggageAddon() != null){
+                    total += flightBookingLink.getBaggageAddon().getPrice();
+                }
+            }
         }
         total -= (double) promotionCode.getDiscount()/100.0 * total;
         payment.setAmount(total);
@@ -95,6 +100,11 @@ public class PaymentController{
         Double total = (double) 0;
         for(FlightBookingLink fbl : flightBooking.getFlightBookingLinks()){
             total += fbl.getFlight().getPrice();
+            for(FlightBookingLink flightBookingLink: flightBooking.getFlightBookingLinks()){
+                if(flightBookingLink.getBaggageAddon() != null){
+                    total += flightBookingLink.getBaggageAddon().getPrice();
+                }
+            }
         }
         payment.setAmount(total);
         return paymentRepository.save(payment);
