@@ -108,7 +108,32 @@ public class FlightBookingController {
     @GetMapping("/{book_id}")
     public FlightBooking FlightBookings(@PathVariable String book_id) {
         return flightBookingRepository.findByBookId(book_id).orElse(null);
-    }   
+    }
+
+    // @GetMapping("/checkin/check")
+    // public Collection<FlightBooking> getBookingStatusCheckIn() {
+    //     Collection<FlightBooking> flightBookings = flightBookingRepository.findAll();//flightBookingRepository.findAllByBookingStatus(bookingStatusRepository.findByName(EBookingStatus.SUBMIT));
+    //     Collection<FlightBooking> result = new ArrayList<FlightBooking>();
+
+    //     for(FlightBooking flightBooking : flightBookings){
+    //         if(flightBooking.getCheckIn() != null){
+    //             result.add(flightBooking);
+    //         }
+    //     }
+    //     return  result;
+    // }
+    // @GetMapping("/checkin/uncheck")
+    // public Collection<FlightBooking> getBookingStatusUnCheckIn() {
+    //     Collection<FlightBooking> flightBookings = flightBookingRepository.findAll();//flightBookingRepository.findAllByBookingStatus(bookingStatusRepository.findByName(EBookingStatus.SUBMIT));
+    //     Collection<FlightBooking> result = new ArrayList<FlightBooking>();
+
+    //     for(FlightBooking flightBooking : flightBookings){
+    //         if(flightBooking.getCheckIn() == null){
+    //             result.add(flightBooking);
+    //         }
+    //     }
+    //     return result;
+    // }
 
     @GetMapping("/checkin/{lastname}/{depart_airport_id}/{arrive_airport_id}")
     public FlightBooking Users(@PathVariable final String lastname,@PathVariable final Long depart_airport_id,@PathVariable final Long arrive_airport_id) {
