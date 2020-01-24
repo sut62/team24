@@ -1,12 +1,11 @@
 package com.cpe.team24.entity;
 
 import lombok.*;
+
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -14,14 +13,10 @@ import javax.validation.constraints.Size;
 
 import java.util.Date;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-
 
 @Data
 @Entity
@@ -47,13 +42,11 @@ public class CheckIn {
     @Column(unique = true)
     private String boardingPass;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = CheckInStatus.class)
-    @JoinColumn(name = "CHECKINSTATUS_ID", insertable = true)
+    @ManyToOne
     @NotNull
     private CheckInStatus checkInStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = CheckInType.class)
-    @JoinColumn(name = "CHECKINTYPE_ID", insertable = true)
+    @ManyToOne
     @NotNull
     private CheckInType checkInType;
 

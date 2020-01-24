@@ -1,11 +1,7 @@
 package com.cpe.team24.controller;
 
-import com.cpe.team24.entity.User;
 import com.cpe.team24.model.BodyCheckIn;
 import com.cpe.team24.entity.CheckIn;
-import com.cpe.team24.entity.CheckInStatus;
-import com.cpe.team24.entity.CheckInType;
-import com.cpe.team24.entity.FlightBooking;
 import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

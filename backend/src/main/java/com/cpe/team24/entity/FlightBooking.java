@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import net.bytebuddy.utility.RandomString;
 
 @Entity
@@ -53,9 +52,6 @@ public class FlightBooking {
     @OneToOne
     private Payment payment;
 
-    @OneToOne
-    private CheckIn checkIn;
-    
     //Methods
     public void book(Integer departSeatId,Integer returnSeatId){
         this.departSeatId = departSeatId;
