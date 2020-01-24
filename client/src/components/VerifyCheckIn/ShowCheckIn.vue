@@ -67,11 +67,6 @@ export default {
   name: "showCheckIn",
   data: () => ({
     checkIn:[],
-    items: [
-      { title: "BoradingPass: dsadas", icon: "mdi-barcode" },
-      { title: "Email : dsadas@sddsa.com", icon: "mdi-at" },
-      { title: "Phone: 0897417464", icon: "mdi-phone" },
-    ]
   }),
   components: {},
 

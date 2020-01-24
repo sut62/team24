@@ -1,6 +1,11 @@
 <template>
   <div>
-    <Alert :open="saveSuccess" topic="แจ้งเตือน" desc="บันทึกสำเร็จ" :callback="goToFlight" />
+    <Alert 
+      :open="saveSuccess" 
+      topic="แจ้งเตือน" 
+      desc="บันทึกสำเร็จ" 
+      :callback="closeSaveAlert"
+    />
     <Alert
       :open="dataFail"
       topic="แจ้งเตือน"
@@ -13,7 +18,7 @@
       desc="Code ไม่ถูกต้อง"
       :callback="()=>this.codeNotFound = false"
     />
-    <div class="payment" v-if="checkToLoad()">
+    <div class="payment" v-if="checkToLoad() && paymentPage == true">
       <div class="header-bg"></div>
       <div class="content">
         <UserNavbar />
@@ -65,6 +70,34 @@
                       {{data.flightBooking.flightBookingLinks[1].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[1].flight.arrive | moment("HH:mm")}}
                       | {{getDuration(data.flightBooking.flightBookingLinks[1].flight.arrive,data.flightBooking.flightBookingLinks[1].flight.depart)}}
                     </p>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </div>
+            <!-- +++++++++++++++++++++++++++++++++++++++ -->
+
+            <div v-if="data.flightBooking.flightBookingLinks[0].baggageAddon != null || data.flightBooking.flightBookingLinks[1].baggageAddon != null">
+              <v-card class="text-center mt-4">
+                <v-toolbar flat color="primary" dark>
+                  <v-toolbar-title>Baggage Addon details ( สัมภาระพกพา 7 kg รวมอยู่ในค่าโดยสารแล้ว )</v-toolbar-title>
+                </v-toolbar>
+                <v-row class="text-left pl-7">
+                  <v-col v-if="data.flightBooking.flightBookingLinks[0].baggageAddon != null" cols="6">
+                    <v-row>
+                      <v-icon slot="icon" size="36">mdi-bag-checked</v-icon>
+                      <p class="pl-3 pt-3" style="color:grey">Depart Date</p>
+                    </v-row>
+                    <p>สัมภาระเช็คอิน : {{data.flightBooking.flightBookingLinks[0].baggageAddon.maxWeight}} kg</p>
+                    <p>ราคา : {{data.flightBooking.flightBookingLinks[0].baggageAddon.price}} THB</p>
+                  </v-col>
+                  <v-col v-if="data.flightBooking.flightBookingLinks[1].baggageAddon != null">
+                    <v-row>
+                      <i class="airasia-icon icon-return-flight"></i>
+                      <v-icon slot="icon" size="36">mdi-bag-checked</v-icon>
+                      <p class="pl-3 pt-3" style="color:grey">Return Date</p>
+                    </v-row>
+                    <p>สัมภาระเช็คอิน : {{data.flightBooking.flightBookingLinks[1].baggageAddon.maxWeight}} kg</p>
+                    <p>ราคา : {{data.flightBooking.flightBookingLinks[1].baggageAddon.price}} THB</p>
                   </v-col>
                 </v-row>
               </v-card>
@@ -158,13 +191,16 @@
                         <div class="mr-auto p-2" style="color:grey">Subtotal</div>
                         <div class="p-2">{{totalPrice}}</div>
                       </div>
-                      <div class="d-flex pt-2" v-if="this.discountPer > 0">
+                      <div
+                        class="d-flex pt-2" 
+                        v-if="data.flightBooking.flightBookingLinks[0].baggageAddon != null 
+                        || data.flightBooking.flightBookingLinks[1].baggageAddon != null">
+                        <div class="mr-auto p-2" style="color:grey">Baggage Addon</div>
+                        <div class="p-2">{{addonPrice}}</div>
+                      </div>
+                      <div class="d-flex pt-2" v-if="this.discountPer">
                         <div class="mr-auto p-2" style="color:grey">Discount</div>
                         <div class="p-2">{{getDiscount}}</div>
-                      </div>
-                      <div class="d-flex pt-2" v-if="this.discountPer > 0">
-                        <div class="mr-auto p-2" style="color:grey">Total</div>
-                        <div class="p-2">{{getDiff}}</div>
                       </div>
                       <hr />
 
@@ -215,6 +251,132 @@
         <UserFooter />
       </div>
     </div>
+
+
+    <!-- BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL BILL -->
+  <div v-if="billPage == true">
+
+    <div class="header-bg"></div>
+        <div class="content">
+        <UserNavbar />
+        <div class="container" style="margin-top:100px;">
+          <div class="mx-auto">
+            <div>
+              <div class="text-white">
+                <div>
+                  <h1 class="mt-5">Your Payment Bill</h1>
+                </div>
+              </div>
+            </div>
+
+            <div >
+              <v-card class="card text-center pageA4">
+                <br />
+                <v-avatar class="logo mr-4" size="100">
+                  <img src="../assets/logo.png" alt="John" />
+                  <br />
+                </v-avatar>
+                <h3>Booking ID : {{this.bookId}} </h3>
+                <!-- ------------------------------ -->
+                <div class="myborder">
+                  <v-row class="text-left pl-7">
+                  <v-col cols="6">
+                    <v-row>
+                      <v-icon slot="icon" size="36">mdi-airplane-takeoff</v-icon>
+                      <p class="pl-3 pt-3" style="color:grey">Depart Date</p>
+                    </v-row>
+                    <p>{{data.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}</p>
+                    <p>
+                      {{data.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.city.name}}
+                      <v-icon color="error">mdi-arrow-right</v-icon>
+                      {{data.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.city.name}}
+                    </p>
+                    <p>
+                      {{data.flightBooking.flightBookingLinks[0].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[0].flight.arrive | moment("HH:mm")}}
+                      | {{getDuration(data.flightBooking.flightBookingLinks[0].flight.arrive,data.flightBooking.flightBookingLinks[0].flight.depart)}}
+                    </p>
+                  </v-col>
+                  <v-col>
+                    <v-row>
+                      <i class="airasia-icon icon-return-flight"></i>
+                      <v-icon slot="icon" size="36" class="flip">mdi-airplane-takeoff</v-icon>
+                      <p class="pl-3 pt-3" style="color:grey">Return Date</p>
+                    </v-row>
+                    <p>{{data.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}</p>
+                    <p>
+                      {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.city.name}}
+                      <v-icon color="error">mdi-arrow-right</v-icon>
+                      {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.city.name}}
+                    </p>
+                    <p>
+                      {{data.flightBooking.flightBookingLinks[1].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[1].flight.arrive | moment("HH:mm")}}
+                      | {{getDuration(data.flightBooking.flightBookingLinks[1].flight.arrive,data.flightBooking.flightBookingLinks[1].flight.depart)}}
+                    </p>
+                  </v-col>
+                </v-row>
+                </div>
+                <!-- ------------------------------ -->
+                <br>
+                <div class="myborder" v-if="data.flightBooking.flightBookingLinks[0].baggageAddon != null 
+                || data.flightBooking.flightBookingLinks[1].baggageAddon != null">
+
+                  <v-row class="text-left pl-7">
+                  <v-col v-if="data.flightBooking.flightBookingLinks[0].baggageAddon != null" cols="6">
+                    <v-row>
+                      <v-icon slot="icon" size="36">mdi-bag-checked</v-icon>
+                      <p class="pl-3 pt-3" style="color:grey">Depart Date</p>
+                    </v-row>
+                    <p>สัมภาระเช็คอิน : {{data.flightBooking.flightBookingLinks[0].baggageAddon.maxWeight}} kg</p>
+                    <p>ราคา : {{data.flightBooking.flightBookingLinks[0].baggageAddon.price}} THB</p>
+                  </v-col>
+                  <v-col v-if="data.flightBooking.flightBookingLinks[1].baggageAddon != null">
+                    <v-row>
+                      <i class="airasia-icon icon-return-flight"></i>
+                      <v-icon slot="icon" size="36">mdi-bag-checked</v-icon>
+                      <p class="pl-3 pt-3" style="color:grey">Return Date</p>
+                    </v-row>
+                    <p>สัมภาระเช็คอิน : {{data.flightBooking.flightBookingLinks[1].baggageAddon.maxWeight}} kg</p>
+                    <p>ราคา : {{data.flightBooking.flightBookingLinks[1].baggageAddon.price}} THB</p>
+                  </v-col>
+                </v-row>
+
+                </div>
+                <!-- ---------------------- -->
+                <br />
+                <div class="myborder">
+                  <v-row>
+                    <i class="airasia-icon icon-return-flight"></i>
+                    <v-icon slot="icon" size="36" class="flip">mdi-cash-multiple</v-icon>
+                    <p class="pl-3 pt-3" style="color:grey">Total Price</p>
+                  </v-row>
+                  <div>Subtotal : {{totalPrice}} THB</div>
+                  <div v-if="data.flightBooking.flightBookingLinks[0].baggageAddon != null 
+                  && data.flightBooking.flightBookingLinks[1].baggageAddon != null">
+                    Add ons : {{addonPrice}} THB
+                  </div>
+                  <div v-if="this.discountPer > 0">
+                    <p>Discount [ {{discountPer}} % ] : {{getDiscount}}</p>
+                  </div>
+                  <hr />
+                  <p>Total : {{getDiff}} THB</p>
+                  <p>Payment Way : {{this.paymentSaved.paymentWay.name}}</p>
+                </div>
+                <!-- ---------------------- -->
+                <br>
+                <div>
+                  <img class="barcode" src="../assets/barcode2D.png" />
+                </div>
+              </v-card>
+
+              <!-- +++++++++++++++++++++++++++++++++++++++++++ -->
+            </div>
+          </div>
+          <br />
+        </div>
+        <UserFooter />
+      </div>
+    
+  </div>
   </div>
 </template>
 
@@ -244,6 +406,9 @@ export default {
     }
   },
   data: () => ({
+    paymentPage : true ,
+    billPage : false,
+    paymentSaved : null,
     saveSuccess: false,
     dataFail: false,
     codeNotFound: false,
@@ -285,22 +450,30 @@ export default {
     }),
 
     getDiscount() {
-      let discount =
-        ((this.data.flightBooking.flightBookingLinks[0].flight.price +
-          this.data.flightBooking.flightBookingLinks[1].flight.price) *
-          this.discountPer) /
-        100;
+      let sum =
+        this.data.flightBooking.flightBookingLinks[0].flight.price +
+        this.data.flightBooking.flightBookingLinks[1].flight.price ;
+      if(this.data.flightBooking.flightBookingLinks[0].baggageAddon != null){
+        sum += this.data.flightBooking.flightBookingLinks[0].baggageAddon.price;
+      }
+      if(this.data.flightBooking.flightBookingLinks[1].baggageAddon != null){
+        sum += this.data.flightBooking.flightBookingLinks[1].baggageAddon.price;
+      }
+      let discount =(sum * this.discountPer) / 100;
       return numeral(discount).format("0,0.00");
     },
     getDiff() {
       let sum =
         this.data.flightBooking.flightBookingLinks[0].flight.price +
-        this.data.flightBooking.flightBookingLinks[1].flight.price;
+        this.data.flightBooking.flightBookingLinks[1].flight.price ;
+      if(this.data.flightBooking.flightBookingLinks[0].baggageAddon != null){
+        sum += this.data.flightBooking.flightBookingLinks[0].baggageAddon.price;
+      }
+      if(this.data.flightBooking.flightBookingLinks[1].baggageAddon != null){
+        sum += this.data.flightBooking.flightBookingLinks[1].baggageAddon.price;
+      }
       let discount =
-        ((this.data.flightBooking.flightBookingLinks[0].flight.price +
-          this.data.flightBooking.flightBookingLinks[1].flight.price) *
-          this.discountPer) /
-        100;
+        (sum*this.discountPer) / 100;
       let diff = sum - discount;
       return numeral(diff).format("0,0.00");
     },
@@ -309,15 +482,35 @@ export default {
         this.data.flightBooking.flightBookingLinks[0].flight.price +
         this.data.flightBooking.flightBookingLinks[1].flight.price;
       return numeral(sum).format("0,0.00");
+    },
+    addonPrice() {
+      let sum = 0;
+      if(this.data.flightBooking.flightBookingLinks[0].baggageAddon != null){
+        sum += this.data.flightBooking.flightBookingLinks[0].baggageAddon.price;
+      }
+      if(this.data.flightBooking.flightBookingLinks[1].baggageAddon != null){
+        sum += this.data.flightBooking.flightBookingLinks[1].baggageAddon.price;
+      }
+      return numeral(sum).format("0,0.00");
     }
   },
   methods: {
+    closeSaveAlert(){
+      this.saveSuccess = false;
+      this.onShowBill()
+    },
+    onShowBill() {
+      console.log("asdsadasdsa")
+      this.paymentPage = false;
+      this.billPage = true;
+    },
+
     save() {
       if (this.getDiscount > 0) this.savePaymentWithPromotionCode();
       else this.savePayment();
     },
-    goToFlight() {
-      router.push({ name: "bookFlight" });
+    goToPaymentBill() {
+      router.push({ name: "paymentBill" });
     },
     checkPromotion() {
       this.data.promotionCode;
@@ -361,10 +554,12 @@ export default {
               "/" +
               this.email
           )
-          .then(res => {11
+          .then(res => {
+            11;
             console.log("Success");
             console.log(res.data);
             this.saveSuccess = true;
+            this.paymentSaved = res.data;
             //alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
           })
           .catch(e => {
@@ -395,6 +590,7 @@ export default {
             console.log(res.data);
             //alert("บันทึกสำเร็จ ขอบคุณครับ/ค่ะ");
             this.saveSuccess = true;
+            this.paymentSaved = res.data;
           })
           .catch(e => {
             console.log(e);
@@ -479,5 +675,30 @@ export default {
   position: absolute;
   top: 150px;
   width: 70%;
+}
+.pageA4 {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 10mm;
+  margin: 10mm auto;
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.barcode {
+  margin-top: 10px;
+  width: 70%;
+  height: 50px;
+}
+.logo {
+  position: unset;
+  top: 30px;
+  left: 10%;
+}
+.myborder {
+  border-style: solid;
+  border-width: 3px;
+  padding: 20px;
 }
 </style>
