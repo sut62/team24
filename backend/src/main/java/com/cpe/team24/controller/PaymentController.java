@@ -45,6 +45,7 @@ public class PaymentController{
     public Collection<Payment> getAllPayment(){
         return paymentRepository.findAll();
     }
+    
     @PostMapping("/{flight_booking_id}/{payment_way_id}/{promotion_code}/{phone}/{email}")
     public Payment createPayment(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String promotion_code,@PathVariable String phone,@PathVariable String email ){
         Payment payment = new Payment();

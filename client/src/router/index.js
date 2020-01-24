@@ -8,6 +8,7 @@ import Payment from '../views/Payment.vue'
 import Promotion from '../views/Promotion.vue'
 import VeriflyCheckIn from '../views/VerifyCheckIn.vue'
 import CheckPayment from '../views/CheckPayment.vue'
+import CheckTicket from '../views/CheckTicket.vue'
 
 Vue.use(VueRouter)
 
@@ -70,6 +71,11 @@ const routes = [
     path: '/verify-checkIn',
     name: 'VerifyCheckIn',
     component: VeriflyCheckIn
+  },
+  {
+    path: '/check-ticket',
+    name: 'CheckTicket',
+    component: CheckTicket
   },
 ]
 
