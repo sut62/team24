@@ -14,27 +14,25 @@
                                     <v-list-item-action>
                                         <v-list-item-title><b>{{flightBookings.user.firstName}} {{flightBookings.user.lastName}}</b></v-list-item-title>
                                         <v-list-item-subtitle><b>Booking NO. </b>{{flightBookings.bookId}}</v-list-item-subtitle>
-                                        <v-list-item-subtitle><b>สถานะการชำระเงิน: </b> ยังไม่ชำระ </v-list-item-subtitle>
+                                        <v-list-item-subtitle><b>สถานะการชำระเงิน: </b> <font style="color:red">ยังไม่ชำระ</font>  </v-list-item-subtitle>
                                     </v-list-item-action>
                                     <v-list-item-content>
                                             <v-col>
-                                                <v-icon color="blue darken-2">mdi-calendar-range </v-icon>{{flightBookings.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY | เครื่องออกเวลา HH:mm น.")}}<br>
+                                                <v-icon color="blue darken-2">mdi-calendar-range </v-icon>{{flightBookings.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY | เครื่องออกเวลา HH:mm น.")}}<br><br>
                                                 <v-icon color="orange draken-2">mdi-airplane-takeoff</v-icon>{{flightBookings.flightBookingLinks[0].flight.flightAirports[0].airport.name}}
                                                 <v-icon color="error">mdi-arrow-right</v-icon>
                                                 {{flightBookings.flightBookingLinks[0].flight.flightAirports[1].airport.name}}
                                             </v-col>
                                             <v-col>
-                                                <v-icon color="green darken-2">mdi-calendar-range </v-icon>{{flightBookings.flightBookingLinks[1].flight.arrive | moment("DD MMM YYYY | เครื่องถึงเวลา HH:mm น.")}}<br>
+                                                <v-icon color="green darken-2">mdi-calendar-range </v-icon>{{flightBookings.flightBookingLinks[1].flight.arrive | moment("DD MMM YYYY | เครื่องถึงเวลา HH:mm น.")}}<br><br>
                                                 <v-icon color="orange draken-2" class="flip">mdi-airplane-landing</v-icon>{{flightBookings.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
                                                 <v-icon color="error">mdi-arrow-right</v-icon>
                                                 {{flightBookings.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
                                             </v-col>
                                     </v-list-item-content>
                                 </v-list-item>
-                                <div></div>
+                                <p align="center" style="color:red"><b style="color:black">ค้างชำระ</b> <v-icon color="green darken-2">mdi-currency-usd </v-icon>  {{totalPrice(flightBookings)}}</p>
                             </div>
-
-                            <div></div>
                         </div>
                     </v-card>
                 </div>
@@ -53,17 +51,17 @@
                                     <v-list-item-action>
                                         <v-list-item-title> <b>{{payment.flightBooking.user.firstName}} {{payment.flightBooking.user.lastName}}</b></v-list-item-title>
                                         <v-list-item-subtitle> <b>Booking NO. </b>{{payment.flightBooking.bookId}}</v-list-item-subtitle>
-                                        <v-list-item-subtitle><b>สถานะการชำระเงิน: </b> ชำระแล้ว </v-list-item-subtitle>
+                                        <v-list-item-subtitle><b>สถานะการชำระเงิน: </b> <font style="color:green">ชำระแล้ว</font> </v-list-item-subtitle>
                                     </v-list-item-action>
                                     <v-list-item-content>
                                             <v-col>
-                                                <v-icon color="blue darken-2">mdi-calendar-range </v-icon>{{payment.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY | เครื่องออกเวลา HH:mm น.")}}<br>
+                                                <v-icon color="blue darken-2">mdi-calendar-range </v-icon>{{payment.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY | เครื่องออกเวลา HH:mm น.")}}<br><br>
                                                 <v-icon color="orange">mdi-airplane-takeoff</v-icon>{{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.name}}
                                                 <v-icon color="error">mdi-arrow-right</v-icon>
                                                 {{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.name}}
                                             </v-col>
                                             <v-col>
-                                                <v-icon color="green darken-2">mdi-calendar-range </v-icon>{{payment.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY | เครื่องถึงเวลา HH:mm น.")}}<br>
+                                                <v-icon color="green darken-2">mdi-calendar-range </v-icon>{{payment.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY | เครื่องถึงเวลา HH:mm น.")}}<br><br>
                                                 <v-icon color="orange" class="flip">mdi-airplane-takeoff</v-icon>{{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
                                                 <v-icon color="error">mdi-arrow-right</v-icon>
                                                 {{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
@@ -119,6 +117,21 @@ export default {
     },
 
     methods: {
+        totalPrice(flightBooking) {
+            let sum =
+                flightBooking.flightBookingLinks[0].flight.price +
+                flightBooking.flightBookingLinks[1].flight.price;
+            if(flightBooking.flightBookingLinks[0].baggageAddon != null){
+                sum += flightBooking.flightBookingLinks[0].baggageAddon.price;
+
+            }
+            if(flightBooking.flightBookingLinks[1].baggageAddon != null){
+                sum += flightBooking.flightBookingLinks[1].baggageAddon.price;
+
+            }
+            console.log(sum);
+            return numeral(sum).format("0,0");
+        },
         getFlightBooking() {
             http
                 .get(
@@ -151,13 +164,7 @@ export default {
         }
     },
     computed: {
-        totalPrice() {
-            let sum =
-                this.payment.flightBooking.flightBookingLinks[0].flight.price +
-                this.payment.flightBooking.flightBookingLinks[1].flight.price;
-            console.log(sum);
-            return numeral(sum).format("0,0.00");
-        }
+        
     }
 
 };
