@@ -125,8 +125,16 @@ export default {
             let sum =
                 flightBooking.flightBookingLinks[0].flight.price +
                 flightBooking.flightBookingLinks[1].flight.price;
+            if(flightBooking.flightBookingLinks[0].baggageAddon != null){
+                sum += flightBooking.flightBookingLinks[0].baggageAddon.price;
+
+            }
+            if(flightBooking.flightBookingLinks[1].baggageAddon != null){
+                sum += flightBooking.flightBookingLinks[1].baggageAddon.price;
+
+            }
             console.log(sum);
-            return numeral(sum).format("0,0.00");
+            return numeral(sum).format("0,0");
         },
         getFBooking() {
             http
