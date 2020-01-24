@@ -188,7 +188,7 @@ public class FlightTests {
     }
 
     @Test
-    void b6016357_testDepartMustBeEnglishOnly() {
+    void b6016357_testDescriptionMustBeEnglishOnly() {
     Flight flight = new Flight();
     Airplane airplane = airplaneRepository.findById(1L).get();
     Airport airport = airportRepository.findById(1L).get();

@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
@@ -58,6 +59,18 @@ public class FlightBookingController {
     @GetMapping("/pending")
     public Collection<FlightBooking> getBookingPendingOnly() {
         return flightBookingRepository.findAllByBookingStatus(bookingStatusRepository.findByName(EBookingStatus.PENDING));
+    }
+
+    @GetMapping("/pending/user")
+    public Collection<FlightBooking> getBookingPendingOnlyByUser(Authentication authentication) {
+        Collection<FlightBooking> fiBookings = flightBookingRepository.findAllByBookingStatus(bookingStatusRepository.findByName(EBookingStatus.PENDING));
+        Collection<FlightBooking> result = new ArrayList();
+        for(FlightBooking flightBooking : fiBookings){
+            if(flightBooking.getUser() == userRepository.findByUsername(authentication.getName()).get()){
+                result.add(flightBooking);
+            }
+        }
+        return result;
     }
     
     @PostMapping("/book")
