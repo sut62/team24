@@ -310,6 +310,24 @@ public class Team24Application {
 				checkInTypeRepository.save(newCheckInType);
 			}
 
+			Object[][] checkIn = new Object[][] { 
+				{ 4,2,2,"ASDWQE","sdfsf@gmail.com"},
+				{ 2,2,3,"FDSAFQ","sdfsf@gmail.com"},
+			};
+			for (int i = 0; i < checkIn.length; i++) {
+				CheckIn newCheckIn = new CheckIn();
+				FlightBooking fBooking = flightBookingRepository.findById(Long.parseLong(checkIn[i][2].toString())).orElse(null);
+				CheckInStatus checkStatus = checkInStatusRepository.findById(Long.parseLong(checkIn[i][0].toString())).orElse(null);
+				CheckInType checkType = checkInTypeRepository.findById(Long.parseLong(checkIn[i][1].toString())).orElse(null);
+				newCheckIn.setFlightBooking(fBooking);
+				newCheckIn.setCheckInStatus(checkStatus);
+				newCheckIn.setCheckInType(checkType);
+				newCheckIn.setBoardingPass((String) checkIn[i][3]);
+				newCheckIn.setEmail((String) checkIn[i][4]);
+				newCheckIn.setDate(new Date());
+				checkInRepository.save(newCheckIn);
+			}
+
 		};
 	}
 
