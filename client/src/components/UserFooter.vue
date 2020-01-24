@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-footer
-      color="primary lighten-1"
+      color="primary darken-2"
       padless
     >
       <v-row
@@ -20,7 +20,7 @@
           {{ link.name }}
         </v-btn>
         <v-col
-          class="primary lighten-2 py-4 text-center white--text"
+          class="primary darken-4 py-4 text-center white--text"
           cols="12"
         >
           @ {{ new Date().getFullYear() }} — <strong>Airplane</strong>

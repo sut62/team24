@@ -78,22 +78,26 @@ export default {
 
 <style scoped>
   .my-selected{
-    border-color: green;
+    border-color: green!important;
     border-style: solid;
     padding: 10px;
     margin-left: 5px;
+    border-width: 3px;
   }
   .my-img {
+    border-color: rgb(255, 255, 255);
     border-style: solid;
     padding: 10px;
     margin-left: 5px;
     border-radius: 10px;
+    border-width: 3px;
   }
   .my-img:hover {
     border-color: green;
     border-style: solid;
     padding: 10px;
     margin-left: 5px;
+    border-width: 3px;
   }
   .baggageIcon{
     width: 150px;

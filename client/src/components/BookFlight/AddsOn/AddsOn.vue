@@ -2,7 +2,7 @@
   <div class="mx-10 mt-10 mb-12" id="adds-on">
     <BaggageSidebar v-if="showBaggage" :closeSidebar="()=> showBaggage = false"/>
     <h3>บริการเสริมพิเศษ</h3>
-    <div class="card btn" @click="showBaggage = true">
+    <div class="card btn my-menu mt-4" @click="showBaggage = true">
       <div class="d-flex p-4 justify-center">
         <img src="../../../assets/BookFlight-AddsOn/baggage_icon.png" alt="">
         <div class="w-100 mx-10">
@@ -48,6 +48,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .my-menu:hover{
+    box-shadow: 5px 5px 10px rgb(148, 148, 148);
+  }
 </style>

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h3 class="text-white">ค้นหาเที่ยวบิน</h3>
-    <div class="card text-center">
+  <div >
+    <h3 class="text-white ">ค้นหาเที่ยวบิน</h3>
+    <div class="card shadow text-center">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item">
@@ -63,8 +63,6 @@
         </v-form>
       </div>
     </div>
-    <hr/>
-    
   </div>
 </template>
 
@@ -185,6 +183,13 @@ export default {
     border-width: 3px;
     padding:20px;
     border-radius: 20px;
+  }
+  h3 {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+  }
+  .shadow{
+    box-shadow: 5px 5px 15px rgb(0, 0, 0);
   }
   .date-picker{
     position: absolute;

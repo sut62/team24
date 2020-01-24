@@ -1,7 +1,8 @@
 <template>
-  <v-form v-model="valid">
-    <v-card class="pa-10 mt-3">
-      <div class="mb-2" style="color:red"> {{useCurentUserData?'*ใช้ข้อมูลของผู้ใช้งาน ' + this.user.username + ' | ' + this.user.email :''}}</div>
+<div>
+  <div class="mb-2 mt-4 alert alert-primary" style="color:blue"> {{useCurentUserData?'* ใช้ข้อมูลของผู้ใช้งาน Username : ' + this.user.username + ', Email : ' + this.user.email :''}}</div>
+  <v-form v-model="valid" class="mx-auto mt-10" style="width:90%">
+    <v-card class="pa-10 mt-3" >
       <h2>ข้อมูลผู้โดยสาร </h2>
       <v-divider></v-divider>
       <v-row>
@@ -98,6 +99,7 @@
       </v-row>
     </v-card>
   </v-form>
+</div>
 </template>
 
 <script>

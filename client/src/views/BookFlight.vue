@@ -16,19 +16,16 @@
           <BookNav/>
           <!-- หน้าแรก -->
           <div v-if="pageLocation == 1">
-            <v-card class="text-center mt-4 py-12">
-              <p style="color:grey">
+            <v-card class="text-center mt-4 py-12 " style="height:300px">
+              <h2 style="color:lightgrey">
                 กรุณาเลือกวันที่ออกเดินทาง
-              </p>
+              </h2>
             </v-card>
           </div>
           <!-- แสดงรายการบิน -->
           <div v-if="pageLocation == 2">
-            <hr>
             <FlightList :isDepart="true" :selectedFlight="selectedDepartFlight" :selectFlight="selectDepartFlight" :topic="topicDepart" :flights = "flightDepart"/>
-            <hr>
             <FlightList :isDepart="false" :selectedFlight="selectedReturnFlight" :selectFlight="selectReturnFlight" :topic="topicReturn" :flights = "flightReturn"/>
-            <hr>
           </div>
           <!-- ข้อมูลผู้โดยสาร -->
           <div v-if="pageLocation == 3">
@@ -111,7 +108,7 @@ export default {
     background-image: url("../assets/head-bg.jpg");
   }
   .up-100{
-    padding-bottom: 100px;
+    padding-bottom: 80px;
   }
   .content{
     z-index: 1;
@@ -125,5 +122,12 @@ export default {
     position: absolute;
     top: 150px;
     width: 70%;
+  }
+  .bookFlight{
+    background-color: rgb(255, 255, 255)
+  }
+  h1 {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
   }
 </style>

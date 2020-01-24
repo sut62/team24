@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -21,7 +21,7 @@
         </v-dialog>
         <span v-if="logedIn">
           <div class="dropdown ">
-            <button style="width:300px" class="px-10 btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button style="width:300px" class="px-10 btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="" id="user_info_bar"><v-icon>mdi-account</v-icon> ชื่อผู้ใช้ {{user.username}} </span>
             </button>
             <div class="dropdown-menu px-3" style="width:300px" aria-labelledby="dropdown" justify-center>
@@ -39,6 +39,7 @@
       <img
         src="../assets/logo.png"
         alt="John"
+        class="shadow"
       >
     </v-avatar>
   </div>
@@ -118,5 +119,11 @@ export default {
     position: absolute;
     top: 30px;
     left: 10%;
+    box-shadow: 0 8px 6px -6px black;
+  }
+  .shadow {
+    -webkit-box-shadow: 0 8px 6px -16px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
   }
 </style>

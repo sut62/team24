@@ -1,7 +1,7 @@
 <template>
   <div class="bg-dark">
     <div class="sidebar" id="baggage">
-      <div class="card w-70 h-100">
+      <div class="card w-60 h-100">
         <v-icon @click="closeSidebar" color="white" class="close-btn btn">mdi-close</v-icon>
         <!-- This is menu bar -->
         <div class="d-flex justify-space-between">
@@ -24,7 +24,7 @@
           <BaggageCard v-show="menu == 2" :menu="2"/>
         </div>
         <!-- footer -->
-        <div style="position:fixed;bottom:0px;width:70vw">
+        <div style="position:fixed;bottom:0px;width:60vw">
           <hr class="hr">
           <div class="text-right d-flex mx-6 justify-space-between mb-4">
             <div class="text-black text-left">รวม
@@ -87,7 +87,7 @@ export default {
 <style scoped>
   .sidebar{
     background-color: rgba(0, 0, 0, 0.562);
-    padding-left: 30vw;
+    padding-left: 40vw;
     height: 100vh;
     width: 100vw;
     position: fixed;
