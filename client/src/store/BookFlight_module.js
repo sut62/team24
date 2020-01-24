@@ -110,6 +110,8 @@ const bookFlight = {
       let data = {
         "departFlightId": state.data.flightDepart.id,
         "returnFlightId": state.data.flightReturn.id,
+        "departBaggageAddsOnId": state.data.baggageDepart == null? 0 : state.data.baggageDepart.id,
+        "returnBaggageAddsOnId":  state.data.baggageReturn == null? 0 : state.data.baggageReturn.id,
       }
       let result = await BookFlightService.bookFlight(data)
       await commit('BOOK_SUCCESS',result.data)

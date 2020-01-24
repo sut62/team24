@@ -37,6 +37,9 @@ public class FlightBookingController {
     private FlightAirportTypeRepository flightAirportTypeRepository;
 
     @Autowired
+    private BaggageAddonRepository baggageAddonRepository;
+
+    @Autowired
     private AirportRepository airportRepository;
 
     public FlightBookingController(
@@ -75,6 +78,7 @@ public class FlightBookingController {
         flightBookingLink.setFlight(departFlight);
         flightBookingLink.setFlightBooking(flightBooking);
         flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT));
+        flightBookingLink.setBaggageAddon(baggageAddonRepository.findById(bodyFlightBooking.getDepartBaggageAddsOnId()).orElse(null));
         flightBookingLinkRepository.save(flightBookingLink);
 
         flightBookingLink = new FlightBookingLink();
@@ -82,6 +86,7 @@ public class FlightBookingController {
         flightBookingLink.setFlight(returnFlight);
         flightBookingLink.setFlightBooking(flightBooking);
         flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT));
+        flightBookingLink.setBaggageAddon(baggageAddonRepository.findById(bodyFlightBooking.getReturnBaggageAddsOnId()).orElse(null));
         flightBookingLinkRepository.save(flightBookingLink);
 
         return flightBooking;

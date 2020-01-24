@@ -7,6 +7,9 @@ public class BodyFlightBooking {
     private Long departFlightId;
     private Long returnFlightId;
 
+    private Long departBaggageAddsOnId;
+    private Long returnBaggageAddsOnId;
+
     //Getter Setter
     public Long getDepartFlightId() {
         return departFlightId;
@@ -16,4 +19,11 @@ public class BodyFlightBooking {
         return returnFlightId;
     }
 
+    public Long getDepartBaggageAddsOnId() {
+        return departBaggageAddsOnId;
+    }
+
+    public Long getReturnBaggageAddsOnId() {
+        return returnBaggageAddsOnId;
+    }
 }
