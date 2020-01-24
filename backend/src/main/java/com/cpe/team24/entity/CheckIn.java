@@ -57,8 +57,8 @@ public class CheckIn {
     @NotNull
     private CheckInType checkInType;
 
-    @OneToOne
     @NotNull
+    @OneToOne
     private FlightBooking flightBooking;
 
     public Long getId() {

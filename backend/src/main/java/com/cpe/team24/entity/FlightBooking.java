@@ -52,6 +52,9 @@ public class FlightBooking {
 
     @OneToOne
     private Payment payment;
+
+    @OneToOne
+    private CheckIn checkIn;
     
     //Methods
     public void book(Integer departSeatId,Integer returnSeatId){
