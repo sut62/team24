@@ -30,6 +30,9 @@ public class FlightBookingLink {
     private FlightBooking flightBooking;
 
     @ManyToOne
+    private BaggageAddon baggageAddon;
+
+    @ManyToOne
     @NotNull
     private FlightBookingType flightBookingType;
 
@@ -65,5 +68,13 @@ public class FlightBookingLink {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BaggageAddon getBaggageAddon() {
+        return baggageAddon;
+    }
+
+    public void setBaggageAddon(BaggageAddon baggageAddon) {
+        this.baggageAddon = baggageAddon;
     }
 }
