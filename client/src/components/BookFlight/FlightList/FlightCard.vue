@@ -1,7 +1,7 @@
 <template>
   <v-card
-      class="mx-auto mt-3"
-      style="width:100%"
+      class="mx-auto mt-3 shadow"
+      style="width:90%"
     >
       <v-card-text>
         <v-row>
@@ -98,7 +98,16 @@ export default {
   .myselect{
     border-style: solid;
     border-width: 6px;
-    border-color: black;
+    border-color: rgb(83, 59, 2);
     font-weight: bold;
+  }
+  .myselect:hover{
+    border-style: solid;
+    border-width: 6px;
+    border-color: rgb(51, 36, 1);
+    font-weight: bold;
+  }
+  .shadow{
+    box-shadow: 10px 15px 1px rgb(0, 0, 0);
   }
 </style>

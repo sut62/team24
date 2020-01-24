@@ -109,11 +109,11 @@ export default {
 }
 .footer {
   position: fixed;
-  height:100px;
+  height:80px;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgb(66, 65, 65);
+  background-color: rgb(41, 41, 41);
   color: white;
   text-align: center;
 }
