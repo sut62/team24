@@ -9,11 +9,13 @@
       <div class="d-flex flex-wrap">
         <div @click="menu == 1 ? selectBaggageDepart(null) : selectBaggageReturn(null)" :class="{'btn card my-img m-1':true,'my-selected':menu == 1? baggageDepart == null : baggageReturn == null}">
           <img src="../../../assets/BookFlight-AddsOn/baggage_icon.png" class="baggageIcon"/>
+          <v-icon v-show="menu == 1? baggageDepart == null : baggageReturn == null" color="green" class="icon-check">mdi-check-circle</v-icon>
           <div class="text-secondary">0 กก.</div>
           <div>ไม่มีสัมภาระเช็คอิน</div>
         </div>
         <div @click="menu == 1 ? selectBaggageDepart(baggage) : selectBaggageReturn(baggage)" v-for="(baggage,index) in baggages" :key="index" :class="{'btn card my-img m-1':true,'my-selected':menu == 1? baggageDepart != null && baggageDepart.id == baggage.id : baggageReturn != null && baggageReturn.id == baggage.id}">
           <img :src="baggage.baggageImage.url" class="baggageIcon"/>
+          <v-icon v-show="menu == 1? baggageDepart != null && baggageDepart.id == baggage.id : baggageReturn != null && baggageReturn.id == baggage.id" color="green" class="icon-check">mdi-check-circle</v-icon>
           <div class="text-secondary">{{baggage.maxWeight}} กก.</div>
           <div>{{baggage.price | price}} THB</div>
         </div>
@@ -95,5 +97,10 @@ export default {
   }
   .baggageIcon{
     width: 150px;
+  }
+  .icon-check{
+    position: absolute;;
+    top:4px;
+    right:4px;
   }
 </style>

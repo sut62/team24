@@ -7,11 +7,11 @@
         <div class="d-flex justify-space-between">
           <div @click="menu = 1" :class="{'w-50 text-center p-4 btn btn-dark':true,'btn-selected':menu==1}" style="border-radius:0px">
             <v-icon large color="white">mdi-airplane-takeoff</v-icon>
-            <div>{{this.airportDepart.name}} - {{this.airportDepart.city.name}}</div>
+            <div>{{this.airportDepart.name}} - {{this.airportArrive.name}}</div>
           </div>
           <div @click="menu = 2" :class="{'w-50 text-center p-4 btn btn-dark':true,'btn-selected':menu==2}" style="border-radius:0px">
-            <v-icon large color="white">mdi-airplane-landing</v-icon>
-            <div>{{this.airportArrive.name}} - {{this.airportArrive.city.name}}</div>
+            <v-icon large color="white" class="flip">mdi-airplane-takeoff</v-icon>
+            <div>{{this.airportArrive.name}} - {{this.airportDepart.name}}</div>
           </div>
         </div>
         <!-- This is content -->
@@ -110,5 +110,9 @@ export default {
   .close-btn{
     position:absolute;
     right:0px;
+  }
+  .flip {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
   }
 </style>
