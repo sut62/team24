@@ -20,16 +20,19 @@
                                     <v-list-item-content>
                                         <div class="text-card">
                                             <v-col>
-                                                <v-icon color="teal darken-2">mdi-calendar-range </v-icon>{{flightBookings.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}<br>
-                                                <v-icon color="blue darken-2">mdi-airplane-takeoff</v-icon>{{flightBookings.flightBookingLinks[0].flight.flightAirports[0].airport.name}}
+                                                <v-icon color="green darken-2">mdi-calendar-range </v-icon> {{flightBookings.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}<br>
+                                                <v-icon color="blue darken-2">mdi-airplane-takeoff</v-icon> {{flightBookings.flightBookingLinks[0].flight.flightAirports[0].airport.name}}
                                                 <v-icon color="error">mdi-arrow-right</v-icon>
                                                 {{flightBookings.flightBookingLinks[0].flight.flightAirports[1].airport.name}}
                                             </v-col>
                                             <v-col>
-                                                <v-icon color="teal darken-2">mdi-calendar-range </v-icon>{{flightBookings.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}<br>
-                                                <v-icon color="green darken-2" class="flip">mdi-airplane-takeoff</v-icon>{{flightBookings.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
+                                                <v-icon color="green darken-2">mdi-calendar-range </v-icon> {{flightBookings.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}<br>
+                                                <v-icon color="blue darken-2" class="flip">mdi-airplane-takeoff</v-icon> {{flightBookings.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
                                                 <v-icon color="error">mdi-arrow-right</v-icon>
                                                 {{flightBookings.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
+                                            </v-col>
+                                            <v-col>
+                                                <v-icon color="teal darken-2">mdi-currency-usd </v-icon>  {{totalPrice(flightBookings)}}                               
                                             </v-col>
                                         </div>
                                     </v-list-item-content>
@@ -58,16 +61,19 @@
                                     <v-list-item-content>
                                         <div class="text-card">
                                             <v-col>
-                                                <v-icon color="teal darken-2">mdi-calendar-range </v-icon>{{payment.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}<br>
-                                                <v-icon color="blue darken-2">mdi-airplane-takeoff</v-icon>{{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.name}}
+                                                <v-icon color="green darken-2">mdi-calendar-range </v-icon> {{payment.flightBooking.flightBookingLinks[0].flight.depart | moment("DD MMM YYYY")}}<br>
+                                                <v-icon color="blue darken-2">mdi-airplane-takeoff</v-icon> {{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.name}}
                                                 <v-icon color="error">mdi-arrow-right</v-icon>
                                                 {{payment.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.name}}
                                             </v-col>
                                             <v-col>
-                                                <v-icon color="teal darken-2">mdi-calendar-range </v-icon>{{payment.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}<br>
-                                                <v-icon color="green darken-2" class="flip">mdi-airplane-takeoff</v-icon>{{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
+                                                <v-icon color="green darken-2">mdi-calendar-range </v-icon> {{payment.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}<br>
+                                                <v-icon color="blue darken-2" class="flip">mdi-airplane-takeoff</v-icon> {{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
                                                 <v-icon color="error">mdi-arrow-right</v-icon>
                                                 {{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
+                                            </v-col>
+                                            <v-col>
+                                                <v-icon color="teal darken-2">mdi-currency-usd </v-icon> {{payment.amount}}   <v-icon color="blue darken-2">mdi-clock-outline </v-icon> {{payment.payDate| moment("DD MMM YYYY LT")}}
                                             </v-col>
                                         </div>
                                     </v-list-item-content>
@@ -115,6 +121,13 @@ export default {
     },
 
     methods: {
+        totalPrice(flightBooking) {
+            let sum =
+                flightBooking.flightBookingLinks[0].flight.price +
+                flightBooking.flightBookingLinks[1].flight.price;
+            console.log(sum);
+            return numeral(sum).format("0,0.00");
+        },
         getFBooking() {
             http
                 .get(
@@ -147,13 +160,7 @@ export default {
         }
     },
     computed: {
-        totalPrice() {
-            let sum =
-                this.payment.flightBooking.flightBookingLinks[0].flight.price +
-                this.payment.flightBooking.flightBookingLinks[1].flight.price;
-            console.log(sum);
-            return numeral(sum).format("0,0.00");
-        }
+        
     }
 
 };

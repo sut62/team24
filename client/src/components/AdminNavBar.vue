@@ -11,6 +11,7 @@
           <a href="/promotion" class="btn text-light">เพิ่มโปรโมชั่น</a>
           <a href="/flight" class="btn text-light">จัดการเที่ยวบิน</a>
           <a href="/verify-checkIn" class="btn text-light">ตรวจสอบการเช็คอิน</a>    
+          <a href="/Check-Payment" class="btn text-light">ตรวจสอบการชำระเงิน</a>    
         </div>
         <v-dialog persistent v-if="!this.isLoginAsAdmin()" v-model="showAuthForm" max-width="400">
           <template v-slot:activator="{ on }">
