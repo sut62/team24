@@ -51,7 +51,7 @@
 <tr><td rowspan="1" colspan="3">PayFlight Success With PromotionCode</td></tr>
 </thead>
 <tbody>
-<tr><td>open</td><td>http://localhost:8080/payment/ABC123<datalist><option>http://localhost:8080/payment/BRCBQZ</option><option>http://localhost:8080/payment/ABC123</option></datalist></td><td></td>
+<tr><td>open</td><td>http://localhost:8080/payment/ABC123<datalist><option>http://localhost:8080/payment/ABC123</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td></td>
 </tr>
@@ -63,6 +63,8 @@
 </tr>
 <tr><td>click</td><td>id=login_submit<datalist><option>id=login_submit</option><option>//button[@id='login_submit']</option><option>//div[@id='app']/div/div/div/div/div[3]/button</option><option>//button</option><option>css=#login_submit</option></datalist></td><td></td>
 </tr>
+<tr><td>click</td><td>//div[@id='app']/div/main/div<datalist><option>//div[@id='app']/div/main/div</option><option>//main/div</option><option>css=div.v-content__wrap</option></datalist></td><td></td>
+</tr>
 <tr><td>click</td><td>id=input-31<datalist><option>id=input-31</option><option>//input[@id='input-31']</option><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[3]/div/div/div/div/div/div/div/input</option><option>//input</option><option>css=#input-31</option></datalist></td><td></td>
 </tr>
 <tr><td>type</td><td>id=input-31<datalist><option>id=input-31</option><option>//input[@id='input-31']</option><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[3]/div/div/div/div/div/div/div/input</option><option>//input</option><option>css=#input-31</option></datalist></td><td>0123456789</td>
@@ -73,7 +75,7 @@
 </tr>
 <tr><td>click</td><td>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div/div/div/div/div/div/div[2]/div/div[3]<datalist><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div/div/div/div/div/div/div[2]/div/div[3]</option><option>//div/div/div/div/div/div[2]/div/div[3]</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div[4]/div/div<datalist><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div[4]/div/div</option><option>//div[2]/div/div/div/div/div/div/div[4]/div/div</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div[3]/div/div<datalist><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div/div/div/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div[3]/div/div</option><option>//div[2]/div/div/div/div/div/div/div[3]/div/div</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div[2]/div/div/div[2]/div[2]/button/span<datalist><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div[2]/div/div/div[2]/div[2]/button/span</option><option>//div[2]/button/span</option><option>css=span.v-btn__content</option></datalist></td><td></td>
 </tr>
@@ -83,13 +85,13 @@
 </tr>
 <tr><td>click</td><td>id=button-addon2<datalist><option>id=button-addon2</option><option>//button[@id='button-addon2']</option><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div[2]/div/div/div[3]/div/button</option><option>//div[3]/div/button</option><option>css=#button-addon2</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div[2]/div/div/div[6]/button/span<datalist><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div[2]/div/div/div[6]/button/span</option><option>//div[6]/button/span</option><option>css=button.v-btn.v-btn--contained.theme--light.v-size--large.error &gt; span.v-btn__content</option></datalist></td><td></td>
+<tr><td>click</td><td>xpath=(//button[@type='button'])[5]<datalist><option>xpath=(//button[@type='button'])[5]</option><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[4]/div/div[2]/div/div/div[5]/button</option><option>//div[5]/button</option><option>css=button.v-btn.v-btn--contained.theme--light.v-size--large.error</option></datalist></td><td></td>
 </tr>
 <tr><td>assertText</td><td>//div[@id='app']/div/div/div/div[2]<datalist><option>//div[@id='app']/div/div/div/div[2]</option><option>//div/div/div/div[2]</option><option>css=div.v-card__text</option></datalist></td><td>บันทึกสำเร็จ</td>
 </tr>
-<tr><td>click</td><td>//div[@id='app']/div/div/div/div[3]/button/span<datalist><option>//div[@id='app']/div/div/div/div[3]/button/span</option><option>//span</option><option>css=span.v-btn__content</option></datalist></td><td></td>
+<tr><td>click</td><td>//button[@type='button']<datalist><option>//button[@type='button']</option><option>//div[@id='app']/div/div/div/div[3]/button</option><option>//button</option><option>css=button.v-btn.v-btn--flat.v-btn--text.theme--light.v-size--default.green--text.text--darken-1</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>xpath=(//button[@type='button'])[2]<datalist><option>xpath=(//button[@type='button'])[2]</option><option>//div[@id='navbarTogglerDemo01']/span/div/button</option><option>//div/button</option><option>css=button.px-10.btn.btn-secondary.dropdown-toggle</option></datalist></td><td></td>
+<tr><td>click</td><td>xpath=(//button[@type='button'])[3]<datalist><option>xpath=(//button[@type='button'])[3]</option><option>//div[@id='navbarTogglerDemo01']/span/div/button</option><option>//span/div/button</option><option>css=button.px-10.btn.btn-secondary.dropdown-toggle</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=logout_button<datalist><option>id=logout_button</option><option>//div[@id='logout_button']</option><option>//div[@id='navbarTogglerDemo01']/span/div/div/div</option><option>//span/div/div/div</option><option>css=#logout_button</option></datalist></td><td></td>
 </tr>
@@ -99,9 +101,9 @@
 <tr><td rowspan="1" colspan="3">PayFlight Fail at Select</td></tr>
 </thead>
 <tbody>
-<tr><td>open</td><td>http://localhost:8080/payment/ABC123<datalist><option>http://localhost:8080/payment/BRCBQZ</option><option>http://localhost:8080/payment/ABC123</option></datalist></td><td></td>
+<tr><td>open</td><td>http://localhost:8080/payment/ABC123<datalist><option>http://localhost:8080/payment/ABC123</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='app']/div/div/div/div/div[2]/div/div/div/div<datalist><option>//div[@id='app']/div/div/div/div/div[2]/div/div/div/div</option><option>//div[2]/div/div/div/div</option><option>css=div.v-text-field__slot</option></datalist></td><td></td>
 </tr>
 <tr><td>type</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td>alice</td>
 </tr>
@@ -117,7 +119,7 @@
 </tr>
 <tr><td>click</td><td>//div[@id='app']/div/div/div/div[3]/button/span<datalist><option>//div[@id='app']/div/div/div/div[3]/button/span</option><option>//span</option><option>css=span.v-btn__content</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>id=user_info_bar<datalist><option>id=user_info_bar</option><option>//span[@id='user_info_bar']</option><option>//div[@id='navbarTogglerDemo01']/span/div/button/span</option><option>//span/div/button/span</option><option>css=#user_info_bar</option></datalist></td><td></td>
+<tr><td>click</td><td>xpath=(//button[@type='button'])[3]<datalist><option>xpath=(//button[@type='button'])[3]</option><option>//div[@id='navbarTogglerDemo01']/span/div/button</option><option>//span/div/button</option><option>css=button.px-10.btn.btn-secondary.dropdown-toggle</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>id=logout_button<datalist><option>id=logout_button</option><option>//div[@id='logout_button']</option><option>//div[@id='navbarTogglerDemo01']/span/div/div/div</option><option>//span/div/div/div</option><option>css=#logout_button</option></datalist></td><td></td>
 </tr>

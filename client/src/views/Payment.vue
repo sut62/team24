@@ -304,9 +304,9 @@
                     </v-row>
                     <p>{{data.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY")}}</p>
                     <p>
-                      {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.city.name}}
-                      <v-icon color="error">mdi-arrow-right</v-icon>
                       {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.city.name}}
+                      <v-icon color="error">mdi-arrow-right</v-icon>
+                      {{data.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.city.name}}
                     </p>
                     <p>
                       {{data.flightBooking.flightBookingLinks[1].flight.depart | moment("HH:mm")}} - {{data.flightBooking.flightBookingLinks[1].flight.arrive | moment("HH:mm")}}
