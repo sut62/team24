@@ -8,6 +8,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
         <div class="my-2 my-lg-0">
           <a href="/book-flight" class="a btn">เริ่มจองเที่ยวบิน</a>
+          <a href="/check-ticket" class="a btn">เช็คการจองตั๋ว</a>
           <a href="/checkin" class="btn">เช็คอิน</a>
           <a href="/payment" class="btn">ชำระค่าเที่ยวบิน</a>
           <a href="/about" class="btn mr-5">เกี่ยวกับเรา</a>
