@@ -756,7 +756,7 @@ export default {
       axiosInstance
         .get("/checkin/checkLast")
         .then(response => {
-          console.log(response.data);
+          //console.log(response.data);
           this.checkInLast = response.data;
           this.$nextTick();
         })
