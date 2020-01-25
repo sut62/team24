@@ -40,6 +40,10 @@ export default {
         path: '/book-flight'
       },
       {
+        name:'เช็คการจองตั๋ว',
+        path: '/check-ticket'
+      },
+      {
         name:'เช็คอิน',
         path: '/checkIn'
       },
