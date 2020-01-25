@@ -57,9 +57,11 @@
                                 <v-list-item-action>
                                     <v-list-item-title> <b>{{payment.flightBooking.user.firstName}} {{payment.flightBooking.user.lastName}}</b></v-list-item-title>
                                     <v-list-item-subtitle> <b>Booking NO. </b>{{payment.flightBooking.bookId}}</v-list-item-subtitle>
+                                    <v-list-item-subtitle><b>วันที่ทำการจอง: </b>{{payment.flightBooking.date | moment("DD MMM YYYY | HH:mm น.")}} </v-list-item-subtitle>
                                     <v-list-item-subtitle><b>สถานะการชำระเงิน: </b>
                                         <font style="color:green">ชำระแล้ว</font>
                                     </v-list-item-subtitle>
+                                    <v-list-item-subtitle> <b>วันและเวลาที่ชำระเงิน </b>{{payment.payDate | moment("DD MMM YYYY | HH:mm น.")}}</v-list-item-subtitle>
                                 </v-list-item-action>
                                 <v-divider class="mx-5" inset vertical></v-divider>
                                 <v-list-item-content>
@@ -72,10 +74,10 @@
                                     </v-col>
                                     <v-col>
                                         <h4>ARRIVE</h4>
-                                        <v-icon color="green darken-2">mdi-calendar-range </v-icon> {{payment.flightBooking.flightBookingLinks[1].flight.depart | moment("DD MMM YYYY | เครื่องถึงเวลา HH:mm น.")}}<br><br>
-                                        <v-icon color="orange" class="flip">mdi-airplane-landing</v-icon> {{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
+                                        <v-icon color="green darken-2">mdi-calendar-range </v-icon> {{payment.flightBooking.flightBookingLinks[1].flight.arrive | moment("DD MMM YYYY | เครื่องถึงเวลา HH:mm น.")}}<br><br>
+                                        <v-icon color="orange" class="flip">mdi-airplane-landing</v-icon> {{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
                                         <v-icon color="error">mdi-arrow-right-bold</v-icon>
-                                        {{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
+                                        {{payment.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.name}}
                                     </v-col>
                                 </v-list-item-content>
                             </v-list-item>
