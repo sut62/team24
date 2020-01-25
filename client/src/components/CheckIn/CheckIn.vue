@@ -515,13 +515,13 @@
               </v-avatar>
               <div class="ml-10 mt-5">
               <div align="left" class="caption">Depart</div>
-              <p align="left" class="title">{{flightAirports_go_depart.name}}</p>
+              <p align="left" class="title">{{checkInLast.flightBooking.flightBookingLinks[0].flight.flightAirports[0].airport.name}}</p>
               <div align="left" class="caption">Arrive</div>
-              <p align="left" class="title">{{flightAirports_go_arrive.name}}</p>
+              <p align="left" class="title">{{checkInLast.flightBooking.flightBookingLinks[0].flight.flightAirports[1].airport.name}}</p>
               <div align="left" class="caption">booking no.</div>
-              <p align="left" class="title">{{flight.bookId}}</p>
+              <p align="left" class="title">{{checkInLast.flightBooking.bookId}}</p>
                <div align="left" class="caption">Check in status. </div>
-              <p align="left" class="title">{{checkInStatus.name}}</p>
+              <p align="left" class="title">{{checkInLast.checkInStatus.name}}</p>
               </div>
             </v-col>
             <v-col >
@@ -529,19 +529,19 @@
               <div v-if ="boardingPass == true"  class="myborder">
                 <p class="caption">
                   Flight
-                  <sub class="title">{{flightBookingType_go}}</sub>
+                  <sub class="title">{{checkInLast.flightBooking.flightBookingLinks[0].flightBookingType.name}}</sub>
                 </p>
                 <p class="caption">
                   Date Depart
-                  <sub class="overline">{{ flightBookingLinks_go.depart  | moment("DD MMM YYYY")}}</sub>
+                  <sub class="overline">{{ checkInLast.flightBooking.flightBookingLinks[0].flight.depart  | moment("DD MMM YYYY")}}</sub>
                 </p>
                 <p class="caption">
                   Date Arrive
-                  <sub class="overline">{{ flightBookingLinks_go.arrive | moment("DD MMM YYYY")}}</sub>
+                  <sub class="overline">{{ checkInLast.flightBooking.flightBookingLinks[0].flight.arrive | moment("DD MMM YYYY")}}</sub>
                 </p>
                 <p class="caption">
                   Seat no.
-                  <sub class="title">{{flight.departSeatId}}</sub>
+                  <sub class="title">{{checkInLast.flightBooking.departSeatId}}</sub>
                 </p>
                 <p></p>
               </div>
@@ -564,34 +564,34 @@
                 <br />
               </v-avatar>
               <div class="ml-10 mt-5">
-              <div align="left" class="caption ">Depart</div>
-              <p align="left" class="title">{{flightAirports_back_depart.name}}</p>
+             <div align="left" class="caption">Depart</div>
+              <p align="left" class="title">{{checkInLast.flightBooking.flightBookingLinks[1].flight.flightAirports[0].airport.name}}</p>
               <div align="left" class="caption">Arrive</div>
-              <p align="left" class="title">{{flightAirports_back_arrive.name}}</p>
+              <p align="left" class="title">{{checkInLast.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.name}}</p>
               <div align="left" class="caption">booking no.</div>
-              <p align="left" class="title">{{flight.bookId}}</p>
-              <div align="left" class="caption">Check in status. </div>
-              <p align="left" class="title">{{checkInStatus.name}}</p>
+              <p align="left" class="title">{{checkInLast.flightBooking.bookId}}</p>
+               <div align="left" class="caption">Check in status. </div>
+              <p align="left" class="title">{{checkInLast.checkInStatus.name}}</p>
               </div>
             </v-col>
             <v-col>
               <h1>Bording Pass</h1>
               <div  v-if ="boardingPass == true" class="myborder">
-                <p class="caption">
+             <p class="caption">
                   Flight
-                  <sub class="title">{{flightBookingType_back}}</sub>
+                  <sub class="title">{{checkInLast.flightBooking.flightBookingLinks[1].flightBookingType.name}}</sub>
                 </p>
                 <p class="caption">
                   Date Depart
-                  <sub class="overline">{{ flightBookingLinks_back.depart| moment("DD MMM YYYY") }}</sub>
+                  <sub class="overline">{{ checkInLast.flightBooking.flightBookingLinks[1].flight.depart  | moment("DD MMM YYYY")}}</sub>
                 </p>
                 <p class="caption">
                   Date Arrive
-                  <sub class="overline">{{ flightBookingLinks_back.arrive| moment("DD MMM YYYY") }}</sub>
+                  <sub class="overline">{{ checkInLast.flightBooking.flightBookingLinks[1].flight.arrive | moment("DD MMM YYYY")}}</sub>
                 </p>
                 <p class="caption">
                   Seat no.
-                  <sub class="title">{{flight.returnSeatId}}</sub>
+                  <sub class="title">{{checkInLast.flightBooking.returnSeatId}}</sub>
                 </p>
                 <p></p>
               </div>
@@ -636,6 +636,7 @@ export default {
       checkInType: [],
       flight: [],
       user: [],
+      checkInLast:[],
       flightBookingId: [],
       flightBookingLinks_go: [],
       flightBookingLinks_back: [],
@@ -709,7 +710,7 @@ export default {
     onShowBoardingPass(main) {
       main.safty_page = !main.safty_page;
       main.boardingPass = !main.boardingPass;
-      JsBarcode("#barcode", this.flight.bookId);
+      JsBarcode("#barcode", this.checkInLast.boardingPass);
     },
     backToFirstPage(){
       location.reload()
@@ -751,11 +752,12 @@ export default {
           console.log(e);
         });
     },
-    getCheckIn() {
+    getCheckInLast() {
       axiosInstance
-        .get("/checkin")
+        .get("/checkin/checkLast")
         .then(response => {
           console.log(response.data);
+          this.checkInLast = response.data;
           this.$nextTick();
         })
         .catch(e => {
@@ -860,6 +862,7 @@ export default {
     this.getFlightAirport();
     this.getCheckInStatus();
     this.getCheckInType();
+    this.getCheckInLast();
     this.checkIn.lastname = this.account.lastName
     //console.log(this.flight)
   },
