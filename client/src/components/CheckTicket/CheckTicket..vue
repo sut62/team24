@@ -13,6 +13,7 @@
                                 <v-list-item-action>
                                     <v-list-item-title><b>{{flightBookings.user.firstName}} {{flightBookings.user.lastName}}</b></v-list-item-title>
                                     <v-list-item-subtitle><b>Booking NO. </b>{{flightBookings.bookId}}</v-list-item-subtitle>
+                                    <v-list-item-subtitle><b>วันที่ทำการจอง </b>{{flightBookings.date | moment("DD MMM YYYY | HH:mm น.")}} </v-list-item-subtitle>
                                     <v-list-item-subtitle><b>สถานะการชำระเงิน: </b>
                                         <font style="color:red">ยังไม่ชำระ</font>
                                     </v-list-item-subtitle>
