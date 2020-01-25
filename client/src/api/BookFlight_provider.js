@@ -20,6 +20,9 @@ class BookFlightProvider extends HttpRequest {
   getAddsOnByAirport(airport_id){
     return this.fetch('/adds-on/airport/'+airport_id)
   }
+  getBaggageType(){
+    return this.fetch('/baggage-type')
+  }
 }
 
 export default BookFlightProvider
