@@ -239,7 +239,7 @@ public class Team24Application {
 
 			// ------- Baggage Type --------
 			Stream.of(
-				"ธรรมดา","ที่ต้องดูแลเป็นเศษ","อุปกรณ์การกีฬา"
+				"ธรรมดา","ที่ต้องดูแลเป็นพิเศษ","อุปกรณ์การกีฬา"
 			).forEach(bagtype-> {
 				BaggageType baggagetype = new BaggageType(); 
 				baggagetype.setBtypename(bagtype); 
@@ -247,9 +247,9 @@ public class Team24Application {
 			});
 
 
-			Object[][] bagimage;
+			
 		
-			bagimage = new Object[][] {
+			Object[][] bagimage = new Object[][] {
 				{ "SMALL", "https://image.flaticon.com/icons/svg/1926/1926375.svg" },
 				{ "MEDIUM", "https://image.flaticon.com/icons/svg/494/494835.svg" },
 				{ "LARGE","https://image.flaticon.com/icons/svg/2118/2118860.svg" },
@@ -264,9 +264,26 @@ public class Team24Application {
 			};
 
 			Object[][] bag = new Object[][] { 
-				{ 5, 500.00, 1,1,1 },
-				{ 10, 1000.00, 1,2,1 },
-				{ 10, 1200.00, 2,3,2 }
+				// 0=weight,1=price,2=type, 3=image,4=airport
+				{ 5, 50.00, 1,1,1 },
+				{ 10, 100.00, 1,2,1 },
+				{ 15, 150.00, 1,3,1 },
+				{ 5, 200.00, 2,4,1 },
+				{ 10, 400.00, 2,4,1 },
+				{ 15, 600.00, 2,4,1 },
+				{ 5, 300.00, 3,5,1 },
+				{ 10, 500.00, 3,5,1 },
+				{ 15, 700.00, 3,5,1 },
+
+				{ 5, 100.00, 1,1,2 },
+				{ 10, 150.00, 1,2,2 },
+				{ 15, 200.00, 1,3,2 },
+				{ 5, 260.00, 2,4,2 },
+				{ 10, 460.00, 2,4,2 },
+				{ 15, 660.00, 2,4,2 },
+				{ 5, 380.00, 3,5,2 },
+				{ 10, 580.00, 3,5,2 },
+				{ 15, 780.00, 3,5,2 },
 			};
 			for (int i = 0; i < bag.length; i++) {
 				BaggageAddon newBag = new BaggageAddon();
@@ -280,7 +297,7 @@ public class Team24Application {
 				newBag.setBaggageImage(bimage);
 
 				// Airport bagairport = airportRepository.findById(id)
-				Airport bagairport = airportRepository.findById(Long.parseLong(data[i][4].toString())).orElse(null);
+				Airport bagairport = airportRepository.findById(Long.parseLong(bag[i][4].toString())).orElse(null);
 				newBag.setAirport(bagairport);
 				
 

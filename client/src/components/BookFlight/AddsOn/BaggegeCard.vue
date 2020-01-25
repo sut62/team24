@@ -4,16 +4,22 @@
     <div class="card-header">
       <v-icon>mdi-account</v-icon> ผู้โดยสาร 1 ท่าน
     </div>
+    
     <div class="card-body">
+      <!-- menu type selection -->
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button disabled class="btn btn-secondary">ประเภทสัมภาระ</button>
+        <button v-for="(type,index) in baggageTypes" :key="index"  @click="selected.typeId = type.id" type="button" :class="{'btn ':true,'btn-warning':selected.typeId != type.id,'btn-danger':selected.typeId == type.id}">{{type.btypename}}</button>
+      </div>
       <!-- card seeletec menu -->
-      <div class="d-flex flex-wrap">
+      <div class="d-flex mt-3 flex-wrap">
         <div @click="menu == 1 ? selectBaggageDepart(null) : selectBaggageReturn(null)" :class="{'btn card my-img m-1':true,'my-selected':menu == 1? baggageDepart == null : baggageReturn == null}">
           <img src="../../../assets/BookFlight-AddsOn/baggage_icon.png" class="baggageIcon"/>
           <v-icon v-show="menu == 1? baggageDepart == null : baggageReturn == null" color="green" class="icon-check">mdi-check-circle</v-icon>
           <div class="text-secondary">0 กก.</div>
           <div>ไม่มีสัมภาระเช็คอิน</div>
         </div>
-        <div @click="menu == 1 ? selectBaggageDepart(baggage) : selectBaggageReturn(baggage)" v-for="(baggage,index) in baggages" :key="index" :class="{'btn card my-img m-1':true,'my-selected':menu == 1? baggageDepart != null && baggageDepart.id == baggage.id : baggageReturn != null && baggageReturn.id == baggage.id}">
+        <div @click="menu == 1 ? selectBaggageDepart(baggage) : selectBaggageReturn(baggage)" v-for="(baggage,index) in baggagesByType" :key="index" :class="{'btn card my-img m-1':true,'my-selected':menu == 1? baggageDepart != null && baggageDepart.id == baggage.id : baggageReturn != null && baggageReturn.id == baggage.id}">
           <img :src="baggage.baggageImage.url" class="baggageIcon"/>
           <v-icon v-show="menu == 1? baggageDepart != null && baggageDepart.id == baggage.id : baggageReturn != null && baggageReturn.id == baggage.id" color="green" class="icon-check">mdi-check-circle</v-icon>
           <div class="text-secondary">{{baggage.maxWeight}} กก.</div>
@@ -23,6 +29,7 @@
       <hr>
       <div class="text-right text-success">เลือกสัมภาระของเที่ยวบินขา{{menu==1?'ไป':'กลับ'}}</div>
     </div>
+    
   </div>
 </template>
 
@@ -32,7 +39,11 @@ import {mapState,mapMutations} from 'vuex'
 var numeral = require("numeral");
 export default {
   data:()=>({
-    baggages:[]
+    baggages:[],
+    baggageTypes:[],
+    selected:{
+      typeId:0
+    }
   }),
   computed:{
     ...mapState({
@@ -40,7 +51,10 @@ export default {
       airportArrive: state => state.BookFlight.data.airportArrive,
       baggageDepart: state => state.BookFlight.data.baggageDepart,
       baggageReturn: state => state.BookFlight.data.baggageReturn,
-    })
+    }),
+    baggagesByType(){
+      return this.baggages.filter(bag => bag.baggageType.id == this.selected.typeId)
+    }
   },
   filters:{
     price(price){
@@ -61,6 +75,12 @@ export default {
     },
   },
   mounted(){
+    BookFlightService.getBaggageType().then(
+      res => {
+        this.baggageTypes = res.data
+        this.selected.typeId = this.baggageTypes[0].id
+      }
+    )
     if(this.menu == 2){
       BookFlightService.getAddsOnByAirport(this.airportArrive.id).then(res => {
         console.log(res.data)
