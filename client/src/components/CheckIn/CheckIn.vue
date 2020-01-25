@@ -751,9 +751,9 @@ export default {
           console.log(e);
         });
     },
-    getCheckIn() {
+    getCheckInLast() {
       axiosInstance
-        .get("/checkin")
+        .get("/checkin/checkLast")
         .then(response => {
           console.log(response.data);
           this.$nextTick();
@@ -860,6 +860,7 @@ export default {
     this.getFlightAirport();
     this.getCheckInStatus();
     this.getCheckInType();
+    this.getCheckInLast();
     this.checkIn.lastname = this.account.lastName
     //console.log(this.flight)
   },

@@ -5,6 +5,7 @@ import com.cpe.team24.entity.CheckIn;
 import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Sort;
 
 
 import java.util.Collection;
@@ -41,6 +42,11 @@ public class CheckInController {
     @GetMapping("")
     public Collection<CheckIn> checkIn() {
         return checkInRepository.findAll().stream().collect(Collectors.toList());
+    }
+
+    @GetMapping("/checkLast")
+    public CheckIn getCheckInLast() {
+        return checkInRepository.findFirstByOrderByIdDesc();
     }
 
     @GetMapping("/{id}")
