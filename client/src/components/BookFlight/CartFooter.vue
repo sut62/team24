@@ -1,5 +1,6 @@
 <template>
   <div>
+    <FlightDetailSidebar v-if="showSideBar" :closeSidebar="this.closeSidebar"/>
     <MyAlert id="alert" :open="showGuestAlert" :topic="topicAlert" :desc="msgAlert" :callback="closeAlert" />
     <div :v-if="this.bookResult != null">
       <MyAlert id="alert_success" :open="this.bookResult != null" topic="จองเที่ยวบินสำเร็จ" desc="กด ตกลง เพื่อไปหน้าชำระเงิน" :callback="goToPayment" />
@@ -7,8 +8,8 @@
     <div class="footer" >
       <v-row>
         <v-col cols="6">
-          <div class="mt-3 float-right">
-            <i class="fas fa-shopping-cart fa-2x" ></i> <span class="h4 ml-3">ราคารวม </span><span class="h1"> {{getTotalPrice | price}} THB</span>
+          <div class="mt-5 float-right">
+           <i class="fas fa-shopping-cart" ></i> <div @click="showSideBar = true" class="badge badge-info btn btn-info">detail</div>  <span class="ml-3">ราคารวม </span><span class="h5"> {{getTotalPrice | price}} THB</span>
           </div>
         </v-col>
         <v-col cols="6">
@@ -25,6 +26,7 @@
 
 <script>
 import {mapGetters, mapActions,mapState} from 'vuex'
+import FlightDetailSidebar from './DetailSidebar/FlightDetailSidebar'
 import MyAlert from '../Alert'
 import router from '../../router'
 var numeral = require("numeral");
@@ -32,12 +34,14 @@ var numeral = require("numeral");
 export default {
   name: "cartFooter",
   components: {
-    MyAlert
+    MyAlert,
+    FlightDetailSidebar
   },
   data:()=>({
     showGuestAlert: false,
     msgAlert: '',
     topicAlert:'',
+    showSideBar: false
   }),
   computed: {
     ...mapState({
@@ -51,6 +55,7 @@ export default {
       getIsNextBtnAllow: 'BookFlight/getIsNextBtnAllow'
     }),
   },
+  
   filters:{
     price(price){
       // add this on top
@@ -64,6 +69,9 @@ export default {
     }),
     getDesc(){
       return 'Booking ID ของคุณ คือ ' + this.bookResult.bookId
+    },
+    closeSidebar(){
+      this.showSideBar = false
     },
     closeAlert(){
       this.showGuestAlert = false
