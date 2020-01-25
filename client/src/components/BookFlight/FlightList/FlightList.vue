@@ -1,8 +1,8 @@
 <template>
   <div class="mx-auto mt-10" id="flight-list">
     <v-row class="mb-3">
-      <h4 v-if="this.isDepart" class="mycard mr-4 ml-5"><v-icon>mdi-airplane-takeoff</v-icon> ขาไป</h4>
-      <h4 v-else class="mycard mr-4 ml-5 "><v-icon class="flip">mdi-airplane-takeoff</v-icon> ขากลับ</h4>
+      <h4 v-if="this.isDepart" class="mycard mt-2 mr-4 ml-5"><v-icon>mdi-airplane-takeoff</v-icon> ขาไป</h4>
+      <h4 v-else class="mycard mr-4 mt-2 ml-5 "><v-icon class="flip">mdi-airplane-takeoff</v-icon> ขากลับ</h4>
       <p class="mycard alert alert-success" >{{topic}}</p>
       <v-icon class="ml-3 icon" @click="showSearchBar()">mdi-lead-pencil</v-icon>
     </v-row>
