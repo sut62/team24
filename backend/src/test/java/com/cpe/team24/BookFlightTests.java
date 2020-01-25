@@ -125,6 +125,26 @@ public class BookFlightTests {
         assertEquals("bookingStatus", v.getPropertyPath().toString());
     }
     @Test
+    void b6000530_testDateMustNotBeNull() {
+        FlightBooking flightBooking = new FlightBooking();
+        BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(1,1);
+        flightBooking.setBookingStatus(pendingStatus);
+        flightBooking.setUser(user);
+        flightBooking.setDate(null);
+        Set<ConstraintViolation<FlightBooking>> result = validator.validate(flightBooking);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<FlightBooking> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("date", v.getPropertyPath().toString());
+    }
+    @Test
     void b6000530_testUserMustNotBeNull() {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
