@@ -107,6 +107,104 @@ public class BookFlightTests {
     }
 
     @Test
+    void b6000530_testFlightBookingLink_flightMustNotBeNull(){
+        FlightBooking flightBooking = new FlightBooking();
+        BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(1,1);
+        String bookId = flightBooking.getBookId();
+        Date date = flightBooking.getDate();
+        flightBooking.setBookingStatus(pendingStatus);
+        flightBooking.setUser(user);
+        flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
+
+        // Add Depart's Flight and Return's Flight to TableLink
+        FlightBookingLink flightBookingLinkDepart = new FlightBookingLink();
+        Flight departFlight = flightRepository.findById(1l).get();
+        flightBookingLinkDepart.setFlight(null);
+        flightBookingLinkDepart.setFlightBooking(flightBooking);
+        flightBookingLinkDepart.setFlightBookingType(departType);
+
+        Set<ConstraintViolation<FlightBookingLink>> result = validator.validate(flightBookingLinkDepart);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<FlightBookingLink> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("flight", v.getPropertyPath().toString());
+    }
+    @Test
+    void b6000530_testFlightBookingLink_flightBookingMustNotBeNull(){
+        FlightBooking flightBooking = new FlightBooking();
+        BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(1,1);
+        String bookId = flightBooking.getBookId();
+        Date date = flightBooking.getDate();
+        flightBooking.setBookingStatus(pendingStatus);
+        flightBooking.setUser(user);
+        flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
+
+        // Add Depart's Flight and Return's Flight to TableLink
+        FlightBookingLink flightBookingLinkDepart = new FlightBookingLink();
+        Flight departFlight = flightRepository.findById(1l).get();
+        flightBookingLinkDepart.setFlight(departFlight);
+        flightBookingLinkDepart.setFlightBooking(null);
+        flightBookingLinkDepart.setFlightBookingType(departType);
+
+        Set<ConstraintViolation<FlightBookingLink>> result = validator.validate(flightBookingLinkDepart);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<FlightBookingLink> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("flightBooking", v.getPropertyPath().toString());
+    }
+
+    @Test
+    void b6000530_testFlightBookingLink_flightBookingTypeMustNotBeNull(){
+        FlightBooking flightBooking = new FlightBooking();
+        BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(1,1);
+        String bookId = flightBooking.getBookId();
+        Date date = flightBooking.getDate();
+        flightBooking.setBookingStatus(pendingStatus);
+        flightBooking.setUser(user);
+        flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
+
+        // Add Depart's Flight and Return's Flight to TableLink
+        FlightBookingLink flightBookingLinkDepart = new FlightBookingLink();
+        Flight departFlight = flightRepository.findById(1l).get();
+        flightBookingLinkDepart.setFlight(departFlight);
+        flightBookingLinkDepart.setFlightBooking(flightBooking);
+        flightBookingLinkDepart.setFlightBookingType(null);
+
+        Set<ConstraintViolation<FlightBookingLink>> result = validator.validate(flightBookingLinkDepart);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<FlightBookingLink> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("flightBookingType", v.getPropertyPath().toString());
+    }
+
+    @Test
     void b6000530_testBookingStatusMustNotBeNull() {
         FlightBooking flightBooking = new FlightBooking();
 
