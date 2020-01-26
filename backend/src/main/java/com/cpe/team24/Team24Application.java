@@ -193,8 +193,11 @@ public class Team24Application {
 			for (int i = 0; i < data.length; i++) {
 				FlightBooking flightBooking = new FlightBooking();
 				flightBooking.book((Integer) data[i][2], (Integer) data[i][3]);
-				if(i==0){
+				if(i==1){
 					flightBooking.setBookId("ABC123");
+				}else
+				if(i==0){
+					flightBooking.setBookId("123456");
 				}
 				
 				flightBooking.setBookingStatus(bookingStatusRepository.findByName(EBookingStatus.PENDING));
