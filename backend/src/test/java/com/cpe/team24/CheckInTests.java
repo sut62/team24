@@ -75,7 +75,7 @@ public class CheckInTests {
         CheckIn checkIn = new CheckIn();
         CheckInStatus checkInStatus = checkInStatusRepository.findById((1l)).get();
         CheckInType checkInType = checkInTypeRepository.findById((1l)).get();
-        FlightBooking flightBooking = flightBookingRepository.findById(1L).get();
+        FlightBooking flightBooking = flightBookingRepository.findById(2L).get();
         Date date = new Date();
         String boardingPass = RandomString.make(6).toUpperCase();
         

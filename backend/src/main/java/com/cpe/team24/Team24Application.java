@@ -331,8 +331,7 @@ public class Team24Application {
 			}
 
 			Object[][] checkIn = new Object[][] { 
-				{ 4,2,2,"ASDWQE","sdfsf@gmail.com"},
-				{ 2,2,3,"FDSAFQ","sdfsf@gmail.com"},
+				{ 2,2,3,"FDSAFQ","bobzaza@gmail.com"},
 			};
 			for (int i = 0; i < checkIn.length; i++) {
 				CheckIn newCheckIn = new CheckIn();

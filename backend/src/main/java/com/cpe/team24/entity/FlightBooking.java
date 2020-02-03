@@ -43,14 +43,17 @@ public class FlightBooking {
     @ManyToOne(fetch = FetchType.EAGER,targetEntity = BookingStatus.class)
     @JoinColumn(name = "BOOKING_STATUS_ID", insertable = true)
     @NotNull
-    private BookingStatus bookingStatus; //
+    private BookingStatus bookingStatus; 
 
     @ManyToOne
     @NotNull
-    private User user; //
+    private User user; 
 
     @OneToOne
     private Payment payment;
+
+    @OneToOne
+    private CheckIn checkIn;
 
     //Methods
     public void book(Integer departSeatId,Integer returnSeatId){
