@@ -500,12 +500,9 @@
        <v-btn  @click="()=>backToFirstPage(this)" class="ma-2 " style="text-align:center" color="primary" dark>Print
         <v-icon dark right>mdi-printer</v-icon>
       </v-btn>
-      <v-btn @click="()=>backToFirstPage(this)" class="ma-2 " style="text-align:center" color="red" dark="">close
-        <v-icon dark right>mdi-close</v-icon>
-      </v-btn>
       </div>
       
-      <div class="card text-center card-bordingpass-style">
+      <div v-if="checkInLast != []" class="card text-center card-bordingpass-style">
         <div class="card-body">
           <v-row class="pt-5 pr-5">
             <v-col v-if ="boardingPass == true" >
@@ -555,7 +552,7 @@
         </div>
       </div>
       <br />
-      <div v-if="flightBookingLinks_back != '' "  class="card text-center card-bordingpass-style">
+      <div v-if="flightBookingLinks_back != '' && checkInLast != [] "  class="card text-center card-bordingpass-style">
         <div class="card-body">
           <v-row class="pt-5 pr-5">
             <v-col  v-if ="boardingPass == true">
@@ -632,7 +629,6 @@ export default {
       notfound: false,
       isBarcodeVisible: true,
       flightAirport: [],
-      checkInStatus: [],
       checkInType: [],
       flight: [],
       user: [],
@@ -710,7 +706,7 @@ export default {
     onShowBoardingPass(main) {
       main.safty_page = !main.safty_page;
       main.boardingPass = !main.boardingPass;
-      JsBarcode("#barcode", this.checkInLast.boardingPass);
+      
     },
     backToFirstPage(){
       location.reload()
@@ -759,6 +755,7 @@ export default {
           //console.log(response.data);
           this.checkInLast = response.data;
           this.$nextTick();
+          JsBarcode("#barcode", this.checkInLast.boardingPass);
         })
         .catch(e => {
           console.log(e);
@@ -843,12 +840,12 @@ export default {
         .then(() => {
           // alert("เช็คอินสำเร็จ", response);
           this.success = true
+          this.getCheckInLast();
           this.onShowBoardingPass(this);
         })
         .catch(() => {
           this.fall = true
           //alert("เกิดข้อผิดพลาด CheckIn ไม่สำเร็จ !!" + e);
-          
         });
     }
   },
@@ -859,12 +856,9 @@ export default {
     })
   },
   mounted() {
-    this.getFlightAirport();
-    this.getCheckInStatus();
-    this.getCheckInType();
-    this.getCheckInLast();
     this.checkIn.lastname = this.account.lastName
-    //console.log(this.flight)
+    this.getFlightAirport();
+    this.getCheckInType();
   },
 };
 </script>

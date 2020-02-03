@@ -3,6 +3,7 @@ package com.cpe.team24.entity;
 import lombok.*;
 
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -15,6 +16,7 @@ import java.util.Date;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -51,7 +53,8 @@ public class CheckIn {
     private CheckInType checkInType;
 
     @NotNull
-    @OneToOne
+    @OneToOne(targetEntity = FlightBooking.class)
+    @JoinColumn(name = "FLIGHT_BOOKING_ID", referencedColumnName = "FLIGHT_BOOKING_ID",unique = true)
     private FlightBooking flightBooking;
 
     public Long getId() {
