@@ -3,32 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<title>VerifyCheckIn</title>
+	<title>B6012540_VerifyCheckIn</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">VerifyLoginFail</td></tr>
-</thead>
-<tbody>
-<tr><td>open</td><td>http://localhost:8080/verify-checkIn<datalist><option>http://localhost:8081/verify-checkIn</option><option>http://localhost:8080/verify-checkIn</option></datalist></td><td></td>
-</tr>
-<tr><td>click</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td></td>
-</tr>
-<tr><td>type</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td>Alice</td>
-</tr>
-<tr><td>click</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td></td>
-</tr>
-<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td>12345</td>
-</tr>
-<tr><td>click</td><td>id=login_submit<datalist><option>id=login_submit</option><option>//button[@id='login_submit']</option><option>//div[@id='app']/div[2]/div/div/div/div[3]/button</option><option>//button</option><option>css=#login_submit</option></datalist></td><td></td>
-</tr>
-<tr><td>assertText</td><td>id=alert_msg<datalist><option>id=alert_msg</option><option>//div[@id='alert_msg']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div[3]</option><option>//div[2]/div[3]</option><option>css=#alert_msg</option></datalist></td><td>เกิดข้อผิดพลาด</td>
-</tr>
-</tbody></table>
-<table cellpadding="1" cellspacing="1" border="1">
-<thead>
-<tr><td rowspan="1" colspan="3">VerifyLoginSucess</td></tr>
+<tr><td rowspan="1" colspan="3">VerifyCheckInhavedata</td></tr>
 </thead>
 <tbody>
 <tr><td>open</td><td>http://localhost:8080/verify-checkIn<datalist><option>http://localhost:8081/verify-checkIn</option><option>http://localhost:8080/verify-checkIn</option></datalist></td><td></td>
@@ -43,11 +23,43 @@
 </tr>
 <tr><td>click</td><td>id=login_submit<datalist><option>id=login_submit</option><option>//button[@id='login_submit']</option><option>//div[@id='app']/div[2]/div/div/div/div[3]/button</option><option>//button</option><option>css=#login_submit</option></datalist></td><td></td>
 </tr>
-<tr><td>assertText</td><td>//div[@id='navbarTogglerDemo01']/span/div/button/span<datalist><option>//div[@id='navbarTogglerDemo01']/span/div/button/span</option><option>//div/button/span</option><option>css=button.px-10.btn.btn-secondary.dropdown-toggle &gt; span</option></datalist></td><td>ชื่อผู้ใช้*</td>
+<tr><td>assertText</td><td>//aside/div/div/div[2]/div<datalist><option>//div[@id='app']/div/main/div/div/div[3]/div/div/div/div/div/aside/div/div/div[2]/div</option><option>//aside/div/div/div[2]/div</option><option>css=div.v-list-item__title</option></datalist></td><td>ชื่อผู้ใช้ : *</td>
+</tr>
+<tr><td>assertText</td><td>//aside/div/div/div[2]/div[2]<datalist><option>//div[@id='app']/div/main/div/div/div[3]/div/div/div/div/div/aside/div/div/div[2]/div[2]</option><option>//aside/div/div/div[2]/div[2]</option><option>css=div.v-list-item__subtitle</option></datalist></td><td>สภานะเช็คอิน : *</td>
+</tr>
+<tr><td>assertText</td><td>//aside/div/div/div[2]/div[3]<datalist><option>//div[@id='app']/div/main/div/div/div[3]/div/div/div/div/div/aside/div/div/div[2]/div[3]</option><option>//aside/div/div/div[2]/div[3]</option></datalist></td><td>เช็คอินผ่านทาง : *</td>
 </tr>
 <tr><td>click</td><td>xpath=(//button[@type='button'])[2]<datalist><option>xpath=(//button[@type='button'])[2]</option><option>//div[@id='navbarTogglerDemo01']/span/div/button</option><option>//div/button</option><option>css=button.px-10.btn.btn-secondary.dropdown-toggle</option></datalist></td><td></td>
 </tr>
 <tr><td>click</td><td>link=ออกจากระบบ<datalist><option>link=ออกจากระบบ</option><option>//a[contains(text(),'ออกจากระบบ')]</option><option>//div[@id='navbarTogglerDemo01']/span/div/div/a</option><option>//span/div/div/a</option><option>css=a.dropdown-item.px-0</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='app']/div/main/div<datalist><option>//div[@id='app']/div/main/div</option><option>//main/div</option><option>css=div.v-content__wrap</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">VerifyCheckInNotHaveData</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/verify-checkIn/testfail<datalist><option>http://localhost:8081/verify-checkIn</option><option>http://localhost:8080/verify-checkIn</option><option>http://localhost:8080/verify-checkIn/testfail</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td>Alice</td>
+</tr>
+<tr><td>click</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td>1234</td>
+</tr>
+<tr><td>click</td><td>id=login_submit<datalist><option>id=login_submit</option><option>//button[@id='login_submit']</option><option>//div[@id='app']/div[2]/div/div/div/div[3]/button</option><option>//button</option><option>css=#login_submit</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>//div[3]/div/div/div/div/div<datalist><option>//div[@id='app']/div/main/div/div/div[3]/div/div/div/div/div</option><option>//div[3]/div/div/div/div/div</option><option>css=div.text-center.mt-5.mb-5</option></datalist></td><td>ไม่พบข้อมูล</td>
+</tr>
+<tr><td>click</td><td>xpath=(//button[@type='button'])[2]<datalist><option>xpath=(//button[@type='button'])[2]</option><option>//div[@id='navbarTogglerDemo01']/span/div/button</option><option>//div/button</option><option>css=button.px-10.btn.btn-secondary.dropdown-toggle</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=ออกจากระบบ<datalist><option>link=ออกจากระบบ</option><option>//a[contains(text(),'ออกจากระบบ')]</option><option>//div[@id='navbarTogglerDemo01']/span/div/div/a</option><option>//span/div/div/a</option><option>css=a.dropdown-item.px-0</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='app']/div/main/div<datalist><option>//div[@id='app']/div/main/div</option><option>//main/div</option><option>css=div.v-content__wrap</option></datalist></td><td></td>
 </tr>
 </tbody></table>
 </body>
