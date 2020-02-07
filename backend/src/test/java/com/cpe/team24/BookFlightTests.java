@@ -3,22 +3,19 @@ package com.cpe.team24;
 import com.cpe.team24.entity.*;
 import com.cpe.team24.repository.*;
 import com.cpe.team24.repository.auth.RoleRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.*;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
- 
+
 //@DataJpaTest
 @SpringBootTest
 public class BookFlightTests {
@@ -104,6 +101,84 @@ public class BookFlightTests {
         assertEquals(flightBooking,flightBookingLinkReturn.getFlightBooking());
         assertEquals(returnType,flightBookingLinkReturn.getFlightBookingType());
 
+    }
+
+    @Test
+    void b6000530_testFlightBookingLinksMustNotHave_2_DepartFlight() {
+        FlightBooking flightBooking = new FlightBooking();
+        BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(1,1);
+        String bookId = flightBooking.getBookId();
+        Date date = flightBooking.getDate();
+        flightBooking.setBookingStatus(pendingStatus);
+        flightBooking.setUser(user);
+        flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
+
+        // Add Depart's Flight to TableLink 1
+        FlightBookingLink flightBookingLinkDepart = new FlightBookingLink();
+        Flight departFlight = flightRepository.findById(1l).get();
+        flightBookingLinkDepart.setFlight(departFlight);
+        flightBookingLinkDepart.setFlightBooking(flightBooking);
+        flightBookingLinkDepart.setFlightBookingType(departType);
+        //save
+        flightBookingLinkDepart = flightBookingLinkRepository.saveAndFlush(flightBookingLinkDepart);
+
+        // Add Depart's Flight to TableLink 2
+        flightBookingLinkDepart = new FlightBookingLink();
+        departFlight = flightRepository.findById(1l).get();
+        flightBookingLinkDepart.setFlight(departFlight);
+        flightBookingLinkDepart.setFlightBooking(flightBooking);
+        flightBookingLinkDepart.setFlightBookingType(departType);
+
+        try {
+            flightBookingLinkDepart = flightBookingLinkRepository.saveAndFlush(flightBookingLinkDepart);
+            fail("(flightBookingLink.flightBooking , flightBookingLink.flightBookingType) is not unique");
+        } catch (Exception ex) {
+            assertEquals("org.hibernate.exception.ConstraintViolationException: could not execute statement",ex.getCause().toString());
+        }
+    }
+
+    @Test
+    void b6000530_testFlightBookingLinksMustNotHave_2_ReturnFlight() {
+        FlightBooking flightBooking = new FlightBooking();
+        BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+
+        User user = userRepository.findByUsername("alice").get();
+        flightBooking.book(1,1);
+        String bookId = flightBooking.getBookId();
+        Date date = flightBooking.getDate();
+        flightBooking.setBookingStatus(pendingStatus);
+        flightBooking.setUser(user);
+        flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
+
+        // Add Return's Flight to TableLink 1
+        FlightBookingLink flightBookingLinkReturn = new FlightBookingLink();
+        Flight returnFlight = flightRepository.findById(1l).get();
+        flightBookingLinkReturn.setFlight(returnFlight);
+        flightBookingLinkReturn.setFlightBooking(flightBooking);
+        flightBookingLinkReturn.setFlightBookingType(returnType);
+        //save
+        flightBookingLinkReturn = flightBookingLinkRepository.saveAndFlush(flightBookingLinkReturn);
+
+        // Add Return's Flight to TableLink 2
+        flightBookingLinkReturn = new FlightBookingLink();
+        returnFlight = flightRepository.findById(1l).get();
+        flightBookingLinkReturn.setFlight(returnFlight);
+        flightBookingLinkReturn.setFlightBooking(flightBooking);
+        flightBookingLinkReturn.setFlightBookingType(returnType);
+
+        try {
+            flightBookingLinkReturn = flightBookingLinkRepository.saveAndFlush(flightBookingLinkReturn);
+            fail("(flightBookingLink.flightBooking , flightBookingLink.flightBookingType) is not unique");
+        } catch (Exception ex) {
+            assertEquals("org.hibernate.exception.ConstraintViolationException: could not execute statement",ex.getCause().toString());
+        }
     }
 
     @Test

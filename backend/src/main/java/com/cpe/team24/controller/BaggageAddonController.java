@@ -50,7 +50,7 @@ public class BaggageAddonController {
         return baggageaddonRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
     @GetMapping("/airport/{id}")
-    public Collection<BaggageAddon> getAllAddsOn(@PathVariable Long id) {
+    public Collection<BaggageAddon> getAddsOnByAirport(@PathVariable Long id) {
         return baggageaddonRepository.findAllByAirport(airportRepository.findById(id).orElse(null));
     }
 
