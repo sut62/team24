@@ -1,11 +1,11 @@
 <template>
 <div>
-
     <div class="container">
         <div class="row">
             <div class="col">
-                <p class="pl-3 pt-3" style="color:black">ยังไม่ชำระเงิน</p>
 
+                <p class="pl-3 pt-3" style="color:black">ยังไม่ชำระเงิน</p>
+                
                 <div v-for="(flightBookings,index) in flightBookings" :key="index">
                     <v-card>
 
@@ -30,7 +30,7 @@
             </div>
             <div class="col">
                 <p class="pl-3 pt-3" style="color:black">ชำระเงินแล้ว</p>
-                
+
                 <div v-for="(payment,index) in payment" :key="index">
                     <v-card>
 
@@ -64,7 +64,8 @@
                     <v-list-item-action>
                         <img src="../../assets/iconfinder_profle_1055000.png" alt="profilePicture" width="" height="100" />
                         <v-list-item>{{temppayment.flightBooking.user.firstName}} <br> {{temppayment.flightBooking.user.lastName}}</v-list-item>
-                        <v-list-item>ชำระเงินแล้วที่ {{temppayment.paymentWay.name}}</v-list-item>
+                        <v-list-item>ชำระเงินแล้ว</v-list-item>
+                        <v-list-item>{{temppayment.paymentWay.name}}</v-list-item>
                         
 
                     </v-list-item-action>
@@ -83,8 +84,9 @@
                                 {{temppayment.flightBooking.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
                             </v-col>
                             <v-col>
-                                <v-icon color="teal darken-2">mdi-currency-usd </v-icon> {{totalPrice1(temppayment)}}
-                                <v-icon color="blue darken-2">mdi-clock-outline </v-icon> {{temppayment.payDate| moment("DD MMM YYYY LT")}}
+                                <v-icon color="teal darken-2">mdi-currency-usd </v-icon> {{totalPrice1(temppayment)}}<hr>
+                                วันที่จำการจองตั๋วเครื่องบิน: {{temppayment.flightBooking.date | moment("DD MMM YYYY LT")}}<br><br>
+                                วันที่ทำการชำระเงิน: {{temppayment.payDate| moment("DD MMM YYYY LT")}}
                             </v-col>
                         </div>
                     </v-list-item-content>
@@ -99,6 +101,7 @@
                                 </v-row>
                                 <p>สัมภาระเช็คอิน : {{temppayment.flightBooking.flightBookingLinks[0].baggageAddon.maxWeight}} kg</p>
                                 <p>ราคา : {{temppayment.flightBooking.flightBookingLinks[0].baggageAddon.price}} THB</p>
+                                
                             </v-col>
                             <v-col v-if="temppayment.flightBooking.flightBookingLinks[1].baggageAddon != null">
                                 <v-row>
@@ -126,14 +129,14 @@
     <v-dialog v-if="dialog1" v-model="dialog1" max-width="">
         <v-card>
             <v-card-title class="headline">{{tempbook.bookId}} ________________________________________________________________________________________________<v-icon color="teal darken-2" size="40">mdi-currency-usd </v-icon>ราคารวม : {{totalPriceAll(tempbook)}}</v-card-title>
-            
+
             <div>
                 <v-list-item three-line>
                     <v-list-item-action>
                         <img src="../../assets/iconfinder_profle_1055000.png" alt="profilePicture" width="" height="100" />
                         <v-list-item>{{tempbook.user.firstName}} <br> {{tempbook.user.lastName}}</v-list-item>
                         <v-list-item>ยังไม่ชำระเงิน</v-list-item>
-
+                        
                     </v-list-item-action>
                     <v-list-item-content>
                         <div class="text-card">
@@ -150,8 +153,8 @@
                                 {{tempbook.flightBookingLinks[1].flight.flightAirports[1].airport.name}}
                             </v-col>
                             <v-col>
-                                <v-icon color="teal darken-2">mdi-currency-usd </v-icon> {{totalPrice(tempbook)}} THB
-
+                                <v-icon color="teal darken-2">mdi-currency-usd </v-icon> {{totalPrice(tempbook)}} THB<hr>
+                                วันที่จำการจองตั๋วเครื่องบิน: {{tempbook.date | moment("DD MMM YYYY LT")}}
                             </v-col>
                         </div>
                     </v-list-item-content>
