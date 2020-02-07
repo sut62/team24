@@ -32,7 +32,7 @@
             <GuestDetail/>
           </div>
           <div v-if="pageLocation == 4">
-            <AddsOn/>
+            <ChooseAddsOnUI/>
           </div>
         </div>
       </div>
@@ -53,12 +53,12 @@ import FlightList from '../components/BookFlight/FlightList/FlightList'
 import CartFooter from '../components/BookFlight/CartFooter'
 import GuestDetail from '../components/BookFlight/GuestDetail'
 import {mapMutations,mapActions,mapState} from 'vuex'
-import AddsOn from '../components/BookFlight/AddsOn/AddsOn'
+import ChooseAddsOnUI from '../components/BookFlight/AddsOn/ChooseAddsOnUI'
 
 export default {
-  name: 'boookFlight',
+  name: 'FlightBookingUI',
   components: {
-    AddsOn,
+    ChooseAddsOnUI,
     Search,
     UserNavbar,
     UserFooter,
