@@ -45,7 +45,10 @@ public class PaymentController{
     public Collection<Payment> getAllPayment(){
         return paymentRepository.findAll();
     }
-    
+    @GetMapping("{id}")
+    public Payment getByPaymentId(@PathVariable Long id){
+        return paymentRepository.findById(id).get();
+    }
     @PostMapping("/{flight_booking_id}/{payment_way_id}/{promotion_code}/{phone}/{email}")
     public Payment createPayment(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String promotion_code,@PathVariable String phone,@PathVariable String email ){
         Payment payment = new Payment();
@@ -54,6 +57,7 @@ public class PaymentController{
         PaymentWay paymentWay = paymentWayRepository.findById(payment_way_id).orElse(null);
         PromotionCode promotionCode = promotionCodeRepository.findByCode(promotion_code);
 
+        System.out.print(promotionCode);
         payment.setPayDate(new Date());
         payment.setFlightBooking(flightBooking);
         payment.setPaymentWay(paymentWay);

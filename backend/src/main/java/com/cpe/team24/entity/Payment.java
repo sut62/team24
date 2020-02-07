@@ -61,7 +61,6 @@ public class Payment {
     public void setPromotionCode(PromotionCode promotionCode) {
         this.promotionCode = promotionCode;
     }
-
     
     public Long getId() {
         return this.id;
