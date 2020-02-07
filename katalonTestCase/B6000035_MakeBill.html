@@ -3,9 +3,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<title>MakeBill</title>
+	<title>B6000035_MakeBill</title>
 </head>
 <body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Show Fail</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/payment/TESTFAIL00<datalist><option>http://localhost:8080/payment/TESTFAIL00</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td>Alice</td>
+</tr>
+<tr><td>click</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div[2]/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td>1234</td>
+</tr>
+<tr><td>click</td><td>id=login_submit<datalist><option>id=login_submit</option><option>//button[@id='login_submit']</option><option>//div[@id='app']/div[2]/div/div/div/div[3]/button</option><option>//button</option><option>css=#login_submit</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[2]/div/h1<datalist><option>//div[@id='app']/div/main/div/div/div[4]/div[2]/div[2]/div/div[2]/div/h1</option><option>//div[2]/div/h1</option><option>css=div.text-center.p-5.v-card.v-sheet.theme--light &gt; h1</option></datalist></td><td>ไม่พบข้อมูล</td>
+</tr>
+<tr><td>click</td><td>xpath=(//button[@type='button'])[2]<datalist><option>xpath=(//button[@type='button'])[2]</option><option>//div[@id='navbarTogglerDemo01']/span/div/button</option><option>//div/button</option><option>css=button.px-10.btn.btn-primary.dropdown-toggle</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=logout_button<datalist><option>id=logout_button</option><option>//div[@id='logout_button']</option><option>//div[@id='navbarTogglerDemo01']/span/div/div/div</option><option>//span/div/div/div</option><option>css=#logout_button</option></datalist></td><td></td>
+</tr>
+</tbody></table>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
 <tr><td rowspan="1" colspan="3">Show Success</td></tr>
