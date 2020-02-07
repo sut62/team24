@@ -73,6 +73,12 @@ const routes = [
     component: VeriflyCheckIn
   },
   {
+    path: '/verify-checkIn/:mode',
+    name: 'VerifyCheckInTest',
+    component: VeriflyCheckIn,
+    props: true
+  },
+  {
     path: '/check-ticket',
     name: 'CheckTicket',
     component: CheckTicket
