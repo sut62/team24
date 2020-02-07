@@ -7,7 +7,7 @@
                 <h1>ตรวจสอบการชำระเงิน</h1>
             </div>
         </div>
-    <Check></Check>   
+    <Check :mode="mode"></Check>   
     </div>
 
     
@@ -21,6 +21,11 @@ import NavBar from '../components/AdminNavBar'
 import Check from '../components/CheckPayment/Checkpay.vue'
 export default {
     name: 'AddsOn',
+     props: {
+    mode: {
+      type: String
+    }
+  },
     components: {
         NavBar,
         Check

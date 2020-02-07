@@ -62,6 +62,13 @@ const routes = [
     name: 'checkPayment',
     component: CheckPayment
   },
+  
+  {
+    path: '/check-payment/:mode',
+    name: 'checkPaymentTest',
+    component: CheckPayment,
+    props: true
+  },
 
   {
     path: '*',

@@ -1,6 +1,10 @@
 <template>
 <div>
-    <div class="container">
+     <div class="container" v-if="data == true">
+         <center ><font size="20">Data not found</font></center>
+      </div>
+    
+    <div class="container" v-if="data == false">
         <div class="row">
             <div class="col">
 
@@ -209,6 +213,11 @@ let http = axios.create({
 export default {
 
     name: "Checkpay",
+     props: {
+    mode: {
+      type: String
+    }
+  },
     data: () => ({
         tempayment: null,
         tempbook: null,
@@ -216,8 +225,8 @@ export default {
         dialog1: false,
         flightBookings: [],
         payment: [],
-        price: ""
-
+        price: "",
+        data: true
     }),
 
     methods: {
@@ -267,6 +276,7 @@ export default {
                 )
                 .then(res => {
                     this.flightBookings = res.data;
+                    this.data = false;
                 })
                 .catch(e => console.log(e));
 
@@ -278,13 +288,17 @@ export default {
                 )
                 .then(res => {
                     this.payment = res.data;
+                    this.data = false;
                 })
                 .catch(e => console.log(e));
         }
     },
     mounted() {
-        this.getFBooking();
-        this.getPay();
+        if(this.mode !="testfail"){
+      //console.log("fromShowCheckIn "+ this.mode);
+      this.getFBooking();
+    this.getPay();
+    }
     },
     watch: {
         images() {
