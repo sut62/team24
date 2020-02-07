@@ -238,6 +238,31 @@ public class CheckInTests {
         assertEquals("must not be null", v.getMessage());
         assertEquals("checkInType", v.getPropertyPath().toString());
     }
+    @Test
+    void b6012540_testCheckInStatusMustNotBeNull(){
+        CheckIn checkIn = new CheckIn();
+        CheckInType checkInType = checkInTypeRepository.findById((1l)).orElse(null);
+        FlightBooking flightBooking = flightBookingRepository.findById(1L).get();
+        String boardingPass = RandomString.make(6).toUpperCase();
+        Date date = new Date();
+
+        checkIn.setCheckInStatus(null);
+        checkIn.setCheckInType(checkInType);
+        checkIn.setFlightBooking(flightBooking);
+        checkIn.setBoardingPass(boardingPass);
+        checkIn.setEmail("test@gmail.com");
+        checkIn.setDate(date);
+
+        Set<ConstraintViolation<CheckIn>> result = validator.validate(checkIn);
+        //System.out.println("======================================="+ result);
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<CheckIn> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("checkInStatus", v.getPropertyPath().toString());
+    }
 
     @Test
     void b6012540_testFlightBookingMustNotBeNull(){

@@ -2,6 +2,9 @@ package com.cpe.team24.controller;
 
 import com.cpe.team24.model.BodyCheckIn;
 import com.cpe.team24.entity.CheckIn;
+import com.cpe.team24.entity.CheckInStatus;
+import com.cpe.team24.entity.CheckInType;
+import com.cpe.team24.entity.FlightBooking;
 import com.cpe.team24.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -58,13 +61,18 @@ public class CheckInController {
     @PostMapping("/create")
     public CheckIn newCheckIn(@RequestBody final BodyCheckIn bodyCheckIn) {
         CheckIn checkIn = new CheckIn();
-        checkIn.setCheckInStatus(checkInStatusRepository.findById((1L)).orElse(null));
-        checkIn.setCheckInType(checkInTypeRepository.findById((1L)).orElse(null));
-        checkIn.setFlightBooking(flightBookingRepository.findById(bodyCheckIn.getFlightBookingId()).orElse(null));
+        CheckInStatus s = checkInStatusRepository.findById((1L)).orElse(null);
+        CheckInType t = checkInTypeRepository.findById((1L)).orElse(null);
+        FlightBooking f = flightBookingRepository.findById(bodyCheckIn.getFlightBookingId()).orElse(null);
+        checkIn.setCheckInStatus(s);
+        checkIn.setCheckInType(t);
+        checkIn.setFlightBooking(f);
         checkIn.setBoardingPass(RandomString.make(6).toUpperCase());
-        checkIn.setEmail(bodyCheckIn.getEmail());
-        checkIn.setDate(new Date());
+        String email = bodyCheckIn.getEmail();
+        Date date = new Date();
+        checkIn.setEmail(email);
+        checkIn.setDate(date);
         return checkInRepository.save(checkIn);
     }
-
+    
 }

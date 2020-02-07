@@ -115,7 +115,7 @@
         <div class="mt-3 font-weight-medium topic-size">Flight</div>
         <div class="mt-0 font-weight-medium text-size">รายละเอียดเที่ยวบิน</div>
         <div class="card text-center card-description">
-          <div class="card-header text-left">รายละเอียด (ขาไป)</div>
+          <div class="card-header text-left">รายละเอียด ขาไป : {{flight.flightBookingLinks[0].flightBookingType.name}}</div>
           <div class="card card-flight card-header text-center">
             <v-row>
               <v-col cols="5">{{flightAirports_go_depart.name}} </v-col>
@@ -138,7 +138,7 @@
           class="card text-center card-description"
           
         >
-          <div class="card-header text-left">รายละเอียด (ขากลับ)</div>
+          <div class="card-header text-left">รายละเอียด ขากลับ : {{flight.flightBookingLinks[1].flightBookingType.name}}</div>
           <div class="card card-flight card-header text-center">
             <v-row>
               <v-col cols="5">{{flightAirports_back_depart.name}}</v-col>
@@ -774,6 +774,7 @@ export default {
         )
         .then(response => {
           if (response.data != null) {
+            console.log(response.data);
             this.flight = response.data;
             this.user = response.data.user;
             this.flightBookingId = response.data.id;
@@ -814,7 +815,7 @@ export default {
               response.data.flightBookingLinks[1].flight.flightAirports[1].airport.name;
 
             this.checkIn.flightBookingId = this.flight.id;
-           
+
                this.onShowFligthPage(this);
           } else {
             this.clear();
