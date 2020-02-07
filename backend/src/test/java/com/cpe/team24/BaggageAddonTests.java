@@ -59,7 +59,7 @@ public class BaggageAddonTests {
     }
 
     @Test
-    void testAddBaggageSuccess() {
+    void b6026066_testAddBaggageSuccess() {
         BaggageAddon baggageAddon= new BaggageAddon();
         baggageAddon.setMaxWeight(5);
         baggageAddon.setPrice(500.00);
@@ -99,6 +99,26 @@ public class BaggageAddonTests {
     }
 
     @Test
+    void b6026066_maxPriceNotBeNull(){
+        BaggageAddon baggageAddon= new BaggageAddon();
+        baggageAddon.setMaxWeight(5);
+        baggageAddon.setPrice(null);
+
+        baggageAddon.setBaggageType(baggagetypeRepository.findById(1L));
+        baggageAddon.setBaggageImage(baggageimageRepository.findById(1L));
+        baggageAddon.setAirport(airportRepository.findById(1L).orElse(null));
+
+        Set<ConstraintViolation<BaggageAddon>> result = validator.validate(baggageAddon);
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<BaggageAddon> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("price", v.getPropertyPath().toString());
+    }
+
+    @Test
     void b6026066_BaggagetypeMustNotBeNull(){
         BaggageAddon baggageAddon= new BaggageAddon();
         baggageAddon.setMaxWeight(10);
@@ -116,6 +136,46 @@ public class BaggageAddonTests {
         ConstraintViolation<BaggageAddon> v = result.iterator().next();
         assertEquals("must not be null", v.getMessage());
         assertEquals("baggageType", v.getPropertyPath().toString());
+    }
+
+    @Test
+    void b6026066_BaggageImageMustNotBeNull(){
+        BaggageAddon baggageAddon= new BaggageAddon();
+        baggageAddon.setMaxWeight(10);
+        baggageAddon.setPrice(500.00);
+
+        baggageAddon.setBaggageType(baggagetypeRepository.findById(1L));
+        baggageAddon.setBaggageImage(null);
+        baggageAddon.setAirport(airportRepository.findById(1L).orElse(null));
+
+        Set<ConstraintViolation<BaggageAddon>> result = validator.validate(baggageAddon);
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<BaggageAddon> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("baggageImage", v.getPropertyPath().toString());
+    }
+
+    @Test
+    void b6026066_BaggageAirportMustNotBeNull(){
+        BaggageAddon baggageAddon= new BaggageAddon();
+        baggageAddon.setMaxWeight(10);
+        baggageAddon.setPrice(500.00);
+
+        baggageAddon.setBaggageType(baggagetypeRepository.findById(1L));
+        baggageAddon.setBaggageImage(baggageimageRepository.findById(1L));
+        baggageAddon.setAirport(null);
+
+        Set<ConstraintViolation<BaggageAddon>> result = validator.validate(baggageAddon);
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<BaggageAddon> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("airport", v.getPropertyPath().toString());
     }
 
     @Test
@@ -140,7 +200,49 @@ public class BaggageAddonTests {
     }
 
     @Test
-    void b6026066_Pricemax100000() {
+    void b6026066_MaxWeightNoneNegative() {
+        BaggageAddon bag = new BaggageAddon();
+        bag.setMaxWeight(-10);
+        bag.setPrice(500.00);
+
+        bag.setBaggageType(baggagetypeRepository.findById(1L));
+        bag.setBaggageImage(baggageimageRepository.findById(1L));
+        bag.setAirport(airportRepository.findById(1L).orElse(null));
+
+        
+        Set<ConstraintViolation<BaggageAddon>> result = validator.validate(bag);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<BaggageAddon> v = result.iterator().next();
+        assertEquals("must be greater than or equal to 0", v.getMessage());
+        assertEquals("maxWeight", v.getPropertyPath().toString());
+    }
+    
+    @Test
+    void b6026066_WeightMax10000() {
+        BaggageAddon bag = new BaggageAddon();
+        bag.setMaxWeight(100000);
+        bag.setPrice(500.00);
+
+        bag.setBaggageType(baggagetypeRepository.findById(1L));
+        bag.setBaggageImage(baggageimageRepository.findById(1L));
+        bag.setAirport(airportRepository.findById(1L).orElse(null));
+
+        Set<ConstraintViolation<BaggageAddon>> result = validator.validate(bag);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+        System.out.println("======================================="+ result);
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<BaggageAddon> v = result.iterator().next();
+        assertEquals("must be less than or equal to 10000", v.getMessage());
+        assertEquals("maxWeight", v.getPropertyPath().toString());
+    }
+
+    @Test
+    void b6026066_PriceMax100000() {
         BaggageAddon bag = new BaggageAddon();
         bag.setMaxWeight(10);
         bag.setPrice(100000000000.00);
@@ -159,4 +261,6 @@ public class BaggageAddonTests {
         assertEquals("must be less than or equal to 100000", v.getMessage());
         assertEquals("price", v.getPropertyPath().toString());
     }
+
+    
 }

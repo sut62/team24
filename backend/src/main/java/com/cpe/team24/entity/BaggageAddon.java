@@ -32,6 +32,7 @@ public class BaggageAddon {
 
     @NotNull
     @PositiveOrZero
+    @Max(10000)
     private Integer maxWeight;
  
 
