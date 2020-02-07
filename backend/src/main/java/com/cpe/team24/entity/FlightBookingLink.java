@@ -11,6 +11,10 @@ import lombok.NonNull;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"FLIGHT_BOOKING_ID", "FLIGHT_BOOKING_TYPE_ID"})
+)
 public class FlightBookingLink {
     @Id
     @SequenceGenerator(name="FLIGHT_BOOKING_LINK_SEQ",sequenceName="FLIGHT_BOOKING_LINK_SEQ")
@@ -34,6 +38,7 @@ public class FlightBookingLink {
 
     @ManyToOne
     @NotNull
+    @JoinColumn(name = "FLIGHT_BOOKING_TYPE_ID")
     private FlightBookingType flightBookingType;
 
     //GETTER SETTER

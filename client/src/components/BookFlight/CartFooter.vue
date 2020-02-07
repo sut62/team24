@@ -9,7 +9,7 @@
       <v-row>
         <v-col cols="6">
           <div class="mt-5 float-right">
-           <i class="fas fa-shopping-cart" ></i> <div @click="showSideBar = true" class="badge badge-info btn btn-info">detail</div>  <span class="ml-3">ราคารวม </span><span class="h5"> {{getTotalPrice | price}} THB</span>
+            <i class="fas fa-shopping-cart" ></i> <div @click="showSideBar = true" class="badge badge-info btn btn-info">detail</div>  <span class="ml-3">ราคารวม </span><span class="h5"> {{getTotalPrice | price}} THB</span>
           </div>
         </v-col>
         <v-col cols="6">
@@ -95,7 +95,11 @@ export default {
         this.topicAlert = "แจ้งเตือนจากระบบ"
         this.msgAlert = "กรุณาเลือกเที่ยวบินขากลับ"
       }else{
-        this.nextPage()
+        this.nextPage().catch(err=>{
+          this.showGuestAlert = true
+          this.topicAlert = "เกิดข้อผิดพลาด"
+          this.msgAlert = err.toString()
+        })
       }
     }
   },
