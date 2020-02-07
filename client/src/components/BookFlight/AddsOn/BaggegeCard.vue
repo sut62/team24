@@ -4,14 +4,18 @@
     <div class="card-header">
       <v-icon>mdi-account</v-icon> ผู้โดยสาร 1 ท่าน
     </div>
-    
-    <div class="card-body">
+    <div v-if="this.baggages.length == 0" class="card-body">
+      <div class="p-4">
+        <h3>สนามบินนี้ไม่มีบริการสัมภาระเช็คอินพิเศษ</h3>
+      </div>
+    </div>
+    <div v-else class="card-body">
       <!-- menu type selection -->
       <div class="btn-group" role="group" aria-label="Basic example">
         <button disabled class="btn btn-secondary">ประเภทสัมภาระ</button>
         <button v-for="(type,index) in baggageTypes" :key="index"  @click="selected.typeId = type.id" type="button" :class="{'btn ':true,'btn-warning':selected.typeId != type.id,'btn-danger':selected.typeId == type.id}">{{type.btypename}}</button>
       </div>
-      <!-- card seeletec menu -->
+      <!-- card selected menu -->
       <div class="d-flex mt-3 flex-wrap">
         <div @click="menu == 1 ? selectBaggageDepart(null) : selectBaggageReturn(null)" :class="{'btn card my-img m-1':true,'my-selected':menu == 1? baggageDepart == null : baggageReturn == null}">
           <img src="../../../assets/BookFlight-AddsOn/baggage_icon.png" class="baggageIcon"/>
