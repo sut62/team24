@@ -4,6 +4,7 @@ import com.cpe.team24.entity.*;
 import com.cpe.team24.model.BodyFlightBooking;
 import com.cpe.team24.repository.*;
 
+import net.bytebuddy.utility.RandomString;
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 @RestController
 @RequestMapping(path="/api/flight-booking")
@@ -75,12 +77,15 @@ public class FlightBookingController {
     
     @PostMapping("/book")
     @PreAuthorize("hasRole('ROLE_MEMBER')")
-    public FlightBooking book(@RequestBody final BodyFlightBooking bodyFlightBooking, final Authentication authentication) {
+    public FlightBooking BookFlight(@RequestBody final BodyFlightBooking bodyFlightBooking, final Authentication authentication) {
         System.out.println(authentication.getName());
         FlightBooking flightBooking = new FlightBooking();
         final Integer departSeatId = 1;
         final Integer returnSeatId = 1;
-        flightBooking.book(departSeatId,returnSeatId);
+        flightBooking.setDepartSeatId(departSeatId);
+        flightBooking.setReturnSeatId(returnSeatId);
+        flightBooking.setBookId(RandomString.make(6).toUpperCase());
+        flightBooking.setDate(new Date());
         flightBooking.setUser(userRepository.findByUsername(authentication.getName()).orElse(null));
         flightBooking.setBookingStatus(bookingStatusRepository.findByName(EBookingStatus.PENDING));
         flightBooking = flightBookingRepository.save(flightBooking);
