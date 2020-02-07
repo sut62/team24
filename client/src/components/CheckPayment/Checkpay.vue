@@ -30,7 +30,7 @@
             </div>
             <div class="col">
                 <p class="pl-3 pt-3" style="color:black">ชำระเงินแล้ว</p>
-
+                
                 <div v-for="(payment,index) in payment" :key="index">
                     <v-card>
 
@@ -64,7 +64,8 @@
                     <v-list-item-action>
                         <img src="../../assets/iconfinder_profle_1055000.png" alt="profilePicture" width="" height="100" />
                         <v-list-item>{{temppayment.flightBooking.user.firstName}} <br> {{temppayment.flightBooking.user.lastName}}</v-list-item>
-                        <v-list-item>ชำระเงินแล้ว</v-list-item>
+                        <v-list-item>ชำระเงินแล้วที่ {{temppayment.paymentWay.name}}</v-list-item>
+                        
 
                     </v-list-item-action>
                     <v-list-item-content>
