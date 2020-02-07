@@ -149,7 +149,9 @@ public class Team24Application {
 			data = new Object[][] {
 					// price , depart(days), flight duration(minute) , Airport (Depart), Airpot (Arrive), Airplane
 					// 0 is today , 1 tomorrow , 2 next 2 day
-					{ 1900, 0, 30 ,1,2,1 }, { 1800, 0, 40 ,1,2,1 }, { 2000, 1, 75 ,2,1,1 }, { 2400, 1, 55,2,1,1 }, };
+					{ 1900, 0, 30 ,1,2,1 }, { 1800, 0, 40 ,1,2,1 }, { 2000, 1, 75 ,2,1,1 }, { 2400, 1, 55,2,1,1 },
+					{ 1900, 0, 30 ,1,3,1 }, { 1800, 0, 40 ,1,3,1 }, { 2000, 1, 75 ,3,1,1 }, { 2400, 1, 55,3,1,1 }, 
+				 };
 			for (int i = 0; i < data.length; i++) {
 				Flight flight = new Flight();
 				flight.setPrice(Double.parseDouble(data[i][0].toString()));
@@ -189,7 +191,9 @@ public class Team24Application {
 			// --------------Flight Booking-----------------
 			data = new Object[][] {
 					// departFlightId,returnFlightId,departSeatId,returnSeatId,MemberId
-					{ 3, 1, 1, 1, 1 }, { 1, 3, 2, 2, 1 },{ 1, 3, 2, 2, 2 },{ 3, 1, 2, 2, 1 } };
+					{ 3, 1, 1, 1, 1 }, { 1, 3, 2, 2, 1 },{ 1, 3, 2, 2, 2 },{ 3, 1, 2, 2, 1 },
+					{ 7, 5, 1, 1, 1 }, { 7, 5, 2, 2, 1 },{ 5, 7, 2, 2, 2 },{ 5, 7, 2, 2, 1 }
+				 };
 			for (int i = 0; i < data.length; i++) {
 				FlightBooking flightBooking = new FlightBooking();
 				flightBooking.book((Integer) data[i][2], (Integer) data[i][3]);
