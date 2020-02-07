@@ -46,11 +46,11 @@ public class PaymentController{
         return paymentRepository.findAll();
     }
     @GetMapping("{id}")
-    public Payment getByPaymentId(@PathVariable Long id){
+    public Payment makeBill(@PathVariable Long id){
         return paymentRepository.findById(id).get();
     }
     @PostMapping("/{flight_booking_id}/{payment_way_id}/{promotion_code}/{phone}/{email}")
-    public Payment createPayment(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String promotion_code,@PathVariable String phone,@PathVariable String email ){
+    public Payment payFlight(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String promotion_code,@PathVariable String phone,@PathVariable String email ){
         Payment payment = new Payment();
 
         FlightBooking flightBooking = flightBookingRepository.findById(flight_booking_id).orElse(null);
@@ -66,7 +66,6 @@ public class PaymentController{
         payment.setEmail(email);
         
         this.submitBooking(flightBooking);
-
         Double total = (double) 0;
         for(FlightBookingLink fbl : flightBooking.getFlightBookingLinks()){
             total += fbl.getFlight().getPrice();
@@ -85,7 +84,7 @@ public class PaymentController{
     }
 
     @PostMapping("/{flight_booking_id}/{payment_way_id}/{phone}/{email}")
-    public Payment createPayment(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String phone,@PathVariable String email ){
+    public Payment payFlightWithoutCode(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String phone,@PathVariable String email ){
         Payment payment = new Payment();
 
         FlightBooking flightBooking = flightBookingRepository.findById(flight_booking_id).orElse(null);

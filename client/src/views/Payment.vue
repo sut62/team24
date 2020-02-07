@@ -571,7 +571,7 @@ export default {
       router.push({ name: "paymentBill" });
     },
     checkPromotion() {
-      this.data.promotionCode;
+      this.data.promotionCode; 
       http
         .get("/promotion-code/" + this.data.promotionCode)
         .then(res => {
