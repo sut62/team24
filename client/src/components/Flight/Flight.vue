@@ -4,9 +4,9 @@
     <Alert :open="fall" topic="แจ้งเตือน" desc="บันทึกไม่สำเร็จ" :callback="()=>this.fall = false" />
     <v-container fluid>
         <v-row>
-            <v-col cols="12" sm="20" md="12">
-                <v-card>
-                    <v-toolbar>
+            <v-col cols="12" sm="20" md="10">
+                <v-card raised>
+                    <v-toolbar height="100px">
                         <h1>เที่ยวบิน</h1>
                     </v-toolbar>
                     <v-dialog v-model="dialog" max-width="800px">
@@ -75,8 +75,9 @@
 
                     <v-card-text style="height: 100%; width: 100%" class="background">
                         <div v-for="(flight1, index) in flight" :key="index">
-                            <v-card>
-                                <v-list-item>
+                            <v-card tile>
+                                <div class="p-2 mb-2">
+                                    <v-list-item>
                                     <v-list-item-content>
                                         <v-row class="font-weight-medium">
                                             <v-list-item>
@@ -100,9 +101,10 @@
                                                 </v-row>
                                             </v-list-item>
                                         </v-row>
-                                        <hr />
                                     </v-list-item-content>
                                 </v-list-item>
+                                </div>
+                                
                             </v-card>
                         </div>
 
@@ -246,7 +248,6 @@ export default {
         this.getFlight();
         this.getAirport();
         this.getAirplane();
-        // this.saveFlight();
     }
 }
 </script>
