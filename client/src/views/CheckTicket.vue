@@ -3,14 +3,12 @@
     <div class="header-bg"></div>
     <div class="content">
         <UserNavbar />
-        <div class="container" style="margin-top:100px;">
+        <div class="container" style="margin-top:100px; margin-bottom: 300px">
             <div class="mx-auto">
-                <div>
-                    <div class="text-white">
-                        <h1 class="mt-5">ตรวจสอบการจองตั๋วเครื่องบิน</h1><br><br>
-                    </div>
+                <div class="text-white">
+                    <h1 class="mt-5">ตรวจสอบการจองตั๋วเครื่องบิน</h1><br><br>
                 </div>
-                <Search />
+                <Search :mode="mode"/>
             </div>
         </div>
         <UserFooter />
@@ -25,6 +23,11 @@ import UserNavbar from '../components/UserNavbar'
 import UserFooter from '../components/UserFooter'
 export default {
     name: 'CheckTicket',
+    props: {
+        mode: {
+            type: String
+        }
+    },
     data: () => ({
 
     }),
@@ -37,11 +40,6 @@ export default {
 </script>
 
 <style scoped>
-.flip {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-}
-
 .header-bg {
     height: 300px;
     width: 100%;
@@ -55,16 +53,5 @@ export default {
 .content {
     z-index: 1;
     position: relative;
-}
-
-.my-right {
-    position: absolute;
-    right: 1px;
-}
-
-.my-content {
-    position: absolute;
-    top: 150px;
-    width: 100%;
 }
 </style>
