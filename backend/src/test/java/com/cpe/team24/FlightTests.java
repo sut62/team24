@@ -105,47 +105,7 @@ public class FlightTests {
 
     }
 
-   @Test
-   void b6016357_testFlightDepartMustNotBeNull(){
-    Flight flight = new Flight();
-    Airplane airplane = airplaneRepository.findById(1L).get();
-    Airport airport = airportRepository.findById(1L).get();
-    FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT);
-    FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT);
-
-    Double price = 1500.40;
-    Date depart = null;
-    Date arrive = new Date();
-
-    flight.setPrice(price);
-    flight.setDepart(depart);
-    flight.setArrive(arrive);
-    flight.setAirplane(airplane);
-    flight.setDescription("description");
-
-    //FlightAirport depart
-    FlightAirport flightAirportDepart = new FlightAirport();
-    flightAirportDepart.setAirport(airport);
-    flightAirportDepart.setFlightAirportType(flightAirportTypeDepart);
-    flightAirportDepart.setFlight(flight);
-
-    //FlightAirport arrive
-    FlightAirport flightAirportArrive = new FlightAirport();
-    flightAirportArrive.setAirport(airport);
-    flightAirportArrive.setFlightAirportType(flightAirportTypeArrive);
-    flightAirportArrive.setFlight(flight);
-
-
-       Set<ConstraintViolation<Flight>> result = validator.validate(flight);
-       System.out.println("======================================="+ result);
-       // result ต้องมี error 1 ค่าเท่านั้น
-       assertEquals(1, result.size());
-
-       // error message ตรงชนิด และถูก field
-       ConstraintViolation<Flight> v = result.iterator().next();
-       assertEquals("must not be null", v.getMessage());
-       assertEquals("depart", v.getPropertyPath().toString());
-   }
+   
 
    @Test
     void b6016357_testPriceMustFollowWithDigitOnly() {
@@ -226,5 +186,132 @@ public class FlightTests {
         assertEquals("must match \"[a-z A-Z]*\"", v.getMessage());
         assertEquals("description", v.getPropertyPath().toString());
     }
+    
+    @Test
+    void b6016357_testFlightDepartMustNotBeNull(){
+    Flight flight = new Flight();
+    Airplane airplane = airplaneRepository.findById(1L).get();
+    Airport airport = airportRepository.findById(1L).get();
+    FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT);
+    FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT);
+
+    Double price = 1500.40;
+    Date depart = null;
+    Date arrive = new Date();
+
+    flight.setPrice(price);
+    flight.setDepart(depart);
+    flight.setArrive(arrive);
+    flight.setAirplane(airplane);
+    flight.setDescription("description");
+
+    //FlightAirport depart
+    FlightAirport flightAirportDepart = new FlightAirport();
+    flightAirportDepart.setAirport(airport);
+    flightAirportDepart.setFlightAirportType(flightAirportTypeDepart);
+    flightAirportDepart.setFlight(flight);
+
+    //FlightAirport arrive
+    FlightAirport flightAirportArrive = new FlightAirport();
+    flightAirportArrive.setAirport(airport);
+    flightAirportArrive.setFlightAirportType(flightAirportTypeArrive);
+    flightAirportArrive.setFlight(flight);
+
+
+       Set<ConstraintViolation<Flight>> result = validator.validate(flight);
+       System.out.println("======================================="+ result);
+       // result ต้องมี error 1 ค่าเท่านั้น
+       assertEquals(1, result.size());
+
+       // error message ตรงชนิด และถูก field
+       ConstraintViolation<Flight> v = result.iterator().next();
+       assertEquals("must not be null", v.getMessage());
+       assertEquals("depart", v.getPropertyPath().toString());
+   }
+
+   @Test
+    void b6016357_testFlightArriveMustNotBeNull(){
+    Flight flight = new Flight();
+    Airplane airplane = airplaneRepository.findById(1L).get();
+    Airport airport = airportRepository.findById(1L).get();
+    FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT);
+    FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT);
+
+    Double price = 1500.40;
+    Date depart = new Date();
+    Date arrive = null;
+
+    flight.setPrice(price);
+    flight.setDepart(depart);
+    flight.setArrive(arrive);
+    flight.setAirplane(airplane);
+    flight.setDescription("description");
+
+    //FlightAirport depart
+    FlightAirport flightAirportDepart = new FlightAirport();
+    flightAirportDepart.setAirport(airport);
+    flightAirportDepart.setFlightAirportType(flightAirportTypeDepart);
+    flightAirportDepart.setFlight(flight);
+
+    //FlightAirport arrive
+    FlightAirport flightAirportArrive = new FlightAirport();
+    flightAirportArrive.setAirport(airport);
+    flightAirportArrive.setFlightAirportType(flightAirportTypeArrive);
+    flightAirportArrive.setFlight(flight);
+
+
+       Set<ConstraintViolation<Flight>> result = validator.validate(flight);
+       System.out.println("======================================="+ result);
+       // result ต้องมี error 1 ค่าเท่านั้น
+       assertEquals(1, result.size());
+
+       // error message ตรงชนิด และถูก field
+       ConstraintViolation<Flight> v = result.iterator().next();
+       assertEquals("must not be null", v.getMessage());
+       assertEquals("arrive", v.getPropertyPath().toString());
+   }
+
+   @Test
+    void b6016357_testFlightPriceMustNotBeNull(){
+    Flight flight = new Flight();
+    Airplane airplane = airplaneRepository.findById(1L).get();
+    Airport airport = airportRepository.findById(1L).get();
+    FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT);
+    FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT);
+
+    Double price = null;
+    Date depart = new Date();
+    Date arrive = new Date();
+
+    flight.setPrice(price);
+    flight.setDepart(depart);
+    flight.setArrive(arrive);
+    flight.setAirplane(airplane);
+    flight.setDescription("description");
+
+    //FlightAirport depart
+    FlightAirport flightAirportDepart = new FlightAirport();
+    flightAirportDepart.setAirport(airport);
+    flightAirportDepart.setFlightAirportType(flightAirportTypeDepart);
+    flightAirportDepart.setFlight(flight);
+
+    //FlightAirport arrive
+    FlightAirport flightAirportArrive = new FlightAirport();
+    flightAirportArrive.setAirport(airport);
+    flightAirportArrive.setFlightAirportType(flightAirportTypeArrive);
+    flightAirportArrive.setFlight(flight);
+
+
+       Set<ConstraintViolation<Flight>> result = validator.validate(flight);
+       System.out.println("======================================="+ result);
+       // result ต้องมี error 1 ค่าเท่านั้น
+       assertEquals(1, result.size());
+
+       // error message ตรงชนิด และถูก field
+       ConstraintViolation<Flight> v = result.iterator().next();
+       assertEquals("must not be null", v.getMessage());
+       assertEquals("price", v.getPropertyPath().toString());
+   }
+
 
 }

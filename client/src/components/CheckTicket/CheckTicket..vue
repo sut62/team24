@@ -7,8 +7,8 @@
     </div>
 
     <div class="container" v-if="data == false">
-        <div class="row">
-            <div class="col">
+        <v-row>
+            <v-col>
                 <div v-for="(flightBookings,index) in flightBookings" :key="index">
                     <v-card tile max-width="1200" class="mx-auto">
                         <div class="p-2 mb-2">
@@ -50,15 +50,14 @@
                                         </div>
                                     </v-list-item-content>
                                 </div>
-
                             </v-list-item>
                         </div>
                     </v-card>
                 </div>
-            </div>
-        </div>
+            </v-col>
+        </v-row>
 
-        <div class="col">
+        <v-col>
             <div v-for="(payment,index) in payment" :key="index">
                 <v-card tile max-width="1200" center class="mx-auto">
                     <div class="p-2 mb-2">
@@ -93,11 +92,10 @@
                                 </v-col>
                             </v-list-item-content>
                         </v-list-item>
-                        <div></div>
                     </div>
                 </v-card>
             </div>
-        </div>
+        </v-col>
     </div>
 </div>
 </template>
@@ -183,7 +181,6 @@ export default {
     },
     mounted() {
         if (this.mode != "testfail") {
-            //console.log("fromShowCheckIn "+ this.mode);
             this.getFlightBooking();
             this.getPayment();
         }
