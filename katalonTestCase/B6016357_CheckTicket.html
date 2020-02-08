@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>B6016357_CheckTicket</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CheckTicket Success</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8081/check-ticket<datalist><option>http://localhost:8081/check-ticket</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td>bob</td>
+</tr>
+<tr><td>click</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td>1234</td>
+</tr>
+<tr><td>click</td><td>id=login_submit<datalist><option>id=login_submit</option><option>//button[@id='login_submit']</option><option>//div[@id='app']/div/div/div/div/div[3]/button</option><option>//button</option><option>css=#login_submit</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>//div[@id='app']/div/main/div/div/div[2]/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div/b<datalist><option>//div[@id='app']/div/main/div/div/div[2]/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div/b</option><option>//b</option><option>css=b</option></datalist></td><td>*</td>
+</tr>
+<tr><td>click</td><td>//span[@id='user_info_bar']/i<datalist><option>//span[@id='user_info_bar']/i</option><option>//i</option><option>css=i.v-icon.notranslate.mdi.mdi-account.theme--light</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=logout_button<datalist><option>id=logout_button</option><option>//div[@id='logout_button']</option><option>//div[@id='navbarTogglerDemo01']/span/div/div/div</option><option>//span/div/div/div</option><option>css=#logout_button</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CheckTicket Fail</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8081/check-ticket/testfail<datalist><option>http://localhost:8081/check-ticket/testfail</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=username<datalist><option>id=username</option><option>//input[@id='username']</option><option>//div[@id='app']/div/div/div/div/div[2]/div/div/div/div/input</option><option>//input</option><option>css=#username</option></datalist></td><td>bob</td>
+</tr>
+<tr><td>click</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=password<datalist><option>id=password</option><option>//input[@id='password']</option><option>//div[@id='app']/div/div/div/div/div[2]/div[2]/div/div/div/input</option><option>//div[2]/div/div/div/input</option><option>css=#password</option></datalist></td><td>1234</td>
+</tr>
+<tr><td>click</td><td>id=login_submit<datalist><option>id=login_submit</option><option>//button[@id='login_submit']</option><option>//div[@id='app']/div/div/div/div/div[3]/button</option><option>//button</option><option>css=#login_submit</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>//div[@id='app']/div/main/div/div/div[2]/div[2]/div/div[2]/div/center/font<datalist><option>//div[@id='app']/div/main/div/div/div[2]/div[2]/div/div[2]/div/center/font</option><option>//font</option><option>css=font</option></datalist></td><td>Data not found</td>
+</tr>
+<tr><td>click</td><td>//span[@id='user_info_bar']/i<datalist><option>//span[@id='user_info_bar']/i</option><option>//i</option><option>css=i.v-icon.notranslate.mdi.mdi-account.theme--light</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=logout_button<datalist><option>id=logout_button</option><option>//div[@id='logout_button']</option><option>//div[@id='navbarTogglerDemo01']/span/div/div/div</option><option>//span/div/div/div</option><option>css=#logout_button</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -90,6 +90,12 @@ const routes = [
     name: 'CheckTicket',
     component: CheckTicket
   },
+  {
+    path: '/check-ticket/:mode',
+    name: 'CheckTicket',
+    component: CheckTicket,
+    props: true
+  },
 ]
 
 const router = new VueRouter({
