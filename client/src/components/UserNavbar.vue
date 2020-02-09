@@ -14,13 +14,13 @@
           <a href="/about" class="btn mr-5">เกี่ยวกับเรา</a>
 
         </div>
-        <v-dialog persistent v-if="!logedIn" v-model="showAuthForm" max-width="400">
+        <v-dialog persistent v-if="!this.isLoginAsCustomer()" v-model="showAuthForm" max-width="400">
           <template v-slot:activator="{ on }">
             <v-btn color="primary" dark v-on="on">เข้าสู่ระบบ</v-btn>
           </template>
-          <LoginForm :closeDialog = "closeDialog"/>
+          <LoginForm :message="this.formMessage" :closeDialog = "closeDialog"/>
         </v-dialog>
-        <span v-if="logedIn">
+        <span v-if="this.isLoginAsCustomer()">
           <div class="dropdown ">
             <button style="width:300px" class="px-10 btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="" id="user_info_bar"><v-icon>mdi-account</v-icon> ชื่อผู้ใช้ {{user.username}} </span>
@@ -69,18 +69,23 @@ export default {
     openAuthForm(){
       this.showAuthFrom = true;
     },
-    isLogin(){
-      let user =localStorage.getItem('user')
-      if(user != null){
-        return true;
-      }
-      else 
+    isLoginAsCustomer(){
+      if(!this.logedIn){
         return false
+      }
+      for(let role of this.user.roles){
+        if(role == "ROLE_MEMBER"){
+          return true;
+        }
+      }
+      this.formMessage = "กรุณาใช้ Account Customer ในการเข้าสู่ระบบ"
+      return false;
     }
   },
   watch:{
     logedIn(){
-      if(!this.logedIn){
+      this.formMessage = ""
+      if(!this.isLoginAsCustomer()){
         this.showAuthForm = true
       } 
     }
@@ -92,9 +97,10 @@ export default {
     })
   },
   mounted(){
-    if(!this.logedIn){
+    if(!this.isLoginAsCustomer()){
       this.showAuthForm = true
     } 
+    this.showAuthForm = true
   }
 }
 </script>
