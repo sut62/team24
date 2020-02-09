@@ -71,7 +71,7 @@ public class CheckInTests {
     }
 
     @Test
-    void b6012540_testBoardingPassMustUnique(){
+    void b6012540_testBoardingPassMustBeUnique(){
         CheckIn checkIn = new CheckIn();
         CheckInStatus checkInStatus = checkInStatusRepository.findById((1l)).get();
         CheckInType checkInType = checkInTypeRepository.findById((1l)).get();
@@ -97,6 +97,39 @@ public class CheckInTests {
             checkIn2.setCheckInType(checkInType);
             checkIn2.setFlightBooking(flightBooking);
             checkIn2.setBoardingPass(oldBoardingPass);
+            checkIn2.setEmail("test@gmail.com");
+            checkIn2.setDate(date);
+
+            checkIn2 = checkInRepository.saveAndFlush(checkIn2);
+        });
+
+     }
+     @Test
+    void b6012540_testFlightBookingMustBeUnique(){
+        CheckIn checkIn = new CheckIn();
+        CheckInStatus checkInStatus = checkInStatusRepository.findById((1l)).get();
+        CheckInType checkInType = checkInTypeRepository.findById((1l)).get();
+        FlightBooking flightBooking = flightBookingRepository.findById(8L).get();
+        Date date = new Date();
+        String boardingPass = RandomString.make(6).toUpperCase();
+        
+
+        checkIn.setCheckInStatus(checkInStatus);
+        checkIn.setCheckInType(checkInType);
+        checkIn.setFlightBooking(flightBooking);
+        checkIn.setBoardingPass(boardingPass);
+        checkIn.setEmail("test@gmail.com");
+        checkIn.setDate(date);
+
+        checkIn = checkInRepository.saveAndFlush(checkIn);
+        
+         //คาดหวังว่า DataIntegrityViolationException จะถูก throw
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            CheckIn checkIn2 = new CheckIn();
+            checkIn2.setCheckInStatus(checkInStatus);
+            checkIn2.setCheckInType(checkInType);
+            checkIn2.setFlightBooking(flightBooking);
+            checkIn2.setBoardingPass(RandomString.make(6).toUpperCase());
             checkIn2.setEmail("test@gmail.com");
             checkIn2.setDate(date);
 
