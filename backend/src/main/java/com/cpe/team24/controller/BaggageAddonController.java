@@ -49,6 +49,7 @@ public class BaggageAddonController {
     public Collection<BaggageAddon> getAllAddsOn() {
         return baggageaddonRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
+    
     @GetMapping("/airport/{id}")
     public Collection<BaggageAddon> getAddsOnByAirport(@PathVariable Long id) {
         return baggageaddonRepository.findAllByAirport(airportRepository.findById(id).orElse(null));
@@ -64,10 +65,11 @@ public class BaggageAddonController {
     @PathVariable long baggagetype_id,
     @PathVariable long airport_id
    ) {
-                        
+       
+    Airport airport = airportRepository.findById(airport_id).orElseThrow(()-> new MessageDescriptorFormatException("Can not find airport id"));                   
     BaggageImage addbaggageimage = baggageimageRepository.findById(baggageimage_id);                    
     BaggageType addbaggagetype = baggagetypeRepository.findById(baggagetype_id);
-    Airport airport = airportRepository.findById(airport_id).orElseThrow(()-> new MessageDescriptorFormatException("Can not find airport id"));
+    
 
     newBaggage.setAirport(airport);
 

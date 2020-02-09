@@ -269,6 +269,7 @@ public class Team24Application {
 				{ "VIP", "https://image.flaticon.com/icons/svg/1040/1040624.svg" },
 				{ "SPORT", "https://image.flaticon.com/icons/svg/33/33736.svg" }, 
 			};
+			
 			for (int i = 0; i < bagimage.length; i++) {
 				BaggageImage image = new BaggageImage();
 				image.setName((String) bagimage[i][0]);

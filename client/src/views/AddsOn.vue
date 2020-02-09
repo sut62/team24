@@ -35,7 +35,7 @@
     },
     data() {
       return {
-          openDialog:false,
+        openDialog:false,
         modal: false,
         
       }
