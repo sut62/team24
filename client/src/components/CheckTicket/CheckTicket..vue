@@ -1,12 +1,12 @@
 <template>
 <div>
-    <div class="container" v-if="data == true">
+    <div class="container" v-if="data == false">
         <center>
             <font size="20">Data not found</font>
         </center>
     </div>
 
-    <div class="container" v-if="data == false">
+    <div class="container" v-if="data == true">
         <v-row>
             <v-col>
                 <div v-for="(flightBookings,index) in flightBookings" :key="index">
@@ -135,7 +135,7 @@ export default {
         flightBookings: [],
         payment: [],
         price: "",
-        data: true
+        data: false
 
     }),
 
@@ -162,7 +162,7 @@ export default {
                 )
                 .then(res => {
                     this.flightBookings = res.data;
-                    this.data = false;
+                    this.data = true;
                 })
                 .catch(e => console.log(e));
 
@@ -174,7 +174,7 @@ export default {
                 )
                 .then(res => {
                     this.payment = res.data;
-                    this.data = false;
+                    this.data = true;
                 })
                 .catch(e => console.log(e));
         }
