@@ -294,10 +294,11 @@ export default {
         }
     },
     mounted() {
-        if(this.mode !="testfail"){
-      //console.log("fromShowCheckIn "+ this.mode);
-      this.getFBooking();
+    if(this.mode !="testfail"){
+    
     this.getPay();
+    this.getFBooking();
+    
     }
     },
     watch: {
