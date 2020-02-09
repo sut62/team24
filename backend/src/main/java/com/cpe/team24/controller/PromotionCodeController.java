@@ -2,9 +2,6 @@ package com.cpe.team24.controller;
 
 import com.cpe.team24.entity.PromotionCode;
 import com.cpe.team24.repository.PromotionCodeRepository;
-import com.cpe.team24.repository.PromotionImageRepository;
-import com.cpe.team24.repository.PromotionRepository;
-import com.cpe.team24.repository.PromotionStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

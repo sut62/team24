@@ -6,10 +6,8 @@ import com.cpe.team24.model.BodyPromotion;
 import com.cpe.team24.repository.PromotionCodeRepository;
 import com.cpe.team24.repository.PromotionImageRepository;
 import com.cpe.team24.repository.PromotionRepository;
-import com.cpe.team24.repository.PromotionStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import lombok.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,9 +20,6 @@ public class PromotionController {
 
     @Autowired
     private PromotionRepository promotionRepository;
-
-    @Autowired
-    private PromotionStatusRepository promotionStatusRepository;
 
     @Autowired
     private PromotionImageRepository promotionImageRepository;

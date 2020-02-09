@@ -2,8 +2,6 @@ package com.cpe.team24;
 
 import com.cpe.team24.entity.*;
 import com.cpe.team24.repository.*;
-import com.cpe.team24.repository.auth.RoleRepository;
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +37,6 @@ public class BookFlightTests {
 
     @Autowired
     private FlightBookingTypeRepository flightBookingTypeRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @BeforeEach
     public void setup() {

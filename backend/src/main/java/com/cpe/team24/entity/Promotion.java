@@ -4,8 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import java.util.Collection;
-
 @Data
 @Entity
 @NoArgsConstructor
