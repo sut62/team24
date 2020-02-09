@@ -467,7 +467,7 @@
           @click="()=>saveCreateCheckIn(this)"
           class="btn btn-danger text-white btn-lg"
           style="width:10px margin-left: 10px;"
-        >ยืนยัน</a>
+        >บันทึก</a>
       </div>
     </div>
      <!-- ================================================================Section safty_page==================================================================================== -->
