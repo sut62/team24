@@ -103,12 +103,12 @@ public class BookFlightTests {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
         FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
-        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+        // FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
-        String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // String bookId = flightBooking.getBookId();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
         flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
@@ -141,13 +141,13 @@ public class BookFlightTests {
     void b6000530_testFlightBookingLinksMustNotHave_2_ReturnFlight() {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
-        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        // FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
         FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
-        String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // String bookId = flightBooking.getBookId();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
         flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
@@ -181,19 +181,19 @@ public class BookFlightTests {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
         FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
-        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+        // FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
-        String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // String bookId = flightBooking.getBookId();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
         flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
 
         // Add Depart's Flight and Return's Flight to TableLink
         FlightBookingLink flightBookingLinkDepart = new FlightBookingLink();
-        Flight departFlight = flightRepository.findById(1l).get();
+        // Flight departFlight = flightRepository.findById(1l).get();
         flightBookingLinkDepart.setFlight(null);
         flightBookingLinkDepart.setFlightBooking(flightBooking);
         flightBookingLinkDepart.setFlightBookingType(departType);
@@ -213,12 +213,12 @@ public class BookFlightTests {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
         FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
-        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+        // FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
-        String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // String bookId = flightBooking.getBookId();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
         flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
@@ -245,13 +245,13 @@ public class BookFlightTests {
     void b6000530_testFlightBookingLink_flightBookingTypeMustNotBeNull(){
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
-        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
-        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+        // FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        // FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
-        String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // String bookId = flightBooking.getBookId();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
         flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
@@ -317,7 +317,7 @@ public class BookFlightTests {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
 
-        User user = userRepository.findByUsername("alice").get();
+        // User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(null);
@@ -373,13 +373,13 @@ public class BookFlightTests {
     void b6000530_testBookIdMustNotBeNull() {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
-        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
-        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+        // FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        // FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
-        String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // String bookId = flightBooking.getBookId();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookId(null);
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
@@ -398,13 +398,13 @@ public class BookFlightTests {
     void b6000530_testBookIdMustNotBe5Digit() {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
-        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
-        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+        // FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        // FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
-        String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // String bookId = flightBooking.getBookId();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookId("12345");
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
@@ -422,13 +422,13 @@ public class BookFlightTests {
     void b6000530_testBookIdMustNotBe11Digit() {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
-        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
-        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+        // FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        // FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
-        String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // String bookId = flightBooking.getBookId();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookId("12345678901");
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
@@ -446,13 +446,13 @@ public class BookFlightTests {
     void b6000530_testBookIdMustFitToPattern() {
         FlightBooking flightBooking = new FlightBooking();
         BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
-        FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
-        FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
+        // FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+        // FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
-        String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // String bookId = flightBooking.getBookId();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookId("ห%$123");
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
@@ -477,7 +477,7 @@ public class BookFlightTests {
         User user = userRepository.findByUsername("alice").get();
         flightBooking.book(1,1);
         String bookId = flightBooking.getBookId();
-        Date date = flightBooking.getDate();
+        // Date date = flightBooking.getDate();
         flightBooking.setBookingStatus(pendingStatus);
         flightBooking.setUser(user);
         flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
