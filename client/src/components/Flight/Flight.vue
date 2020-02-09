@@ -63,7 +63,6 @@
                                         </v-menu>
                                     </v-col>
                                 </v-row>
-                                <small class="grey--text">* This doesn't actually save.</small>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -83,7 +82,7 @@
                                             <v-list-item>
                                                 <v-row class="ml-6 mt -3">
                                                     <v-list-item-title class="headline mb-3">{{flight1.airplane.name}}</v-list-item-title>
-                                                    <v-list-item-title class="headline mb-0">{{flight1.price}} บาท</v-list-item-title>
+                                                    <v-list-item-title class="headline mb-0"><v-icon color="green darken-2">mdi-currency-usd </v-icon>ราคา {{flight1.price}} บาท</v-list-item-title>
                                                 </v-row>
                                                 <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
                                                 <v-row class="ml-6 mt-.5">
