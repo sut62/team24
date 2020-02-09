@@ -8,14 +8,12 @@ import com.cpe.team24.entity.FlightBooking;
 import com.cpe.team24.entity.FlightBookingLink;
 import com.cpe.team24.entity.Payment;
 import com.cpe.team24.entity.PaymentWay;
-import com.cpe.team24.entity.Promotion;
 import com.cpe.team24.entity.PromotionCode;
 import com.cpe.team24.repository.BookingStatusRepository;
 import com.cpe.team24.repository.FlightBookingRepository;
 import com.cpe.team24.repository.PaymentRepository;
 import com.cpe.team24.repository.PaymentWayRepository;
 import com.cpe.team24.repository.PromotionCodeRepository;
-import com.cpe.team24.repository.PromotionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 
 @RequestMapping("/api/payment")
 @RestController
@@ -34,8 +31,6 @@ public class PaymentController{
     private PaymentWayRepository paymentWayRepository;
     @Autowired
     private FlightBookingRepository flightBookingRepository;
-    @Autowired
-    private PromotionRepository promotionRepository ;
     @Autowired
     private PromotionCodeRepository promotionCodeRepository;
     @Autowired

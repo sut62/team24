@@ -17,8 +17,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-import org.hibernate.validator.constraints.Range;
-
 @Data
 @Entity
 @NoArgsConstructor

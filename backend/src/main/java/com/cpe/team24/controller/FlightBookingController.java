@@ -66,7 +66,7 @@ public class FlightBookingController {
     @GetMapping("/pending/user")
     public Collection<FlightBooking> getBookingPendingOnlyByUser(Authentication authentication) {
         Collection<FlightBooking> fiBookings = flightBookingRepository.findAllByBookingStatus(bookingStatusRepository.findByName(EBookingStatus.PENDING));
-        Collection<FlightBooking> result = new ArrayList();
+        Collection<FlightBooking> result = new ArrayList<FlightBooking>();
         for(FlightBooking flightBooking : fiBookings){
             if(flightBooking.getUser() == userRepository.findByUsername(authentication.getName()).get()){
                 result.add(flightBooking);

@@ -1,7 +1,6 @@
 package com.cpe.team24.entity;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
