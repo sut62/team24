@@ -55,10 +55,8 @@ public class FlightTests {
         Flight flight = new Flight();
         Airplane airplane = airplaneRepository.findById(1L).get();
         Airport airport = airportRepository.findById(1L).get();
-        FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository
-                .findByName(EFlightAirportType.DEPART_AIRPORT);
-        FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository
-                .findByName(EFlightAirportType.ARRIVE_AIRPORT);
+        FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT);
+        FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT);
 
         Double price = 1500.40;
         // date create
@@ -111,10 +109,8 @@ public class FlightTests {
         Flight flight = new Flight();
         Airplane airplane = airplaneRepository.findById(1L).get();
         Airport airport = airportRepository.findById(1L).get();
-        FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository
-                .findByName(EFlightAirportType.DEPART_AIRPORT);
-        FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository
-                .findByName(EFlightAirportType.ARRIVE_AIRPORT);
+        FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT);
+        FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT);
 
         Double price = -1500.40;
         Date depart = new Date();
@@ -153,10 +149,8 @@ public class FlightTests {
         Flight flight = new Flight();
         Airplane airplane = airplaneRepository.findById(1L).get();
         Airport airport = airportRepository.findById(1L).get();
-        FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository
-                .findByName(EFlightAirportType.DEPART_AIRPORT);
-        FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository
-                .findByName(EFlightAirportType.ARRIVE_AIRPORT);
+        FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT);
+        FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT);
 
         Double price = 1500.40;
         Date depart = new Date();
@@ -195,10 +189,8 @@ public class FlightTests {
         Flight flight = new Flight();
         Airplane airplane = airplaneRepository.findById(1L).get();
         Airport airport = airportRepository.findById(1L).get();
-        FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository
-                .findByName(EFlightAirportType.DEPART_AIRPORT);
-        FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository
-                .findByName(EFlightAirportType.ARRIVE_AIRPORT);
+        FlightAirportType flightAirportTypeDepart = flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT);
+        FlightAirportType flightAirportTypeArrive = flightAirportTypeRepository.findByName(EFlightAirportType.ARRIVE_AIRPORT);
 
         Double price = 1500.40;
         Date depart = new Date();
