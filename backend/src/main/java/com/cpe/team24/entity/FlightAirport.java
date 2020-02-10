@@ -1,6 +1,7 @@
 package com.cpe.team24.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -17,13 +18,16 @@ public class FlightAirport {
     @Column(name = "FLIGHT_AIRPORT_ID",unique = true,nullable = false)
     private @NonNull Long id;
 
+    @NotNull
     @JsonIgnore
     @ManyToOne
     private Flight flight;
 
+    @NotNull
     @ManyToOne
     private FlightAirportType flightAirportType;
 
+    @NotNull
     @ManyToOne
     private Airport airport;
 

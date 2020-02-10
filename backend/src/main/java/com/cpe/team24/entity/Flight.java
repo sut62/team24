@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
@@ -24,7 +25,7 @@ public class Flight {
     @Column(name = "FLIGHT_ID", unique = true, nullable = true)
     private Long id;
 
-    @Size(max = 255)
+    @Size(min = 10,max = 255)
     @Pattern(regexp = "[a-z A-Z]*")
     private String description;
     
@@ -47,6 +48,7 @@ public class Flight {
     @OneToMany(mappedBy = "flight",fetch = FetchType.LAZY)
     private Collection<FlightAirport> flightAirports;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airplane.class)
     @JoinColumn(name = "FIGHT_AIRPLANE_ID", insertable = true)
     private Airplane airplane;
