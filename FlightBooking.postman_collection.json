@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "ce028d72-4dc8-45fc-b4f7-e1f45fb2d80d",
+		"name": "FlightBooking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All FlightCity",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/flight-city",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"flight-city"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Flight by Date",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/flight/2020-01-03/1/2",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"flight",
+						"2020-01-03",
+						"1",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9000/flight-booking/book",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCb2IiLCJpYXQiOjE1Nzc1NDc4NjMsImV4cCI6MTU3NzYzNDI2M30.WppbpjwEmUcaKftxWz8NIOf5F19EsBNeQU9fQ89jbunQYXowaYCg1Oz00mwASsCiZS57GqtTDnWE0vdYR9Mx1A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"departFlightId\":1,\n\t\"returnFlightId\":2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9000/api/flight-booking/book",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"flight-booking",
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9000/flight-booking",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/flight-booking",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"flight-booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9000/flight/2019-12-18",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCb2IiLCJpYXQiOjE1Nzc1NDY3NjksImV4cCI6MTU3NzYzMzE2OX0.HqyRJO8v0HIHXDcBmfi8fD1afq5QsZgqwXf8GY52alcBiEDA4tTJ4wai3MqhyHxxlUhA-zPEYVp5oR14ydrlzQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/flight/2019-12-29",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"flight",
+						"2019-12-29"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9000/api/auth/signin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"bob\",\n\t\"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9000/api/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:9000/api/flight-booking/book",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"departFlightId\":1,\n\t\"returnFlightId\":2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9000/api/flight-booking/book",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"flight-booking",
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all adds-on",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/adds-on",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"adds-on"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save adds-on",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/adds-on/50/200/1/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"adds-on",
+						"50",
+						"200",
+						"1",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all promotions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/promotion",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"promotion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creat promotion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/promotion/TestPromotion1/This is prmotion 1/A1234/50/2020-2-2/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"promotion",
+						"TestPromotion1",
+						"This is prmotion 1",
+						"A1234",
+						"50",
+						"2020-2-2",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get promotion images",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/promotion-image",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"promotion-image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get adds-on by airport id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/adds-on",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"adds-on"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Flight By ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:9000/api/flight/id/7",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"flight",
+						"id",
+						"7"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
