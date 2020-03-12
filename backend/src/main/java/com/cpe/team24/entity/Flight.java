@@ -37,12 +37,12 @@ public class Flight {
     private Date arrive;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     private Collection<FlightBookingLink> flightBookingLinks;
 
     // -------- Joke --------
 
-    @OneToMany(mappedBy = "flight",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<FlightAirport> flightAirports;
 
     @NotNull
