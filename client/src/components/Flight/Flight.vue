@@ -2,12 +2,20 @@
 <div>
     <Alert :open="success" topic="แจ้งเตือน" desc="บันทึกสำเร็จ" :callback="()=>this.success = false" />
     <Alert :open="fall" topic="แจ้งเตือน" desc="บันทึกไม่สำเร็จ" :callback="()=>this.fall = false" />
+    <Alert :open="deleteSuccess" topic="แจ้งเตือน" desc="ลบ Flight สำเร็จ" :callback="()=>this.deleteSuccess = false" />
+    <Alert :open="deleteFail" topic="แจ้งเตือน" desc="ลบ Flight ไม่สำเร็จ เนื่องจากมีการเชื่อมต่อของ FlightBooking อยู่" :callback="()=>this.deleteFail = false" />
     <v-container fluid>
         <v-row>
             <v-col cols="12" sm="20" md="10">
                 <v-card raised>
                     <v-toolbar height="100px">
                         <h1>เที่ยวบิน</h1>
+                        <v-btn id="add_fligh_btn" class="mx-2" absolute dark fab color="pink" @click="dialog = !dialog">
+                            <v-icon>mdi-plus</v-icon>
+                        </v-btn>
+                        <v-btn id="delete_fligh_btn" absolute dark fab right color="red" @click="dialog1 = !dialog1">
+                            <v-icon>mdi-minus</v-icon>
+                        </v-btn>
                     </v-toolbar>
                     <v-dialog v-model="dialog" max-width="800px">
                         <v-card>
@@ -22,45 +30,21 @@
                                     </v-col>
                                 </v-row>
 
-                                <v-text-field id="PriceInput" label="ราคา(บาท)" v-model="flights.price"></v-text-field>
+                                <v-text-field id="PriceInput" label="ราคา(บาท)" v-model="flights.price" date-format="yyyy-MM-dd" time-format="HH:mm"></v-text-field>
 
                                 <v-row>
                                     <v-col cols="12" lg="6">
-                                        <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="290px">
-                                            <template v-slot:activator="{ on }">
-                                                <v-text-field v-model="flights.departDate" label="Depart Date" hint="YYYY/MM/DD format" persistent-hint prepend-icon="mdi-calendar-clock" v-on="on"></v-text-field>
-                                            </template>
-                                            <v-date-picker id="datepicker1" v-model="flights.departDate" no-title @input="menu1 = false"></v-date-picker>
-                                        </v-menu>
-                                        <p>Date in ISO format: <strong>{{ flights.departDate }}</strong></p>
+                                        <v-flex>
+                                            <v-datetime-picker label="Depart Date" v-model="flights.departDate" timePickerFormat="24hr" date-format="yyyy-MM-dd" time-format="HH:mm"></v-datetime-picker>
+                                        </v-flex>
+                                        <p>Datetime value: <span v-text="flights.departDate" date-format="yyyy-MM-dd" time-format="HH:mm"></span></p>
                                     </v-col>
 
                                     <v-col cols="12" lg="6">
-                                        <v-menu ref="menu2" v-model="menu2" :close-on-content-click="false" transition="scale-transition" offset-y max-width="290px" min-width="290px">
-                                            <template v-slot:activator="{ on }">
-                                                <v-text-field v-model="flights.arriveDate" label="Arrive Date" hint="YYYY/MM/DD format" persistent-hint prepend-icon="mdi-calendar-clock" v-on="on"></v-text-field>
-                                            </template>
-                                            <v-date-picker id="datepicker2" v-model="flights.arriveDate" no-title @input="menu2 = false"></v-date-picker>
-                                        </v-menu>
-                                        <p>Date in ISO format: <strong>{{ flights.arriveDate }}</strong></p>
-                                    </v-col>
-                                </v-row>
-                                <v-row>
-                                    <v-col cols="12" sm="6">
-                                        <v-menu ref="menu3" v-model="menu3" :close-on-content-click="false" :nudge-right="40" :return-value.sync="flights.departTime" transition="scale-transition" offset-y max-width="290px" min-width="290px">
-                                            <template v-slot:activator="{ on }">
-                                                <v-text-field v-model="flights.departTime" label="Depart Time" prepend-icon="mdi-timer" readonly v-on="on"></v-text-field>
-                                            </template>
-                                            <v-time-picker id="time1" format="24hr" v-if="menu3" v-model="flights.departTime" @click:minute="$refs.menu3.save(flights.departTime)"></v-time-picker>
-                                        </v-menu>
-                                    </v-col>
-                                    <v-col cols="12" sm="6">
-                                        <v-menu ref="menu4" v-model="menu4" :close-on-content-click="false" :nudge-right="40" :return-value.sync="flights.arriveTime" transition="scale-transition" offset-y max-width="290px" min-width="290px">
-                                            <template v-slot:activator="{ on }">
-                                                <v-text-field v-model="flights.arriveTime" label="Arrive Time" prepend-icon="mdi-timer" readonly v-on="on"></v-text-field>
-                                            </template>
-                                            <v-time-picker id="time2" format="24hr" v-if="menu4" v-model="flights.arriveTime" @click:minute="$refs.menu4.save(flights.arriveTime)"></v-time-picker>
-                                        </v-menu>
+                                        <v-flex>
+                                            <v-datetime-picker readonly label="Arrive Date" v-model="flights.arriveDate" date-format="yyyy-MM-dd" time-format="HH:mm"></v-datetime-picker>
+                                        </v-flex>
+                                        <p>Datetime value: <span v-text="flights.arriveDate" date-format="yyyy-MM-dd" time-format="HH:mm"></span></p>
                                     </v-col>
                                 </v-row>
                             </v-card-text>
@@ -72,51 +56,59 @@
                         </v-card>
                     </v-dialog>
 
+                    <v-dialog v-model="dialog1" max-width="800px">
+                        <v-card>
+                            <v-card-text>
+                                <v-autocomplete id="FlightCombobox" label="เลือก Flight ที่ต้องการลบ" v-model="flights.flightId" :items="flight" item-text="id" item-value="value.id"></v-autocomplete>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn text color="primary" @click="dialog1 = false">ปิด</v-btn>
+                                <v-btn text color="primary" @click="deleteFlight(flights.flightId)">ยืนยันการลดเที่ยวบิน</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+
                     <v-card-text style="height: 100%; width: 100%" class="background">
                         <div v-for="(flight1, index) in flight" :key="index">
                             <v-card tile>
+                                <!-- <button type="button" class="close" aria-label="Close" @click="deleteFlight(flight.id)">
+                                    <span aria-hidden="true">&times;</span>
+                                </button> -->
                                 <div class="p-2 mb-2">
                                     <v-list-item>
-                                    <v-list-item-content>
-                                        <v-row class="font-weight-medium">
-                                            <v-list-item>
-                                                <v-row class="ml-6 mt -3">
-                                                    <v-list-item-title class="headline mb-3">{{flight1.airplane.name}}</v-list-item-title>
-                                                    <v-list-item-title class="headline mb-0"><v-icon color="green darken-2">mdi-currency-usd </v-icon>ราคา {{flight1.price}} บาท</v-list-item-title>
-                                                </v-row>
-                                                <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
-                                                <v-row class="ml-6 mt-.5">
-                                                    <v-list-item-content>
-                                                        <v-list-item-title class="font-weight-medium">{{flight1.depart | moment("DD-MM-YYYY | HH:mm")}}</v-list-item-title>
-                                                        <v-list-item-title class="font-weight-medium">[{{flight1.flightAirports[0].airport.name}}] {{flight1.flightAirports[0].airport.city.name}}</v-list-item-title>
-                                                    </v-list-item-content>
-                                                </v-row>
-                                                <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
-                                                <v-row class="ml-6 mt-.5">
-                                                    <v-list-item-content>
-                                                        <v-list-item-title class="font-weight-medium">{{flight1.arrive | moment("DD-MM-YYYY | HH:mm")}}</v-list-item-title>
-                                                        <v-list-item-title class="font-weight-medium">[{{flight1.flightAirports[1].airport.name}}] {{flight1.flightAirports[1].airport.city.name}}</v-list-item-title>
-                                                    </v-list-item-content>
-                                                </v-row>
-                                            </v-list-item>
-                                        </v-row>
-                                    </v-list-item-content>
-                                </v-list-item>
+                                        <v-list-item-content>
+                                            <v-row class="font-weight-medium">
+                                                <v-list-item>
+                                                    <v-row class="ml-6 mt -3">
+                                                        <v-list-item-title class="headline mb-3">{{flight1.airplane.name}}</v-list-item-title>
+                                                        <v-list-item-title class="headline mb-0">
+                                                            <v-icon color="green darken-2">mdi-currency-usd </v-icon>ราคา {{flight1.price}} บาท
+                                                        </v-list-item-title>
+                                                    </v-row>
+                                                    <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
+                                                    <v-row class="ml-6 mt-.5">
+                                                        <v-list-item-content>
+                                                            <v-list-item-title class="font-weight-medium">{{flight1.depart | moment("YYYY-MM-DD | HH:mm")}}</v-list-item-title>
+                                                            <v-list-item-title class="font-weight-medium">[{{flight1.flightAirports[0].airport.name}}] {{flight1.flightAirports[0].airport.city.name}}</v-list-item-title>
+                                                        </v-list-item-content>
+                                                    </v-row>
+                                                    <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
+                                                    <v-row class="ml-6 mt-.5">
+                                                        <v-list-item-content>
+                                                            <v-list-item-title class="font-weight-medium">{{flight1.arrive | moment("YYYY-MM-DD | HH:mm")}}</v-list-item-title>
+                                                            <v-list-item-title class="font-weight-medium">[{{flight1.flightAirports[1].airport.name}}] {{flight1.flightAirports[1].airport.city.name}}</v-list-item-title>
+                                                        </v-list-item-content>
+                                                    </v-row>
+                                                </v-list-item>
+                                            </v-row>
+                                        </v-list-item-content>
+                                    </v-list-item>
                                 </div>
-                                
                             </v-card>
                         </div>
-
                     </v-card-text>
-
-                    <v-card-text style="height: 100px; position: relative">
-                        <v-btn id="add_fligh_btn" absolute dark fab top right color="pink" @click="dialog = !dialog">
-                            <v-icon>mdi-plus</v-icon>
-                        </v-btn>
-                    </v-card-text>
-
                 </v-card>
-
             </v-col>
         </v-row>
     </v-container>
@@ -140,25 +132,26 @@ export default {
     data: () => ({
         airportName: [],
         dialog: false,
+        dialog1: false,
         menu1: false,
         menu2: false,
         menu3: false,
         menu4: false,
         success: false,
+        deleteSuccess: false,
+        deleteFail: false,
         fall: false,
-        notfound: false,
         flight: [],
         airplanes: [],
         airports: [],
         flights: {
+            flightId: "",
             airplaneId: "",
             departAirportId: "",
             arriveAirportId: "",
             price: "",
-            departDate: "",
-            departTime: "",
-            arriveDate: "",
-            arriveTime: ""
+            departDate: "2019-03-12 12:00",
+            arriveDate: "2019-03-12 13:00",
         }
     }),
     components: {
@@ -171,6 +164,7 @@ export default {
         }
     },
     methods: {
+        allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
         getFlight() {
             http
                 .get('http://localhost:9000/api/flight')
@@ -209,14 +203,26 @@ export default {
                     console.log(e);
                 })
         },
+        deleteFlight(id) {
+            http
+                .delete("http://localhost:9000/api/flight/id/" + id).then(res => {
+                    console.log(res.data);
+                    this.getFlight();
+                    this.deleteSuccess = true;
+                })
+                .catch(e => {
+                    console.log(e);
+                    this.deleteFail = true;
+                })
+        },
         saveFlight() {
             http({
                     method: 'post',
                     url: "http://localhost:9000/api/flight/create",
                     data: {
                         "price": this.flights.price,
-                        "departDate": this.flights.departDate + " " + this.flights.departTime,
-                        "arriveDate": this.flights.arriveDate + " " + this.flights.arriveTime,
+                        "departDate": this.flights.departDate,
+                        "arriveDate": this.flights.arriveDate,
                         "airplaneId": this.flights.airplaneId,
                         "departAirportId": this.flights.departAirportId,
                         "arriveAirportId": this.flights.arriveAirportId
@@ -224,7 +230,7 @@ export default {
                 })
                 .then(response => {
                     // alert("บันทึกสำเร็จ", response);
-                    this.getFlight()    
+                    this.getFlight()
                     this.success = true
                     console.log(response.data)
                     // window.location.reload()
@@ -234,8 +240,8 @@ export default {
                     console.log(e);
                     console.log({
                         "price": this.flights.price,
-                        "departDate": this.flights.departDate + " " + this.flights.departTime,
-                        "arriveDate": this.flights.arriveDate + " " + this.flights.arriveTime,
+                        "departDate": this.flights.departDate,
+                        "arriveDate": this.flights.arriveDate,
                         "airplaneId": this.flights.airplaneId,
                         "departAirportId": this.flights.departAirportId,
                         "arriveAirportId": this.flights.arriveAirportId

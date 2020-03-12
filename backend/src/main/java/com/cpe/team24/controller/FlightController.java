@@ -51,6 +51,7 @@ public class FlightController {
     public Flight getFlightById(@PathVariable Long id){
         return flightRepository.findById(id).orElse(null);
     }
+    
 
     @DeleteMapping("/id/{id}")
     public boolean deleteFlight(@Valid @PathVariable Long id){
