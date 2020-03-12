@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
@@ -20,9 +19,7 @@ import java.util.Date;
 public class Flight {
 
     @Id
-    @SequenceGenerator(name="FLIGHT_seq",sequenceName="FLIGHT_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="FLIGHT_seq")
-    @Column(name = "FLIGHT_ID", unique = true, nullable = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Size(min = 10,max = 255)
@@ -40,12 +37,12 @@ public class Flight {
     private Date arrive;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
     private Collection<FlightBookingLink> flightBookingLinks;
 
     // -------- Joke --------
 
-    @OneToMany(mappedBy = "flight",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "flight",cascade = CascadeType.ALL)
     private Collection<FlightAirport> flightAirports;
 
     @NotNull
