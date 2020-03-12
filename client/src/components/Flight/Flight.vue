@@ -10,41 +10,41 @@
                 <v-card raised>
                     <v-toolbar height="100px">
                         <h1>เที่ยวบิน</h1>
-                        <v-btn id="add_fligh_btn" class="mx-2" absolute dark fab color="pink" @click="dialog = !dialog">
+                        <v-btn id="add_fligh_btn" class="mx-12" absolute small dark fab right color="primary" @click="dialog = !dialog">
                             <v-icon>mdi-plus</v-icon>
                         </v-btn>
-                        <v-btn id="delete_fligh_btn" absolute dark fab right color="red" @click="dialog1 = !dialog1">
+                        <v-btn id="delete_fligh_btn" class="mx-0" absolute small dark fab right color="pink" @click="dialog1 = !dialog1">
                             <v-icon>mdi-minus</v-icon>
                         </v-btn>
                     </v-toolbar>
                     <v-dialog v-model="dialog" max-width="800px">
                         <v-card>
                             <v-card-text>
-                                <v-autocomplete id="AirplaneCombobox" label="เครื่องบิน" v-model="flights.airplaneId" :items="airplanes" item-text="name" item-value="id"></v-autocomplete>
+                                <v-autocomplete id="AirplaneCombobox" label="เครื่องบิน" :rules="[rules.requiredAirplane]" v-model="flights.airplaneId" :items="airplanes" item-text="name" item-value="id"></v-autocomplete>
                                 <v-row>
                                     <v-col cols="12" sm="6" md="6">
-                                        <v-autocomplete id="departAirportCombobox" label="เมืองต้นทาง" v-model="flights.departAirportId" key="value.id" :items="airportName" item-text="text" item-value="value.id"></v-autocomplete>
+                                        <v-autocomplete id="departAirportCombobox" label="เมืองต้นทาง" :rules="[rules.requiredAirportDepart]" v-model="flights.departAirportId" key="value.id" :items="airportName" item-text="text" item-value="value.id"></v-autocomplete>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="6">
-                                        <v-autocomplete id="arriveAirportCombobox" label="เมืองปลายทาง" v-model="flights.arriveAirportId" :items="airportName" item-text="text" item-value="value.id"></v-autocomplete>
+                                        <v-autocomplete id="arriveAirportCombobox" label="เมืองปลายทาง" :rules="[rules.requiredAirportArrive]" v-model="flights.arriveAirportId" :items="airportName" item-text="text" item-value="value.id"></v-autocomplete>
                                     </v-col>
                                 </v-row>
 
-                                <v-text-field id="PriceInput" label="ราคา(บาท)" v-model="flights.price" date-format="yyyy-MM-dd" time-format="HH:mm"></v-text-field>
+                                <v-text-field id="PriceInput" label="ราคา(บาท)" :rules="[rules.requiredPrice]" v-model="flights.price"></v-text-field>
 
                                 <v-row>
                                     <v-col cols="12" lg="6">
                                         <v-flex>
-                                            <v-datetime-picker label="Depart Date" v-model="flights.departDate" timePickerFormat="24hr" date-format="yyyy-MM-dd" time-format="HH:mm"></v-datetime-picker>
+                                            <v-datetime-picker label="Depart Date" v-model="flights.departDate" date-format="yyyy-MM-dd" time-format="HH:mm"></v-datetime-picker>
                                         </v-flex>
-                                        <p>Datetime value: <span v-text="flights.departDate" date-format="yyyy-MM-dd" time-format="HH:mm"></span></p>
+                                        <p>Datetime value: <span>{{flights.departDate | moment("YYYY-MM-DD | HH:mm")}}</span></p>
                                     </v-col>
 
                                     <v-col cols="12" lg="6">
                                         <v-flex>
-                                            <v-datetime-picker readonly label="Arrive Date" v-model="flights.arriveDate" date-format="yyyy-MM-dd" time-format="HH:mm"></v-datetime-picker>
+                                            <v-datetime-picker label="Arrive Date" v-model="flights.arriveDate" date-format="yyyy-MM-dd" time-format="HH:mm"></v-datetime-picker>
                                         </v-flex>
-                                        <p>Datetime value: <span v-text="flights.arriveDate" date-format="yyyy-MM-dd" time-format="HH:mm"></span></p>
+                                        <p>Datetime value: <span>{{flights.arriveDate | moment("YYYY-MM-DD | HH:mm")}}</span></p>
                                     </v-col>
                                 </v-row>
                             </v-card-text>
@@ -72,16 +72,16 @@
                     <v-card-text style="height: 100%; width: 100%" class="background">
                         <div v-for="(flight1, index) in flight" :key="index">
                             <v-card tile>
-                                <!-- <button type="button" class="close" aria-label="Close" @click="deleteFlight(flight.id)">
-                                    <span aria-hidden="true">&times;</span>
-                                </button> -->
                                 <div class="p-2 mb-2">
                                     <v-list-item>
                                         <v-list-item-content>
                                             <v-row class="font-weight-medium">
                                                 <v-list-item>
                                                     <v-row class="ml-6 mt -3">
-                                                        <v-list-item-title class="headline mb-3">{{flight1.airplane.name}}</v-list-item-title>
+                                                        <v-list-item-title class="headline mb-2">
+                                                            <font color="red">Flight ID: {{flight1.id}}</font>
+                                                        </v-list-item-title>
+                                                        <v-list-item-title class="headline mb-2"><b>เครื่องบิน:</b> {{flight1.airplane.name}}</v-list-item-title>
                                                         <v-list-item-title class="headline mb-0">
                                                             <v-icon color="green darken-2">mdi-currency-usd </v-icon>ราคา {{flight1.price}} บาท
                                                         </v-list-item-title>
@@ -118,6 +118,7 @@
 <script>
 import axios from "axios";
 import Alert from '../Alert';
+import moment from 'moment';
 
 let http = axios.create({
     baseURL: 'http://localhost:9000/api',
@@ -130,6 +131,13 @@ let http = axios.create({
 export default {
     name: "flight",
     data: () => ({
+        rules: {
+            required: v => !!v || 'Required.',
+            requiredAirplane: v => v.id != undefined || 'กรุณาเลือกเครื่องบิน',
+            requiredAirportDepart: v => v.id != undefined || 'กรุณาเลือกเมืองต้นทาง',
+            requiredAirportArrive: v => v.id != undefined || 'กรุณาเลือกเมืองปลายทาง',
+            requiredPrice: v => v.id != undefined || 'กรุณากรอกราคา',
+        },
         airportName: [],
         dialog: false,
         dialog1: false,
@@ -150,8 +158,8 @@ export default {
             departAirportId: "",
             arriveAirportId: "",
             price: "",
-            departDate: "2019-03-12 12:00",
-            arriveDate: "2019-03-12 13:00",
+            departDate: "",
+            arriveDate: "",
         }
     }),
     components: {
@@ -164,7 +172,6 @@ export default {
         }
     },
     methods: {
-        allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
         getFlight() {
             http
                 .get('http://localhost:9000/api/flight')
@@ -221,8 +228,8 @@ export default {
                     url: "http://localhost:9000/api/flight/create",
                     data: {
                         "price": this.flights.price,
-                        "departDate": this.flights.departDate,
-                        "arriveDate": this.flights.arriveDate,
+                        "departDate": moment(this.flights.departDate).format("YYYY-MM-DD HH:mm").toString(),
+                        "arriveDate": moment(this.flights.departDate).format("YYYY-MM-DD HH:mm").toString(),
                         "airplaneId": this.flights.airplaneId,
                         "departAirportId": this.flights.departAirportId,
                         "arriveAirportId": this.flights.arriveAirportId
@@ -240,8 +247,8 @@ export default {
                     console.log(e);
                     console.log({
                         "price": this.flights.price,
-                        "departDate": this.flights.departDate,
-                        "arriveDate": this.flights.arriveDate,
+                        "departDate": moment(this.flights.departDate).format("YYYY-MM-DD HH:mm").toString(),
+                        "arriveDate": moment(this.flights.departDate).format("YYYY-MM-DD HH:mm").toString(),
                         "airplaneId": this.flights.airplaneId,
                         "departAirportId": this.flights.departAirportId,
                         "arriveAirportId": this.flights.arriveAirportId
@@ -253,7 +260,17 @@ export default {
         this.getFlight();
         this.getAirport();
         this.getAirplane();
-    }
+    },
+    created() {
+        let departDate = new Date()
+        let arriveDate = new Date()
+        arriveDate.setDate(arriveDate.getDate() + 1)
+        let departDateString = moment(departDate).format("YYYY-MM-DD HH:mm").toString()
+        let arriveDateString = moment(arriveDate).format("YYYY-MM-DD HH:mm").toString()
+        this.flights.departDate = departDateString;
+        this.flights.arriveDate = arriveDateString;
+    },
+
 }
 </script>
 
