@@ -89,6 +89,7 @@
                                                     <v-icon large color="orange darken-2">mdi-airplane-takeoff</v-icon>
                                                     <v-row class="ml-6 mt-.5">
                                                         <v-list-item-content>
+                                                            <v-list-item-title class="font-weight-small">YYYY-MM-DD | HH:mm</v-list-item-title>
                                                             <v-list-item-title class="font-weight-medium">{{flight1.depart | moment("YYYY-MM-DD | HH:mm")}}</v-list-item-title>
                                                             <v-list-item-title class="font-weight-medium">[{{flight1.flightAirports[0].airport.name}}] {{flight1.flightAirports[0].airport.city.name}}</v-list-item-title>
                                                         </v-list-item-content>
@@ -96,6 +97,7 @@
                                                     <v-icon large color="orange darken-2">mdi-airplane-landing</v-icon>
                                                     <v-row class="ml-6 mt-.5">
                                                         <v-list-item-content>
+                                                            <v-list-item-title class="font-weight-small">YYYY-MM-DD | HH:mm</v-list-item-title>
                                                             <v-list-item-title class="font-weight-medium">{{flight1.arrive | moment("YYYY-MM-DD | HH:mm")}}</v-list-item-title>
                                                             <v-list-item-title class="font-weight-medium">[{{flight1.flightAirports[1].airport.name}}] {{flight1.flightAirports[1].airport.city.name}}</v-list-item-title>
                                                         </v-list-item-content>
