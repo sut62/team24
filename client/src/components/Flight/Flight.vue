@@ -3,7 +3,7 @@
     <Alert :open="success" topic="แจ้งเตือน" desc="บันทึกสำเร็จ" :callback="()=>this.success = false" />
     <Alert :open="fall" topic="แจ้งเตือน" desc="บันทึกไม่สำเร็จ" :callback="()=>this.fall = false" />
     <Alert :open="deleteSuccess" topic="แจ้งเตือน" desc="ลบ Flight สำเร็จ" :callback="()=>this.deleteSuccess = false" />
-    <Alert :open="deleteFail" topic="แจ้งเตือน" desc="ลบ Flight ไม่สำเร็จ เนื่องจากมีการเชื่อมต่อของ FlightBooking อยู่" :callback="()=>this.deleteFail = false" />
+    <Alert :open="deleteFail" topic="แจ้งเตือน" desc="ลบ Flight ไม่สำเร็จ" :callback="()=>this.deleteFail = false" />
     <v-container fluid>
         <v-row>
             <v-col cols="12" sm="20" md="10">
