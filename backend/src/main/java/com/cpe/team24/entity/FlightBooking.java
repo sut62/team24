@@ -32,10 +32,10 @@ public class FlightBooking {
     private Date date;
 
     @NotNull
-    private Integer departSeatId; //
+    private Integer departSeatId = 0;
 
     @NotNull
-    private Integer returnSeatId; //
+    private Integer returnSeatId = 0;
 
     @OneToMany(mappedBy = "flightBooking")
     private Collection<FlightBookingLink> flightBookingLinks;

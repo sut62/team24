@@ -41,6 +41,21 @@ public class FlightBookingLink {
     @JoinColumn(name = "FLIGHT_BOOKING_TYPE_ID")
     private FlightBookingType flightBookingType;
 
+    //Method
+    @PrePersist
+    public void prePersist() throws Exception{
+        Integer tempSeatId = flight.getLastTempSeatId() + 1;
+        if(tempSeatId <= flight.getAirplane().getSeatAmout()){
+            flight.setLastTempSeatId(tempSeatId);
+        }else{
+            if(flightBookingType.getName() == EFlightBookingType.DEPART_FLIGHT){
+                throw new Exception("Depart flight's seat not available");
+            }else{
+                throw new Exception("Return flight's seat not available");
+            }
+        }
+    }
+
     //GETTER SETTER
     public Flight getFlight() {
         return flight;

@@ -40,6 +40,9 @@ public class Flight {
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<FlightBookingLink> flightBookingLinks;
 
+    private Integer lastSeatId = 0;
+
+    private Integer lastTempSeatId = 0;
     // -------- Joke --------
 
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -49,6 +52,20 @@ public class Flight {
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Airplane.class)
     @JoinColumn(name = "FIGHT_AIRPLANE_ID", insertable = true)
     private Airplane airplane;
+
+    //Methods
+    @PreUpdate
+    public void preUpdate() throws Exception{
+        if(lastTempSeatId < lastSeatId){
+            throw new Exception("Not Allow lastTempSeatId < lastSeatId");
+        }
+        if(lastSeatId > airplane.getSeatAmout()){
+            throw new Exception("Not Allow lastSeatId > seatAmount");
+        }
+        if(lastTempSeatId > airplane.getSeatAmout()){
+            throw new Exception("Not Allow lastTempSeatId > seatAmount");
+        }
+    }
 
     //Getter Setter
     public Double getPrice() {
@@ -103,5 +120,21 @@ public class Flight {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getLastSeatId() {
+        return lastSeatId;
+    }
+
+    public void setLastSeatId(Integer lastSeatId) {
+        this.lastSeatId = lastSeatId;
+    }
+
+    public Integer getLastTempSeatId() {
+        return lastTempSeatId;
+    }
+
+    public void setLastTempSeatId(Integer lastTempSeatId) {
+        this.lastTempSeatId = lastTempSeatId;
     }
 }
