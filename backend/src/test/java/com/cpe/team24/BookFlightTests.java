@@ -7,7 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.security.RunAs;
+import javax.transaction.Transactional;
 import javax.validation.*;
 import java.util.*;
 
@@ -16,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //@DataJpaTest
 @SpringBootTest
+@Transactional
 public class BookFlightTests {
 
     private Validator validator;
@@ -510,7 +514,46 @@ public class BookFlightTests {
             flightBooking2 = flightBookingRepository.saveAndFlush(flightBooking2);
         });
     }
+    @Test
+    public void B6000530_testBookFlightMustNotAllowWhenFlightSeatFull(){
+        Exception exception = assertThrows(Exception.class, () -> {
+            for(int i=0;i<2;i++){
+                FlightBooking flightBooking = new FlightBooking();
+                BookingStatus pendingStatus = bookingStatusRepository.findByName(EBookingStatus.PENDING);
+                FlightBookingType departType = flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT);
+                FlightBookingType returnType = flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT);
 
+                User user = userRepository.findByUsername("alice").get();
+                flightBooking.book(0,0);
+                String bookId = flightBooking.getBookId();
+                // Date date = flightBooking.getDate();
+                flightBooking.setBookingStatus(pendingStatus);
+                flightBooking.setUser(user);
+                flightBooking = flightBookingRepository.saveAndFlush(flightBooking);
+
+                // Add Depart's Flight and Return's Flight to TableLink
+                FlightBookingLink flightBookingLinkDepart = new FlightBookingLink();
+                Flight departFlight = flightRepository.findById(9l).get();
+                flightBookingLinkDepart.setFlight(departFlight);
+                flightBookingLinkDepart.setFlightBooking(flightBooking);
+                flightBookingLinkDepart.setFlightBookingType(departType);
+                //save
+                flightBookingLinkDepart = flightBookingLinkRepository.saveAndFlush(flightBookingLinkDepart);
+
+                FlightBookingLink flightBookingLinkReturn = new FlightBookingLink();
+                Flight returnFlight = flightRepository.findById(10l).get();
+                flightBookingLinkReturn.setFlight(returnFlight);
+                flightBookingLinkReturn.setFlightBooking(flightBooking);
+                flightBookingLinkReturn.setFlightBookingType(returnType);
+                //save
+                flightBookingLinkReturn = flightBookingLinkRepository.saveAndFlush(flightBookingLinkReturn);
+
+            }
+        });
+        String actualMessage = exception.getMessage();
+        assertEquals("java.lang.Exception: Depart flight's seat not available",actualMessage);
+    }
+    
 }
 
 
