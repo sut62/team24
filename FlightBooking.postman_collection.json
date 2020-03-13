@@ -30,7 +30,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:9000/api/flight/2020-01-03/1/2",
+					"raw": "localhost:9000/api/flight/2020-03-13/1/2",
 					"host": [
 						"localhost"
 					],
@@ -38,7 +38,7 @@
 					"path": [
 						"api",
 						"flight",
-						"2020-01-03",
+						"2020-03-13",
 						"1",
 						"2"
 					]
@@ -47,18 +47,8 @@
 			"response": []
 		},
 		{
-			"name": "localhost:9000/flight-booking/book",
+			"name": "Book Flight",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCb2IiLCJpYXQiOjE1Nzc1NDc4NjMsImV4cCI6MTU3NzYzNDI2M30.WppbpjwEmUcaKftxWz8NIOf5F19EsBNeQU9fQ89jbunQYXowaYCg1Oz00mwASsCiZS57GqtTDnWE0vdYR9Mx1A",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [
 					{
@@ -70,7 +60,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"departFlightId\":1,\n\t\"returnFlightId\":2\n}",
+					"raw": "{\n\t\"departFlightId\":1,\n\t\"returnFlightId\":2,\n\t\"departBaggageAddsOnId\":1,\n\t\"returnBaggageAddsOnId\":1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -93,7 +83,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:9000/flight-booking",
+			"name": "Get All FlightBooking",
 			"request": {
 				"auth": {
 					"type": "bearer"
@@ -363,6 +353,104 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"Alice\",\n\t\"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9000/api/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "payFlight",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9000/api/payment/12/1/0853124000/toei@gg.com",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"payment",
+						"12",
+						"1",
+						"0853124000",
+						"toei@gg.com"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTU4NDA4OTcwMywiZXhwIjoxNTg0MTc2MTAzfQ.YMtsuhRssDwq6aI9zWn0E-RdQ5W-4NHAcIkJ_cUJv2Z-64Tw1u1VKyhZWchKMjOSA7EV3r-nipmh28PndrqYtg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1ab60929-5c69-4e4c-9621-830ea25a7d5b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1b72e73d-7581-4efa-b7fa-9c3d4549bbf6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}
