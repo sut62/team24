@@ -73,7 +73,10 @@ public class FlightController {
             for(FlightAirport flightAirport : flight.getFlightAirports()){
                 Airport airport = flightAirport.getAirport();
                 if(flightAirport.getFlightAirportType() == flightAirportTypeRepository.findByName(EFlightAirportType.DEPART_AIRPORT)){
-                    if (airport == airportRepository.findById(airport_depart_id).orElseThrow(() -> new MessageDescriptorFormatException("Not found depart airport ID"))) {
+                    if (
+                        airport == airportRepository.findById(airport_depart_id).orElseThrow(() -> new MessageDescriptorFormatException("Not found depart airport ID"))
+                        & flight.getLastTempSeatId() < flight.getAirplane().getSeatAmout()
+                    ) {
                         departFlight.add(flight);
                     }
                 }
