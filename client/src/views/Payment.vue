@@ -301,6 +301,9 @@
                         {{this.paymentSaved.flightBooking.flightBookingLinks[0].flight.depart | moment("HH:mm")}} - {{this.paymentSaved.flightBooking.flightBookingLinks[0].flight.arrive | moment("HH:mm")}}
                         | {{getDuration(this.paymentSaved.flightBooking.flightBookingLinks[0].flight.arrive,data.flightBooking.flightBookingLinks[0].flight.depart)}}
                       </p>
+                      <p>
+                        SEAT ID : {{this.paymentSaved.flightBooking.departSeatId}}
+                      </p>
                     </v-col>
                     <v-col>
                       <v-row>
@@ -317,6 +320,9 @@
                       <p>
                         {{this.paymentSaved.flightBooking.flightBookingLinks[1].flight.depart | moment("HH:mm")}} - {{this.paymentSaved.flightBooking.flightBookingLinks[1].flight.arrive | moment("HH:mm")}}
                         | {{getDuration(this.paymentSaved.flightBooking.flightBookingLinks[1].flight.arrive,data.flightBooking.flightBookingLinks[1].flight.depart)}}
+                      </p>
+                      <p>
+                        SEAT ID : {{this.paymentSaved.flightBooking.returnSeatId}}
                       </p>
                     </v-col>
                   </v-row>
