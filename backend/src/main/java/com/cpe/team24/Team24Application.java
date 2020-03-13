@@ -16,6 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -125,7 +126,7 @@ public class Team24Application {
 				System.out.println("-------------------------------------------");
 			};
 			// ------------ Airplane -----------------
-			data = new Object[][] { { "Airbus A320" , "180"}, { "Airbus A320-Neo" , "186"} };
+			data = new Object[][] { { "Airbus A320" , "180"}, { "Airbus A320-Neo" , "186"}, { "Airbus For-Test" , "1"} };
 			for (int i = 0; i < data.length; i++) {
 				Airplane airplane = new Airplane();
 				airplane.setName(data[i][0].toString());
@@ -155,8 +156,9 @@ public class Team24Application {
 					// price , depart(days), flight duration(minute) , Airport (Depart), Airpot (Arrive), Airplane
 					// 0 is today , 1 tomorrow , 2 next 2 day
 					{ 1900, 0, 30 ,1,2,1 }, { 1800, 0, 40 ,1,2,1 }, { 2000, 1, 75 ,2,1,1 }, { 2400, 1, 55,2,1,1 },
-					{ 1900, 0, 30 ,1,3,1 }, { 1800, 0, 40 ,1,3,1 }, { 2000, 1, 75 ,3,1,1 }, { 2400, 1, 55,3,1,1 }, 
-				 };
+					{ 1900, 0, 30 ,1,3,1 }, { 1800, 0, 40 ,1,3,1 }, { 2000, 1, 75 ,3,1,1 }, { 2400, 1, 55,3,1,1 },
+					{ 1900, 0, 30 ,1,2,3 }, { 1800, 0, 40 ,1,2,3 }, { 2000, 1, 75 ,2,1,3 }, { 2400, 1, 55,2,1,3 },
+			};
 			for (int i = 0; i < data.length; i++) {
 				Flight flight = new Flight();
 				flight.setPrice(Double.parseDouble(data[i][0].toString()));
