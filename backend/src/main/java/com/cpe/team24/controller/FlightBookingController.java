@@ -4,6 +4,7 @@ import com.cpe.team24.entity.*;
 import com.cpe.team24.model.BodyFlightBooking;
 import com.cpe.team24.repository.*;
 
+import javassist.NotFoundException;
 import net.bytebuddy.utility.RandomString;
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageDescriptorFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,13 +78,16 @@ public class FlightBookingController {
     
     @PostMapping("/book")
     @PreAuthorize("hasRole('ROLE_MEMBER')")
-    public FlightBooking BookFlight(@RequestBody final BodyFlightBooking bodyFlightBooking, final Authentication authentication) {
+    public FlightBooking BookFlight(@RequestBody final BodyFlightBooking bodyFlightBooking, final Authentication authentication) throws NotFoundException {
         System.out.println(authentication.getName());
         FlightBooking flightBooking = new FlightBooking();
-        final Integer departSeatId = 1;
-        final Integer returnSeatId = 1;
-        flightBooking.setDepartSeatId(departSeatId);
-        flightBooking.setReturnSeatId(returnSeatId);
+        /**
+         * Code เก่าที่มีการ Hard Code ไว้
+         */
+//        final Integer departSeatId = 1;
+//        final Integer returnSeatId = 1;
+//        flightBooking.setDepartSeatId(departSeatId);
+//        flightBooking.setReturnSeatId(returnSeatId);
         flightBooking.setBookId(RandomString.make(6).toUpperCase());
         flightBooking.setDate(new Date());
         flightBooking.setUser(userRepository.findByUsername(authentication.getName()).orElse(null));
@@ -91,8 +95,8 @@ public class FlightBookingController {
         flightBooking = flightBookingRepository.save(flightBooking);
 
         // Add Depart's Flight and Return's Flight to TableLink 
-        FlightBookingLink flightBookingLink= new FlightBookingLink();
-        final Flight departFlight = flightRepository.findById(bodyFlightBooking.getDepartFlightId()).orElse(null);
+        FlightBookingLink flightBookingLink = new FlightBookingLink();
+        final Flight departFlight = flightRepository.findById(bodyFlightBooking.getDepartFlightId()).orElseThrow(() -> new NotFoundException("Depart Flight not found"));
         flightBookingLink.setFlight(departFlight);
         flightBookingLink.setFlightBooking(flightBooking);
         flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.DEPART_FLIGHT));
@@ -100,7 +104,7 @@ public class FlightBookingController {
         flightBookingLinkRepository.save(flightBookingLink);
 
         flightBookingLink = new FlightBookingLink();
-        final Flight returnFlight = flightRepository.findById(bodyFlightBooking.getReturnFlightId()).orElse(null);
+        final Flight returnFlight = flightRepository.findById(bodyFlightBooking.getReturnFlightId()).orElseThrow(() -> new NotFoundException("Return Flight not found"));
         flightBookingLink.setFlight(returnFlight);
         flightBookingLink.setFlightBooking(flightBooking);
         flightBookingLink.setFlightBookingType(flightBookingTypeRepository.findByName(EFlightBookingType.RETURN_FLIGHT));

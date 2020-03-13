@@ -3,17 +3,8 @@ package com.cpe.team24.controller;
 import java.util.Date;
 import java.util.Collection;
 
-import com.cpe.team24.entity.EBookingStatus;
-import com.cpe.team24.entity.FlightBooking;
-import com.cpe.team24.entity.FlightBookingLink;
-import com.cpe.team24.entity.Payment;
-import com.cpe.team24.entity.PaymentWay;
-import com.cpe.team24.entity.PromotionCode;
-import com.cpe.team24.repository.BookingStatusRepository;
-import com.cpe.team24.repository.FlightBookingRepository;
-import com.cpe.team24.repository.PaymentRepository;
-import com.cpe.team24.repository.PaymentWayRepository;
-import com.cpe.team24.repository.PromotionCodeRepository;
+import com.cpe.team24.entity.*;
+import com.cpe.team24.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +26,10 @@ public class PaymentController{
     private PromotionCodeRepository promotionCodeRepository;
     @Autowired
     private BookingStatusRepository bookingStatusRepository;
+    @Autowired
+    private FlightBookingTypeRepository flightBookingTypeRepository;
+    @Autowired
+    private FlightRepository flightRepository;
 
     @GetMapping("")
     public Collection<Payment> getAllPayment(){
@@ -45,7 +40,7 @@ public class PaymentController{
         return paymentRepository.findById(id).get();
     }
     @PostMapping("/{flight_booking_id}/{payment_way_id}/{promotion_code}/{phone}/{email}")
-    public Payment payFlight(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String promotion_code,@PathVariable String phone,@PathVariable String email ){
+    public Payment payFlight(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String promotion_code,@PathVariable String phone,@PathVariable String email ) throws Exception{
         Payment payment = new Payment();
 
         FlightBooking flightBooking = flightBookingRepository.findById(flight_booking_id).orElse(null);
@@ -59,8 +54,12 @@ public class PaymentController{
         payment.setPromotionCode(promotionCode);
         payment.setPhone(phone);
         payment.setEmail(email);
-        
-        this.submitBooking(flightBooking);
+        try{
+            this.submitBooking(flightBooking);
+        }catch (Exception ex){
+            throw ex;
+        }
+
         Double total = (double) 0;
         for(FlightBookingLink fbl : flightBooking.getFlightBookingLinks()){
             total += fbl.getFlight().getPrice();
@@ -73,13 +72,49 @@ public class PaymentController{
         return paymentRepository.save(payment);
     }
     
-    void submitBooking(FlightBooking flightBooking){
+    void submitBooking(FlightBooking flightBooking) throws Exception{
         flightBooking.setBookingStatus(bookingStatusRepository.findByName(EBookingStatus.SUBMIT));
+        try {
+            setSeat(flightBooking);
+        }catch (Exception ex){
+            throw ex;
+        }
         flightBookingRepository.save(flightBooking);
+    }
+    /**
+     * method สำหรับจัดสรรที่นั่ง
+     */
+    void setSeat(FlightBooking flightBooking) throws Exception{
+        Integer departSeatId = 0;
+        Integer returnSeatId = 0;
+        Collection<FlightBookingLink> flightBookingLinks = flightBooking.getFlightBookingLinks();
+        for(FlightBookingLink fl : flightBookingLinks){
+            if(fl.getFlightBookingType().getName() == EFlightBookingType.DEPART_FLIGHT){
+                Flight departFlight = fl.getFlight();
+                departSeatId = departFlight.getLastSeatId() + 1;
+                if(departSeatId <= departFlight.getAirplane().getSeatAmout()){
+                    departFlight.setLastSeatId(departSeatId);
+                    flightRepository.save(departFlight);
+                }else{
+                    throw new Exception("Depart Flight's seat not available");
+                }
+            }else if(fl.getFlightBookingType().getName() == EFlightBookingType.RETURN_FLIGHT){
+                Flight returnFlight = fl.getFlight();
+                returnSeatId = returnFlight.getLastSeatId() + 1;
+                if(departSeatId <= returnFlight.getAirplane().getSeatAmout()){
+                    returnFlight.setLastSeatId(returnSeatId);
+                    flightRepository.save(returnFlight);
+                }else{
+                    throw new Exception("Return Flight's seat not available");
+                }
+            }
+        }
+        flightBooking.setDepartSeatId(departSeatId);
+        flightBooking.setReturnSeatId(returnSeatId);
     }
 
     @PostMapping("/{flight_booking_id}/{payment_way_id}/{phone}/{email}")
-    public Payment payFlightWithoutCode(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String phone,@PathVariable String email ){
+    public Payment payFlightWithoutCode(@PathVariable Long flight_booking_id,@PathVariable Long payment_way_id,@PathVariable String phone,@PathVariable String email ) throws Exception{
         Payment payment = new Payment();
 
         FlightBooking flightBooking = flightBookingRepository.findById(flight_booking_id).orElse(null);
@@ -90,8 +125,12 @@ public class PaymentController{
         payment.setPaymentWay(paymentWay);
         payment.setPhone(phone);
         payment.setEmail(email);
-        
-        this.submitBooking(flightBooking);
+        try{
+            this.submitBooking(flightBooking);
+        }catch (Exception ex){
+            throw ex;
+        }
+
         
         Double total = (double) 0;
         for(FlightBookingLink fbl : flightBooking.getFlightBookingLinks()){
