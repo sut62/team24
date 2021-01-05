@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@mdi/font": "^4.7.95",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "canvas": "^2.6.1",
     "common-http": "^2.1.8",
     "core-js": "^3.4.3",
